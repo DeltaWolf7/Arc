@@ -1,5 +1,5 @@
 <?php
-$page = Page::getBySEOURL(arcGetURLData('data'));
+$page = Page::getBySEOURL(arcGetURLData('data1'));
 ?>
 
 <div class="page-header">

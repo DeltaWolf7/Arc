@@ -49,4 +49,9 @@ class UserGroup extends DataProvider {
     public function getPermissions() {
         return UserPermission::getByGroupID($this->id);
     }
+    
+    public static function getAllGroups() {
+        $groups = new UserGroup();
+        return $groups->getCollection(['ORDER' => 'name ASC']);
+    }
 }

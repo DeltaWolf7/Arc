@@ -66,7 +66,7 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="list-group">
-                    <li class="list-group-item active"><a href="<?php echo arcGetModulePath(); ?>/send"><span class="fa fa-pencil"></span> Compose</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/send"><span class="fa fa-pencil"></span> Compose</a></li>
                     <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/"><span class="fa fa-inbox"></span> Inbox</a></li>
                     <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/sent"><span class="fa fa-folder"></span> Sent</a></li>
                     <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/trash"><span class="fa fa-trash"></span> Trash</a></li>
@@ -104,9 +104,7 @@
                             <?php
                         }
                         echo '</table>';
-                        ?>
-
-                        <?php
+                        
                     } else {
                         echo 'No messages in this folder.';
                     }

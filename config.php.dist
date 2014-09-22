@@ -40,10 +40,10 @@ DEFINE('ARCDBSERVER', 'localhost');
 DEFINE('ARCDBNAME', 'arc');
 
 // Database username
-DEFINE('ARCDBUSER', 'arc');
+DEFINE('ARCDBUSER', 'username');
 
 // Database password
-DEFINE('ARCDBPASSWORD', 'mypassword');
+DEFINE('ARCDBPASSWORD', 'password');
 
 // Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
 DEFINE('ARCDBTYPE', 'mysql');
@@ -81,7 +81,7 @@ DEFINE('ARCFAVICON', '');
 DEFINE('ARCKEYWORDS', '');
 
 // Project version
-DEFINE('ARCVERSION', '0.0.0.7');
+DEFINE('ARCVERSION', '0.0.0.10');
 
 // Project debug mode
 DEFINE('ARCDEBUG', true);
@@ -90,7 +90,7 @@ DEFINE('ARCDEBUG', true);
 DEFINE('ARCDEFAULTTYPE', 'page');
 
 // Project default page
-DEFINE('ARCDEFAULTPAGE', 'test');
+DEFINE('ARCDEFAULTPAGE', 'welcome');
 
 // Session Timeout (minutes)
 DEFINE('ARCSESSIONTIMEOUT', 30);

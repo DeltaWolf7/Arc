@@ -14,9 +14,11 @@ require_once __DIR__ . '/bootstrap.php';
         <!-- JavaScript -->
         <script src="<?php echo arcGetPath(); ?>js/jquery-2.1.1.min.js"></script>
         <script src="<?php echo arcGetPath(); ?>js/bootstrap.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/delta-ajax-1.0.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/status.min.js"></script>
+        <script src="<?php echo arcGetPath(); ?>js/delta-ajax-1.0.js"></script>
+        <script src="<?php echo arcGetPath(); ?>js/status.js"></script>
         <script src="<?php echo arcGetPath(); ?>js/bootstrap-datepicker.min.js"></script>
+        <script src="<?php echo arcGetPath(); ?>js/jquery-hotkeys.min.js"></script>
+        <script src="<?php echo arcGetPath(); ?>js/bootstrap-wysiwyg.min.js"></script>
 
         <!-- CSS -->
         <link href="<?php echo arcGetPath(); ?>css/status.min.css" rel="stylesheet">

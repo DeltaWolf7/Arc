@@ -56,4 +56,8 @@ class Page extends DataProvider {
         return $page;
     }
 
+    public static function getAllPages() {
+        $page = new Page();
+        return $page->getCollection(['ORDER' => 'seourl ASC']);
+    }
 }

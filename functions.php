@@ -118,7 +118,12 @@ function arcGetHeader() {
 function arcSetPage($name, $data = null) {
     $GLOBALS['arc_url_data'] = array();
     $GLOBALS['arc_url_data']['module'] = $name;
-    $GLOBALS['arc_url_data']['data'] = $data;
+    $count = 1;
+    $url = explode('/', $data);
+    foreach ($url as $item) {
+        $GLOBALS['arc_url_data']['data' . $count] = $item;
+        $count++;
+    }
 }
 
 // get content
@@ -137,7 +142,6 @@ function arcGetContent() {
         arcSetPage('error', '419');
     } else {
         $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-       
         // if no module, use default from config.
         if (empty(arcGetURLData('module'))) {
             // get the default page of module.
@@ -176,19 +180,23 @@ function arcGetContent() {
                 $permissions = $group->getPermissions();
             }
 
-            if (arcGetURLData('module') == 'page') {
-                if (!UserPermission::hasPermission($permissions, 'page/' . arcGetURLData('data'))) {
-                    arcSetPage('error', '403');
-                }
-            } else {
-                if (!UserPermission::hasPermission($permissions, 'module/' . arcGetURLData('module'))) {
-                    arcSetPage('error', '403');
-                }
+            $pCheck = arcGetURLData('module') . '/' . arcGetURLData('data1');
+
+            if (arcGetURLData('module') != 'page') {
+                $pCheck = 'module/' . arcGetURLData('module');
+            }
+
+            if (!UserPermission::hasPermission($permissions, $pCheck)) {
+                arcSetPage('error', '403');
             }
         }
     }
 
-    include_once arcGetPath(true) . 'modules/' . arcGetURLData('module') . '/index.php';
+    if (arcGetURLData('data1') == 'administration') {
+        include_once arcGetPath(true) . 'modules/' . arcGetURLData('module') . '/administration/index.php';
+    } else {
+        include_once arcGetPath(true) . 'modules/' . arcGetURLData('module') . '/index.php';
+    }
 }
 
 // get user
@@ -213,15 +221,27 @@ function arcRedirect() {
 
 // get dispatch url
 function arcGetDispatch() {
-    echo ARCWWW . 'modules/' . arcGetURLData('module') . '/dispatch.php';
+    if (arcGetURLData('data1') == 'administration') {
+        echo ARCWWW . 'modules/' . arcGetURLData('module') . '/administration/dispatch.php';
+    } else {
+        echo ARCWWW . 'modules/' . arcGetURLData('module') . '/dispatch.php';
+    }
 }
 
 // get module root
 function arcGetModulePath($filesystem = false) {
     if ($filesystem == true) {
-        return arcGetPath(true) . 'modules/' . arcGetURLData('module');
+        if (arcGetURLData('data1') == 'administration') {
+            return arcGetPath(true) . 'modules/' . arcGetURLData('module') . '/administration/';
+        } else {
+            return arcGetPath(true) . 'modules/' . arcGetURLData('module');
+        }
     }
-    return ARCWWW . arcGetURLData('module');
+    if (arcGetURLData('data1') == 'administration') {
+        return ARCWWW . arcGetURLData('module') . '/administration/';
+    } else {
+        return ARCWWW . arcGetURLData('module');
+    }
 }
 
 // get menu
@@ -229,15 +249,45 @@ function arcGetMenu() {
     $modules = scandir(arcGetPath(true) . 'modules');
     $module_list = array();
     $groups = array();
+
+    $group = new UserGroup();
+    if (!empty(arcGetUser())) {
+        $user = arcGetUser();
+        $group = $user->getGroup();
+    }
+    else
+    {
+        $group->getByID('3');
+    }
+
+    $permissions = $group->getPermissions();
+    $perms = new UserPermission();
+
     foreach ($modules as $module) {
         if ($module != '..' && $module != '.') {
+            // module menu
             if (file_exists(arcGetPath(true) . 'modules/' . $module . '/menu.php')) {
-                include arcGetPath(true) . 'modules/' . $module . '/menu.php';
-                $menu['module'] = $module;
-                if (empty($menu['group'])) {
-                    $module_list[] = $menu;
-                } else {
-                    $groups[$menu['group']][] = $menu;
+
+                if ($perms->hasPermission($permissions, 'module/' . $module)) {
+
+                    include arcGetPath(true) . 'modules/' . $module . '/menu.php';
+                    $menu['module'] = $module;
+                    if (empty($menu['group'])) {
+                        $module_list[] = $menu;
+                    } else {
+                        $groups[$menu['group']][] = $menu;
+                    }
+                }
+            }
+
+            // module administration menu
+            if ($group->name == 'Administrators') {
+                if (file_exists(arcGetPath(true) . 'modules/' . $module . '/administration/menu.php')) {
+                    include arcGetPath(true) . 'modules/' . $module . '/administration/menu.php';
+                    $menu['group'] = 'Administration';
+                    $menu['requireslogin'] = true;
+                    $menu['module'] = $module;
+                    $groups['Administration'][] = $menu;
                 }
             }
         }
@@ -258,7 +308,13 @@ function arcGetMenu() {
         foreach ($groups as $key => $value) {
             echo '<li class="dropdown">';
             echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">';
-            echo '<span class="fa fa-list"></span>&nbsp;' . $key . ' <span class="caret"></span></a>';
+            echo '<span class="fa ';
+            if ($key == 'Administration') {
+                echo 'fa-cogs';
+            } else {
+                echo 'fa-list';
+            }
+            echo '"></span>&nbsp;' . $key . ' <span class="caret"></span></a>';
             echo '<ul class="dropdown-menu" role="menu">';
             arcProcessMenuItems($value);
             echo '</ul></li>';
@@ -278,7 +334,11 @@ function arcProcessMenuItems($items) {
                 if ($item['divider'] == true) {
                     echo '<li class="divider"></li>';
                 }
-                echo '<li><a href="' . arcGetPath() . $item['module'] . '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['name'] . '</a></li>';
+                echo '<li><a href="' . arcGetPath() . $item['module'];
+                if ($item['group'] == 'Administration') {
+                    echo '/administration';
+                }
+                echo '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['name'] . '</a></li>';
             }
         }
     } else {
@@ -299,9 +359,11 @@ function arcGetModules() {
     $module_list = array();
     foreach ($modules as $module) {
         if ($module != '..' && $module != '.') {
-            include arcGetPath(true) . 'modules/' . $module . '/info.php';
-            $module_info['module'] = $module;
-            $module_list[] = $module_info;
+            if (file_exists(arcGetPath(true) . 'modules/' . $module . '/info.php')) {
+                include arcGetPath(true) . 'modules/' . $module . '/info.php';
+                $module_info['module'] = $module;
+                $module_list[] = $module_info;
+            }
         }
     }
     return $module_list;

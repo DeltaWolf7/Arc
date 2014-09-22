@@ -1,9 +1,7 @@
-<?php
-
-/*
+/* 
  * The MIT License
  *
- * Copyright 2014 Craig Longford.
+ * Copyright 2014 Craig.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,22 +20,26 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
+ * 
+ * Written by Craig Longford (deltawolf7@gmail.com)
+ * http://www.deltasblog.co.uk
  */
 
-/**
- * AJAX data dispatch handler
- *
- * @author Craig Longford
- */
-require_once '../../bootstrap.php';
+function updateStatus(data) {
+    var dataArray = data.split("|");
+    if (dataArray.length > 1) {
+        updateStatusDiv(dataArray[1], dataArray[0]);
+    } else {
+        updateStatusDiv(data, '');
+    }
+}
+;
 
-$user = new User();
-$user->getByID($_POST['userid']);
-$theme = $user->getSettingByKey('ARC_THEME');
-
-
-
-$theme->setting = $_POST['theme'];
-$theme->update();
-
-echo 'success|Settings saved';
+function updateStatusDiv(content, status) {
+    var element = document.getElementById("status");
+    element.innerHTML = content;
+    element.style.display = "block";
+    element.className = "alert alert-" + status;
+    $('html,body').animate({scrollTop: $("#status").offset().top},'slow');
+}
+;

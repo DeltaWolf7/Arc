@@ -31,50 +31,30 @@
  */
 require_once '../../bootstrap.php';
 
-if (empty($_POST['firstname'])) {
-    echo 'danger|<strong>Firstname</strong> must be provided';
-    return;
-}
-
-if (empty($_POST['lastname'])) {
-    echo 'danger|<strong>Lastname</strong> must be provided';
-    return;
-}
-
-if (empty($_POST['email'])) {
-    echo 'danger|<strong>Email address</strong> must be provided';
-    return;
-}
-
-if (empty($_POST['password'])) {
-    echo 'danger|<strong>Password</strong> must be provided';
-    return;
-}
-
-if (empty($_POST['password2'])) {
-    echo 'danger|<strong>Password retype</strong> must be provided';
-    return;
-}
-
-if ($_POST['password'] != $_POST['password2']) {
-    echo 'danger|Passwords do not match';
-    return;
-}
-
 $user = new User();
-$user->getByEmail($_POST['email']);
+$user->getByID($_POST['userid']);
 
-if ($user->id > 0) {
-    echo 'danger|<strong>Email address</strong> already registered';
-    return;
+// theme settings
+$theme = $user->getSettingByKey('ARC_THEME');
+$theme->setting = $_POST['theme'];
+
+
+// password settings
+if (!empty($_POST['password'])) {
+
+    if (strlen($_POST['password']) > 0 && ($_POST['password'] == $_POST['retype'])) {
+        $user->setPassword($_POST['password']);
+    } else {
+        echo 'danger|Password and retyped password do not match';
+        return;
+    }
 }
 
 $user->firstname = $_POST['firstname'];
 $user->lastname = $_POST['lastname'];
 $user->email = $_POST['email'];
-$user->setPassword($_POST['password']);
-$user->usergroupid = 2;
-$user->update();
 
-arcSetUser($user);
-echo 'success|Your details have been registered';
+$user->update();
+$theme->update();
+
+echo 'success|Settings saved';
