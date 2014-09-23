@@ -254,9 +254,7 @@ function arcGetMenu() {
     if (!empty(arcGetUser())) {
         $user = arcGetUser();
         $group = $user->getGroup();
-    }
-    else
-    {
+    } else {
         $group->getByID('3');
     }
 
@@ -266,24 +264,27 @@ function arcGetMenu() {
     foreach ($modules as $module) {
         if ($module != '..' && $module != '.') {
             // module menu
-            if (file_exists(arcGetPath(true) . 'modules/' . $module . '/menu.php')) {
+            if (file_exists(arcGetPath(true) . 'modules/' . $module . '/info.php')) {
 
                 if ($perms->hasPermission($permissions, 'module/' . $module)) {
 
-                    include arcGetPath(true) . 'modules/' . $module . '/menu.php';
-                    $menu['module'] = $module;
-                    if (empty($menu['group'])) {
-                        $module_list[] = $menu;
-                    } else {
-                        $groups[$menu['group']][] = $menu;
+                    include arcGetPath(true) . 'modules/' . $module . '/info.php';
+
+                    if (isset($menu['module'])) {
+                        $menu['module'] = $module;
+                        if (empty($menu['group'])) {
+                            $module_list[] = $menu;
+                        } else {
+                            $groups[$menu['group']][] = $menu;
+                        }
                     }
                 }
             }
 
             // module administration menu
             if ($group->name == 'Administrators') {
-                if (file_exists(arcGetPath(true) . 'modules/' . $module . '/administration/menu.php')) {
-                    include arcGetPath(true) . 'modules/' . $module . '/administration/menu.php';
+                if (file_exists(arcGetPath(true) . 'modules/' . $module . '/administration/info.php')) {
+                    include arcGetPath(true) . 'modules/' . $module . '/administration/info.php';
                     $menu['group'] = 'Administration';
                     $menu['requireslogin'] = true;
                     $menu['module'] = $module;
@@ -361,8 +362,10 @@ function arcGetModules() {
         if ($module != '..' && $module != '.') {
             if (file_exists(arcGetPath(true) . 'modules/' . $module . '/info.php')) {
                 include arcGetPath(true) . 'modules/' . $module . '/info.php';
-                $module_info['module'] = $module;
-                $module_list[] = $module_info;
+                if (isset($module_info)) {
+                    $module_info['module'] = $module;
+                    $module_list[] = $module_info;
+                }
             }
         }
     }

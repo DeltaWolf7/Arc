@@ -4,6 +4,11 @@ JQuery                      2.1.1                 http://jquery.com/download/
 Font Awesome                4.2.0                 http://fortawesome.github.io/Font-Awesome/
 Bootstrap WYSIWYG           18/9/2014             http://mindmup.github.io/bootstrap-wysiwyg/
 
+0.0.0.11
+--------
+/ Merged modules menu and info file (now just info.php);
+/ Changed the way modules are detected to reflect above change.
+
 0.0.0.10
 --------
 * Fixed registration module not recording group and user first/last name.
