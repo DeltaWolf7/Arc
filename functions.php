@@ -260,8 +260,9 @@ function arcGetMenu() {
 
     $permissions = $group->getPermissions();
     $perms = new UserPermission();
-
+        
     foreach ($modules as $module) {
+        $module_info = '';
         if ($module != '..' && $module != '.') {
             // module menu
             if (file_exists(arcGetPath(true) . 'modules/' . $module . '/info.php')) {
@@ -270,12 +271,12 @@ function arcGetMenu() {
 
                     include arcGetPath(true) . 'modules/' . $module . '/info.php';
 
-                    if (isset($menu['module'])) {
-                        $menu['module'] = $module;
-                        if (empty($menu['group'])) {
-                            $module_list[] = $menu;
+                    if (isset($module_info['menu'])) {
+                        $module_info['module'] = $module;
+                        if (empty($module_info['group'])) {
+                            $module_list[] = $module_info;
                         } else {
-                            $groups[$menu['group']][] = $menu;
+                            $groups[$module_info['group']][] = $module_info;
                         }
                     }
                 }
@@ -285,23 +286,23 @@ function arcGetMenu() {
             if ($group->name == 'Administrators') {
                 if (file_exists(arcGetPath(true) . 'modules/' . $module . '/administration/info.php')) {
                     include arcGetPath(true) . 'modules/' . $module . '/administration/info.php';
-                    $menu['group'] = 'Administration';
-                    $menu['requireslogin'] = true;
-                    $menu['module'] = $module;
-                    $groups['Administration'][] = $menu;
+                    $module_info['group'] = 'Administration';
+                    $module_info['requireslogin'] = true;
+                    $module_info['module'] = $module;
+                    $groups['Administration'][] = $module_info;
                 }
             }
         }
     }
 
     // logout menu (last item)
-    $menu['name'] = 'Logout';
-    $menu['icon'] = 'fa-lock';
-    $menu['divider'] = false;
-    $menu['requireslogin'] = true;
-    $menu['group'] = '';
-    $menu['module'] = 'logout';
-    $module_list[] = $menu;
+    $module_info['menu'] = 'Logout';
+    $module_info['icon'] = 'fa-lock';
+    $module_info['divider'] = false;
+    $module_info['requireslogin'] = true;
+    $module_info['group'] = '';
+    $module_info['module'] = 'logout';
+    $module_list[] = $module_info;
 
     echo '<ul class="nav navbar-nav navbar-right">';
 
@@ -339,7 +340,7 @@ function arcProcessMenuItems($items) {
                 if ($item['group'] == 'Administration') {
                     echo '/administration';
                 }
-                echo '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['name'] . '</a></li>';
+                echo '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['menu'] . '</a></li>';
             }
         }
     } else {
@@ -348,7 +349,7 @@ function arcProcessMenuItems($items) {
                 if ($item['divider'] == true) {
                     echo '<li class="divider"></li>';
                 }
-                echo '<li><a href="' . arcGetPath() . $item['module'] . '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['name'] . '</a></li>';
+                echo '<li><a href="' . arcGetPath() . $item['module'] . '"><span class="fa ' . $item['icon'] . '"></span> ' . $item['menu'] . '</a></li>';
             }
         }
     }
@@ -362,6 +363,12 @@ function arcGetModules() {
         if ($module != '..' && $module != '.') {
             if (file_exists(arcGetPath(true) . 'modules/' . $module . '/info.php')) {
                 include arcGetPath(true) . 'modules/' . $module . '/info.php';
+                if (isset($module_info)) {
+                    $module_info['module'] = $module;
+                    $module_list[] = $module_info;
+                }
+            } elseif (file_exists(arcGetPath(true) . 'modules/' . $module . '/administration/info.php')) {
+                include arcGetPath(true) . 'modules/' . $module . '/administration/info.php';
                 if (isset($module_info)) {
                     $module_info['module'] = $module;
                     $module_list[] = $module_info;

@@ -1,4 +1,10 @@
 <?php
+
+if (!file_exists('config.php')) {
+    header( 'Location: install/' ) ;
+    exit();
+}
+
 require_once __DIR__ . '/bootstrap.php';
 ?>
 <!DOCTYPE html>

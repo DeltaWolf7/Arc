@@ -7,11 +7,11 @@ $module_info['author'] = 'Craig Longford';
 $module_info['email'] = 'deltawolf7@gmail.com';
 $module_info['www'] = 'http://www.deltasblog.co.uk';
 
-$menu['name'] = 'Login';
-$menu['icon'] = 'fa-user';
-$menu['divider'] = false;
-$menu['requireslogin'] = false;
-$menu['group'] = '';
+$module_info['menu'] = 'Login';
+$module_info['icon'] = 'fa-user';
+$module_info['divider'] = false;
+$module_info['requireslogin'] = false;
+$module_info['group'] = '';
 
 ?>
 

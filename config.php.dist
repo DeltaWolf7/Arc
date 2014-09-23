@@ -75,7 +75,7 @@ DEFINE('ARCDESCRIPTION', '');
 DEFINE('ARCAUTHOR', 'Arc');
 
 // Project fav icon
-DEFINE('ARCFAVICON', '');
+DEFINE('ARCFAVICON', 'favicon.png');
 
 // Project keywords
 DEFINE('ARCKEYWORDS', '');
@@ -84,7 +84,7 @@ DEFINE('ARCKEYWORDS', '');
 DEFINE('ARCVERSION', '0.0.0.11');
 
 // Project debug mode
-DEFINE('ARCDEBUG', true);
+DEFINE('ARCDEBUG', false);
 
 // Project default page type (page or module)
 DEFINE('ARCDEFAULTTYPE', 'page');

@@ -1,27 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.0.10deb1
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Sep 22, 2014 at 02:37 PM
--- Server version: 5.5.38-0ubuntu0.14.04.1
--- PHP Version: 5.5.9-1ubuntu4.4
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
---
--- Database: `arc`
---
-
--- --------------------------------------------------------
-
 --
 -- Table structure for table `arc_last_access`
 --
@@ -33,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `arc_last_access` (
   `browser` text NOT NULL,
   `ipaddress` varchar(15) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 -- --------------------------------------------------------
 
@@ -136,7 +112,7 @@ CREATE TABLE IF NOT EXISTS `arc_user_permissions` (
   `groupid` int(11) NOT NULL,
   `permission` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
 
 --
 -- Dumping data for table `arc_user_permissions`
@@ -154,7 +130,7 @@ INSERT INTO `arc_user_permissions` (`id`, `groupid`, `permission`) VALUES
 (11, 3, 'module/register'),
 (15, 1, 'module/page'),
 (17, 1, 'page/administration'),
-(18, 1, 'module/installer');
+(25, 1, 'module/installer');
 
 -- --------------------------------------------------------
 

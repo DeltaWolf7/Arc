@@ -1,9 +1,9 @@
 <?php
 
-$menu['name'] = 'Pages';
-$menu['icon'] = 'fa-file-code-o';
-$menu['divider'] = false;
-$menu['requireslogin'] = true;
-$menu['group'] = '';
+$module_info['menu'] = 'Pages';
+$module_info['icon'] = 'fa-file-code-o';
+$module_info['divider'] = false;
+$module_info['requireslogin'] = true;
+$module_info['group'] = '';
 
 ?>

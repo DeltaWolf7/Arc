@@ -1,9 +1,9 @@
 <?php
 
-$menu['name'] = 'Users';
-$menu['icon'] = 'fa-user';
-$menu['divider'] = false;
-$menu['requireslogin'] = true;
-$menu['group'] = '';
+$module_info['menu'] = 'Users';
+$module_info['icon'] = 'fa-user';
+$module_info['divider'] = false;
+$module_info['requireslogin'] = true;
+$module_info['group'] = '';
 
 ?>

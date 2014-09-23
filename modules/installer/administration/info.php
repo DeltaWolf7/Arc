@@ -1,9 +1,9 @@
 <?php
 
-$menu['name'] = 'Installer';
-$menu['icon'] = 'fa-cube';
-$menu['divider'] = false;
-$menu['requireslogin'] = true;
-$menu['group'] = '';
+$module_info['menu'] = 'Installer';
+$module_info['icon'] = 'fa-cube';
+$module_info['divider'] = false;
+$module_info['requireslogin'] = true;
+$module_info['group'] = '';
 
 ?>

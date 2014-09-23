@@ -8,6 +8,8 @@ Bootstrap WYSIWYG           18/9/2014             http://mindmup.github.io/boots
 --------
 / Merged modules menu and info file (now just info.php);
 / Changed the way modules are detected to reflect above change.
+* Fixed a bug in the menu system causing a miss-read of information.
+* Fixed a bug where administration modules did not show in permissions.
 
 0.0.0.10
 --------
