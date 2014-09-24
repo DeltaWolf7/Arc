@@ -9,8 +9,18 @@ Arc Web Application Framework
 
 What is Arc
 ===========
-Arc is a web framework that I wrote. Basically it make it easy to create web applications, without having to start from scratch.
+Arc is a framework designed to facilitate the rapid development of web applications. 
+This is achieved through the use of self loading modules.
 
-Arc is based on BootStrap and my own AJAX library. The framework is written in PHP5
+Based on the BootStrap design framework, JQuery, Medoo, Font Awesome and Delta's AJAX library.
 
-Check out the Wiki for more information.
+Arc Features
+--User management system
+--Group based permission system for modules and pages
+--Dynamic page creating
+--SEO Friendly URL construction throughout
+--Simplified AJAX commands for rapid development
+--Support for CSS based themes
+--Intelligent 404, 403 and 419 handling
+--Module installer
+--User to user messaging system 

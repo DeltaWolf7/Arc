@@ -118,6 +118,7 @@ function arcGetHeader() {
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
     }
+    arcGetTheme();
     
     arcGetCSSJavascript("js", "js/");
     if (!empty(arcGetURLData("module"))) {
@@ -134,7 +135,7 @@ function arcGetCSSJavascript($type, $path) {
                 if ($type == "js") {
                 echo "\t<script src='" . arcGetPath() . $path . $file . "'></script>" . PHP_EOL;
                 } elseif ($type == "css") {
-                    echo "\t<link rel='stylesheet' type='text/css' href='" . arcGetPath() . $path . $file . "'>" . PHP_EOL;
+                    echo "\t<link href='" . arcGetPath() . $path . $file . "' rel='stylesheet'>" . PHP_EOL;
                 }
             }
         }
@@ -340,7 +341,7 @@ function arcGetMenu() {
     if (count($groups) > 0) {
         foreach ($groups as $key => $value) {
             echo "\t\t<li class='dropdown'>";
-            echo "<a class='dropdown-toggle' data-toggle='dropdown' href='#'>";
+            echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown'>";
             echo "<span class='fa ";
             if ($key == "Administration") {
                 echo "fa-cogs";
@@ -416,8 +417,9 @@ function arcGetTheme() {
         $user = arcGetUser();
         $theme = $user->getSettingByKey("ARC_THEME");
         if (!empty($theme->setting)) {
-            return "themes/" . $theme->setting . ".min.css";
+            echo "\t<link href='" . arcGetPath() . "css/themes/" . $theme->setting . ".min.css' rel='stylesheet'>" . PHP_EOL;
+            return;
         }
     }
-    return "bootstrap-theme.min.css";
+    echo "\t<link href='" . arcGetPath() . "css/themes/bootstrap-theme.min.css' rel='stylesheet'>" . PHP_EOL;
 }

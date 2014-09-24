@@ -1,8 +1,15 @@
 Bootstrap                   3.2.0                 http://getbootstrap.com/
-Boostrap Date Picker        12/3/2013             http://www.eyecon.ro/bootstrap-datepicker/
+Boostrap Date Picker        12/03/2013             http://www.eyecon.ro/bootstrap-datepicker/
 JQuery                      2.1.1                 http://jquery.com/download/
 Font Awesome                4.2.0                 http://fortawesome.github.io/Font-Awesome/
-Bootstrap WYSIWYG           18/9/2014             http://mindmup.github.io/bootstrap-wysiwyg/
+Bootstrap WYSIWYG           18/09/2014             http://mindmup.github.io/bootstrap-wysiwyg/
+
+
+0.0.0.13
+--------
+* Fixed bug caused by BootStrap loading before JQuery.
+* Fixed theme not being loaded from user settings.
+/ Changed the provided page content for the welcome page.
 
 0.0.0.12
 --------
