@@ -29,39 +29,39 @@
  *
  * @author Craig Longford
  */
-require_once '../../bootstrap.php';
+require_once "../../bootstrap.php";
 
-if ($_POST['action'] == 'send') {
+if ($_POST["action"] == "send") {
 
     $from = new User();
-    $from->getByID($_POST['userid']);
+    $from->getByID($_POST["userid"]);
 
-    if ($_POST['replyid'] != '0') {
+    if ($_POST["replyid"] != "0") {
         $m = new Message();
-        $m->getByID($_POST['replyid']);
+        $m->getByID($_POST["replyid"]);
         $m->replied = 1;
         $m->update();
     }
 
     $message = new Message();
     $message->fromid = $from->id;
-    $message->fromuser = $from->firstname . ' ' . $from->lastname;
-    $message->content = $_POST['message'];
-    $message->subject = $_POST['subject'];
-    $message->userid = $_POST['touser'];
-    $message->folder = 'Inbox';
+    $message->fromuser = $from->firstname . " " . $from->lastname;
+    $message->content = $_POST["message"];
+    $message->subject = $_POST["subject"];
+    $message->userid = $_POST["touser"];
+    $message->folder = "Inbox";
 
     $messageX = new Message();
     $messageX->fromid = $from->id;
-    $messageX->fromuser = $from->firstname . ' ' . $from->lastname;
-    $messageX->content = $_POST['message'];
-    $messageX->subject = $_POST['subject'];
+    $messageX->fromuser = $from->firstname . " " . $from->lastname;
+    $messageX->content = $_POST["message"];
+    $messageX->subject = $_POST["subject"];
     $messageX->userid = $from->id;
     $messageX->read = true;
-    $messageX->folder = 'Sent';
+    $messageX->folder = "Sent";
 
     $message->update();
     $messageX->update();
 
-    echo 'success|Message sent';
+    echo "success|Message sent";
 }

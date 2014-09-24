@@ -40,24 +40,24 @@ class Page extends DataProvider {
 
     public function __construct() {
         parent::__construct();
-        $this->title = '';
-        $this->content = '';
-        $this->metadescription = '';
-        $this->metakeywords = '';
-        $this->metatitle = '';
-        $this->seourl = '';
-        $this->table = ARCDBPREFIX . 'pages';
-        $this->columns = ['id', 'title', 'content', 'seourl', 'metatitle', 'metadescription', 'metakeywords'];
+        $this->title = "";
+        $this->content = "";
+        $this->metadescription = "";
+        $this->metakeywords = "";
+        $this->metatitle = "";
+        $this->seourl = "";
+        $this->table = ARCDBPREFIX . "pages";
+        $this->columns = ["id", "title", "content", "seourl", "metatitle", "metadescription", "metakeywords"];
     }
 
     public static function getBySEOURL($seourl) {
         $page = new Page();
-        $page->get(['seourl' => $seourl]);
+        $page->get(["seourl" => $seourl]);
         return $page;
     }
 
     public static function getAllPages() {
         $page = new Page();
-        return $page->getCollection(['ORDER' => 'seourl ASC']);
+        return $page->getCollection(["ORDER" => "seourl ASC"]);
     }
 }

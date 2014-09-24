@@ -34,63 +34,63 @@
  */
 
 // Database server
-DEFINE('ARCDBSERVER', 'localhost');
+DEFINE("ARCDBSERVER", "localhost");
 
 // Database name
-DEFINE('ARCDBNAME', 'arc');
+DEFINE("ARCDBNAME", "arc");
 
 // Database username
-DEFINE('ARCDBUSER', 'username');
+DEFINE("ARCDBUSER", "username");
 
 // Database password
-DEFINE('ARCDBPASSWORD', 'password');
+DEFINE("ARCDBPASSWORD", "password");
 
 // Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE('ARCDBTYPE', 'mysql');
+DEFINE("ARCDBTYPE", "mysql");
 
 // Database prefix
-DEFINE('ARCDBPREFIX', 'arc_');
+DEFINE("ARCDBPREFIX", "arc_");
 
 /*
  * Server Configuration
  */
 
 // Web path
-DEFINE('ARCWWW', '/');
+DEFINE("ARCWWW", "/");
 
 // FS path
-DEFINE('ARCFS', '/');
+DEFINE("ARCFS", "/");
 
 /*
  * Project Configuration
  */
 
 // Project title
-DEFINE('ARCTITLE', 'Project Arc');
+DEFINE("ARCTITLE", "Project Arc");
 
 // Project description
-DEFINE('ARCDESCRIPTION', '');
+DEFINE("ARCDESCRIPTION", "");
 
 // Project author
-DEFINE('ARCAUTHOR', 'Arc');
+DEFINE("ARCAUTHOR", "Arc");
 
 // Project fav icon
-DEFINE('ARCFAVICON', 'favicon.png');
+DEFINE("ARCFAVICON", "favicon.png");
 
 // Project keywords
-DEFINE('ARCKEYWORDS', '');
+DEFINE("ARCKEYWORDS", "");
 
 // Project version
-DEFINE('ARCVERSION', '0.0.0.11');
+DEFINE("ARCVERSION", "0.0.0.12");
 
 // Project debug mode
-DEFINE('ARCDEBUG', false);
+DEFINE("ARCDEBUG", false);
 
 // Project default page type (page or module)
-DEFINE('ARCDEFAULTTYPE', 'page');
+DEFINE("ARCDEFAULTTYPE", "page");
 
 // Project default page
-DEFINE('ARCDEFAULTPAGE', 'welcome');
+DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
-DEFINE('ARCSESSIONTIMEOUT', 30);
+DEFINE("ARCSESSIONTIMEOUT", 30);

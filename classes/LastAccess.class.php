@@ -39,23 +39,23 @@ class LastAccess extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->userid = 0;
-        $this->when = date('y-m-d h:i:s');
-        $this->browser = '';
-        $this->ipaddress = '';
-        $this->table = ARCDBPREFIX . 'last_access';
-        $this->columns = ['id', 'userid', 'when', 'browser', 'ipaddress'];
+        $this->when = date("y-m-d h:i:s");
+        $this->browser = "";
+        $this->ipaddress = "";
+        $this->table = ARCDBPREFIX . "last_access";
+        $this->columns = ["id", "userid", "when", "browser", "ipaddress"];
     }
 
     public static function getByUserID($userid) {
         $access = new LastAccess();
-        return $access->getCollection(['userid' => $userid, 'ORDER' => 'when DESC']);
+        return $access->getCollection(["userid" => $userid, "ORDER" => "when DESC"]);
     }
 
     public static function logAccess($userid) {
         $access = new LastAccess();
         $access->userid = $userid;
-        $access->browser = $_SERVER['HTTP_USER_AGENT'];
-        $access->ipaddress = $_SERVER['REMOTE_ADDR'];
+        $access->browser = $_SERVER["HTTP_USER_AGENT"];
+        $access->ipaddress = $_SERVER["REMOTE_ADDR"];
         $access->update();
     }
 

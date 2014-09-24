@@ -1,15 +1,15 @@
 <div class="page-header">
     <h1>Page Management
         <?php
-        if (!empty(arcGetURLData('data3'))) {
-            echo '<a href="' . arcGetModulePath() . '"><span class="fa fa-arrow-circle-left"></span></a>';
+        if (!empty(arcGetURLData("data3"))) {
+            echo "<a href='" . arcGetModulePath() . "'><span class='fa fa-arrow-circle-left'></span></a>";
         }
         ?>
     </h1>
 </div>
 
 <?php
-if (empty(arcGetURLData('data2'))) {
+if (empty(arcGetURLData("data2"))) {
     ?>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -17,22 +17,22 @@ if (empty(arcGetURLData('data2'))) {
         </div>
         <div class="panel-body">
             <table class="table table-striped">
-                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo arcGetModulePath() . 'edit/0'; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
+                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo arcGetModulePath() . "edit/0"; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
                 <?php
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
-                    echo '<tr><td>' . $page->seourl . '</td><td>' . $page->title . '</td><td class="text-right"><a href="' . arcGetModulePath() . 'edit/' . $page->id . '"><span class="fa fa-edit"></span></a></td></tr>';
+                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span></a></td></tr>";
                 }
                 ?>
             </table>
         </div>
     </div>
     <?php
-} elseif (arcGetURLData('data2') == 'edit') {
+} elseif (arcGetURLData("data2") == "edit") {
 
     $page = new Page();
-    if (arcGetURLData('data3') != '0') {
-        $page->getByID(arcGetURLData('data3'));
+    if (arcGetURLData("data3") != "0") {
+        $page->getByID(arcGetURLData("data3"));
     }
     ?>
     <form role="form">

@@ -47,16 +47,16 @@ $user = arcGetUser();
                     <option value="">default</option>
                     <?php
                     
-                    $selectedtheme = $user->getSettingByKey('ARC_THEME');
-                    $themes = scandir(arcGetPath(true) . '/css/themes/');
+                    $selectedtheme = $user->getSettingByKey("ARC_THEME");
+                    $themes = scandir(arcGetPath(true) . "/css/themes/");
                     foreach ($themes as $theme) {
-                        if ($theme != '..' && $theme != '.') {
+                        if ($theme != ".." && $theme != ".") {
                             $themename = substr($theme, 0, strlen($theme) - 8);
-                            echo '<option value="' . $themename . '"';
+                            echo "<option value='" . $themename . "'";
                             if ($selectedtheme->setting == $themename) {
-                                echo ' selected';
+                                echo " selected";
                             }
-                            echo '>' . $themename . '</option>' . PHP_EOL;
+                            echo ">" . $themename . "</option>" . PHP_EOL;
                         }
                     }
                     ?>

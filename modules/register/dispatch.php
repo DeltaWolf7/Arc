@@ -29,52 +29,52 @@
  *
  * @author Craig Longford
  */
-require_once '../../bootstrap.php';
+require_once "../../bootstrap.php";
 
-if (empty($_POST['firstname'])) {
-    echo 'danger|<strong>Firstname</strong> must be provided';
+if (empty($_POST["firstname"])) {
+    echo "danger|<strong>Firstname</strong> must be provided";
     return;
 }
 
-if (empty($_POST['lastname'])) {
-    echo 'danger|<strong>Lastname</strong> must be provided';
+if (empty($_POST["lastname"])) {
+    echo "danger|<strong>Lastname</strong> must be provided";
     return;
 }
 
-if (empty($_POST['email'])) {
-    echo 'danger|<strong>Email address</strong> must be provided';
+if (empty($_POST["email"])) {
+    echo "danger|<strong>Email address</strong> must be provided";
     return;
 }
 
-if (empty($_POST['password'])) {
-    echo 'danger|<strong>Password</strong> must be provided';
+if (empty($_POST["password"])) {
+    echo "danger|<strong>Password</strong> must be provided";
     return;
 }
 
-if (empty($_POST['password2'])) {
-    echo 'danger|<strong>Password retype</strong> must be provided';
+if (empty($_POST["password2"])) {
+    echo "danger|<strong>Password retype</strong> must be provided";
     return;
 }
 
-if ($_POST['password'] != $_POST['password2']) {
-    echo 'danger|Passwords do not match';
+if ($_POST["password"] != $_POST["password2"]) {
+    echo "danger|Passwords do not match";
     return;
 }
 
 $user = new User();
-$user->getByEmail($_POST['email']);
+$user->getByEmail($_POST["email"]);
 
 if ($user->id > 0) {
-    echo 'danger|<strong>Email address</strong> already registered';
+    echo "danger|<strong>Email address</strong> already registered";
     return;
 }
 
-$user->firstname = $_POST['firstname'];
-$user->lastname = $_POST['lastname'];
-$user->email = $_POST['email'];
-$user->setPassword($_POST['password']);
+$user->firstname = $_POST["firstname"];
+$user->lastname = $_POST["lastname"];
+$user->email = $_POST["email"];
+$user->setPassword($_POST["password"]);
 $user->usergroupid = 2;
 $user->update();
 
 arcSetUser($user);
-echo 'success|Your details have been registered';
+echo "success|Your details have been registered";

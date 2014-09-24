@@ -37,7 +37,7 @@ abstract class DataProvider {
 
     public function __construct() {
         $this->id = 0;
-        $this->table = '';
+        $this->table = "";
         $this->columns = array();
     }
 
@@ -47,7 +47,7 @@ abstract class DataProvider {
     }
 
     public function getByID($id) {
-        return $this->get(['id' => $id]);
+        return $this->get(["id" => $id]);
     }
 
     public function getCollection($where) {
@@ -69,19 +69,19 @@ abstract class DataProvider {
         $dataColumns = array();
         $properties = get_object_vars($this);
         foreach ($columns as $column) {
-            if ($column != 'table' && $column != 'columns') {
+            if ($column != "table" && $column != "columns") {
                 $dataColumns[$column] = $properties[$column];
             }
         }
         if ($this->id == 0) {
             $this->id = arcDatabase()->insert($this->table, $dataColumns);
         } else {
-            arcDatabase()->update($this->table, $dataColumns, ['id' => $this->id]);
+            arcDatabase()->update($this->table, $dataColumns, ["id" => $this->id]);
         }
     }
 
     public function delete($id) {
-        arcDatabase()->delete($this->table, ['id' => $id]);
+        arcDatabase()->delete($this->table, ["id" => $id]);
     }
 
     protected function fill($data) {

@@ -30,35 +30,36 @@
  * @author Craig Longford
  */
 session_start();
-require_once 'config.php';
-require_once 'functions.php';
+require_once "config.php";
 
 // check if debug is enabled
 if (ARCDEBUG == true) {
     error_reporting(E_ALL);
-    ini_set('display_errors', '1');
+    ini_set("display_errors", "1");
 }
 
+require_once "functions.php";
+
 // setup database connection from config
-require_once $_SERVER['DOCUMENT_ROOT'] . ARCFS . 'medoo.min.php';
+require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "medoo.min.php";
 try {
     $arc_db = new medoo([
-        'database_type' => ARCDBTYPE,
-        'database_name' => ARCDBNAME,
-        'server' => ARCDBSERVER,
-        'username' => ARCDBUSER,
-        'password' => ARCDBPASSWORD
+        "database_type" => ARCDBTYPE,
+        "database_name" => ARCDBNAME,
+        "server" => ARCDBSERVER,
+        "username" => ARCDBUSER,
+        "password" => ARCDBPASSWORD
     ]);
 } catch (Exception $e) {
-    echo 'Unable to connect to database. Please check \'config.php\'';
-    echo '<br />Exception: ' . $e->getMessage();
+    echo "Unable to connect to database. Please check 'config.php'";
+    echo "<br />Exception: " . $e->getMessage();
     die();
 }
 
 function __autoload($class_name) {
-    if (file_exists($_SERVER['DOCUMENT_ROOT'] . ARCFS . 'classes/' . $class_name . '.class.php')) {
-        require_once($_SERVER['DOCUMENT_ROOT'] . ARCFS . 'classes/' . $class_name . '.class.php');
-    } elseif (file_exists($_SERVER['DOCUMENT_ROOT'] . ARCFS . 'modules/' . arcGetURLData('module') . '/classes/' . $class_name . '.class.php')) {
-        require_once($_SERVER['DOCUMENT_ROOT'] . ARCFS . 'modules/' . arcGetURLData('module') . '/classes/' . $class_name . '.class.php');
+    if (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php")) {
+        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");
+    } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
+        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
     }
 }

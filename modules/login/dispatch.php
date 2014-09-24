@@ -29,33 +29,33 @@
  *
  * @author Craig Longford
  */
-require_once '../../bootstrap.php';
+require_once "../../bootstrap.php";
 
-if (empty($_POST['email'])) {
-    echo 'danger|<strong>Email address</strong> must be provided';
+if (empty($_POST["email"])) {
+    echo "danger|<strong>Email address</strong> must be provided";
     return;
 }
 
-if (empty($_POST['password'])) {
-    echo 'danger|<strong>Password</strong> must be provided';
+if (empty($_POST["password"])) {
+    echo "danger|<strong>Password</strong> must be provided";
     return;
 }
 
-$user = User::getByEmail($_POST['email']);
+$user = User::getByEmail($_POST["email"]);
 
-if ($user->verifyPassword($_POST['password'])) {
+if ($user->verifyPassword($_POST["password"])) {
 
     if ($user->enabled) {
         arcSetUser($user);
 
         LastAccess::logAccess($user->id);
 
-        echo 'success|Login successful';
+        echo "success|Login successful";
         return;
     } else {
-        echo 'danger|Account disabled';
+        echo "danger|Account disabled";
         return;
     }
 }
 
-echo 'danger|Invalid username and/or password';
+echo "danger|Invalid username and/or password";

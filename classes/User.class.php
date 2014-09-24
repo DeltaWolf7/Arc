@@ -43,24 +43,24 @@ class User extends DataProvider {
         parent::__construct();
         $this->firstname;
         $this->lastname;
-        $this->email = '';
+        $this->email = "";
         $this->enabled = true;
-        $this->passwordhash = '';
+        $this->passwordhash = "";
         $this->usergroupid = 0;
-        $this->created = date('y-m-d h:i:s');
-        $this->table = ARCDBPREFIX . 'users';
-        $this->columns = ['id', 'firstname', 'lastname', 'email', 'passwordhash', 'created', 'enabled', 'usergroupid'];
+        $this->created = date("y-m-d h:i:s");
+        $this->table = ARCDBPREFIX . "users";
+        $this->columns = ["id", "firstname", "lastname", "email", "passwordhash", "created", "enabled", "usergroupid"];
     }
 
     public static function getByEmail($email) {
         $user = new User();
-        $user->get(['email' => $email]);
+        $user->get(["email" => $email]);
         return $user;
     }
 
     public static function getAllUsers() {
         $user = new User();
-        return $user->getCollection(['ORDER' => 'firstname ASC']);
+        return $user->getCollection(["ORDER" => "firstname ASC"]);
     }
     
     public function getGroup() {

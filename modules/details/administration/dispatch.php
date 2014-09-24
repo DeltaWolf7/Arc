@@ -29,42 +29,42 @@
  *
  * @author Craig Longford
  */
-require_once '../../../bootstrap.php';
+require_once "../../../bootstrap.php";
 
-if ($_POST['action'] == 'saveuser') {
+if ($_POST["action"] == "saveuser") {
     $user = new User();
-    $user->getByID($_POST['userid']);
+    $user->getByID($_POST["userid"]);
 
 // theme settings
-    $theme = $user->getSettingByKey('ARC_THEME');
-    $theme->setting = $_POST['theme'];
+    $theme = $user->getSettingByKey("ARC_THEME");
+    $theme->setting = $_POST["theme"];
 
 
 // password settings
-    if (!empty($_POST['password'])) {
+    if (!empty($_POST["password"])) {
 
-        if (strlen($_POST['password']) > 0 && ($_POST['password'] == $_POST['retype'])) {
-            $user->setPassword($_POST['password']);
+        if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
+            $user->setPassword($_POST["password"]);
         } else {
-            echo 'danger|Password and retyped password do not match';
+            echo "danger|Password and retyped password do not match";
             return;
         }
     }
 
-    $user->firstname = $_POST['firstname'];
-    $user->lastname = $_POST['lastname'];
-    $user->email = $_POST['email'];
+    $user->firstname = $_POST["firstname"];
+    $user->lastname = $_POST["lastname"];
+    $user->email = $_POST["email"];
     
-    $user->usergroupid = $_POST['group'];
+    $user->usergroupid = $_POST["group"];
 
     $user->update();
     $theme->update();
 
-    echo 'success|User saved';
-} elseif ($_POST['action'] == 'savepermission') {
+    echo "success|User saved";
+} elseif ($_POST["action"] == "savepermission") {
     $permission = new UserPermission();
-    $permission->getByID($_POST['id']);
-    $permission->permission = $_POST['data'];
+    $permission->getByID($_POST["id"]);
+    $permission->permission = $_POST["data"];
     $permission->update();
-    echo 'success|Permission saved';
+    echo "success|Permission saved";
 }

@@ -35,14 +35,14 @@ class UserGroup extends DataProvider {
 
     public function __construct() {
         parent::__construct();
-        $this->name = '';
-        $this->table = ARCDBPREFIX . 'user_groups';
-        $this->columns = ['id', 'name'];
+        $this->name = "";
+        $this->table = ARCDBPREFIX . "user_groups";
+        $this->columns = ["id", "name"];
     }
     
     public static function getByName($name) {
         $group = new UserGroup();
-        $group->get(['name' => $name]);
+        $group->get(["name" => $name]);
         return $group;
     }
     
@@ -52,6 +52,6 @@ class UserGroup extends DataProvider {
     
     public static function getAllGroups() {
         $groups = new UserGroup();
-        return $groups->getCollection(['ORDER' => 'name ASC']);
+        return $groups->getCollection(["ORDER" => "name ASC"]);
     }
 }

@@ -29,32 +29,32 @@
  *
  * @author Craig Longford
  */
-require_once '../../bootstrap.php';
+require_once "../../bootstrap.php";
 
 $user = new User();
-$user->getByID($_POST['userid']);
+$user->getByID($_POST["userid"]);
 
 // theme settings
-$theme = $user->getSettingByKey('ARC_THEME');
-$theme->setting = $_POST['theme'];
+$theme = $user->getSettingByKey("ARC_THEME");
+$theme->setting = $_POST["theme"];
 
 
 // password settings
-if (!empty($_POST['password'])) {
+if (!empty($_POST["password"])) {
 
-    if (strlen($_POST['password']) > 0 && ($_POST['password'] == $_POST['retype'])) {
+    if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
         $user->setPassword($_POST['password']);
     } else {
-        echo 'danger|Password and retyped password do not match';
+        echo "danger|Password and retyped password do not match";
         return;
     }
 }
 
-$user->firstname = $_POST['firstname'];
-$user->lastname = $_POST['lastname'];
-$user->email = $_POST['email'];
+$user->firstname = $_POST["firstname"];
+$user->lastname = $_POST["lastname"];
+$user->email = $_POST["email"];
 
 $user->update();
 $theme->update();
 
-echo 'success|Settings saved';
+echo "success|Settings saved";

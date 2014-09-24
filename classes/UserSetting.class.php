@@ -37,16 +37,16 @@ class UserSetting extends DataProvider {
 
     public function __construct() {
         parent::__construct();
-        $this->key = '';
+        $this->key = "";
         $this->userid = 0;
-        $this->setting = '';
-        $this->table = ARCDBPREFIX . 'user_settings';
-        $this->columns = ['id', 'key', 'userid', 'setting'];
+        $this->setting = "";
+        $this->table = ARCDBPREFIX . "user_settings";
+        $this->columns = ["id", "key", "userid", "setting"];
     }
 
     public static function getByUserID($userid, $key) {
         $setting = new UserSetting();
-        $setting->get(['AND' => ['userid' => $userid, 'key' => $key]]);
+        $setting->get(["AND" => ["userid" => $userid, "key" => $key]]);
 
         // if no setting was found in the database, return empty setting with userid and key.
         if ($setting->userid == 0) {

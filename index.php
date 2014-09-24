@@ -1,11 +1,5 @@
 <?php
-
-if (!file_exists('config.php')) {
-    header( 'Location: install/' ) ;
-    exit();
-}
-
-require_once __DIR__ . '/bootstrap.php';
+require_once __DIR__ . "/bootstrap.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,22 +10,6 @@ require_once __DIR__ . '/bootstrap.php';
         <?php
         arcGetHeader();
         ?>
-
-        <!-- JavaScript -->
-        <script src="<?php echo arcGetPath(); ?>js/jquery-2.1.1.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/bootstrap.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/delta-ajax-1.0.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/status.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/bootstrap-datepicker.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/jquery-hotkeys.min.js"></script>
-        <script src="<?php echo arcGetPath(); ?>js/bootstrap-wysiwyg.min.js"></script>
-
-        <!-- CSS -->
-        <link href="<?php echo arcGetPath(); ?>css/status.min.css" rel="stylesheet">
-        <link href="<?php echo arcGetPath(); ?>css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo arcGetPath(); ?>css/<?php echo arcGetTheme(); ?>" rel="stylesheet"> 
-        <link href="<?php echo arcGetPath(); ?>css/datepicker.min.css" rel="stylesheet"> 
-        <link href="<?php echo arcGetPath(); ?>css/font-awesome.min.css" rel="stylesheet"> 
     </head>
 
     <body>

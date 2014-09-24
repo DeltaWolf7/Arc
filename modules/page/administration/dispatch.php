@@ -29,20 +29,20 @@
  *
  * @author Craig Longford
  */
-require_once '../../../bootstrap.php';
+require_once "../../../bootstrap.php";
 
-if ($_POST['action'] == 'savepage') {
+if ($_POST['action'] == "savepage") {
     
-    $page = Page::getBySEOURL($_POST['seourl']);
-    $input = html_entity_decode($_POST['editor']);
+    $page = Page::getBySEOURL($_POST["seourl"]);
+    $input = html_entity_decode($_POST["editor"]);
     $page->content = $input;
-    $page->title = $_POST['title'];
-    $page->metadescription = $_POST['metadescription'];
-    $page->metakeywords = $_POST['metakeywords'];
-    $page->metatitle = $_POST['metatitle'];
+    $page->title = $_POST["title"];
+    $page->metadescription = $_POST["metadescription"];
+    $page->metakeywords = $_POST["metakeywords"];
+    $page->metatitle = $_POST["metatitle"];
     $page->update();
     
-    echo 'success|Page updated';
+    echo "success|Page updated";
 }
 
 
