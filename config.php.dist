@@ -81,7 +81,7 @@ DEFINE("ARCFAVICON", "favicon.png");
 DEFINE("ARCKEYWORDS", "");
 
 // Project version
-DEFINE("ARCVERSION", "0.0.0.13");
+DEFINE("ARCVERSION", "0.0.0.14");
 
 // Project debug mode
 DEFINE("ARCDEBUG", false);

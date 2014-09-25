@@ -18,6 +18,12 @@
             } elseif (arcGetURLData("data1") == "trash") {
                 echo "Trash";
                 $folder = "trash";
+                $messages = Message::getMessagesByFolder($user->id, $folder);
+                foreach ($messages as $message) {
+                    if (strtotime($message->date) < strtotime('-30 days')) {
+                        $message->delete($message->id);
+                    }
+                }
             } elseif (arcGetURLData("data1") == "delete") {
                 $m = new Message();
                 $m->getByID(arcGetURLData("data2"));

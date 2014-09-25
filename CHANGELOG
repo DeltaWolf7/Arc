@@ -5,6 +5,10 @@ Font Awesome                4.2.0                 http://fortawesome.github.io/F
 Bootstrap WYSIWYG           18/09/2014             http://mindmup.github.io/bootstrap-wysiwyg/
 
 
+0.0.0.14
+--------
++ Added auto delete to message trash module.
+
 0.0.0.13
 --------
 * Fixed bug caused by BootStrap loading before JQuery.
