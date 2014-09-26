@@ -4,6 +4,10 @@ JQuery                      2.1.1                 http://jquery.com/download/
 Font Awesome                4.2.0                 http://fortawesome.github.io/Font-Awesome/
 Bootstrap WYSIWYG           18/09/2014             http://mindmup.github.io/bootstrap-wysiwyg/
 
+0.0.0.15
+--------
+* Fixed a bug in the module that handles saving permissions.
++ Added the ability to add new groups to the permissions module.
 
 0.0.0.14
 --------

@@ -67,4 +67,10 @@ if ($_POST["action"] == "saveuser") {
     $permission->permission = $_POST["data"];
     $permission->update();
     echo "success|Permission saved";
+} elseif ($_POST['action'] == "savegroup") {
+    $group = new UserGroup();
+    $group->getByID($_POST['id']);
+    $group->name = $_POST['name'];
+    $group->update();
+    echo "success|Group name saved";
 }

@@ -22,10 +22,10 @@ if (empty(arcGetURLData("data2"))) {
                 <?php
                 $users = User::getAllUsers();
                 foreach ($users as $user) {
-                    echo "<tr><td>" . $user->id . "</td><td>" . $user->firstname . "</td><td>" . $user->lastname . "</td>" . 
-                            "<td>" . $user->email . "</td>" . 
-                            "<td class='text-right'><a href='" . arcGetModulePath() . "user/edit/" . $user->id . "'><span class='fa fa-edit'></span> Edit</a>" .
-                            "&nbsp;<a href='" . arcGetModulePath() . "user/remove/" . $user->id . "'><span class='fa fa-remove'></span> Remove</a></td></tr>";
+                    echo "<tr><td>" . $user->id . "</td><td>" . $user->firstname . "</td><td>" . $user->lastname . "</td>" .
+                    "<td>" . $user->email . "</td>" .
+                    "<td class='text-right'><a href='" . arcGetModulePath() . "user/edit/" . $user->id . "'><span class='fa fa-edit'></span> Edit</a>" .
+                    "&nbsp;<a href='" . arcGetModulePath() . "user/remove/" . $user->id . "'><span class='fa fa-remove'></span> Remove</a></td></tr>";
                 }
                 ?>
             </table>
@@ -38,12 +38,12 @@ if (empty(arcGetURLData("data2"))) {
         </div>
         <div class="panel-body">
             <table class="table table-striped">
-                <tr><th>ID</th><th>Name</th><th>&nbsp;</th></tr>
+                <tr><th>ID</th><th>Name</th><th class="text-right"><a href='<?php echo arcGetModulePath() . "group/edit/0"; ?>'><span class="fa fa-plus"></span> New Group</a></th></tr>
                 <?php
                 $groups = UserGroup::getAllGroups();
                 foreach ($groups as $group) {
                     echo "<tr><td>" . $group->id . "</td><td>" . $group->name . "</td>" .
-                            "<td class='text-right'><a href='" . arcGetModulePath() . "group/edit/" . $group->id . "'><span class='fa fa-cog'></span> Permissions</a></td></tr>";
+                    "<td class='text-right'><a href='" . arcGetModulePath() . "group/edit/" . $group->id . "'><span class='fa fa-cog'></span> Permissions</a></td></tr>";
                 }
                 ?>
             </table>
@@ -135,7 +135,7 @@ if (empty(arcGetURLData("data2"))) {
                 </div>
             </div>
             <input type="hidden" id="userid" value="<?php echo $user->id; ?>" />
-            <button type="button" class="btn btn-default" onclick="ajax.send('POST', {action: 'saveuser', theme: '#theme', userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email', group: '#group'}, '<?php arcGetDispatch(); ?>', updateStatus, true)">Update</button>
+            <button type="button" class="btn btn-default" onclick="ajax.send('POST', {action: 'saveuser', theme: '#theme', userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email', group: '#group'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Update</button>
         </form>
 
         <?php
@@ -156,6 +156,21 @@ if (empty(arcGetURLData("data2"))) {
                 <h3 class="panel-title">Group Permissions</h3>
             </div>
             <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-11">
+                        <div class="form-group">
+                            <label for="groupname">Group Name</label>
+                            <input maxlength="100" type="text" class="form-control" id="groupname" placeholder="Group Name" value="<?php echo $group->name; ?>">
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <br /><br />
+                            <?php if ($group->id != 1 && $group->id != 2 && $group->id != 3) { ?>
+                            <a href="#" onclick="ajax.send('POST', {action: 'savegroup', id: '<?php echo $group->id; ?>', name: '#groupname'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</a>
+                            <?php } ?>
+                        </div></div>
+                </div>
                 <table class="table table-striped">
                     <tr><th>Permission</th><th class="text-right"><a href="<?php echo arcGetModulePath() . "group/add/" . arcGetURLData("data4"); ?>"><span class="fa fa-plus"></span> New Permission</a></th></tr>
 
@@ -197,11 +212,9 @@ if (empty(arcGetURLData("data2"))) {
                             echo ">" . $perm . "</option>";
                         }
                         echo "</select></td><td class='text-right'><a href='" . arcGetModulePath() . "group/remove/" . $permission->id . "/" . $group->id . "'><span class='fa fa-remove'></span> Remove</a>";
-                        echo " <a href='#' onclick='";
                         ?>
-                        ajax.send('POST', {action: 'savepermission', id: '<?php echo $permission->id; ?>', data: '#<?php echo 'permission' . $count; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);
+                        <a href="#" onclick="ajax.send('POST', {action: 'savepermission', id: '<?php echo $permission->id; ?>', data: '#<?php echo 'permission' . $count; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</a>
                         <?php
-                        echo "'><span class='fa fa-save'></span> Save</a>";
                         echo "</td></tr>";
                         $count++;
                     }
