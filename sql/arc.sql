@@ -89,17 +89,18 @@ INSERT INTO `arc_users` (`id`, `firstname`, `lastname`, `email`, `passwordhash`,
 CREATE TABLE IF NOT EXISTS `arc_user_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `description` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `arc_user_groups`
 --
 
-INSERT INTO `arc_user_groups` (`id`, `name`) VALUES
-(1, 'Administrators'),
-(2, 'Users'),
-(3, 'Anyone');
+INSERT INTO `arc_user_groups` (`id`, `name`, `description`) VALUES
+(1, 'Administrators', 'Arc System Aministrators'),
+(2, 'Users', 'Arc System Users'),
+(3, 'Anyone', 'Arc System Anonymous');
 
 -- --------------------------------------------------------
 

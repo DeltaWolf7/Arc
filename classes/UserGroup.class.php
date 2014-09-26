@@ -32,12 +32,14 @@
 class UserGroup extends DataProvider {
 
     public $name;
+    public $description;
 
     public function __construct() {
         parent::__construct();
         $this->name = "";
+        $this->description = "";
         $this->table = ARCDBPREFIX . "user_groups";
-        $this->columns = ["id", "name"];
+        $this->columns = ["id", "name", "description"];
     }
     
     public static function getByName($name) {

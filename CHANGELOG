@@ -1,8 +1,23 @@
-Bootstrap                   3.2.0                 http://getbootstrap.com/
-Boostrap Date Picker        12/03/2013             http://www.eyecon.ro/bootstrap-datepicker/
-JQuery                      2.1.1                 http://jquery.com/download/
-Font Awesome                4.2.0                 http://fortawesome.github.io/Font-Awesome/
-Bootstrap WYSIWYG           18/09/2014             http://mindmup.github.io/bootstrap-wysiwyg/
+Bootstrap                   3.2.0               http://getbootstrap.com/
+Boostrap Date Picker        12/03/2013          http://www.eyecon.ro/bootstrap-datepicker/
+JQuery                      2.1.1               http://jquery.com/download/
+Font Awesome                4.2.0               http://fortawesome.github.io/Font-Awesome/
+Bootstrap WYSIWYG           18/09/2014          http://mindmup.github.io/bootstrap-wysiwyg/
+Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
+
+
+0.0.0.16
+--------
++ Added support for group descriptions.
++ Added function to remove custom groups from permissions.
++ Added support for Bootstrap Filestyle.
+/ Changed style of the installer module to match.
+/ Changed the way module details are loaded. (Corrects modules with no details)
++ Added support to modules to protect from removal.
+/ Improved installer layout and information.
+* Fixed the page meta and other details not being output.
+/ Changed links on page module.
+/ Improved module layouts.
 
 0.0.0.15
 --------

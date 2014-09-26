@@ -12,6 +12,7 @@ $module_info["icon"] = "fa-asterisk";
 $module_info["divider"] = false;
 $module_info["requireslogin"] = false;
 $module_info["group"] = '';
+$module_info["system"] = true;
 
 ?>
 

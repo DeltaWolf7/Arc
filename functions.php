@@ -56,8 +56,6 @@ function arcGetURLData($name = null) {
     return $GLOBALS["arc_url_data"];
 }
 
-$arc_page;
-
 // function to split url
 function arcSplitURL() {
     if (isset($_REQUEST["url"])) {
@@ -71,6 +69,19 @@ function arcSplitURL() {
             }
             $count++;
         }
+    } else {
+        // get the default page of module.
+        switch (ARCDEFAULTTYPE) {
+            case "module":
+                arcSetPage(ARCDEFAULTPAGE, null);
+                break;
+            case "page":
+                arcSetPage("page", ARCDEFAULTPAGE);
+                break;
+            default:
+                arcSetPage("error", "404");
+                break;
+        }
     }
 }
 
@@ -78,48 +89,33 @@ function arcSplitURL() {
 function arcGetHeader() {
     arcSplitURL();
 
-    $GLOBALS["arc_page"] = Page::getBySEOURL(arcGetURLData("module"));
-
-    // website title
+    $page = Page::getBySEOURL(arcGetURLData("data1"));
     echo "<title>";
-    if (!empty($GLOBALS["arc_page"]->title)) {
-        echo $GLOBALS["arc_page"]->title;
+    if (!empty($page->title)) {
+        echo $page->title;
     } else {
         echo ARCTITLE;
     }
+
     echo "</title>" . PHP_EOL;
-
-    // website author
     echo "\t<meta name='author' content='" . ARCAUTHOR . "'>" . PHP_EOL;
-
-    // website met adescription
-    echo "\t<meta name='description' content='";
-    if (!empty($GLOBALS['arc_page']->metadescription)) {
-        echo $GLOBALS['arc_page']->metadescription;
-    } else {
-        echo ARCDESCRIPTION;
+    if (!empty($page->metadescription)) {
+        echo "\t<meta name='description' content='" . $page->metadescription . "'>" . PHP_EOL;
     }
-    echo "'>" . PHP_EOL;
-
-    // website meta keywords
-    echo "\t<meta name='keywords' content='";
-    if (!empty($GLOBALS["arc_page"]->metakeywords)) {
-        echo $GLOBALS["arc_page"]->metakeywords;
-    } else {
-        echo ARCKEYWORDS;
+    if (!empty($page->metakeywords)) {
+        echo "\t<meta name='keywords' content='" . $page->metakeywords . "'>" . PHP_EOL;
     }
-    echo "'>" . PHP_EOL;
-
-    // website icon
+    if (!empty($page->title)) {
+        echo "\t<link rel='alternate' href='http://" . $_SERVER['HTTP_HOST'] . ARCWWW . "page/" . $page->seourl . "'>" . PHP_EOL;
+    }
     echo "\t<link rel='icon' href='" . ARCFAVICON . "'>" . PHP_EOL;
-
 
     arcGetCSSJavascript("css", "css/");
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
     }
     arcGetTheme();
-    
+
     arcGetCSSJavascript("js", "js/");
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("js", "modules/" . arcGetURLData("module") . "/js/");
@@ -133,7 +129,7 @@ function arcGetCSSJavascript($type, $path) {
         foreach ($files as $file) {
             if ($file != "." && $file != ".." && !is_dir(arcGetPath(true) . $path . $file)) {
                 if ($type == "js") {
-                echo "\t<script src='" . arcGetPath() . $path . $file . "'></script>" . PHP_EOL;
+                    echo "\t<script src='" . arcGetPath() . $path . $file . "'></script>" . PHP_EOL;
                 } elseif ($type == "css") {
                     echo "\t<link href='" . arcGetPath() . $path . $file . "' rel='stylesheet'>" . PHP_EOL;
                 }
@@ -169,26 +165,8 @@ function arcGetContent() {
         session_destroy();
         arcSetPage("error", "419");
     } else {
-        $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp
-        // if no module, use default from config.
-        if (empty(arcGetURLData("module"))) {
-            // get the default page of module.
-            switch (ARCDEFAULTTYPE) {
-                case "module":
-                    if (isset($_REQUEST['url'])) {
-                        arcSetPage(ARCDEFAULTPAGE, $_REQUEST["url"]);
-                    } else {
-                        arcSetPage(ARCDEFAULTPAGE, null);
-                    }
-                    break;
-                case "page":
-                    arcSetPage("page", ARCDEFAULTPAGE);
-                    break;
-                default:
-                    arcSetPage("error", "404");
-                    break;
-            }
-        } elseif (!empty($GLOBALS["arc_page"]->title)) {
+        $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp      
+        if (!empty($GLOBALS["arc_page"]->title)) {
             // if we have a page set it.
             arcSetPage("page", $GLOBALS["arc_page"]->seourl);
         }
@@ -392,19 +370,24 @@ function arcGetModules() {
     $modules = scandir(arcGetPath(true) . "modules");
     $module_list = array();
     foreach ($modules as $module) {
+        $module_info["name"] = 'Unknown';
+        $module_info["description"] = 'No description provided';
+        $module_info["version"] = '0.0.0.0';
+        $module_info["author"] = 'Unknown';
+        $module_info["email"] = 'Unknown';
+        $module_info["www"] = 'Unknown';
+        $module_info["system"] = false;
         if ($module != ".." && $module != ".") {
             if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
                 include arcGetPath(true) . "modules/" . $module . "/info.php";
-                if (isset($module_info)) {
-                    $module_info["module"] = $module;
-                    $module_list[] = $module_info;
-                }
+
+                $module_info["module"] = $module;
+                $module_list[] = $module_info;
             } elseif (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                 include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
-                if (isset($module_info)) {
-                    $module_info["module"] = $module;
-                    $module_list[] = $module_info;
-                }
+
+                $module_info["module"] = $module;
+                $module_list[] = $module_info;
             }
         }
     }

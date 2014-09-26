@@ -26,39 +26,51 @@ function deleteDir($dirPath) {
 }
 ?>
 
-<form role="form" enctype="multipart/form-data" method="POST" action="<?php arcGetModulePath(); ?>">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Installer</h3>
-        </div>
-        <div class="panel-body">
-            <div class="form-group">
-                <label for="upload">Upload</label>
-                <input maxlength="100" type="file" class="form-control" id="upload" name="file" placeholder="Upload module">
+<ul class="nav nav-tabs" role="tablist">
+    <li class="active"><a href="#installer" role="tab" data-toggle="tab">Installer</a></li>
+    <li><a href="#modules" role="tab" data-toggle="tab">Modules</a></li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane active" id="installer">
+        <form role="form" enctype="multipart/form-data" method="POST" action="<?php arcGetModulePath(); ?>">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Installer</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="upload">Upload</label>
+                        <input maxlength="100" type="file" class="filestyle" id="upload" name="file" placeholder="Upload module">
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default">Install</button>
+        </form>
+    </div>
+
+    <div class="tab-pane" id="modules">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Installed Modules</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <tr><th>Module</th><th>Name</th><th>Description</th><th>Author</th><th>Version</th><th>&nbsp;</th></tr>
+                    <?php
+                    $modules = arcGetModules();
+                    foreach ($modules as $module) {
+                        echo "<tr><td>" . $module["module"] . "</td><td>" . $module['name'] . "</td><td>" . $module['description'] . "</td><td>" . $module['author'] . "</td><td>" . $module['version'] . "</td>" .
+                        "<td class='text-right'>";
+                        if ($module['system'] == false) {
+                            echo "<a href='" . arcGetModulePath() . "remove/" . $module["module"] . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
+                        }
+                    }
+                    ?>
+                </table>
             </div>
         </div>
-    </div>
-    <button type="submit" class="btn btn-default">Install</button>
-</form>
-<br /><br />
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Installed Modules</h3>
-    </div>
-    <div class="panel-body">
-        <table class="table table-striped">
-            <tr><th>Module</th><th>&nbsp;</th></tr>
-            <?php
-            $modules = arcGetModules();
-            foreach ($modules as $module) {
-                echo "<tr><td>" . $module["module"] . "</td>" . 
-                        "<td class='text-right'><a href='" . arcGetModulePath() . "remove/" . $module["module"] . "'><span class='fa fa-remove'></span></a></td></tr>";
-            }
-            ?>
-        </table>
-    </div>
-</div>
+    </div></div>
 
 <?php
 if (isset($_FILES["file"])) {
@@ -85,3 +97,7 @@ if (isset($_FILES["file"])) {
     }
 }
 ?>
+
+<script>
+    $(":file").filestyle();
+</script>

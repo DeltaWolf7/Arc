@@ -65,23 +65,14 @@ DEFINE("ARCFS", "/");
  * Project Configuration
  */
 
-// Project title
-DEFINE("ARCTITLE", "Project Arc");
-
-// Project description
-DEFINE("ARCDESCRIPTION", "");
-
-// Project author
-DEFINE("ARCAUTHOR", "Arc");
+// Project Title
+DEFINE('ARCTITLE', 'Arc Project');
 
 // Project fav icon
 DEFINE("ARCFAVICON", "favicon.png");
 
-// Project keywords
-DEFINE("ARCKEYWORDS", "");
-
 // Project version
-DEFINE("ARCVERSION", "0.0.0.15");
+DEFINE("ARCVERSION", "0.0.0.16");
 
 // Project debug mode
 DEFINE("ARCDEBUG", false);

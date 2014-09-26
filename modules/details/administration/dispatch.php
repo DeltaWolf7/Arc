@@ -54,7 +54,7 @@ if ($_POST["action"] == "saveuser") {
     $user->firstname = $_POST["firstname"];
     $user->lastname = $_POST["lastname"];
     $user->email = $_POST["email"];
-    
+
     $user->usergroupid = $_POST["group"];
 
     $user->update();
@@ -67,10 +67,11 @@ if ($_POST["action"] == "saveuser") {
     $permission->permission = $_POST["data"];
     $permission->update();
     echo "success|Permission saved";
-} elseif ($_POST['action'] == "savegroup") {
+} elseif ($_POST["action"] == "savegroup") {
     $group = new UserGroup();
-    $group->getByID($_POST['id']);
-    $group->name = $_POST['name'];
+    $group->getByID($_POST["id"]);
+    $group->name = $_POST["name"];
+    $group->description = $_POST["description"];
     $group->update();
-    echo "success|Group name saved";
+    echo "success|Group saved";
 }

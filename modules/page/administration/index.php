@@ -21,7 +21,7 @@ if (empty(arcGetURLData("data2"))) {
                 <?php
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
-                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span></a></td></tr>";
+                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a></td></tr>";
                 }
                 ?>
             </table>
