@@ -11,7 +11,7 @@ http_response_code(arcGetURLData("data1"));
         <?php
         switch (arcGetURLData("data1")) {
             case "404":
-                echo "The resource you\'re looking for cannot be found.";
+                echo "The resource you're looking for cannot be found.";
                 break;
             case "403":
                 echo "You do not have permission to access this resource.";
