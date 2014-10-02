@@ -60,13 +60,17 @@ ajax.buildQuery = function(data) {
     for (var key in data) {
         var input = encodeURIComponent(key) + '=';
         if (data[key].startsWith('#')) {
-            var element = document.getElementById(data[key].substring(1));
-            if (element.type == "select") {
-                input += encodeURIComponent(element.options[element].value);
-            } else if (element.type == "checkbox") {
-                input += encodeURIComponent(element.checked);
-            } else {
-                input += encodeURIComponent(element.value);
+            try {
+                var element = document.getElementById(data[key].substring(1));
+                if (element.type == "select") {
+                    input += encodeURIComponent(element.options[element].value);
+                } else if (element.type == "checkbox") {
+                    input += encodeURIComponent(element.checked);
+                } else {
+                    input += encodeURIComponent(element.value);
+                }
+            } catch (error) {
+                throw new Error("Element not found '" + data[key].substring(1) + "'.");
             }
         } else {
             input += encodeURIComponent(data[key]);
