@@ -23,5 +23,16 @@
         <label for="password2">Retype Password</label>
         <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password">
     </div>
-    <button type="button" class="btn btn-default" onclick="ajax.send('POST', {firstname: '#firstname', lastname: '#lastname', email: '#email', password: '#password', password2: '#password2'}, '<?php arcGetDispatch(); ?>', updateStatus, true)">Register</button>
+    <button type="button" class="btn btn-default" onclick="ajax.send('POST', {firstname: '#firstname', lastname: '#lastname', email: '#email', password: '#password', password2: '#password2'}, '<?php arcGetDispatch(); ?>', register, true)">Register</button>
 </form>
+
+<script>
+    function register(data) {
+        var data2 = data.split('|');
+        if (data2[0] == "success")
+        {
+            window.location = "<?php echo ARCWWW; ?>";
+        }
+        updateStatus(data);
+    }
+</script>

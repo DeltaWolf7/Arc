@@ -12,9 +12,6 @@
 if (empty(arcGetURLData("data2"))) {
     ?>
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Pages</h3>
-        </div>
         <div class="panel-body">
             <table class="table table-striped">
                 <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo arcGetModulePath() . "edit/0"; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
@@ -36,9 +33,13 @@ if (empty(arcGetURLData("data2"))) {
     }
     ?>
     <form role="form">
+        
+        <div class="row">
+            <div class="col-md-6">
+        
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Edit Page</h3>
+                <h3 class="panel-title">Page Details</h3>
             </div>
             <div class="panel-body">
                 <div class="form-group">
@@ -49,9 +50,35 @@ if (empty(arcGetURLData("data2"))) {
                     <label for="seourl">SEO Url</label>
                     <input type="text" class="form-control" id="seourl" placeholder="SEO Url" value="<?php echo $page->seourl; ?>">
                 </div>
+            </div>
+        </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Page Details</h3>
+            </div>
+            <div class="panel-body">
                 <div class="form-group">
-                    <label for="content">Content</label>
-
+                    <label for="metatitle">META Title</label>
+                    <input type="text" class="form-control" id="metatitle" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="metadescription">META Description</label>
+                    <input type="text" class="form-control" id="metadescription" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="metakeywords">META Keywords</label>
+                    <input type="text" class="form-control" id="metakeywords" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
+                </div> 
+            </div>
+            </div>
+        </div>
+        </div>
+        
+            <div class="panel panel-default">
+                <div class="panel-body">
+                <div class="form-group">
 
                     <div class="navbar-default" data-role="editor-toolbar" data-target="#editor">
                         <div class="btn-group">
@@ -107,21 +134,12 @@ if (empty(arcGetURLData("data2"))) {
                     </div>
                     <div id="editor"><?php echo html_entity_decode($page->content); ?></div>
                 </div>
-                <div class="form-group">
-                    <label for="metatitle">META Title</label>
-                    <input type="text" class="form-control" id="metatitle" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="metadescription">META Description</label>
-                    <input type="text" class="form-control" id="metadescription" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="metakeywords">META Keywords</label>
-                    <input type="text" class="form-control" id="metakeywords" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
                 </div>
             </div>
-        </div>
-        <button type="button" class="btn btn-default" onclick="doUpdate();">Update</button>
+     
+        <div class="text-right">
+     
+            <button type="button" class="btn btn-default" onclick="doUpdate();">Update</button></div>
     </form>
     <script>
         function doUpdate() {

@@ -26,23 +26,27 @@ function deleteDir($dirPath) {
 }
 ?>
 
-<ul class="nav nav-tabs" role="tablist">
+<p>
+<ul class="nav nav-pills" role="tablist">
     <li class="active"><a href="#installer" role="tab" data-toggle="tab">Installer</a></li>
     <li><a href="#modules" role="tab" data-toggle="tab">Modules</a></li>
 </ul>
+</p>
 
 <div class="tab-content">
     <div class="tab-pane active" id="installer">
         <form role="form" enctype="multipart/form-data" method="POST" action="<?php arcGetModulePath(); ?>">
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Installer</h3>
-                </div>
                 <div class="panel-body">
                     <div class="form-group">
-                        <label for="upload">Upload</label>
+                       Select the Zip archive containing the module to install.
+                    </div>
+                    <div class="form-group">
+                        <label for="upload">Module Uploader</label>
+                        
                         <input maxlength="100" type="file" class="filestyle" id="upload" name="file" placeholder="Upload module">
                     </div>
+                    
                 </div>
             </div>
             <button type="submit" class="btn btn-default">Install</button>
@@ -51,9 +55,6 @@ function deleteDir($dirPath) {
 
     <div class="tab-pane" id="modules">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Installed Modules</h3>
-            </div>
             <div class="panel-body">
                 <table class="table table-striped">
                     <tr><th>Module</th><th>Name</th><th>Description</th><th>Author</th><th>Version</th><th>&nbsp;</th></tr>

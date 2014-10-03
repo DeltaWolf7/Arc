@@ -5,6 +5,12 @@ Font Awesome                4.2.0               http://fortawesome.github.io/Fon
 Bootstrap WYSIWYG           18/09/2014          http://mindmup.github.io/bootstrap-wysiwyg/
 Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
 
+
+0.0.0.19
+--------
+* Further improved the UI of the in-built modules.
+* Improved registration module.
+
 0.0.0.18
 --------
 + Added error handling to AJAX library.
