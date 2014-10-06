@@ -1,10 +1,12 @@
 <?php
 
-$module_info["menu"] = "Users";
-$module_info["icon"] = "fa-user";
-$module_info["divider"] = false;
-$module_info["requireslogin"] = true;
-$module_info["group"] = "";
 $module_info["system"] = true;
+
+
+$module_info["menu"][0]["name"] = "Users";
+$module_info["menu"][0]["icon"] = "fa-user";
+$module_info["menu"][0]["divider"] = false;
+$module_info["menu"][0]["url"] = "";
+$module_info["menu"][0]["group"] = "";
 
 ?>

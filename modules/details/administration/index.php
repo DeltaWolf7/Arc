@@ -249,6 +249,7 @@ if (empty(arcGetURLData("data2"))) {
                     </div>
                 </div>
             </div>
+        </div>
             <?php
         } elseif (arcGetURLData("data3") == "add") {
             $permission = new UserPermission();

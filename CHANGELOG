@@ -11,6 +11,11 @@ Medoo                       0.9.6.2             http://medoo.in/
 0.0.0.21
 --------
 + Added support for setting default theme from config.
+* Fixed missing closing div tag on user management.
+/ Changed the way menus are built.
++ Added support for multi menu items from one module.
++ Added support for specifying url in menu item.
+- Removed requires login from menu.
 
 0.0.0.20
 --------

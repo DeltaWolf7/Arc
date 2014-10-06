@@ -70,7 +70,7 @@ function arcSplitURL() {
             $count++;
         }
     } else {
-        // get the default page of module.
+// get the default page of module.
         switch (ARCDEFAULTTYPE) {
             case "module":
                 arcSetPage(ARCDEFAULTPAGE, null);
@@ -167,12 +167,12 @@ function arcGetContent() {
     } else {
         $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp      
         if (!empty($GLOBALS["arc_page"]->title)) {
-            // if we have a page set it.
+// if we have a page set it.
             arcSetPage("page", $GLOBALS["arc_page"]->seourl);
         }
 
         if (!file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module"))) {
-            // module not found.
+// module not found.
             arcSetPage("error", "404");
         } else {
 
@@ -276,17 +276,16 @@ function arcGetMenu() {
         if ($module != ".." && $module != ".") {
             // module menu
             if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
-
                 if ($perms->hasPermission($permissions, "module/" . $module)) {
-
                     include arcGetPath(true) . "modules/" . $module . "/info.php";
-
-                    if (isset($module_info["menu"])) {
-                        $module_info["module"] = $module;
-                        if (empty($module_info["group"])) {
-                            $module_list[] = $module_info;
-                        } else {
-                            $groups[$module_info["group"]][] = $module_info;
+                    if (isset($module_info["menu"]) && count($module_info["menu"] > 0)) {
+                        foreach ($module_info['menu'] as $menu) {
+                            $menu["module"] = $module;
+                            if (empty($menu["group"])) {
+                                $module_list[] = $menu;
+                            } else {
+                                $groups[$menu["group"]][] = $menu;
+                            }
                         }
                     }
                 }
@@ -296,20 +295,22 @@ function arcGetMenu() {
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                     include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
-                    $module_info["group"] = "Administration";
-                    $module_info["requireslogin"] = true;
-                    $module_info["module"] = $module;
-                    $groups["Administration"][] = $module_info;
+                    if (isset($module_info["menu"]) && count($module_info["menu"] > 0)) {
+                        foreach ($module_info["menu"] as $menu) {
+                            $menu["module"] = $module;
+                            $menu["group"] = "Administration";
+                            $groups["Administration"][] = $menu;
+                        }
+                    }
                 }
             }
         }
     }
 
-    // logout menu (last item)
-    $module_info["menu"] = "Logout";
+// logout menu (last item)
+    $module_info['name'] = "Logout";
     $module_info["icon"] = "fa-lock";
     $module_info["divider"] = false;
-    $module_info["requireslogin"] = true;
     $module_info["group"] = "";
     $module_info["module"] = "logout";
     $module_list[] = $module_info;
@@ -340,28 +341,17 @@ function arcGetMenu() {
 
 // process menu items
 function arcProcessMenuItems($items) {
-    if (!empty(arcGetUser())) {
-        foreach ($items as $item) {
-            if ($item["requireslogin"] == true) {
-                if ($item["divider"] == true) {
-                    echo "\t\t\t<li class='divider'></li>" . PHP_EOL;
-                }
-                echo "\t\t\t<li><a href='" . arcGetPath() . $item["module"];
-                if ($item["group"] == "Administration") {
-                    echo "/administration";
-                }
-                echo "'><span class='fa " . $item["icon"] . "'></span> " . $item["menu"] . "</a></li>" . PHP_EOL;
-            }
+    foreach ($items as $item) {
+        if (isset($item["divider"]) && $item["divider"] == true) {
+            echo "\t\t\t<li class='divider'></li>" . PHP_EOL;
         }
-    } else {
-        foreach ($items as $item) {
-            if ($item["requireslogin"] == false) {
-                if ($item["divider"] == true) {
-                    echo "\t\t\t<li class='divider'></li>" . PHP_EOL;
-                }
-                echo "<li><a href='" . arcGetPath() . $item["module"] . "'><span class='fa " . $item["icon"] . "'></span> " . $item["menu"] . "</a></li>" . PHP_EOL;
-            }
+        echo "\t\t\t<li><a href='" . arcGetPath() . $item["module"];
+        if ($item["group"] == "Administration") {
+            echo "/administration";
+        } elseif (isset($item["url"]) && !empty($item["url"])) {
+            echo $item["url"];
         }
+        echo "'><span class='fa " . $item["icon"] . "'></span> " . $item["name"] . "</a></li>" . PHP_EOL;
     }
 }
 
