@@ -4,7 +4,14 @@ JQuery                      2.1.1               http://jquery.com/download/
 Font Awesome                4.2.0               http://fortawesome.github.io/Font-Awesome/
 Bootstrap WYSIWYG           18/09/2014          http://mindmup.github.io/bootstrap-wysiwyg/
 Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
+Medoo                       0.9.6.2             http://medoo.in/
 
+
+
+0.0.0.20
+--------
+* Updated Medoo to version 0.9.6.2
++ Added html editor to page editor module.
 
 0.0.0.19
 --------

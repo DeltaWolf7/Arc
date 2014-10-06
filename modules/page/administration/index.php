@@ -33,52 +33,53 @@ if (empty(arcGetURLData("data2"))) {
     }
     ?>
     <form role="form">
-        
+
         <div class="row">
             <div class="col-md-6">
-        
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Page Details</h3>
-            </div>
-            <div class="panel-body">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Title" value="<?php echo $page->title; ?>">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Page Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Title" value="<?php echo $page->title; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="seourl">SEO Url</label>
+                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" value="<?php echo $page->seourl; ?>">
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="seourl">SEO Url</label>
-                    <input type="text" class="form-control" id="seourl" placeholder="SEO Url" value="<?php echo $page->seourl; ?>">
-                </div>
-            </div>
-        </div>
             </div>
             <div class="col-md-6">
                 <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Page Details</h3>
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Page Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="metatitle">META Title</label>
+                            <input type="text" class="form-control" id="metatitle" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="metadescription">META Description</label>
+                            <input type="text" class="form-control" id="metadescription" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="metakeywords">META Keywords</label>
+                            <input type="text" class="form-control" id="metakeywords" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
+                        </div> 
+                    </div>
+                </div>
             </div>
+        </div>
+
+        <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="metatitle">META Title</label>
-                    <input type="text" class="form-control" id="metatitle" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="metadescription">META Description</label>
-                    <input type="text" class="form-control" id="metadescription" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="metakeywords">META Keywords</label>
-                    <input type="text" class="form-control" id="metakeywords" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
-                </div> 
-            </div>
-            </div>
-        </div>
-        </div>
-        
-            <div class="panel panel-default">
-                <div class="panel-body">
-                <div class="form-group">
+
 
                     <div class="navbar-default" data-role="editor-toolbar" data-target="#editor">
                         <div class="btn-group">
@@ -131,17 +132,54 @@ if (empty(arcGetURLData("data2"))) {
                             <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><span class="fa fa-repeat"></span></a>
                         </div>
                         <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
+                        <a class="btn" data-edit="html" title="Html Editor" onclick="showHtml();"><span class="fa fa-html5"></span></a>
                     </div>
                     <div id="editor"><?php echo html_entity_decode($page->content); ?></div>
                 </div>
-                </div>
             </div>
-     
+        </div>
+
         <div class="text-right">
-     
+
             <button type="button" class="btn btn-default" onclick="doUpdate();">Update</button></div>
     </form>
+
+
+<div class="modal fade" id="htmlModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Html Editor</h4>
+      </div>
+      <div class="modal-body">
+          <p>
+              <textarea id="htmlEditor" rows="10" class="form-control"></textarea>              
+          </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="saveHtml();">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <script>
+        function showHtml() {
+            var html = document.getElementById('htmlEditor');
+            var txt = $('#editor').html();
+            html.value = txt;
+            $('#htmlModal').modal('show');
+        }
+        
+        function saveHtml() {
+            var html = document.getElementById('htmlEditor');
+            $('#editor').html(html.value);
+            $('#htmlModal').modal('hide');
+        }
+        
         function doUpdate() {
             var txt = $('#editor').html();
             ajax.send('POST', {action: 'savepage', metatitle: '#metatitle', metadescription: '#metadescription', metakeywords: '#metakeywords', editor: txt, seourl: '#seourl', title: '#title'}, '<?php arcGetDispatch(); ?>', updateStatus, true);
