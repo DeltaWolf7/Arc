@@ -404,5 +404,5 @@ function arcGetTheme() {
             return;
         }
     }
-    echo "\t<link href='" . arcGetPath() . "css/themes/bootstrap-theme.min.css' rel='stylesheet'>" . PHP_EOL;
+    echo "\t<link href='" . arcGetPath() . "css/themes/" . ARCDEFAULTTHEME . ".min.css' rel='stylesheet'>" . PHP_EOL;
 }

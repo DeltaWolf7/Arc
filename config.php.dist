@@ -72,7 +72,7 @@ DEFINE('ARCTITLE', 'Arc Project');
 DEFINE("ARCFAVICON", "favicon.png");
 
 // Project version
-DEFINE("ARCVERSION", "0.0.0.20");
+DEFINE("ARCVERSION", "0.0.0.21");
 
 // Project debug mode
 DEFINE("ARCDEBUG", false);
@@ -85,3 +85,6 @@ DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
 DEFINE("ARCSESSIONTIMEOUT", 30);
+
+// Default theme
+DEFINE("ARCDEFAULTTHEME", "bootstrap-theme");

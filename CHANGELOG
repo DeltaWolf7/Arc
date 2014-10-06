@@ -8,6 +8,10 @@ Medoo                       0.9.6.2             http://medoo.in/
 
 
 
+0.0.0.21
+--------
++ Added support for setting default theme from config.
+
 0.0.0.20
 --------
 * Updated Medoo to version 0.9.6.2
