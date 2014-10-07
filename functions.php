@@ -165,14 +165,16 @@ function arcGetContent() {
         session_destroy();
         arcSetPage("error", "419");
     } else {
-        $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp      
-        if (!empty($GLOBALS["arc_page"]->title)) {
-// if we have a page set it.
-            arcSetPage("page", $GLOBALS["arc_page"]->seourl);
+        $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp   
+        
+        $page = Page::getBySEOURL(arcGetURLData("module"));
+        if ($page->id != 0) {
+            // if we have a page set it.
+            arcSetPage("page", arcGetURLData("module"));
         }
 
         if (!file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module"))) {
-// module not found.
+            // module not found.
             arcSetPage("error", "404");
         } else {
 

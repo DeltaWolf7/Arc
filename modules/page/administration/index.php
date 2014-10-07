@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>Page Management
         <?php
-        if (!empty(arcGetURLData("data3"))) {
+        if (arcGetURLData("data3") != null) {
             echo "<a href='" . arcGetModulePath() . "'><span class='fa fa-arrow-circle-left'></span></a>";
         }
         ?>
@@ -18,7 +18,8 @@ if (empty(arcGetURLData("data2"))) {
                 <?php
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
-                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a></td></tr>";
+                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a>"
+                            . "&nbsp;<a href='" . arcGetModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
                 }
                 ?>
             </table>
@@ -165,6 +166,16 @@ if (empty(arcGetURLData("data2"))) {
   </div>
 </div>
 
+    <?php
+} elseif (arcGetURLData("data2") == "remove") {
+    $page = new Page();
+    $page->getByID(arcGetURLData("data3"));
+    $page->delete($page->id);
+    arcRedirect(arcGetModulePath());
+}
+?>
+
+
 
     <script>
         function showHtml() {
@@ -235,6 +246,3 @@ if (empty(arcGetURLData("data2"))) {
             window.prettyPrint && prettyPrint();
         });
     </script>
-    <?php
-}
-?>

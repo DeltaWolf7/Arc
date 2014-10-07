@@ -8,6 +8,15 @@ Medoo                       0.9.6.2             http://medoo.in/
 
 
 
+0.0.0.22
+--------
+/ Changed the way the title is displayed on pages. (Not shown if empty)
+* Fixed the pages administration module not saving.
++ Added remove page to page module.
+* Fixed pages not loading.
+* Fixed bug in installer that prevented modules from being deleted.
++ Added module details to installer.
+
 0.0.0.21
 --------
 + Added support for setting default theme from config.
