@@ -110,7 +110,6 @@
                             <?php
                         }
                         echo "</table>";
-                        
                     } else {
                         echo "No messages in this folder.";
                     }
@@ -144,7 +143,7 @@
                                     <tr><td style="vertical-align: middle;">Subject</td><td>
                                             <?php if (arcGetURLData("data1") == "send" || arcGetURLData("data1") == "reply") {
                                                 ?>
-                                                <input id="subject" type="textbox" class="form-control" placeholder="Subject" value="<?php echo $newMail->subject; ?>" />
+                                                <input id="subject" type="textbox" class="form-control" placeholder="Subject" maxlength="100" value="<?php echo $newMail->subject; ?>" />
                                                 <?php
                                             } else {
                                                 echo $m->subject;
@@ -194,11 +193,11 @@
                                 ?>
                                 <input type="hidden" value="<?php echo $user->id; ?>" id="userid">
                                 <input type="hidden" value="<?php
-                                if (arcGetURLData("data1") == "reply") {
-                                    echo $m->id;
-                                } else {
-                                    echo "0";
-                                }
+                            if (arcGetURLData("data1") == "reply") {
+                                echo $m->id;
+                            } else {
+                                echo "0";
+                            }
                                 ?>" id="replyid">
                             </form>
                         </div>

@@ -5,11 +5,11 @@
 <form role="form">
     <div class="form-group">
         <label for="name">Firstname</label>
-        <input maxlength="100" type="text" class="form-control" id="firstname" placeholder="Enter firstname">
+        <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="Enter firstname">
     </div>
     <div class="form-group">
         <label for="name">Lastname</label>
-        <input maxlength="100" type="text" class="form-control" id="lastname" placeholder="Enter lastname">
+        <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Enter lastname">
     </div>
     <div class="form-group">
         <label for="email">Email address</label>

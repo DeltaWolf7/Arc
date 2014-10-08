@@ -60,4 +60,9 @@ class Page extends DataProvider {
         $page = new Page();
         return $page->getCollection(["ORDER" => "seourl ASC"]);
     }
+    
+    public function getPermissions() {
+        $permissions = new UserPermission();
+        return $permissions->getCollection(["permission" => "page/" . $this->seourl]);
+    }
 }

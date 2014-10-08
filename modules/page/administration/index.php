@@ -19,7 +19,7 @@ if (empty(arcGetURLData("data2"))) {
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
                     echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a>"
-                            . "&nbsp;<a href='" . arcGetModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
+                    . "&nbsp;<a href='" . arcGetModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
                 }
                 ?>
             </table>
@@ -37,7 +37,6 @@ if (empty(arcGetURLData("data2"))) {
 
         <div class="row">
             <div class="col-md-6">
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">Page Details</h3>
@@ -45,32 +44,52 @@ if (empty(arcGetURLData("data2"))) {
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" placeholder="Title" value="<?php echo $page->title; ?>">
+                            <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200" value="<?php echo $page->title; ?>">
                         </div>
                         <div class="form-group">
                             <label for="seourl">SEO Url</label>
-                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" value="<?php echo $page->seourl; ?>">
+                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50" value="<?php echo $page->seourl; ?>">
                         </div>
+                        <?php if ($page->id != 0) { ?>
+                            <div class="form-group">
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <?php
+                                        $permissions = $page->getPermissions();
+                                        echo "<br />This page belongs to " . count($permissions) . " group";
+                                        if (count($permissions) > 1) {
+                                            echo "s";
+                                        }
+                                        echo "."
+                                        ?>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button type="button" class="btn btn-default" onclick="showPermissions();">Edit Page Permissions</button>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Page Details</h3>
+                        <h3 class="panel-title">META Details</h3>
                     </div>
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="metatitle">META Title</label>
-                            <input type="text" class="form-control" id="metatitle" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
+                            <input type="text" class="form-control" id="metatitle" maxlength="55" placeholder="META Title" value="<?php echo $page->metatitle; ?>">
                         </div>
                         <div class="form-group">
                             <label for="metadescription">META Description</label>
-                            <input type="text" class="form-control" id="metadescription" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
+                            <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
                         </div>
                         <div class="form-group">
                             <label for="metakeywords">META Keywords</label>
-                            <input type="text" class="form-control" id="metakeywords" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
+                            <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
                         </div> 
                     </div>
                 </div>
@@ -146,103 +165,174 @@ if (empty(arcGetURLData("data2"))) {
     </form>
 
 
-<div class="modal fade" id="htmlModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Html Editor</h4>
-      </div>
-      <div class="modal-body">
-          <p>
-              <textarea id="htmlEditor" rows="10" class="form-control"></textarea>              
-          </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="saveHtml();">Save changes</button>
-      </div>
+    <div class="modal fade" id="htmlModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Html Editor</h4>
+                </div>
+                <div class="modal-body">
+                    <textarea id="htmlEditor" rows="20" class="form-control"></textarea>              
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveHtml();">Update</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+
+    <div class="modal fade" id="permissonsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Page Permissions</h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <tr><th>Group</th><th>&nbsp;</th></tr>
+                        <?php
+                        $permissions = $page->getPermissions();
+                        foreach ($permissions as $permission) {
+                            $group = $permission->getGroup();
+                            echo "<tr><td>" . $group->name . "</td><td class='text-right'><a href='" . arcGetModulePath() . "permission/remove/" . $permission->id . "/" . $page->id . "'><span class='fa fa-remove'></span> Remove</a>";
+                            echo "</td></tr>";
+                        }
+                        ?>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="window.location = '<?php echo arcGetModulePath() . "edit/" . $page->id; ?>'">Refresh</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addPermission();">New Permission</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addpermissonsModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">Add New Page Permission</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pagegroup">Group</label>
+                        <select id="pagegroup" class="form-control">
+                            <?php
+                            $groups = UserGroup::getAllGroups();
+                            foreach ($groups as $group) {
+                                echo "<option value='" . $group->id . "'>" . $group->name . "</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php arcGetDispatch(); ?>', null, true);">Add To Group</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php
 } elseif (arcGetURLData("data2") == "remove") {
     $page = new Page();
-    $page->getByID(arcGetURLData("data3"));
     $page->delete($page->id);
     arcRedirect(arcGetModulePath());
+} elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "remove") {
+    $permission = new UserPermission();
+    $permission->delete(arcGetURLData("data4"));
+    arcRedirect(arcGetModulePath() . "edit/" . arcGetURLData("data5"));
+} elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "add") {
+    $permission = new UserPermission();
+    $permission->delete(arcGetURLData("data4"));
+    arcRedirect(arcGetModulePath() . "edit/" . arcGetURLData("data5"));
 }
 ?>
 
 
 
-    <script>
-        function showHtml() {
-            var html = document.getElementById('htmlEditor');
-            var txt = $('#editor').html();
-            html.value = txt;
-            $('#htmlModal').modal('show');
-        }
-        
-        function saveHtml() {
-            var html = document.getElementById('htmlEditor');
-            $('#editor').html(html.value);
-            $('#htmlModal').modal('hide');
-        }
-        
-        function doUpdate() {
-            var txt = $('#editor').html();
-            ajax.send('POST', {action: 'savepage', metatitle: '#metatitle', metadescription: '#metadescription', metakeywords: '#metakeywords', editor: txt, seourl: '#seourl', title: '#title'}, '<?php arcGetDispatch(); ?>', updateStatus, true);
-        }
+<script>
+    function addPermission() {
+        $('#addpermissonsModal').modal('show');
+    }
 
-        $(function () {
-            function initToolbarBootstrapBindings() {
-                var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                    'Times New Roman', 'Verdana'],
-                        fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-                $.each(fonts, function (idx, fontName) {
-                    fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-                });
-                $('a[title]').tooltip({container: 'body'});
-                $('.dropdown-menu input').click(function () {
-                    return false;
-                })
-                        .change(function () {
-                            $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-                        })
-                        .keydown('esc', function () {
-                            this.value = '';
-                            $(this).change();
-                        });
+    function showPermissions() {
+        $('#permissonsModal').modal('show');
+    }
 
-                $('[data-role=magic-overlay]').each(function () {
-                    var overlay = $(this), target = $(overlay.data('target'));
-                    overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-                });
-                if ("onwebkitspeechchange"  in document.createElement("input")) {
-                    var editorOffset = $('#editor').offset();
-                    $('#voiceBtn').css('position', 'absolute').offset({top: editorOffset.top, left: editorOffset.left + $('#editor').innerWidth() - 35});
-                } else {
-                    $('#voiceBtn').hide();
-                }
+    function showHtml() {
+        var html = document.getElementById('htmlEditor');
+        var txt = $('#editor').html();
+        html.value = txt;
+        $('#htmlModal').modal('show');
+    }
+
+    function saveHtml() {
+        var html = document.getElementById('htmlEditor');
+        $('#editor').html(html.value);
+        $('#editor').cleanHtml();
+        $('#htmlModal').modal('hide');
+    }
+
+    function doUpdate() {
+        var txt = $('#editor').html();
+        ajax.send('POST', {action: 'savepage', metatitle: '#metatitle', metadescription: '#metadescription', metakeywords: '#metakeywords', editor: txt, seourl: '#seourl', title: '#title'}, '<?php arcGetDispatch(); ?>', updateStatus, true);
+    }
+
+    $(function () {
+        function initToolbarBootstrapBindings() {
+            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                'Times New Roman', 'Verdana'],
+                    fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            $.each(fonts, function (idx, fontName) {
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+            });
+            $('a[title]').tooltip({container: 'body'});
+            $('.dropdown-menu input').click(function () {
+                return false;
+            })
+                    .change(function () {
+                        $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                    })
+                    .keydown('esc', function () {
+                        this.value = '';
+                        $(this).change();
+                    });
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this), target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+            if ("onwebkitspeechchange"  in document.createElement("input")) {
+                var editorOffset = $('#editor').offset();
+                $('#voiceBtn').css('position', 'absolute').offset({top: editorOffset.top, left: editorOffset.left + $('#editor').innerWidth() - 35});
+            } else {
+                $('#voiceBtn').hide();
             }
-            ;
-            function showErrorAlert(reason, detail) {
-                var msg = '';
-                if (reason === 'unsupported-file-type') {
-                    msg = "Unsupported format " + detail;
-                }
-                else {
-                    console.log("error uploading file", reason, detail);
-                }
-                $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                        '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+        ;
+        function showErrorAlert(reason, detail) {
+            var msg = '';
+            if (reason === 'unsupported-file-type') {
+                msg = "Unsupported format " + detail;
             }
-            ;
-            initToolbarBootstrapBindings();
-            $('#editor').wysiwyg({fileUploadError: showErrorAlert});
-            window.prettyPrint && prettyPrint();
-        });
-    </script>
+            else {
+                console.log("error uploading file", reason, detail);
+            }
+            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+                    '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+        ;
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({fileUploadError: showErrorAlert});
+        window.prettyPrint && prettyPrint();
+    });
+</script>

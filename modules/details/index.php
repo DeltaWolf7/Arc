@@ -19,23 +19,23 @@ $user = arcGetUser();
 
                     <div class="form-group">
                         <label for="firstname">Firstname</label>
-                        <input type="firstname" class="form-control" id="firstname" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
+                        <input type="firstname" class="form-control" id="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
                     </div>
                     <div class="form-group">
                         <label for="lastname">Lastname</label>
-                        <input type="lastname" class="form-control" id="lastname" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
+                        <input type="lastname" class="form-control" id="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Email" value="<?php echo $user->email; ?>">
+                        <input type="email" class="form-control" id="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
+                        <input type="password" class="form-control" id="password" maxlength="100" placeholder="Password" autocomplete="off">
                     </div>
                     <div class="form-group">
                         <label for="retype">Retype</label>
-                        <input type="password" class="form-control" id="retype" placeholder="Retype" autocomplete="off">
+                        <input type="password" class="form-control" id="retype" maxlength="100" placeholder="Retype" autocomplete="off">
                     </div>
                 </div>
             </div>
