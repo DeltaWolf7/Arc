@@ -7,6 +7,16 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+
+0.0.0.25
+--------
+- Removed old themes.
++ Added new theme system to replace old theme system.
+/ Changed the layout of Arc to have less in the root.
++ Added new system settings class and table for system related settings.
+- Removed theme options from user details and administration module.
+! Note: index.php in the root no longer requires editing to change looks and feel.
+
 0.0.0.24
 --------
 + Added links to installer for modules.

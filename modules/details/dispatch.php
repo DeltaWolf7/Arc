@@ -34,11 +34,6 @@ require_once "../../bootstrap.php";
 $user = new User();
 $user->getByID($_POST["userid"]);
 
-// theme settings
-$theme = $user->getSettingByKey("ARC_THEME");
-$theme->setting = $_POST["theme"];
-
-
 // password settings
 if (!empty($_POST["password"])) {
 
@@ -55,6 +50,5 @@ $user->lastname = $_POST["lastname"];
 $user->email = $_POST["email"];
 
 $user->update();
-$theme->update();
 
 echo "success|Settings saved";

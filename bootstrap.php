@@ -38,10 +38,10 @@ if (ARCDEBUG == true) {
     ini_set("display_errors", "1");
 }
 
-require_once "functions.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/functions.php";
 
 // setup database connection from config
-require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "medoo.min.php";
+require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/medoo.min.php";
 try {
     $arc_db = new medoo([
         "database_type" => ARCDBTYPE,

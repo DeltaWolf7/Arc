@@ -121,38 +121,10 @@ if (empty(arcGetURLData("data2"))) {
                             </div>
                         </div>
                     </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">User Style</h3>
-                        </div>
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <label for="theme"><span class="fa fa-exclamation-sign"></span> Theme</label>
-                                <select id="theme" class="form-control">
-                                    <option value="">default</option>
-                                    <?php
-                                    $selectedtheme = $user->getSettingByKey("ARC_THEME");
-                                    $themes = scandir(arcGetPath(true) . "/css/themes/");
-                                    foreach ($themes as $theme) {
-                                        if ($theme != ".." && $theme != ".") {
-                                            $themename = substr($theme, 0, strlen($theme) - 8);
-                                            echo "<option value='" . $themename . "'";
-                                            if ($selectedtheme->setting == $themename) {
-                                                echo " selected";
-                                            }
-                                            echo ">" . $themename . "</option>" . PHP_EOL;
-                                        }
-                                    }
-                                    ?>
-                                </select>
-
-                            </div>
-                        </div>
-                    </div>
                 </div></div>
             <div class="text-right">
                 <input type="hidden" id="userid" value="<?php echo $user->id; ?>" />
-                <button type="button" class="btn btn-default" onclick="ajax.send('POST', {action: 'saveuser', theme: '#theme', userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email', group: '#group'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Update</button>
+                <button type="button" class="btn btn-default" onclick="ajax.send('POST', {action: 'saveuser', userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email', group: '#group'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Update</button>
             </div>
         </form>
         <?php

@@ -115,11 +115,19 @@ function arcGetHeader() {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
     }
     
-    arcGetTheme();
-
     arcGetCSSJavascript("js", "js/");
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("js", "modules/" . arcGetURLData("module") . "/js/");
+    }
+    
+    // get css and javascript for theme
+    $theme = arcGetTheme();
+    if (file_exists(arcGetPath(true) . $theme . "/css")) {
+        arcGetCSSJavascript("css", $theme . "/css/");
+    }
+    
+    if (file_exists(arcGetPath(true) . $theme . "/js")) {
+        arcGetCSSJavascript("js", $theme . "/js/");
     }
 }
 
@@ -389,13 +397,9 @@ function arcGetModules() {
 
 //get theme
 function arcGetTheme() {
-    if (!empty(arcGetUser())) {
-        $user = arcGetUser();
-        $theme = $user->getSettingByKey("ARC_THEME");
-        if (!empty($theme->setting)) {
-            echo "\t<link href='" . arcGetPath() . "css/themes/" . $theme->setting . ".min.css' rel='stylesheet'>" . PHP_EOL;
-            return;
-        }
+    $theme = SystemSetting::getByKey("ARCTHEME");
+    if (!file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
+        return "templates/default";
     }
-    echo "\t<link href='" . arcGetPath() . "css/themes/" . ARCDEFAULTTHEME . ".min.css' rel='stylesheet'>" . PHP_EOL;
+    return "templates/" . $theme->setting;
 }

@@ -35,11 +35,6 @@ if ($_POST["action"] == "saveuser") {
     $user = new User();
     $user->getByID($_POST["userid"]);
 
-// theme settings
-    $theme = $user->getSettingByKey("ARC_THEME");
-    $theme->setting = $_POST["theme"];
-
-
 // password settings
     if (!empty($_POST["password"])) {
 
@@ -58,7 +53,6 @@ if ($_POST["action"] == "saveuser") {
     $user->usergroupid = $_POST["group"];
 
     $user->update();
-    $theme->update();
 
     echo "success|User saved";
 } elseif ($_POST["action"] == "savepermission") {
