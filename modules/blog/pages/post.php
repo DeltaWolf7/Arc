@@ -15,7 +15,7 @@ $poster->getByID($blog->posterid);
             ?>
             <div class="row">
                 <div class="col-md-4">
-                    <a href="<?php echo arcGetModulePath() . "/post/" . $blog->seourl ?>"><img class="img-rounded" style="width: 300px;" src="<?php echo arcGetPath() . $blog->image; ?>" alt="<?php echo $blog->title; ?>" /></a>
+                    <a href="<?php echo arcGetModulePath() . "/post/" . $blog->seourl ?>"><img class="img-rounded" style="width: 300px;" src="<?php echo arcGetPath() . "modules" .  arcGetModulePath() . "/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>" /></a>
                 </div>
                 <div class="col-md-8">             
                     <?php

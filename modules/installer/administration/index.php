@@ -61,7 +61,7 @@ function deleteDir($dirPath) {
                     <?php
                     $modules = arcGetModules();
                     foreach ($modules as $module) {
-                        echo "<tr><td>" . $module["module"] . "</td><td>" . $module['name'] . "</td><td>" . $module['description'] . "</td><td>" . $module['author'] . "</td><td>" . $module['version'] . "</td>" .
+                        echo "<tr><td>" . $module["module"] . "</td><td><a href='" . $module['www'] . "' target='_new'>" . $module['name'] . "</a></td><td>" . $module['description'] . "</td><td><a href='mailto:" . $module['email'] . "'>" . $module['author'] . "</a></td><td>" . $module['version'] . "</td>" .
                         "<td class='text-right'>";
                         if ($module['system'] == false) {
                             echo "<a href='" . arcGetModulePath() . "remove/" . $module["module"] . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";

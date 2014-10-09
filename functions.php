@@ -114,6 +114,7 @@ function arcGetHeader() {
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
     }
+    
     arcGetTheme();
 
     arcGetCSSJavascript("js", "js/");
