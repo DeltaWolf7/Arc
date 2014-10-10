@@ -15,10 +15,8 @@
             </div>
         </div>
     </nav>
-    <?php
-    arcGetContent();
-    ?>
+    <?php arcGetContent(); ?>
     <p>
-    <div id="status" style="display:none;" class="alert alert-success" role="alert"></div>
-</p>
+        <div id="status" style="display:none;" class="alert alert-success" role="alert"></div>
+    </p>
 </div>

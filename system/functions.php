@@ -114,18 +114,18 @@ function arcGetHeader() {
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
     }
-    
+
     arcGetCSSJavascript("js", "js/");
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("js", "modules/" . arcGetURLData("module") . "/js/");
     }
-    
+
     // get css and javascript for theme
     $theme = arcGetTheme();
     if (file_exists(arcGetPath(true) . $theme . "/css")) {
         arcGetCSSJavascript("css", $theme . "/css/");
     }
-    
+
     if (file_exists(arcGetPath(true) . $theme . "/js")) {
         arcGetCSSJavascript("js", $theme . "/js/");
     }
@@ -175,7 +175,7 @@ function arcGetContent() {
         arcSetPage("error", "419");
     } else {
         $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp   
-        
+
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id != 0) {
             // if we have a page set it.
@@ -276,7 +276,7 @@ function arcGetMenu() {
         $user = arcGetUser();
         $group = $user->getGroup();
     } else {
-        $group->getByID("3");
+        $group = UserGroup::getByName("Anyone");
     }
 
     $permissions = $group->getPermissions();

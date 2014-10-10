@@ -29,7 +29,9 @@
  *
  * @author Craig Longford
  */
+// start session
 session_start();
+// get config file
 require_once "config.php";
 
 // check if debug is enabled
@@ -38,6 +40,7 @@ if (ARCDEBUG == true) {
     ini_set("display_errors", "1");
 }
 
+// include main functions file
 require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/functions.php";
 
 // setup database connection from config
@@ -56,6 +59,7 @@ try {
     die();
 }
 
+// class auto loader
 function __autoload($class_name) {
     if (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php")) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");

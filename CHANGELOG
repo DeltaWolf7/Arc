@@ -8,6 +8,11 @@ Medoo                       0.9.6.2             http://medoo.in/
 
 
 
+0.0.0.26
+--------
+/ Cleaned up some code and added comments.
+/ Updated sql script.
+
 0.0.0.25
 --------
 - Removed old themes.
