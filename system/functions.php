@@ -87,32 +87,55 @@ function arcSplitURL() {
 
 // get header
 function arcGetHeader() {
+    // split the url, get module and data.
     arcSplitURL();
 
     $page = Page::getBySEOURL(arcGetURLData("data1"));
-    echo "<title>";
+
     if (!empty($page->title)) {
-        echo $page->title;
+        $title = $page->title;
     } else {
-        echo ARCTITLE;
+        $title = ARCTITLE;
     }
 
-    echo "</title>" . PHP_EOL;
-    echo "\t<meta name='author' content='" . ARCAUTHOR . "'>" . PHP_EOL;
-    if (!empty($page->metadescription)) {
-        echo "\t<meta name='description' content='" . $page->metadescription . "'>" . PHP_EOL;
+    $metadescription = $page->metadescription;
+    $metakeywords = $page->metakeywords;
+
+    // include header file module has one
+    if (!empty(arcGetURLData("module")) && file_exists("modules/" . arcGetURLData("module") . "/header.php")) {
+        include "modules/" . arcGetURLData("module") . "/header.php";
     }
-    if (!empty($page->metakeywords)) {
-        echo "\t<meta name='keywords' content='" . $page->metakeywords . "'>" . PHP_EOL;
+
+    echo "\t<title>" . $title . "</title>" . PHP_EOL;
+    echo "\t<meta name=\"author\" content=\"" . ARCAUTHOR . "\">" . PHP_EOL;
+    if (!empty($metadescription)) {
+        echo "\t<meta name=\"description\" content=\"" . $metadescription . "\">" . PHP_EOL;
+    }
+    if (!empty($metakeywords)) {
+        echo "\t<meta name=\"keywords\" content=\"" . $metakeywords . "\">" . PHP_EOL;
     }
     if (!empty($page->title)) {
-        echo "\t<link rel='alternate' href='http://" . $_SERVER['HTTP_HOST'] . ARCWWW . "page/" . $page->seourl . "'>" . PHP_EOL;
+        echo "\t<link rel=\"alternate\" href=\"http://" . $_SERVER['HTTP_HOST'] . ARCWWW . "page/" . $page->seourl . "\">" . PHP_EOL;
     }
-    echo "\t<link rel='icon' href='" . ARCFAVICON . "'>" . PHP_EOL;
+    echo "\t<link href=\"". arcGetPath() . ARCFAVICON . "\" rel=\"icon\">" . PHP_EOL;
+
+    echo "\t<link href=\"http://" . $_SERVER['SERVER_NAME'];
+    if (!empty($page->title)) {
+        echo arcGetPath() . "/" . $page->seourl;
+    } elseif (!empty(arcGetURLData("module"))) {
+        echo arcGetModulePath() . "/";
+    }
+    echo "\" rel=\"canonical\" />" . PHP_EOL;
 
     arcGetCSSJavascript("css", "css/");
     if (!empty(arcGetURLData("module"))) {
         arcGetCSSJavascript("css", "modules/" . arcGetURLData("module") . "/css/");
+    }
+
+    // get css for theme if any
+    $theme = arcGetTheme();
+    if (file_exists(arcGetPath(true) . $theme . "/css")) {
+        arcGetCSSJavascript("css", $theme . "/css/");
     }
 
     arcGetCSSJavascript("js", "js/");
@@ -120,12 +143,7 @@ function arcGetHeader() {
         arcGetCSSJavascript("js", "modules/" . arcGetURLData("module") . "/js/");
     }
 
-    // get css and javascript for theme
-    $theme = arcGetTheme();
-    if (file_exists(arcGetPath(true) . $theme . "/css")) {
-        arcGetCSSJavascript("css", $theme . "/css/");
-    }
-
+    // get javascript for theme if any
     if (file_exists(arcGetPath(true) . $theme . "/js")) {
         arcGetCSSJavascript("js", $theme . "/js/");
     }
@@ -138,9 +156,9 @@ function arcGetCSSJavascript($type, $path) {
         foreach ($files as $file) {
             if ($file != "." && $file != ".." && !is_dir(arcGetPath(true) . $path . $file)) {
                 if ($type == "js") {
-                    echo "\t<script src='" . arcGetPath() . $path . $file . "'></script>" . PHP_EOL;
+                    echo "\t<script src=\"" . arcGetPath() . $path . $file . "\"></script>" . PHP_EOL;
                 } elseif ($type == "css") {
-                    echo "\t<link href='" . arcGetPath() . $path . $file . "' rel='stylesheet'>" . PHP_EOL;
+                    echo "\t<link href=\"" . arcGetPath() . $path . $file . "\" rel=\"stylesheet\">" . PHP_EOL;
                 }
             }
         }
@@ -326,22 +344,22 @@ function arcGetMenu() {
     $module_info["module"] = "logout";
     $module_list[] = $module_info;
 
-    echo "\t<ul class='nav navbar-nav navbar-right'>" . PHP_EOL;
+    echo "<ul class=\"nav navbar-nav navbar-right\">" . PHP_EOL;
 
     if (count($groups) > 0) {
         foreach ($groups as $key => $value) {
-            echo "\t\t<li class='dropdown'>";
-            echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown'>";
-            echo "<span class='fa ";
+            echo "<li class=\"dropdown\">" . PHP_EOL;
+            echo "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
+            echo "<span class=\"fa ";
             if ($key == "Administration") {
                 echo "fa-cogs";
             } else {
                 echo "fa-list";
             }
-            echo "'></span>&nbsp;" . $key . " <span class='caret'></span></a>";
-            echo "\t\t<ul class='dropdown-menu' role='menu'>";
+            echo "\"></span>&nbsp;" . $key . " <span class=\"caret\"></span></a>" . PHP_EOL;
+            echo "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
             arcProcessMenuItems($value);
-            echo "</ul></li>" . PHP_EOL;
+            echo "</ul>" . PHP_EOL . "</li>" . PHP_EOL;
         }
     }
 
@@ -354,9 +372,9 @@ function arcGetMenu() {
 function arcProcessMenuItems($items) {
     foreach ($items as $item) {
         if (isset($item["divider"]) && $item["divider"] == true) {
-            echo "\t\t\t<li class='divider'></li>" . PHP_EOL;
+            echo "<li class='divider'></li>" . PHP_EOL;
         }
-        echo "\t\t\t<li><a href='" . arcGetPath() . $item["module"];
+        echo "<li><a href='" . arcGetPath() . $item["module"];
         if ($item["group"] == "Administration") {
             echo "/administration";
         } elseif (isset($item["url"]) && !empty($item["url"])) {

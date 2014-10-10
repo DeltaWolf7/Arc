@@ -7,6 +7,13 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+0.0.0.27
+--------
++ Added support for modules to edit page title, meta description and meta tags.
++ Added canonical url support.
++ Added og meta tags to blog module header.
+/ Changed a tags to output double quotes instead of single.
+- Removed unneeded tabs in menu builder.
 
 0.0.0.26
 --------
