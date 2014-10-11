@@ -29,7 +29,7 @@
  *
  * @author Craig Longford
  */
-require_once "../../bootstrap.php";
+require_once "../../system/bootstrap.php";
 
 if (empty($_POST["email"])) {
     echo "danger|<strong>Email address</strong> must be provided";

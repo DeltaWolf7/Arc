@@ -7,6 +7,12 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+0.0.0.28
+--------
++ Added powered by function to show arc version.
+/ Changed the location of the bootstrap file.
+/ Updated modules to work with new structure.
+
 0.0.0.27
 --------
 + Added support for modules to edit page title, meta description and meta tags.

@@ -32,7 +32,7 @@
 // start session
 session_start();
 // get config file
-require_once "config.php";
+require_once $_SERVER["DOCUMENT_ROOT"] ."/config.php";
 
 // check if debug is enabled
 if (ARCDEBUG == true) {

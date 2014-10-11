@@ -29,7 +29,7 @@
  *
  * @author Craig Longford
  */
-require_once "../../../bootstrap.php";
+require_once "../../../system/bootstrap.php";
 
 if ($_POST["action"] == "saveuser") {
     $user = new User();

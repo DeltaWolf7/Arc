@@ -421,3 +421,8 @@ function arcGetTheme() {
     }
     return "templates/" . $theme->setting;
 }
+
+//powered by
+function arcPoweredBy() {
+    return "Powered by Arc, Version: " . ARCVERSION;
+}
