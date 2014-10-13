@@ -107,13 +107,12 @@ function arcGetHeader() {
     }
 
     echo "\t<title>" . $title . "</title>" . PHP_EOL;
-    echo "\t<meta name=\"author\" content=\"" . ARCAUTHOR . "\">" . PHP_EOL;
-    if (!empty($metadescription)) {
-        echo "\t<meta name=\"description\" content=\"" . $metadescription . "\">" . PHP_EOL;
-    }
-    if (!empty($metakeywords)) {
-        echo "\t<meta name=\"keywords\" content=\"" . $metakeywords . "\">" . PHP_EOL;
-    }
+    
+    // output meta tags
+    arcGetMeta("author", ARCAUTHOR);
+    arcGetMeta("description", $metadescription);
+    arcGetMeta("keywords", $metakeywords);
+    
     if (!empty($page->title)) {
         echo "\t<link rel=\"alternate\" href=\"http://" . $_SERVER['HTTP_HOST'] . ARCWWW . "page/" . $page->seourl . "\">" . PHP_EOL;
     }
@@ -146,6 +145,13 @@ function arcGetHeader() {
     // get javascript for theme if any
     if (file_exists(arcGetPath(true) . $theme . "/js")) {
         arcGetCSSJavascript("js", $theme . "/js/");
+    }
+}
+
+//output meta tags
+function arcGetMeta($element, $data) {
+    if (!empty($data)) {
+        echo "\t<meta name=\"" . $element . "\" content=\"" . $data . "\">" . PHP_EOL;
     }
 }
 
@@ -267,20 +273,17 @@ function arcGetDispatch() {
     }
 }
 
-// get module root
+// get module path
 function arcGetModulePath($filesystem = false) {
+    $path = ARCWWW;
     if ($filesystem == true) {
-        if (arcGetURLData("data1") == "administration") {
-            return arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/";
-        } else {
-            return arcGetPath(true) . "modules/" . arcGetURLData("module");
-        }
+        $path = arcGetPath(true) . "modules/";
     }
+    $path .= arcGetURLData("module");
     if (arcGetURLData("data1") == "administration") {
-        return ARCWWW . arcGetURLData("module") . "/administration/";
-    } else {
-        return ARCWWW . arcGetURLData("module");
+        $path .= "/administration/";
     }
+    return $path . arcGetURLData("module") . "/administration/";  
 }
 
 // get menu
@@ -336,7 +339,7 @@ function arcGetMenu() {
         }
     }
 
-// logout menu (last item)
+    // logout menu (last item)
     $module_info['name'] = "Logout";
     $module_info["icon"] = "fa-lock";
     $module_info["divider"] = false;

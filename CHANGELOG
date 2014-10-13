@@ -7,6 +7,10 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+0.0.0.29
+--------
+/ Optimised some core functions.
+
 0.0.0.28
 --------
 + Added powered by function to show arc version.
