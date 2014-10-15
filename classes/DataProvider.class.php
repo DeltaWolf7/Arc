@@ -42,7 +42,7 @@ abstract class DataProvider {
     }
 
     public function get($where) {
-        $data = arcDatabase()->get($this->table, $this->columns, $where);
+        $data = arcGetDatabase()->get($this->table, $this->columns, $where);
         $this->fill($data);
     }
 
@@ -51,7 +51,7 @@ abstract class DataProvider {
     }
 
     public function getCollection($where) {
-        $data = arcDatabase()->select($this->table, $this->columns, $where);
+        $data = arcGetDatabase()->select($this->table, $this->columns, $where);
         $collection = array();
         if (is_array($data)) {
             foreach ($data as $item) {
@@ -74,14 +74,14 @@ abstract class DataProvider {
             }
         }
         if ($this->id == 0) {
-            $this->id = arcDatabase()->insert($this->table, $dataColumns);
+            $this->id = arcGetDatabase()->insert($this->table, $dataColumns);
         } else {
-            arcDatabase()->update($this->table, $dataColumns, ["id" => $this->id]);
+            arcGetDatabase()->update($this->table, $dataColumns, ["id" => $this->id]);
         }
     }
 
     public function delete($id) {
-        arcDatabase()->delete($this->table, ["id" => $id]);
+        arcGetDatabase()->delete($this->table, ["id" => $id]);
     }
 
     protected function fill($data) {
