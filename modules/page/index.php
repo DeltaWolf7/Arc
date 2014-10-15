@@ -1,5 +1,5 @@
 <?php
-$page = Page::getBySEOURL(arcGetURLData("data1"));
+$page = Page::getBySEOURL($GLOBALS["arc"]->getURLData("data1"));
 ?>
 
 <?php if (!empty($page->title)) { echo "<div class=\"page-header\"><h1>". $page->title . "</h1></div>"; } ?>

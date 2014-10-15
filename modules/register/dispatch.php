@@ -76,5 +76,5 @@ $user->setPassword($_POST["password"]);
 $user->usergroupid = 2;
 $user->update();
 
-arcSetUser($user);
+$GLOBALS["arc"]->setUser($user);
 echo "success|Your details have been registered";

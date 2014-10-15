@@ -40,30 +40,14 @@ if (ARCDEBUG == true) {
     ini_set("display_errors", "1");
 }
 
-// include main functions file
-require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/functions.php";
-
-// setup database connection from config
-require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/medoo.min.php";
-try {
-    $arc_db = new medoo([
-        "database_type" => ARCDBTYPE,
-        "database_name" => ARCDBNAME,
-        "server" => ARCDBSERVER,
-        "username" => ARCDBUSER,
-        "password" => ARCDBPASSWORD
-    ]);
-} catch (Exception $e) {
-    echo "Unable to connect to database. Please check 'config.php'";
-    echo "<br />Exception: " . $e->getMessage();
-    die();
-}
+$GLOBALS["arc"] = ARC::getInstance();
 
 // class auto loader
 function __autoload($class_name) {
     if (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php")) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");
-    } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
-        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
+    } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $arc->arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
+        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $arc->arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
     }
 }
+

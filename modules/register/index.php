@@ -23,7 +23,7 @@
         <label for="password2">Retype Password</label>
         <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password">
     </div>
-    <button type="button" class="btn btn-default" onclick="ajax.send('POST', {firstname: '#firstname', lastname: '#lastname', email: '#email', password: '#password', password2: '#password2'}, '<?php arcGetDispatch(); ?>', register, true)">Register</button>
+    <button type="button" class="btn btn-default" onclick="ajax.send('POST', {firstname: '#firstname', lastname: '#lastname', email: '#email', password: '#password', password2: '#password2'}, '<?php $GLOBALS["arc"]->getDispatch(); ?>', register, true)">Register</button>
 </form>
 
 <script>
@@ -31,7 +31,7 @@
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
-            window.location = "<?php echo ARCWWW; ?>";
+            window.location = "<?php echo $GLOBALS['arc']->redirect(); ?>";
         }
         updateStatus(data);
     }

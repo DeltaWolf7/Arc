@@ -1,5 +1,5 @@
 <?php
-if (arcGetURLData("data1") == "post") {
+if ($arc->getURLData("data1") == "post") {
     $blog = Blog::getBySEOUrl(arcGetURLData("data2"));
     $title = $blog->title;
     $metakeywords = $blog->tags;
