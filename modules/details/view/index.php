@@ -7,9 +7,6 @@ $user = arcGetUser();
 ?>
 
 <form role="form">
-
-
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Personal</h3>
@@ -41,6 +38,6 @@ $user = arcGetUser();
 
     <div class="text-right">
         <input type="hidden" id="userid" value="<?php echo $user->id; ?>" />
-        <button type="button" class="btn btn-default" onclick="ajax.send('POST', {theme: '#theme', userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email'}, '<?php arcGetDispatch(); ?>', updateStatus, true)">Update</button>
+        <button type="button" class="btn btn-default" onclick="ajax.send('POST', {userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email'}, '<?php arcGetDispatch(); ?>', updateStatus, true)">Update</button>
     </div>
 </form>

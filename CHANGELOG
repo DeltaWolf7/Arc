@@ -7,6 +7,16 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+0.0.0.30
+--------
+/ Changed structure of Arc to better support themes and allow manipulation.
+/ Changed the way headers are built to allow custom additions.
+/ Moved all functions and features to one file for easy management and inclusion. 
++ Added default theme.
++ Added two other modules used in other projects. (Can be deleted, if not required).
+/ Updated all modules to meet new layout.
+- Removed auto built headers.
+
 0.0.0.29
 --------
 / Optimised some core functions.

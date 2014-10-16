@@ -71,8 +71,8 @@ try {
 function __autoload($class_name) {
     if (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php")) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");
-    } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $arc->arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
-        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $arc->arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
+    } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
+        require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
     }
 }
 

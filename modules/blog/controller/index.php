@@ -9,7 +9,7 @@ if (arcGetURLData("data1") == "post") {
         $content = substr($blog->content, 0, $charCount - 1);
     }
     arcAddHeader("description", $content);
-    arcAddHeader("", "<meta property=\"og:title\" content=\"" . $title . "\" />" . PHP_EOL);
+    arcAddHeader("", "<meta property=\"og:title\" content=\"" . $blog->title . "\" />" . PHP_EOL);
     arcAddHeader("", "\t<meta property=\"og:type\" content=\"Article\" />" . PHP_EOL);
     arcAddHeader("", "\t<meta property=\"og:description\" content=\"" . $content . "\" />" . PHP_EOL);
     arcAddHeader("", "\t<meta property=\"og:url\" content=\"http://" . $_SERVER['HTTP_HOST'] . arcGetModulePath() . "/" . arcGetURLData("data1") . "/" . arcGetURLData("data2") . "/\" />" . PHP_EOL);

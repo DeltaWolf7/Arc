@@ -1,36 +1,36 @@
 <div class="page-header">
     <h1>Page Management
         <?php
-        if ($GLOBALS["arc"]->getURLData("data3") != null) {
-            echo "<a href='" . $GLOBALS["arc"]->getModulePath() . "'><span class='fa fa-arrow-circle-left'></span></a>";
+        if (arcGetURLData("data3") != null) {
+            echo "<a href='" . arcGetModulePath() . "'><span class='fa fa-arrow-circle-left'></span></a>";
         }
         ?>
     </h1>
 </div>
 
 <?php
-if (empty($GLOBALS["arc"]->getURLData("data2"))) {
+if (empty(arcGetURLData("data2"))) {
     ?>
     <div class="panel panel-default">
         <div class="panel-body">
             <table class="table table-striped">
-                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo $GLOBALS["arc"]->getModulePath() . "edit/0"; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
+                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo arcGetModulePath() . "edit/0"; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
                 <?php
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
-                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . $GLOBALS["arc"]->getModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a>"
-                    . "&nbsp;<a href='" . $GLOBALS["arc"]->getModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
+                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a>"
+                    . "&nbsp;<a href='" . arcGetModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
                 }
                 ?>
             </table>
         </div>
     </div>
     <?php
-} elseif ($GLOBALS["arc"]->getURLData("data2") == "edit") {
+} elseif (arcGetURLData("data2") == "edit") {
 
     $page = new Page();
-    if ($GLOBALS["arc"]->getURLData("data3") != "0") {
-        $page->getByID($GLOBALS["arc"]->getURLData("data3"));
+    if (arcGetURLData("data3") != "0") {
+        $page->getByID(arcGetURLData("data3"));
     }
     ?>
     <form role="form">
@@ -197,14 +197,14 @@ if (empty($GLOBALS["arc"]->getURLData("data2"))) {
                         $permissions = $page->getPermissions();
                         foreach ($permissions as $permission) {
                             $group = $permission->getGroup();
-                            echo "<tr><td>" . $group->name . "</td><td class='text-right'><a href='" . $GLOBALS["arc"]->getModulePath() . "permission/remove/" . $permission->id . "/" . $page->id . "'><span class='fa fa-remove'></span> Remove</a>";
+                            echo "<tr><td>" . $group->name . "</td><td class='text-right'><a href='" . arcGetModulePath() . "permission/remove/" . $permission->id . "/" . $page->id . "'><span class='fa fa-remove'></span> Remove</a>";
                             echo "</td></tr>";
                         }
                         ?>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="window.location = '<?php echo $GLOBALS["arc"]->getModulePath() . "edit/" . $page->id; ?>'">Refresh</button>
+                    <button type="button" class="btn btn-default" onclick="window.location = '<?php echo arcGetModulePath() . "edit/" . $page->id; ?>'">Refresh</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addPermission();">New Permission</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
@@ -233,7 +233,7 @@ if (empty($GLOBALS["arc"]->getURLData("data2"))) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php $GLOBALS["arc"]->getDispatch(); ?>', null, true);">Add To Group</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php arcGetDispatch(); ?>', null, true);">Add To Group</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -241,18 +241,18 @@ if (empty($GLOBALS["arc"]->getURLData("data2"))) {
     </div>
 
     <?php
-} elseif ($GLOBALS["arc"]->getURLData("data2") == "remove") {
+} elseif (arcGetURLData("data2") == "remove") {
     $page = new Page();
     $page->delete($page->id);
-    $GLOBALS["arc"]->redirect($GLOBALS["arc"]->getModulePath());
-} elseif ($GLOBALS["arc"]->getURLData("data2") == "permission" && $GLOBALS["arc"]->getURLData("data3") == "remove") {
+    arcRedirect(arcGetModulePath());
+} elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "remove") {
     $permission = new UserPermission();
     $permission->delete($GLOBALS["arc"]->getURLData("data4"));
-    $GLOBALS["arc"]->redirect($GLOBALS["arc"]->getModulePath() . "edit/" . $GLOBALS["arc"]->getURLData("data5"));
-} elseif ($GLOBALS["arc"]->getURLData("data2") == "permission" && $GLOBALS["arc"]->getURLData("data3") == "add") {
+    arcRedirect(arcGetURLData() . "edit/" . arcGetURLData("data5"));
+} elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "add") {
     $permission = new UserPermission();
-    $permission->delete($GLOBALS["arc"]->getURLData("data4"));
-    $GLOBALS["arc"]->redirect($GLOBALS["arc"]->getModulePath() . "edit/" . $GLOBALS["arc"]->getURLData("data5"));
+    $permission->delete(arcGetURLData("data4"));
+    arcRedirect(arcGetModulePath() . "edit/" . arcGetURLData("data5"));
 }
 ?>
 
@@ -283,7 +283,7 @@ if (empty($GLOBALS["arc"]->getURLData("data2"))) {
 
     function doUpdate() {
         var txt = $('#editor').html();
-        ajax.send('POST', {action: 'savepage', metatitle: '#metatitle', metadescription: '#metadescription', metakeywords: '#metakeywords', editor: txt, seourl: '#seourl', title: '#title'}, '<?php $GLOBALS["arc"]->getDispatch(); ?>', updateStatus, true);
+        ajax.send('POST', {action: 'savepage', metatitle: '#metatitle', metadescription: '#metadescription', metakeywords: '#metakeywords', editor: txt, seourl: '#seourl', title: '#title'}, '<?php arcGetDispatch(); ?>', updateStatus, true);
     }
 
     $(function () {
