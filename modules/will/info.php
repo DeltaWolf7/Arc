@@ -12,7 +12,7 @@ $module_info["menu"][0]["name"] = "Will Manager";
 $module_info["menu"][0]["icon"] = "fa-file-text-o";
 $module_info["menu"][0]["divider"] = false;
 $module_info["menu"][0]["url"] = "";
-$module_info["menu"][0]["group"] = "Estate Planning";
+$module_info["menu"][0]["group"] = "Applications";
 
 
 ?>

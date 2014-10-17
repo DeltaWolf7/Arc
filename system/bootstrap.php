@@ -350,12 +350,67 @@ function arcGetModulePath($filesystem = false) {
     }
 }
 
+function arcAddMenuItem($name, $icon, $divider, $url, $group) {
+    
+    if (empty($group)) {
+        $menu["name"] = $name;
+        $menu["icon"] = $icon;
+        $menu["divider"] = $divider;
+        $menu["url"] = $url;
+        $_GLOBALS["arc"]["menu"][] = $menu;
+    } else {
+        $menu = arcFindMenu($group, $_GLOBALS["arc"]["menu"]);
+        if (empty($menu)) {
+            exit("Unable to item '" . $name . "'. Group '" . $group . "' doesn't exist.");
+        }
+        
+        $menuX["name"] = $name;
+        $menuX["icon"] = $icon;
+        $menuX["divider"] = $divider;
+        $menuX["url"] = $url;
+        $menu = $menuX;
+    }
+    
+}
+
+function arcAddMenuGroup($name, $icon, $divder, $parent) {
+    if (empty($parent)) {
+        if (empty(arcFindMenu($name, $GLOBALS["arc"]["menu"]))) {
+            $menu["name"] = $name;
+            $menu["icon"] = $icon;
+            $menu["divider"] = $divider;
+            $menu["isgroup"] = true;
+            $GLOBALS["arc"]["menu"][] = $menu;
+        }
+    } else {
+        $menu = arcFindMenu($parent, $GLOBALS["arc"]["menu"]);
+        if (empty($menu)) {
+            exit("Unable to add group '" . $name . "'. '" . $parent . "' doesn't exist.");
+        }    
+        $menuX["name"] = $name;
+        $menuX["icon"] = $icon;
+        $menuX["divider"] = $divider;
+        $menuX["isgroup"] = true;
+        $menu[] = $menuX;
+    }
+}
+
+// find menu item
+function arcFindMenu($name, $menus) {
+    foreach ($menus as $menu) {
+        if ($menu["name"] == $name) {
+            return $menu;
+        } elseif ($menu["isgroup"] == true) {
+            return arcFindMenu($name, $menu);
+        }
+    }
+    return null;
+}
+
 // get menu
 function arcGetMenu() {
     $modules = scandir(arcGetPath(true) . "modules");
-    $module_list = array();
-    $groups = array();
-
+    
     $group = new UserGroup();
     if (!empty(arcGetUser())) {
         $user = arcGetUser();
@@ -368,49 +423,26 @@ function arcGetMenu() {
     $perms = new UserPermission();
 
     foreach ($modules as $module) {
-        $module_info = "";
         if ($module != ".." && $module != ".") {
-// module menu
+            // module menu
             if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
                 if ($perms->hasPermission($permissions, "module/" . $module)) {
                     include arcGetPath(true) . "modules/" . $module . "/info.php";
-                    if (isset($module_info["menu"]) && count($module_info["menu"] > 0)) {
-                        foreach ($module_info['menu'] as $menu) {
-                            $menu["module"] = $module;
-                            if (empty($menu["group"])) {
-                                $module_list[] = $menu;
-                            } else {
-                                $groups[$menu["group"]][] = $menu;
-                            }
-                        }
-                    }
                 }
             }
 
-// module administration menu
+            // module administration menu
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                     include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
-                    if (isset($module_info["menu"]) && count($module_info["menu"] > 0)) {
-                        foreach ($module_info["menu"] as $menu) {
-                            $menu["module"] = $module;
-                            $menu["group"] = "Administration";
-                            $groups["Administration"][] = $menu;
-                        }
-                    }
                 }
             }
         }
     }
 
-// logout menu (last item)
-    $module_info['name'] = "Logout";
-    $module_info["icon"] = "fa-lock";
-    $module_info["divider"] = false;
-    $module_info["group"] = "";
-    $module_info["module"] = "logout";
-    $module_list[] = $module_info;
-
+    // logout menu (last item)
+    arcAddMenuItem("Logout", "fa-lock", false, null, null);
+   
     echo "<ul class=\"nav navbar-nav navbar-right\">" . PHP_EOL;
 
     if (count($groups) > 0) {
