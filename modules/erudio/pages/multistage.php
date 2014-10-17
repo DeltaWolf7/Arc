@@ -1,29 +1,10 @@
 <?php
-if (!isset($_SESSION['user'])) {
-    echo "<script type=\"text/javascript\">window.location=\"/accounts/denied\"</script>";
-}
-
-$multistage = new multistage();
+$multistage = new Multistage();
 $multistage->getRandomMultistage();
-
-
-
-$level = new result();
-$poslv = (int) $level->getMultistageCount($_SESSION['user'], 1);
-$neglv = (int) $level->getMultistageCount($_SESSION['user'], 0);
-$lv = $poslv - $neglv;
-if ($lv < 1)
-{
-    $lv = 1;
-}
-$max = $lv * 10;
 ?>
+
 <p class="lead">Synopsis</p>
 <p>This section will improve your maths skills over different mathematical areas.</p>
-<p class="lead">Personal Level</p>
-<p>Personal level determines the difficulty of the questions. The better your level, the harder the questions.
-    <br />Your current level multiplier is <strong><?php echo $lv; ?></strong>, based on <strong><?php echo $poslv; ?></strong> correct answers over <strong><?php echo $neglv; ?></strong> incorrect answers.
-</p>
 
 <div class="jumbotron">
     <strong>Question</strong><br />
@@ -34,8 +15,7 @@ $max = $lv * 10;
     }
     echo "<br />";
 
-    $parser = new questionparser();
-    $parser->valueLimit = $max;
+    $parser = new QuestionParser();
     $string = $parser->Parse($multistage->masterquestion);
     echo nl2br($string);
 
