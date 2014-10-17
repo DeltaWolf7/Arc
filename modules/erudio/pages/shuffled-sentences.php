@@ -1,9 +1,4 @@
 <?php
-if (!isset($_SESSION['user'])) {
-    echo "<script type=\"text/javascript\">window.location=\"/accounts/denied\"</script>";
-}
-
-
 $sentence = new sentence();
 $sentence->getRandomSentence();
 

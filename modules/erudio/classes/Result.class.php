@@ -1,65 +1,25 @@
 <?php
 
-class result {
+class Result extends DataProvider {
 
-    public $id = -1;
-    public $userid = -1;
+    public $userid;
     public $type;
     public $data;
     public $date;
     public $correct;
     public $time;
-    private $database;
 
     public function __construct() {
-        $this->type = '';
-        $this->date = '';
+        parent::__construct();
+        $this->type = "";
+        $this->data = "";
         $this->date = date("Y-m-d H:i:s");
-        $this->database = new medoo();
         $this->time = 0;
         $this->correct = false;
+        $this->table = "erudio_results";
+        $this->columns = ["id", "userid", "data", "date", "correct", "time"];
     }
     
-    public function getResult($id) {
-        $data = $this->database->get('results', ['id', 'userid', 'type', 'data', 'date', 'correct', 'time'], ['id' => $id]);
-
-        if (is_array($data)) {
-            $this->userid = $data['userid'];
-            $this->type = $data['type'];
-            $this->date = $data['date'];
-            $this->data = $data['data'];
-            $this->id = $data['id'];
-            $this->correct = $data['correct'];
-            $this->time = $data['time'];
-            return true;
-        }
-        return false;
-    }
-
-    public function updateResult() {
-        if ($this->id == -1) {
-            $this->id = $this->database->insert('results', ['userid' => $this->userid,
-                'type' => $this->type,
-                'data' => $this->data,
-                'date' => $this->date,
-                'time' => $this->time,
-                'correct' => $this->correct
-                ]);
-        } else {
-            $this->database->update('results', ['userid' => $this->userid,
-                'type' => $this->type,
-                'data' => $this->data,
-                'date' => $this->date,
-                'time' => $this->time,
-                'correct' => $this->correct
-                ], ['id' => $this->id]);
-        }
-    }
-
-    public function deleteResult($id) {
-        $this->database->delete('results', ['id' => $id]);
-    }
-
     public function getQuickFireCount($id, $getCorrect) {
         $data = $this->database->query("SELECT COUNT(*) FROM results WHERE userid=" . $id . " AND correct=" . $getCorrect . " AND type='Quick Fire'")->fetchAll();
         return $data[0][0];

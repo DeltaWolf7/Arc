@@ -11,7 +11,7 @@
  * - Where ~ is use decimal.
  */
 
-class questionparser {
+class QuestionParser {
 
     // holds the value array.
     public $valueArray;
@@ -36,15 +36,15 @@ class questionparser {
         $this->selectedUnits = Array();
     }
         
-    public function ParseSolution($text)
+    public function parseSolution($text)
     {
         $string = 1;
-        while ($this->FindString($text, '{n') == true) {
+        while ($this->findString($text, '{n') == true) {
             $text = str_replace('{n' . $string . '}', $this->valueArray['{n' . $string . '}'], $text);
             $string++;
         }
         $string = 1;
-        while ($this->FindString($text, '{l') == true) {
+        while ($this->findString($text, '{l') == true) {
             $text = str_replace('{l' . $string . '}', $this->letterArray['{l' . $string . '}'], $text);
             $string++;
         }
@@ -57,8 +57,8 @@ class questionparser {
      * @return string parsed string with replaced content.
      */
 
-    public function Parse($text) {
-        return $this->ParseLetters($this->ParseValues($this->ParseNames($this->ParseUnits($text))));
+    public function parse($text) {
+        return $this->parseLetters($this->parseValues($this->parseNames($this->parseUnits($text))));
     }
 
     /*
@@ -67,11 +67,11 @@ class questionparser {
      * @return string parsed string with replaced content (Values only).
      */
 
-    private function ParseValues($text) {
+    private function parseValues($text) {
         $string = 1;
-        while ($this->FindString($text, '{n') == true) {
+        while ($this->findString($text, '{n') == true) {
             $number = rand(1, $this->valueLimit);
-            if ($this->UseDecimal($text, '{n' . $string . '}') == true) {
+            if ($this->useDecimal($text, '{n' . $string . '}') == true) {
                 $text = str_replace('~{n' . $string . '}', '{n' . $string . '}', $text);
                 $number = $number / 100 + rand(1, $this->valueLimit);
             }
@@ -91,18 +91,18 @@ class questionparser {
      * @return string parsed string with replaced content (Letters only).
      */
 
-    private function ParseLetters($text) {
+    private function parseLetters($text) {
         $string = 1;
-        while ($this->FindString($text, '{l') == true) {
+        while ($this->findString($text, '{l') == true) {
             $text = str_replace('{l' . $string . '}', $this->letterArray[rand(0, 25)], $text);
             $string++;
         }
         return $text;
     }
 
-    private function ParseNames($text) {
+    private function parseNames($text) {
         $string = 1;
-        while ($this->FindString($text, '{p') == true) {
+        while ($this->findString($text, '{p') == true) {
             if (array_key_exists('{p' . $string . '}', $this->selectedNames) == false)
             {
                 $this->selectedNames['{p' . $string . '}'] = $this->nameArray[rand(0, count($this->nameArray) - 1)];
@@ -113,9 +113,9 @@ class questionparser {
         return $text;
     }
     
-    private function ParseUnits($text) {
+    private function parseUnits($text) {
         $string = 1;
-        while ($this->FindString($text, '{u') == true) {
+        while ($this->findString($text, '{u') == true) {
             if (array_key_exists('{u' . $string . '}', $this->selectedUnits) == false)
             {
                 $this->selectedUnits['{u' . $string . '}'] = $this->unitArray[rand(0, count($this->unitArray) - 1)];
@@ -133,7 +133,7 @@ class questionparser {
      * @return bool if the string was found.
      */
 
-    private function FindString($text, $string) {
+    private function findString($text, $string) {
         if (strpos($text, $string) !== false) {
             return true;
         }
@@ -147,7 +147,7 @@ class questionparser {
      * @return bool if the string was found.
      */
 
-    private function UseDecimal($text, $string) {
+    private function useDecimal($text, $string) {
         if (strpos($text, '~' . $string) !== false) {
             return true;
         }
