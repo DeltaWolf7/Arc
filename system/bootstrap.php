@@ -77,6 +77,7 @@ function __autoload($class_name) {
 }
 
 $arc["headerdata"] = array();
+$arc["menu"] = array();
 
 // javascript
 arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
@@ -351,47 +352,55 @@ function arcGetModulePath($filesystem = false) {
 }
 
 function arcAddMenuItem($name, $icon, $divider, $url, $group) {
-    
     if (empty($group)) {
         $menu["name"] = $name;
         $menu["icon"] = $icon;
-        $menu["divider"] = $divider;
-        $menu["url"] = $url;
-        $_GLOBALS["arc"]["menu"][] = $menu;
-    } else {
-        $menu = arcFindMenu($group, $_GLOBALS["arc"]["menu"]);
-        if (empty($menu)) {
-            exit("Unable to item '" . $name . "'. Group '" . $group . "' doesn't exist.");
+        if (!empty($divider)) {
+            $menu["divider"] = $divider;
         }
-        
+        $menu["url"] = $url;
+        $menu["module"] = $GLOBALS["arc"]["menumodule"];
+        $GLOBALS["arc"]["menu"][] = $menu;
+    } else {
+        $menu = arcFindMenu($group, $GLOBALS["arc"]["menu"]);
+        if (empty($menu)) {
+            $menu = arcAddMenuGroup($group, "fa-list", false, null);
+        }
+
         $menuX["name"] = $name;
         $menuX["icon"] = $icon;
-        $menuX["divider"] = $divider;
+        if (!empty($divider)) {
+            $menuX["divider"] = $divider;
+        }
         $menuX["url"] = $url;
-        $menu = $menuX;
+        $menuX["module"] = $GLOBALS["arc"]["menumodule"];
+        $menu[] = $menuX;
     }
-    
 }
 
 function arcAddMenuGroup($name, $icon, $divder, $parent) {
     if (empty($parent)) {
-        if (empty(arcFindMenu($name, $GLOBALS["arc"]["menu"]))) {
-            $menu["name"] = $name;
-            $menu["icon"] = $icon;
+        $menu["name"] = $name;
+        $menu["icon"] = $icon;
+        if (!empty($divider)) {
             $menu["divider"] = $divider;
-            $menu["isgroup"] = true;
-            $GLOBALS["arc"]["menu"][] = $menu;
         }
+        $menu["isgroup"] = true;
+        $GLOBALS["arc"]["menu"][] = $menu;
+        return $menu;
     } else {
         $menu = arcFindMenu($parent, $GLOBALS["arc"]["menu"]);
         if (empty($menu)) {
             exit("Unable to add group '" . $name . "'. '" . $parent . "' doesn't exist.");
-        }    
+        }
         $menuX["name"] = $name;
         $menuX["icon"] = $icon;
-        $menuX["divider"] = $divider;
+        if (!empty($divider)) {
+            $menuX["divider"] = $divider;
+        }
         $menuX["isgroup"] = true;
         $menu[] = $menuX;
+        return $menuX;
     }
 }
 
@@ -410,7 +419,7 @@ function arcFindMenu($name, $menus) {
 // get menu
 function arcGetMenu() {
     $modules = scandir(arcGetPath(true) . "modules");
-    
+
     $group = new UserGroup();
     if (!empty(arcGetUser())) {
         $user = arcGetUser();
@@ -427,6 +436,7 @@ function arcGetMenu() {
             // module menu
             if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
                 if ($perms->hasPermission($permissions, "module/" . $module)) {
+                    $GLOBALS["arc"]["menumodule"] = $module;
                     include arcGetPath(true) . "modules/" . $module . "/info.php";
                 }
             }
@@ -434,52 +444,34 @@ function arcGetMenu() {
             // module administration menu
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
+                    $GLOBALS["arc"]["menumodule"] = $module;
                     include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
                 }
             }
         }
     }
-
+    $GLOBALS["arc"]["menumodule"] = "logout";
     // logout menu (last item)
     arcAddMenuItem("Logout", "fa-lock", false, null, null);
-   
+    $GLOBALS["arc"]["menumodule"] = null;
+
     echo "<ul class=\"nav navbar-nav navbar-right\">" . PHP_EOL;
-
-    if (count($groups) > 0) {
-        foreach ($groups as $key => $value) {
-            echo "<li class=\"dropdown\">" . PHP_EOL;
-            echo "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
-            echo "<span class=\"fa ";
-            if ($key == "Administration") {
-                echo "fa-cogs";
-            } else {
-                echo "fa-list";
-            }
-            echo "\"></span>&nbsp;" . $key . " <span class=\"caret\"></span></a>" . PHP_EOL;
-            echo "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
-            arcProcessMenuItems($value);
-            echo "</ul>" . PHP_EOL . "</li>" . PHP_EOL;
-        }
-    }
-
-    arcProcessMenuItems($module_list);
-
+    arcProcessMenuItems($GLOBALS["arc"]["menu"]);
     echo "</ul>" . PHP_EOL;
 }
 
 // process menu items
-function arcProcessMenuItems($items) {
-    foreach ($items as $item) {
-        if (isset($item["divider"]) && $item["divider"] == true) {
-            echo "<li class='divider'></li>" . PHP_EOL;
+function arcProcessMenuItems($menus) {
+    foreach ($menus as $menu) {
+        if (isset($menu["isgroup"]) && $menu["isgroup"] == true) {
+            echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span class='fa " . $menu["icon"] . "'></span> " . $menu["name"] . " <span class=\"caret\"></span></a>" . PHP_EOL
+            . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
+            arcProcessMenuItems($menu["menu"]);
+            echo "</ul>" . PHP_EOL
+            . "</li>" . PHP_EOL;
+        } else {
+            echo "<li><a href=\"" . $menu["module"] . "\"><span class='fa " . $menu["icon"] . "'></span> " . $menu['name'] . "</a></li>";
         }
-        echo "<li><a href='" . arcGetPath() . $item["module"];
-        if ($item["group"] == "Administration") {
-            echo "/administration";
-        } elseif (isset($item["url"]) && !empty($item["url"])) {
-            echo $item["url"];
-        }
-        echo "'><span class='fa " . $item["icon"] . "'></span> " . $item["name"] . "</a></li>" . PHP_EOL;
     }
 }
 
