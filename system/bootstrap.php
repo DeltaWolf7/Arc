@@ -413,10 +413,7 @@ function arcGetMenu() {
     // logout menu (last item)
     arcAddMenuItem("Logout", "fa-lock", false, null, null);
     $GLOBALS["arc"]["menumodule"] = null;
-
-    echo "<ul class=\"nav navbar-nav navbar-right\">" . PHP_EOL;
     arcProcessMenuItems($GLOBALS["arc"]["menus"]);
-    echo "</ul>" . PHP_EOL;
 }
 
 // process menu items

@@ -11,6 +11,7 @@ Medoo                       0.9.6.2             http://medoo.in/
 + Added controller system.
 / Changed the ways menus are now added.
 + Added favicon the theme controller.
+- System no longer tries to theme navbar.
 
 0.0.0.30
 --------
