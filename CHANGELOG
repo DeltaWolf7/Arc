@@ -6,6 +6,10 @@ Bootstrap WYSIWYG           18/09/2014          http://mindmup.github.io/bootstr
 Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
 Medoo                       0.9.6.2             http://medoo.in/
 
+0.0.0.31
+--------
++ Added controller system.
+/ Changed the ways menus are now added.
 
 0.0.0.30
 --------

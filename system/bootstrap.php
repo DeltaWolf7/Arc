@@ -50,6 +50,7 @@ if (!ini_get('date.timezone')) {
 
 // arc storage
 $arc = array();
+$arc["menu"] = array();
 
 // setup database connection from config
 require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/medoo.min.php";
@@ -75,9 +76,6 @@ function __autoload($class_name) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
     }
 }
-
-$arc["headerdata"] = array();
-$arc["menu"] = array();
 
 // javascript
 arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
@@ -206,8 +204,14 @@ function arcGetController() {
         if (arcGetURLData("data1") == "administration") {
             $path .= "/administration";
         }
-        $path .= "/controller/index.php";
-
+        $path .= "/controller/";
+        
+        if (!empty(arcGetURLData("data1")) && file_exists($path . arcGetURLData("data1") . ".php")) {         
+            $path .= arcGetURLData("data1");
+        } else {
+            $path .= "index";
+        }
+        $path .= ".php";
         if (file_exists($path)) {
             include_once $path;
         }
@@ -328,11 +332,12 @@ function arcRedirect($destination = null) {
 
 // get dispatch url
 function arcGetDispatch() {
+    $path = ARCWWW . "modules/" . arcGetURLData("module");
     if (arcGetURLData("data1") == "administration") {
-        echo ARCWWW . "modules/" . arcGetURLData("module") . "/administration/dispatch.php";
-    } else {
-        echo ARCWWW . "modules/" . arcGetURLData('module') . "/dispatch.php";
+        $path .= "/administration";
     }
+    $path .= "/dispatch.php";
+    echo $path;
 }
 
 // get module root
@@ -352,68 +357,22 @@ function arcGetModulePath($filesystem = false) {
 }
 
 function arcAddMenuItem($name, $icon, $divider, $url, $group) {
-    if (empty($group)) {
-        $menu["name"] = $name;
-        $menu["icon"] = $icon;
-        if (!empty($divider)) {
-            $menu["divider"] = $divider;
-        }
-        $menu["url"] = $url;
-        $menu["module"] = $GLOBALS["arc"]["menumodule"];
-        $GLOBALS["arc"]["menu"][] = $menu;
+    if (!isset($GLOBALS["arc"]["menus"])) {
+        $GLOBALS["arc"]["menus"] = array();
+    }
+   
+    $item = array();
+    $item["name"] = $name;
+    $item["icon"] = $icon;
+    if (!empty($divider)) { $item["divider"] = $divider; }
+    if (!empty($url)) { $item["url"] = $url; }
+    $item["module"] = $GLOBALS["arc"]["menumodule"];
+    
+    if (!empty($group)) {
+        $GLOBALS["arc"]["menus"][$group][] = $item;
     } else {
-        $menu = arcFindMenu($group, $GLOBALS["arc"]["menu"]);
-        if (empty($menu)) {
-            $menu = arcAddMenuGroup($group, "fa-list", false, null);
-        }
-
-        $menuX["name"] = $name;
-        $menuX["icon"] = $icon;
-        if (!empty($divider)) {
-            $menuX["divider"] = $divider;
-        }
-        $menuX["url"] = $url;
-        $menuX["module"] = $GLOBALS["arc"]["menumodule"];
-        $menu[] = $menuX;
+        $GLOBALS["arc"]["menus"][] = $item;
     }
-}
-
-function arcAddMenuGroup($name, $icon, $divder, $parent) {
-    if (empty($parent)) {
-        $menu["name"] = $name;
-        $menu["icon"] = $icon;
-        if (!empty($divider)) {
-            $menu["divider"] = $divider;
-        }
-        $menu["isgroup"] = true;
-        $GLOBALS["arc"]["menu"][] = $menu;
-        return $menu;
-    } else {
-        $menu = arcFindMenu($parent, $GLOBALS["arc"]["menu"]);
-        if (empty($menu)) {
-            exit("Unable to add group '" . $name . "'. '" . $parent . "' doesn't exist.");
-        }
-        $menuX["name"] = $name;
-        $menuX["icon"] = $icon;
-        if (!empty($divider)) {
-            $menuX["divider"] = $divider;
-        }
-        $menuX["isgroup"] = true;
-        $menu[] = $menuX;
-        return $menuX;
-    }
-}
-
-// find menu item
-function arcFindMenu($name, $menus) {
-    foreach ($menus as $menu) {
-        if ($menu["name"] == $name) {
-            return $menu;
-        } elseif ($menu["isgroup"] == true) {
-            return arcFindMenu($name, $menu);
-        }
-    }
-    return null;
 }
 
 // get menu
@@ -456,21 +415,30 @@ function arcGetMenu() {
     $GLOBALS["arc"]["menumodule"] = null;
 
     echo "<ul class=\"nav navbar-nav navbar-right\">" . PHP_EOL;
-    arcProcessMenuItems($GLOBALS["arc"]["menu"]);
+    arcProcessMenuItems($GLOBALS["arc"]["menus"]);
     echo "</ul>" . PHP_EOL;
 }
 
 // process menu items
 function arcProcessMenuItems($menus) {
-    foreach ($menus as $menu) {
-        if (isset($menu["isgroup"]) && $menu["isgroup"] == true) {
-            echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\"><span class='fa " . $menu["icon"] . "'></span> " . $menu["name"] . " <span class=\"caret\"></span></a>" . PHP_EOL
+    foreach ($menus as $menu => $value) {
+        if ($menu != "" && !is_numeric($menu)) {
+            echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
+             . "<span class='fa fa-list'></span> " . $menu . " <span class=\"caret\"></span></a>" . PHP_EOL
             . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
-            arcProcessMenuItems($menu["menu"]);
+            arcProcessMenuItems($value);
             echo "</ul>" . PHP_EOL
             . "</li>" . PHP_EOL;
+        } elseif (isset($value["module"])) {
+            if (isset($value["divider"])) {
+                echo "<li class=\"divider\"></li>";
+            }
+            echo "<li><a href=\"" . $value["module"];
+            if (isset($value["url"])) { echo $value["url"]; }
+            echo "\"><span class='fa " . $value["icon"] . "'></span> "
+            . $value['name'] . "</a></li>";
         } else {
-            echo "<li><a href=\"" . $menu["module"] . "\"><span class='fa " . $menu["icon"] . "'></span> " . $menu['name'] . "</a></li>";
+            arcProcessMenuItems($value);
         }
     }
 }
