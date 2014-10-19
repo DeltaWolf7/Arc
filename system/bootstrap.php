@@ -438,7 +438,7 @@ function arcProcessMenuItems($menus) {
             if (isset($value["divider"])) {
                 echo "<li class=\"divider\"></li>";
             }
-            echo "<li><a href=\"" . $value["module"];
+            echo "<li><a href=\"" . ARCWWW . $value["module"];
             if (isset($value["url"])) {
                 echo $value["url"];
             }
