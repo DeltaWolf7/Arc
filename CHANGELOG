@@ -12,6 +12,7 @@ Medoo                       0.9.6.2             http://medoo.in/
 / Changed the ways menus are now added.
 + Added favicon the theme controller.
 - System no longer tries to theme navbar.
++ Added view override support for styling modules.
 
 0.0.0.30
 --------

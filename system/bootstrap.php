@@ -205,8 +205,8 @@ function arcGetController() {
             $path .= "/administration";
         }
         $path .= "/controller/";
-        
-        if (!empty(arcGetURLData("data1")) && file_exists($path . arcGetURLData("data1") . ".php")) {         
+
+        if (!empty(arcGetURLData("data1")) && file_exists($path . arcGetURLData("data1") . ".php")) {
             $path .= arcGetURLData("data1");
         } else {
             $path .= "index";
@@ -269,18 +269,22 @@ function arcGetView() {
 }
 
 // get content
-function arcGetContent() {
-    $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
-    if (arcGetURLData("data1") == "administration") {
-        $path .= "/administration";
-    }
-    $path .= "/view/index.php";
-
-
-    if (file_exists($path)) {
-        include_once $path;
+function arcGetContent() {  
+    if (file_exists(arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php")) {
+        include_once arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php";
     } else {
-        exit("Missing view: " . $path);
+        $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
+        if (arcGetURLData("data1") == "administration") {
+            $path .= "/administration";
+        }
+        $path .= "/view/index.php";
+
+
+        if (file_exists($path)) {
+            include_once $path;
+        } else {
+            exit("Missing view: " . $path);
+        }
     }
 }
 
@@ -360,14 +364,18 @@ function arcAddMenuItem($name, $icon, $divider, $url, $group) {
     if (!isset($GLOBALS["arc"]["menus"])) {
         $GLOBALS["arc"]["menus"] = array();
     }
-   
+
     $item = array();
     $item["name"] = $name;
     $item["icon"] = $icon;
-    if (!empty($divider)) { $item["divider"] = $divider; }
-    if (!empty($url)) { $item["url"] = $url; }
+    if (!empty($divider)) {
+        $item["divider"] = $divider;
+    }
+    if (!empty($url)) {
+        $item["url"] = $url;
+    }
     $item["module"] = $GLOBALS["arc"]["menumodule"];
-    
+
     if (!empty($group)) {
         $GLOBALS["arc"]["menus"][$group][] = $item;
     } else {
@@ -421,7 +429,7 @@ function arcProcessMenuItems($menus) {
     foreach ($menus as $menu => $value) {
         if ($menu != "" && !is_numeric($menu)) {
             echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
-             . "<span class='fa fa-list'></span> " . $menu . " <span class=\"caret\"></span></a>" . PHP_EOL
+            . "<span class='fa fa-list'></span> " . $menu . " <span class=\"caret\"></span></a>" . PHP_EOL
             . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
             arcProcessMenuItems($value);
             echo "</ul>" . PHP_EOL
@@ -431,7 +439,9 @@ function arcProcessMenuItems($menus) {
                 echo "<li class=\"divider\"></li>";
             }
             echo "<li><a href=\"" . $value["module"];
-            if (isset($value["url"])) { echo $value["url"]; }
+            if (isset($value["url"])) {
+                echo $value["url"];
+            }
             echo "\"><span class='fa " . $value["icon"] . "'></span> "
             . $value['name'] . "</a></li>";
         } else {
