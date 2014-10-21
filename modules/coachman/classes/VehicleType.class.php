@@ -13,7 +13,7 @@ class VehicleType extends DataProvider {
     
     public static function getAll() {
         $vehicles = new VehicleType();
-        return $vehicles->getCollection(["ORDER", "name ASC"]);
+        return $vehicles->getCollection(["ORDER" => "name ASC"]);
     }
 }
 

@@ -9,7 +9,7 @@
     </div>
     <div class="col-sm-4">
         <div class="boxBody boxBodyYellow">
-            <a href="<?php echo arcGetModulePath(); ?>/vehicals"><span class="fa fa-bus"></span> Vehicles</a>
+            <a href="<?php echo arcGetModulePath(); ?>/vehicles"><span class="fa fa-bus"></span> Vehicles</a>
         </div>
         <div class="boxFooter boxFooterYellow">
             <span class="fa fa-search"></span> Show All
