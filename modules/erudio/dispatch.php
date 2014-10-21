@@ -1,6 +1,7 @@
 <?php
 
 require_once "../../system/bootstrap.php";
+arcSetPage("erudio");
 
 if ($_POST["action"] == "antonyms") {
     $question = $_POST['question'];
@@ -60,7 +61,6 @@ if ($_POST["action"] == "antonyms") {
     $answer3 = cleanInput($_POST['answer3']);
     $answer4 = cleanInput($_POST['answer4']);
     $answer5 = cleanInput($_POST['answer5']);
-    $id = $_POST['id'];
     $time = $_POST['time'];
     $taken = time() - $time;
     $resultid = $_POST['result'];
@@ -87,8 +87,8 @@ if ($_POST["action"] == "antonyms") {
     }
 
 
-    $resultx = new result();
-    $resultx->getResult($resultid);
+    $resultx = new Result();
+    $resultx->getByID($resultid);
     $resultx->time = $taken;
     $resultx->correct = $correct;
     $xml = '<result>'
@@ -100,12 +100,12 @@ if ($_POST["action"] == "antonyms") {
             . '<question answer=\'' . $data[10] . '\' entered=\'' . $answer5 . '\'>' . $data[9] . '</question>'
             . '</result>';
     $resultx->data = $xml;
-    $resultx->updateResult();
+    $resultx->update();
 
     if ($correct) {
-        echo "0|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"/lessons/numerical-reasoning-multi-stage\">Try another question</a>";
+        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/multistage" . "\">Try another question</a>";
     } else {
-        echo "1|Sorry, don't give up.<br />Answer 1 <strong>'" . $data[2] . "'</strong>.<br />Answer 2 <strong>'" . $data[4] . "'</strong>.<br />Answer 3 <strong>'" . $data[6] . "'</strong>.<br />Answer 4 <strong>'" . $data[8] . "'</strong>.<br />Answer 5 <strong>'" . $data[10] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"/lessons/numerical-reasoning-multi-stage\">Try another question</a>";
+        echo "danger|Sorry, don't give up.<br />Answer 1 <strong>'" . $data[2] . "'</strong>.<br />Answer 2 <strong>'" . $data[4] . "'</strong>.<br />Answer 3 <strong>'" . $data[6] . "'</strong>.<br />Answer 4 <strong>'" . $data[8] . "'</strong>.<br />Answer 5 <strong>'" . $data[10] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/multistage" . "\">Try another question</a>";
     }
 } elseif ($_POST["action"] == "oddoneout") {
     $question = $_POST['question'];
@@ -158,7 +158,6 @@ if ($_POST["action"] == "antonyms") {
 } elseif ($_POST["action"] == "quickfire") {
     $question = $_POST['question'];
     $answer = cleanInput($_POST['answer']);
-    $id = $_POST['id'];
     $time = $_POST['time'];
     $taken = time() - $time;
     $resultid = $_POST['result'];
@@ -174,8 +173,8 @@ if ($_POST["action"] == "antonyms") {
         $correct = true;
     }
 
-    $result = new result();
-    $result->getResult($resultid);
+    $result = new Result();
+    $result->getByID($resultid);
     $result->type = "Quick Fire";
     $result->time = $taken;
     $result->correct = $correct;
@@ -185,12 +184,12 @@ if ($_POST["action"] == "antonyms") {
             . '</result>';
 
     $result->data = $xml;
-    $result->updateResult();
+    $result->update();
 
     if ($correct) {
-        echo "0|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"/lessons/numerical-reasoning-quick-fire\">Try another question</a>";
+        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/quickfire" . "\">Try another question</a>";
     } else {
-        echo "1|Sorry, don't give up.<br />The correct answer is <strong>'" . $data[1] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"/lessons/numerical-reasoning-quick-fire\">Try another question</a>";
+        echo "danger|Sorry, don't give up.<br />The correct answer is <strong>'" . $data[1] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/quickfire" . "\">Try another question</a>";
     }
 } elseif ($_POST["action"] == "shuffled") {
     $question = $_POST['question'];

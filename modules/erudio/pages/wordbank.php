@@ -1,26 +1,59 @@
-<?php
+<div class="well">
+    <p class="lead">Synopsis</p>
+    <p>This section will improve your ??</p>
+</div>
 
-/* 
- * The MIT License
- *
- * Copyright 2014 Craig.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+<?php
+$excerpt = Excerpt::getRandom();
+
+function cutText($text) {
+    $data = explode("\r\n", $text);
+    return $data[0] . "\r\n\r\n" . $data[1] . "\r\n\r\n" . $data[2];
+}
+?>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="well">
+                    <div class="lead">
+                        <?php echo $excerpt->name; ?>
+                    </div>
+                    <?php echo nl2br(cutText($excerpt->content)); ?>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="word1">Word 1</label>
+                        <select id="word1" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word2">Word 2</label>
+                        <select id="word2" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word3">Word 3</label>
+                        <select id="word3" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word4">Word 4</label>
+                        <select id="word4" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
