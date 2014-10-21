@@ -1,26 +1,53 @@
-<?php
+<div class="page-header">
+    <h1>Erudio</h1>
+</div>
 
-/* 
- * The MIT License
- *
- * Copyright 2014 Craig.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-
+<div class="row">
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Numerical Reasoning</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/multistage" ?>"><span class="fa fa-book"></span> Multistage</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/quickfire" ?>"><span class="fa fa-book"></span> Quickfire</a></li>
+                </ul>
+                <h3>Cloze Test</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/wordbank" ?>"><span class="fa fa-book"></span> Word Bank</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/multiple-choice" ?>"><span class="fa fa-book"></span> Multiple Choice</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/partial-words" ?>"><span class="fa fa-book"></span> Partial Words</a></li>
+                </ul>
+                <h3>Verbal Reasoning</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/comprehension" ?>"><span class="fa fa-book"></span> Comprehension</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/odd-one-out" ?>"><span class="fa fa-book"></span> Odd One Out</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/antonyms" ?>"><span class="fa fa-book"></span> Antonyms</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/synonyms" ?>"><span class="fa fa-book"></span> Synonyms</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/shuffled-sentences" ?>"><span class="fa fa-book"></span> Shuffled Sentences</a></li>
+                </ul>
+                <h3>Non-verbal Reasoning</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/2d" ?>"><span class="fa fa-book"></span> 2D Conventional</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/3d" ?>"><span class="fa fa-book"></span> 3D</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3>Building Blocks</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/times-tables" ?>"><span class="fa fa-book"></span> Times Tables</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/fractions" ?>"><span class="fa fa-book"></span> Fractions</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/algebra" ?>"><span class="fa fa-book"></span> Algebra</a></li>
+                </ul>
+                <h3>Results</h3>
+                <ul class="list-unstyled">
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/results" ?>"><span class="fa fa-book"></span> My Results</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath() . "/leaderboard" ?>"><span class="fa fa-book"></span> Leaderboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
