@@ -71,7 +71,7 @@
                             <label for="fuel">Fuel Cost Per Mile</label>
                             <input type="text" class="form-control" id="fuel" placeholder="Cost of fuel per mile" value="<?php echo $vehicle->fuelcostpermile; ?>" maxlength="18">
                         </div>
-                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', update, true);"><span class="fa fa-save"></span> Save</button></div>
+                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', updateVehicles, true);"><span class="fa fa-save"></span> Save</button></div>
                     </form>
                     <?php
                 }
@@ -80,12 +80,12 @@
     </div>
 </div>
 <script>
-    function update(data) {
+    function updateVehicles(data) {
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
             window.location = "<?php echo arcGetModulePath() . "/vehicles"; ?>";
         }
-        updateStatus(data2);
+        updateStatus(data);
     }
 </script>
