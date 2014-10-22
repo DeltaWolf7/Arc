@@ -7,6 +7,10 @@ Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/boo
 Medoo                       0.9.6.2             http://medoo.in/
 
 
+0.0.0.33
+--------
+/ Corrected wrong path for jquery.
+
 0.0.0.32
 --------
 / Corrected bug preventing administrative access.
