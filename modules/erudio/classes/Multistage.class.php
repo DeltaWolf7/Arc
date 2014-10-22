@@ -37,8 +37,9 @@ class Multistage extends DataProvider {
 
     public static function getRandomMultistage() {
         $multistage = new Multistage();
-        $multistage->get(["ORDER" => RAND(), "LIMIT" => 1]);
-        return $multistage;
+        $data = $multistage->getCollection([]);
+        shuffle($data);
+        return $data[0];
     }
     
     public static function getMultistages() {

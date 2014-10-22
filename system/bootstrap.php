@@ -327,8 +327,7 @@ function arcGetContent() {
             $path .= "/administration";
         }
         $path .= "/view/index.php";
-
-
+       
         if (file_exists($path)) {
             include_once $path;
         } else {
@@ -459,6 +458,9 @@ function arcAddMenuItem($name, $icon, $divider, $url, $group) {
         $item["url"] = $url;
     }
     $item["module"] = $GLOBALS["arc"]["menumodule"];
+    if (isset($GLOBALS["arc"]["menuadmin"]) && $GLOBALS["arc"]["menuadmin"] == true) {
+        $item["module"] = $item["module"] . "/administration";
+    }
 
     if (!empty($group)) {
         $GLOBALS["arc"]["menus"][$group][] = $item;
@@ -498,7 +500,9 @@ function arcGetMenu() {
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                     $GLOBALS["arc"]["menumodule"] = $module;
+                    $GLOBALS["arc"]["menuadmin"] = true;
                     include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
+                    unset($GLOBALS["arc"]["menuadmin"]);
                 }
             }
         }
