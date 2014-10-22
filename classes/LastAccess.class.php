@@ -36,6 +36,9 @@ class LastAccess extends DataProvider {
     public $browser;
     public $ipaddress;
 
+    /**
+     * LastAccess constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->userid = 0;
@@ -46,11 +49,21 @@ class LastAccess extends DataProvider {
         $this->columns = ["id", "userid", "when", "browser", "ipaddress"];
     }
 
+    /**
+     * 
+     * @param int $userid User's ID
+     * @return \LastAccess collection
+     */
     public static function getByUserID($userid) {
         $access = new LastAccess();
         return $access->getCollection(["userid" => $userid, "ORDER" => "when DESC"]);
     }
 
+    /**
+     * 
+     * @param int $userid User's ID
+     * Logs the users browser details and IP address
+     */
     public static function logAccess($userid) {
         $access = new LastAccess();
         $access->userid = $userid;
@@ -58,5 +71,4 @@ class LastAccess extends DataProvider {
         $access->ipaddress = $_SERVER["REMOTE_ADDR"];
         $access->update();
     }
-
 }

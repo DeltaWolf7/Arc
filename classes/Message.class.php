@@ -41,6 +41,9 @@ class Message extends DataProvider {
     public $fromuser;
     public $folder;
 
+    /**
+     * Message constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->subject = "";
@@ -56,9 +59,14 @@ class Message extends DataProvider {
         $this->columns = ["id", "subject", "content", "date", "userid", "read", "replied", "fromid", "fromuser", "folder"];
     }
 
+    /**
+     * 
+     * @param int $userid User's ID
+     * @param string $folder Folder name
+     * @return \Message collection
+     */
     public static function getMessagesByFolder($userid, $folder) {
         $message = new Message();
         return $message->getCollection(["AND" => ['"userid' => $userid, "folder" => $folder], "ORDER" => "date DESC"]);
     }
-
 }

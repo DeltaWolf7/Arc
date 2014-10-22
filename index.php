@@ -24,10 +24,11 @@
  * THE SOFTWARE.
  */
 
-error_reporting(E_ALL);
-ini_set("display_errors", "1");
-
+// include the required system file
 require_once __DIR__ . "/system/bootstrap.php";
 
+// get the controller of the page
 arcGetController();
+
+// get the view of the page
 arcGetView();

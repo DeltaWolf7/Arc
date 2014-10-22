@@ -34,6 +34,9 @@ class UserPermission extends DataProvider {
     public $groupid;
     public $permission;
 
+    /**
+     * UserPermission constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->groupid = 0;
@@ -42,6 +45,12 @@ class UserPermission extends DataProvider {
         $this->columns = ["id", "groupid", "permission"];
     }
     
+    /**
+     * 
+     * @param \UserPermission $permissions Permission collection
+     * @param string $entry Permission to check for
+     * @return boolean True if authorised
+     */
     public static function hasPermission($permissions, $entry) {
         foreach ($permissions as $permission) {
             if ($permission->permission == $entry) {
@@ -51,11 +60,20 @@ class UserPermission extends DataProvider {
         return false;
     }
     
+    /**
+     * 
+     * @param int $groupid Group ID
+     * @return \UserPermission
+     */
     public static function getByGroupID($groupid) {
         $permission = new UserPermission();
         return $permission->getCollection(["groupid" => $groupid]);
     }
     
+    /**
+     * 
+     * @return \UserGroup Gets user's group
+     */
     public function getGroup() {
         $group = new UserGroup();
         $group->getByID($this->groupid);

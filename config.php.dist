@@ -85,6 +85,3 @@ DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
 DEFINE("ARCSESSIONTIMEOUT", 30);
-
-// Default theme
-DEFINE("ARCDEFAULTTHEME", "bootstrap-theme");

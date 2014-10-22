@@ -34,6 +34,9 @@ class SystemSetting extends DataProvider {
     public $key;
     public $setting;
 
+    /**
+     * SystemSetting constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->key = "";
@@ -42,6 +45,11 @@ class SystemSetting extends DataProvider {
         $this->columns = ["id", "key", "setting"];
     }
 
+    /**
+     * 
+     * @param string $key Key of the setting
+     * @return \SystemSetting setting if it exists
+     */
     public static function getByKey($key) {
         $setting = new SystemSetting();
         $setting->get(["key" => $key]);
@@ -52,5 +60,4 @@ class SystemSetting extends DataProvider {
         }
         return $setting;
     }
-
 }

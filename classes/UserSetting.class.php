@@ -35,6 +35,9 @@ class UserSetting extends DataProvider {
     public $userid;
     public $setting;
 
+    /**
+     * UserSetting constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->key = "";
@@ -44,6 +47,12 @@ class UserSetting extends DataProvider {
         $this->columns = ["id", "key", "userid", "setting"];
     }
 
+    /**
+     * 
+     * @param int $userid User's ID
+     * @param string $key Key of the setting
+     * @return \UserSetting
+     */
     public static function getByUserID($userid, $key) {
         $setting = new UserSetting();
         $setting->get(["AND" => ["userid" => $userid, "key" => $key]]);
@@ -55,5 +64,4 @@ class UserSetting extends DataProvider {
         }
         return $setting;
     }
-
 }

@@ -39,6 +39,9 @@ class User extends DataProvider {
     public $enabled;
     public $usergroupid;
 
+    /**
+     * User constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->firstname;
@@ -52,37 +55,68 @@ class User extends DataProvider {
         $this->columns = ["id", "firstname", "lastname", "email", "passwordhash", "created", "enabled", "usergroupid"];
     }
 
+    /**
+     * 
+     * @param string $email User's email address
+     * @return \User
+     */
     public static function getByEmail($email) {
         $user = new User();
         $user->get(["email" => $email]);
         return $user;
     }
 
+    /**
+     * 
+     * @return \User collection (All users)
+     */
     public static function getAllUsers() {
         $user = new User();
         return $user->getCollection(["ORDER" => "firstname ASC"]);
     }
     
+    /**
+     * 
+     * @return \UserGroup Gets the group of the user
+     */
     public function getGroup() {
         $group = new UserGroup();
         $group->getByID($this->usergroupid);
         return $group;
     }
 
+    /**
+     * 
+     * @param string $password Password to be set
+     */
     public function setPassword($password) {
         $this->passwordhash = password_hash($password, PASSWORD_DEFAULT);
     }
 
+    /**
+     * 
+     * @param string $password Password to check against user
+     * @return bool True if password is a match
+     */
     public function verifyPassword($password) {
         return password_verify($password, $this->passwordhash);
     }
 
+    /**
+     * 
+     * @return \LastAccess Gets last access entry for this user
+     */
     public function getLastAccess() {
         $lastaccess = new LastAccess();
         $lastaccess->getByUserID($this->id);
         return $lastaccess;
     }
 
+    /**
+     * 
+     * @param string $key Key of the setting
+     * @return \UserSetting Users setting for the specified key
+     */
     public function getSettingByKey($key) {
          return UserSetting::getByUserID($this->id, $key);
     }

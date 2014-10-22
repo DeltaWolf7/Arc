@@ -31,6 +31,7 @@
  */
 // start session
 session_start();
+
 // get config file
 require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
 
@@ -40,20 +41,25 @@ if (ARCDEBUG == true) {
     ini_set("display_errors", "1");
 }
 
+// check that we are using PHP 5.3 or better.
 if (version_compare(phpversion(), '5.3.0', '<') == true) {
-    exit('PHP 5.3+ Required');
+    exit('PHP 5.3 or newer required');
 }
 
+// make sure we have the correct time zone.
 if (!ini_get('date.timezone')) {
     date_default_timezone_set('UTC');
 }
 
-// arc storage
+// arc storage (stores system values)
 $arc = array();
+// setup empty menu array
 $arc["menu"] = array();
 
-// setup database connection from config
+// include required database system
 require_once $_SERVER["DOCUMENT_ROOT"] . ARCFS . "system/medoo.min.php";
+
+// create a connection to the database
 try {
     $arc["database"] = new medoo([
         "database_type" => ARCDBTYPE,
@@ -68,8 +74,12 @@ try {
     die();
 }
 
-// class auto loader
+/**
+ * 
+ * @param string $class_name The class to search for
+ */
 function __autoload($class_name) {
+    // check for system classes and check for classes in modules.
     if (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php")) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");
     } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
@@ -77,7 +87,7 @@ function __autoload($class_name) {
     }
 }
 
-// javascript
+// javascript, add required javascript files to header
 arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
 arcAddHeader("js", arcGetPath() . "js/jquery-hotkeys.min.js");
 arcAddHeader("js", arcGetPath() . "js/bootstrap.min.js");
@@ -87,27 +97,35 @@ arcAddHeader("js", arcGetPath() . "js/bootstrap-wysiwyg.min.js");
 arcAddHeader("js", arcGetPath() . "js/delta-ajax.min.js");
 arcAddHeader("js", arcGetPath() . "js/status.min.js");
 
-// css
+// css, add required css files to header
 arcAddHeader("css", arcGetPath() . "css/bootstrap.min.css");
 arcAddHeader("css", arcGetPath() . "css/datepicker.min.css");
 arcAddHeader("css", arcGetPath() . "css/font-awesome.min.css");
 arcAddHeader("css", arcGetPath() . "css/status.min.css");
 
-// favicon
+// favicon, add favicon it it exists.
 if (file_exists(arcGetPath() . ARCFAVICON)) {
     arcAddHeader("facicon", arcGetPath() . ARCFAVICON);
 }
 
-// split the url, get module and data.
+// split the url and get module and data.
 arcSplitURL();
 
-// get database object
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * @return \medoo Database connection
+ */
 function arcGetDatabase() {
     global $arc;
     return $arc["database"];
 }
 
-// get www path or filesystem path if true
+/**
+ * 
+ * @param bool $filesystem True to return filesystem path, false for web path
+ * @return string
+ */
 function arcGetPath($filesystem = false) {
     if ($filesystem) {
         return $_SERVER["DOCUMENT_ROOT"] . ARCFS;
@@ -115,7 +133,12 @@ function arcGetPath($filesystem = false) {
     return ARCWWW;
 }
 
-// get url data
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * @param string $name Section to get
+ * @return string Module or data
+ */
 function arcGetURLData($name = null) {
     global $arc;
     if (!empty($name)) {
@@ -127,7 +150,11 @@ function arcGetURLData($name = null) {
     return $arc["urldata"];
 }
 
-// function to split url
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * Splits the URL
+ */
 function arcSplitURL() {
     global $arc;
     $arc["urldata"] = array();
@@ -158,7 +185,12 @@ function arcSplitURL() {
     }
 }
 
-// add to header
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * @param string $type title, description, keywords, author, alternate, canonical, css, js, favicon
+ * @param string $content Value to assign to tag
+ */
 function arcAddHeader($type, $content) {
     global $arc;
     switch ($type) {
@@ -195,6 +227,9 @@ function arcAddHeader($type, $content) {
     }
 }
 
+/**
+ * Includes the controller path used by the current page
+ */
 function arcGetController() {
     include arcGetTheme() . "controller/index.php";
 
@@ -218,7 +253,13 @@ function arcGetController() {
     }
 }
 
+/**
+ * 
+ * @return null Returns on user logout
+ * Includes the specified view
+ */
 function arcGetView() {
+    // logout user
     if (arcGetURLData("module") == "logout") {
         session_unset();
         session_destroy();
@@ -226,13 +267,15 @@ function arcGetView() {
         return;
     }
 
+    // expired session
     $timeout = ARCSESSIONTIMEOUT * 60;
     if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
         session_unset();
         session_destroy();
         arcSetPage("error", "419");
     } else {
-        $_SESSION["LAST_ACTIVITY"] = time(); // update last activity time stamp   
+        // update last activity time stamp
+        $_SESSION["LAST_ACTIVITY"] = time();  
 
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id != 0) {
@@ -253,22 +296,28 @@ function arcGetView() {
                 $permissions = $group->getPermissions();
             }
 
+            // permission check string
             $pCheck = arcGetURLData("module") . "/" . arcGetURLData("data1");
 
+            // module is not a page
             if (arcGetURLData("module") != "page") {
                 $pCheck = "module/" . arcGetURLData("module");
             }
 
+            // user doesn't have permission to access module
             if (!UserPermission::hasPermission($permissions, $pCheck)) {
                 arcSetPage("error", "403");
             }
         }
     }
 
+    // include default theme view
     include arcGetTheme() . "view/index.php";
 }
 
-// get content
+/**
+ * Include the content from the selected module
+ */
 function arcGetContent() {  
     if (file_exists(arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php")) {
         include_once arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php";
@@ -288,16 +337,26 @@ function arcGetContent() {
     }
 }
 
-// get header
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * Adds header information to a page from header array
+ */
 function arcGetHeader() {
     global $arc;
-// output header
+    // output header
     foreach ($arc["headerdata"] as $line) {
         echo $line;
     }
 }
 
-// set page
+/**
+ * 
+ * @global array $arc Arc settings storage
+ * @param string $name Section to change, eg module
+ * @param string $data Data if any
+ * Can be used to force a module. Required for calling classes in dispatch from modules.
+ */
 function arcSetPage($name, $data = null) {
     global $arc;
     $arc["urldata"] = array();
@@ -310,7 +369,10 @@ function arcSetPage($name, $data = null) {
     }
 }
 
-// get user
+/**
+ * 
+ * @return \User Return the logged in user object or null if no one
+ */
 function arcGetUser() {
     if (isset($_SESSION["arc_user"])) {
         return unserialize($_SESSION["arc_user"]);
@@ -318,12 +380,18 @@ function arcGetUser() {
     return null;
 }
 
-// set user
+/**
+ * 
+ * @param User $user Sets the logged in user
+ */
 function arcSetUser($user) {
     $_SESSION["arc_user"] = serialize($user);
 }
 
-// arcRedirect to default
+/**
+ * 
+ * @param string $destination Outputs a javascript redirect to root or specified url
+ */
 function arcRedirect($destination = null) {
     echo "<script>window.location = '";
     if (empty($destination)) {
@@ -334,7 +402,9 @@ function arcRedirect($destination = null) {
     echo "';</script>";
 }
 
-// get dispatch url
+/**
+ * Output the path the the modules dispatch file
+ */
 function arcGetDispatch() {
     $path = ARCWWW . "modules/" . arcGetURLData("module");
     if (arcGetURLData("data1") == "administration") {
@@ -344,7 +414,11 @@ function arcGetDispatch() {
     echo $path;
 }
 
-// get module root
+/**
+ * 
+ * @param bool $filesystem True for filesystem path, False for web path
+ * @return string Path to module
+ */
 function arcGetModulePath($filesystem = false) {
     if ($filesystem == true) {
         if (arcGetURLData("data1") == "administration") {
@@ -360,11 +434,21 @@ function arcGetModulePath($filesystem = false) {
     }
 }
 
+/**
+ * 
+ * @param string $name Name of the menu item
+ * @param string $icon Font Awesome icon name fa-*
+ * @param bool $divider True to include a divider in menu
+ * @param string $url Url of this link, null for default
+ * @param string $group Group to palce the item
+ */
 function arcAddMenuItem($name, $icon, $divider, $url, $group) {
+    // setup menu storage if not already in existance
     if (!isset($GLOBALS["arc"]["menus"])) {
         $GLOBALS["arc"]["menus"] = array();
     }
-
+    
+    // build menu item
     $item = array();
     $item["name"] = $name;
     $item["icon"] = $icon;
@@ -383,7 +467,9 @@ function arcAddMenuItem($name, $icon, $divider, $url, $group) {
     }
 }
 
-// get menu
+/**
+ * Processes modules and building menus from info data
+ */
 function arcGetMenu() {
     $modules = scandir(arcGetPath(true) . "modules");
 
@@ -424,7 +510,11 @@ function arcGetMenu() {
     arcProcessMenuItems($GLOBALS["arc"]["menus"]);
 }
 
-// process menu items
+/**
+ * 
+ * @param Array $menus Array containing menu data
+ * Builds the html for the menu items
+ */
 function arcProcessMenuItems($menus) {
     foreach ($menus as $menu => $value) {
         if ($menu != "" && !is_numeric($menu)) {
@@ -450,7 +540,10 @@ function arcProcessMenuItems($menus) {
     }
 }
 
-// get modules
+/**
+ * 
+ * @return Array Containing the modules installed on the system and their details
+ */
 function arcGetModules() {
     $modules = scandir(arcGetPath(true) . "modules");
     $module_list = array();
@@ -479,7 +572,10 @@ function arcGetModules() {
     return $module_list;
 }
 
-//get theme
+/**
+ * 
+ * @return string Path to template in use
+ */
 function arcGetTheme() {
     $theme = SystemSetting::getByKey("ARCTHEME");
     if (empty($theme->setting) || !file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
@@ -488,7 +584,10 @@ function arcGetTheme() {
     return "templates/" . $theme->setting . "/";
 }
 
-//powered by
+/**
+ * 
+ * @return string Arc version information
+ */
 function arcPoweredBy() {
     return "Powered by Arc, Version: " . ARCVERSION;
 }

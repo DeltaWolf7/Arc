@@ -34,6 +34,9 @@ class UserGroup extends DataProvider {
     public $name;
     public $description;
 
+    /**
+     * UserGroup constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->name = "";
@@ -42,16 +45,29 @@ class UserGroup extends DataProvider {
         $this->columns = ["id", "name", "description"];
     }
     
+    /**
+     * 
+     * @param string $name Name of the group
+     * @return \UserGroup
+     */
     public static function getByName($name) {
         $group = new UserGroup();
         $group->get(["name" => $name]);
         return $group;
     }
     
+    /**
+     * 
+     * @return UserPermission Permission of the user of a group
+     */
     public function getPermissions() {
         return UserPermission::getByGroupID($this->id);
     }
     
+    /**
+     * 
+     * @return UserGroup Returns all groups
+     */
     public static function getAllGroups() {
         $groups = new UserGroup();
         return $groups->getCollection(["ORDER" => "name ASC"]);

@@ -38,6 +38,9 @@ class Page extends DataProvider {
     public $metadescription;
     public $metakeywords;
 
+    /**
+     * Page constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->title = "";
@@ -50,6 +53,11 @@ class Page extends DataProvider {
         $this->columns = ["id", "title", "content", "seourl", "metatitle", "metadescription", "metakeywords"];
     }
 
+    /**
+     * 
+     * @param string $seourl SEO Url
+     * @return \Page
+     */
     public static function getBySEOURL($seourl) {
         $page = new Page();
         $page->get(["seourl" => $seourl]);
