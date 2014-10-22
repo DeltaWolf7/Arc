@@ -38,6 +38,6 @@ $user = arcGetUser();
 
     <div class="text-right">
         <input type="hidden" id="userid" value="<?php echo $user->id; ?>" />
-        <button type="button" class="btn btn-default" onclick="ajax.send('POST', {userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email'}, '<?php arcGetDispatch(); ?>', updateStatus, true)">Update</button>
+        <button type="button" class="btn btn-success" onclick="ajax.send('POST', {userid: '#userid', firstname: '#firstname', lastname: '#lastname', password: '#password', retype: '#retype', email: '#email'}, '<?php arcGetDispatch(); ?>', updateStatus, true)"><span class="fa fa-save"></span> Save</button>
     </div>
 </form>

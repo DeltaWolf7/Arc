@@ -58,6 +58,29 @@ class LastAccess extends DataProvider {
         $access = new LastAccess();
         return $access->getCollection(["userid" => $userid, "ORDER" => "when DESC"]);
     }
+    
+    /**
+     * 
+     * @param int $userid User's ID
+     * @return \LastAccess collection
+     */
+    public static function getIPsByUserID($userid) {
+        $accesses = LastAccess::getByUserID($userid);
+        $data = array();
+        foreach ($accesses as $access) {
+            $found = false;
+            foreach ($data as $dt) {
+                if ($dt->ipaddress == $access->ipaddress) {
+                    $found = true;
+                    continue;
+                }
+            }
+            if ($found == false) {
+                $data[] = $access;
+            }
+        }
+        return $data;
+    }
 
     /**
      * 
@@ -70,5 +93,14 @@ class LastAccess extends DataProvider {
         $access->browser = $_SERVER["HTTP_USER_AGENT"];
         $access->ipaddress = $_SERVER["REMOTE_ADDR"];
         $access->update();
+    }
+    
+    /**
+     * 
+     * @return \LastAccess Returns all access logs
+     */
+    public static function getLogs() {
+        $access = new LastAccess();
+        return $access->getCollection(["ORDER" => "when DESC"]);
     }
 }

@@ -14,12 +14,12 @@ if (empty(arcGetURLData("data2"))) {
     <div class="panel panel-default">
         <div class="panel-body">
             <table class="table table-striped">
-                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><a href="<?php echo arcGetModulePath() . "edit/0"; ?>"><span class="fa fa-plus"></span> New Page</a></th></tr>
+                <tr><th>SEO Url</th><th>Title</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo arcGetModulePath() . "edit/0"; ?>'"><span class="fa fa-plus"></span> New Page</button></th></tr>
                 <?php
                 $pages = Page::getAllPages();
                 foreach ($pages as $page) {
-                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><a href='" . arcGetModulePath() . "edit/" . $page->id . "'><span class='fa fa-edit'></span>&nbsp;Edit</a>"
-                    . "&nbsp;<a href='" . arcGetModulePath() . "remove/" . $page->id . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
+                    echo "<tr><td>" . $page->seourl . "</td><td>" . $page->title . "</td><td class='text-right'><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "edit/" . $page->id . "'\"><span class='fa fa-edit'></span>&nbsp;Edit</button>"
+                    . "&nbsp;<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "remove/" . $page->id . "'\"><span class='fa fa-remove'></span>&nbsp;Remove</button></td></tr>";
                 }
                 ?>
             </table>
@@ -57,15 +57,15 @@ if (empty(arcGetURLData("data2"))) {
                                     <div class="col-md-6 text-center">
                                         <?php
                                         $permissions = $page->getPermissions();
-                                        echo "<br />This page belongs to " . count($permissions) . " group";
+                                        echo "<div class=\"badge\">This page belongs to " . count($permissions) . " group";
                                         if (count($permissions) > 1) {
                                             echo "s";
                                         }
-                                        echo "."
+                                        echo ".</div>"
                                         ?>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        <button type="button" class="btn btn-default" onclick="showPermissions();">Edit Page Permissions</button>
+                                        <button type="button" class="btn btn-primary" onclick="showPermissions();"><span class="fa fa-edit"></span>  Edit Permissions</button>
                                     </div>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@ if (empty(arcGetURLData("data2"))) {
                             <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><span class="fa fa-repeat"></span></a>
                         </div>
                         <input type="text" data-edit="inserttext" id="voiceBtn" x-webkit-speech="">
-                        <a class="btn" data-edit="html" title="Html Editor" onclick="showHtml();"><span class="fa fa-html5"></span></a>
+                        <a class="btn" data-edit="html" title="Html Editor" onclick="showHtml();"><span class="fa fa-file-code-o"></span> Source</a>
                     </div>
                     <div id="editor"><?php echo html_entity_decode($page->content); ?></div>
                 </div>
@@ -161,7 +161,7 @@ if (empty(arcGetURLData("data2"))) {
 
         <div class="text-right">
 
-            <button type="button" class="btn btn-default" onclick="doUpdate();">Update</button></div>
+            <button type="button" class="btn btn-success" onclick="doUpdate();"><span class="fa fa-save"></span> Save</button></div>
     </form>
 
 
@@ -169,7 +169,7 @@ if (empty(arcGetURLData("data2"))) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><span class="fa fa-close"></span> Close</span></button>
                     <h4 class="modal-title">Html Editor</h4>
                 </div>
                 <div class="modal-body">
@@ -192,21 +192,20 @@ if (empty(arcGetURLData("data2"))) {
                 </div>
                 <div class="modal-body">
                     <table class="table table-striped">
-                        <tr><th>Group</th><th>&nbsp;</th></tr>
+                        <tr><th>Group</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="addPermission();"><span class="fa fa-plus"></span> Create</button></th></tr>
                         <?php
                         $permissions = $page->getPermissions();
                         foreach ($permissions as $permission) {
                             $group = $permission->getGroup();
-                            echo "<tr><td>" . $group->name . "</td><td class='text-right'><a href='" . arcGetModulePath() . "permission/remove/" . $permission->id . "/" . $page->id . "'><span class='fa fa-remove'></span> Remove</a>";
+                            echo "<tr><td>" . $group->name . "</td><td class='text-right'><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "permission/remove/" . $permission->id . "/" . $page->id . "'\"><span class='fa fa-remove'></span> Remove</button>";
                             echo "</td></tr>";
                         }
                         ?>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" onclick="window.location = '<?php echo arcGetModulePath() . "edit/" . $page->id; ?>'">Refresh</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="addPermission();">New Permission</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" onclick="window.location = '<?php echo arcGetModulePath() . "edit/" . $page->id; ?>'"><span class="fa fa-refresh"></span> Refresh</button>            
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="fa fa-close"></span> Close</button>
                 </div>
             </div>
         </div>
@@ -216,7 +215,7 @@ if (empty(arcGetURLData("data2"))) {
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only"><span class="fa fa-close"></span> Close</span></button>
                     <h4 class="modal-title">Add New Page Permission</h4>
                 </div>
                 <div class="modal-body">
@@ -233,8 +232,8 @@ if (empty(arcGetURLData("data2"))) {
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php arcGetDispatch(); ?>', null, true);">Add To Group</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php arcGetDispatch(); ?>', null, true);"><span class="fa fa-plus"></span> Add To Group</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="fa fa-close"></span> Close</button>
                 </div>
             </div>
         </div>

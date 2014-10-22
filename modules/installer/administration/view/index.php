@@ -39,17 +39,19 @@ function deleteDir($dirPath) {
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="form-group">
-                       Select the Zip archive containing the module to install.
+                        Select the Zip archive containing the module to install.
                     </div>
                     <div class="form-group">
                         <label for="upload">Module Uploader</label>
-                        
+
                         <input maxlength="100" type="file" class="filestyle" id="upload" name="file" placeholder="Upload module">
                     </div>
-                    
+
                 </div>
             </div>
-            <button type="submit" class="btn btn-default">Install</button>
+            <div class="text-right">
+                <button type="submit" class="btn btn-default">Install</button>
+            </div>
         </form>
     </div>
 
@@ -64,7 +66,7 @@ function deleteDir($dirPath) {
                         echo "<tr><td>" . $module["module"] . "</td><td><a href='" . $module['www'] . "' target='_new'>" . $module['name'] . "</a></td><td>" . $module['description'] . "</td><td><a href='mailto:" . $module['email'] . "'>" . $module['author'] . "</a></td><td>" . $module['version'] . "</td>" .
                         "<td class='text-right'>";
                         if ($module['system'] == false) {
-                            echo "<a href='" . arcGetModulePath() . "remove/" . $module["module"] . "'><span class='fa fa-remove'></span>&nbsp;Remove</a></td></tr>";
+                            echo "<button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "remove/" . $module["module"] . "'\"><span class='fa fa-remove'></span> Remove</button></td></tr>";
                         }
                     }
                     ?>

@@ -10,20 +10,19 @@
     <div class="col-sm-8">
         <table class="table table-striped">
             <tr>
-                <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th></th>
+                <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "/vehicles/new" ?>'"><span class="fa fa-plus"></span> Create</button></th>
             </tr>
             <?php
             $vehicles = Vehicle::getAll();
             foreach ($vehicles as $vehicle) {
                 $type = new VehicleType();
                 $type->getByID($vehicle->typeid);
-                echo "<tr><td><a href=\"" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" onclick=\"window.location='" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "/delete" . "'\"><span class=\"fa fa-close\" style=\"color: red;\"></span> Delete</button></td></tr>";
+                echo "<tr><td><a href=\"" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "/delete" . "'\"><span class=\"fa fa-close\"></span> Delete</button></td></tr>";
             }
             ?>
         </table>
     </div>
     <div class="col-sm-4">
-        <p><button type="button" class="btn-lg btn-info btn-block" onclick="window.location = '<?php echo arcGetModulePath() . "/vehicles/new" ?>'">Create new</button></p>
         <div class="panel panel-default">
             <div class="panel-body">
 
@@ -72,7 +71,7 @@
                             <label for="fuel">Fuel Cost Per Mile</label>
                             <input type="text" class="form-control" id="fuel" placeholder="Cost of fuel per mile" value="<?php echo $vehicle->fuelcostpermile; ?>" maxlength="18">
                         </div>
-                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', update, true);">Save</button></div>
+                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', update, true);"><span class="fa fa-save"></span> Save</button></div>
                     </form>
                     <?php
                 }

@@ -166,7 +166,7 @@
                                     <p>
                                     <div class="row">
                                         <div class="col-md-10">&nbsp;</div>
-                                        <div class="col-md-2 text-right"><a href="#" onclick="ajax.send('POST', {action: 'send', userid: '#userid', touser: '#touser', subject: '#subject', message: '#message', replyid: '#replyid'}, '<?php arcGetDispatch(); ?>', sendMessage, true)"><span class='fa fa-send'></span> Send</a></div>
+                                        <div class="col-md-2 text-right"><button class="btn btn-default" onclick="ajax.send('POST', {action: 'send', userid: '#userid', touser: '#touser', subject: '#subject', message: '#message', replyid: '#replyid'}, '<?php arcGetDispatch(); ?>', sendMessage, true)"><span class='fa fa-send'></span> Send</a></button></div>
                                     </div>
 
                                     </p>
