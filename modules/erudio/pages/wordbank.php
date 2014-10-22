@@ -50,7 +50,42 @@ function cutText($text) {
                             <option>test test test</option>
                         </select>
                     </div>
-
+                    <div class="form-group">
+                        <label for="word5">Word 5</label>
+                        <select id="word5" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word6">Word 6</label>
+                        <select id="word6" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word7">Word 7</label>
+                        <select id="word7" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word8">Word 8</label>
+                        <select id="word8" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word9">Word 9</label>
+                        <select id="word9" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="word10">Word 10</label>
+                        <select id="word10" class="form-control">
+                            <option>test test test</option>
+                        </select>
+                    </div>
                 </form>
             </div>
         </div>
