@@ -90,8 +90,9 @@ function __autoload($class_name) {
 // javascript, add required javascript files to header
 arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
 arcAddHeader("js", arcGetPath() . "js/jquery-hotkeys.min.js");
+arcAddHeader("js", arcGetPath() . "js/moment.min.js");
 arcAddHeader("js", arcGetPath() . "js/bootstrap.min.js");
-arcAddHeader("js", arcGetPath() . "js/bootstrap-datepicker.min.js");
+arcAddHeader("js", arcGetPath() . "js/bootstrap-datetimepicker.min.js");
 arcAddHeader("js", arcGetPath() . "js/bootstrap-filestyle.min.js");
 arcAddHeader("js", arcGetPath() . "js/bootstrap-wysiwyg.min.js");
 arcAddHeader("js", arcGetPath() . "js/delta-ajax.min.js");
@@ -99,7 +100,7 @@ arcAddHeader("js", arcGetPath() . "js/status.min.js");
 
 // css, add required css files to header
 arcAddHeader("css", arcGetPath() . "css/bootstrap.min.css");
-arcAddHeader("css", arcGetPath() . "css/datepicker.min.css");
+arcAddHeader("css", arcGetPath() . "css/bootstrap-datetimepicker.min.css");
 arcAddHeader("css", arcGetPath() . "css/font-awesome.min.css");
 arcAddHeader("css", arcGetPath() . "css/status.min.css");
 

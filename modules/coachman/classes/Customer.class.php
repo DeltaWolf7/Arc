@@ -1,9 +1,9 @@
 <?php
 
-/*
+/* 
  * The MIT License
  *
- * Copyright 2014 Craig Longford.
+ * Copyright 2014 craig.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,64 +24,25 @@
  * THE SOFTWARE.
  */
 
-/**
- * Application configuration
- *
- * @author Craig Longford
- */
-/*
- *  Database Configuration
- */
+class Customer extends DataProvider {
+    
+    public $firstname;
+    public $lastname;
+    public $email;
+    public $phone;
+    public $mobile;
+    public $company;
+    
+    public function __construct() {
+        parent::__construct();
+        $this->firstname = "";
+        $this->lastname = "";
+        $this->email = "";
+        $this->phone = "";
+        $this->mobile = "";
+        $this->company = "";
+        $this->table = "coachman_customers";
+        $this->columns = ["id", "firstname", "lastname", "email", "phone", "mobile", "company"];
+    }
+}
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
-
-// Database name
-DEFINE("ARCDBNAME", "arc");
-
-// Database username
-DEFINE("ARCDBUSER", "username");
-
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
-
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
-
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Server Configuration
- */
-
-// Web path
-DEFINE("ARCWWW", "/");
-
-// FS path
-DEFINE("ARCFS", "/");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project fav icon
-DEFINE("ARCFAVICON", "favicon.png");
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.34");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 30);

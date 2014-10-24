@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Coach Manager <?php
+    <h1>Coach Manager :: Vehicles <?php
         if (!empty(arcGetURLData("data1"))) {
             echo "<a href=\"" . arcGetModulePath() . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
         }
