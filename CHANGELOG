@@ -8,6 +8,13 @@ Medoo                       0.9.6.2             http://medoo.in/
 Moment.js                   2.8.3               http://momentjs.com/
 
 
+0.0.0.35
+--------
++ Added url and referer to logs.
+/ Changed the way logging now works to cover all actions.
++ Added a couple of methods to the user class to prevent the admin being removed/changed on the demo.
++ Updated all the sql files in the project to be current.
+
 0.0.0.34
 --------
 / Changed included date picker, for a better datetime picker.

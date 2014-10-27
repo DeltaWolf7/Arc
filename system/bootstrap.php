@@ -74,6 +74,10 @@ try {
     die();
 }
 
+
+// log access
+LastAccess::logAccess(arcGetUser());
+
 /**
  * 
  * @param string $class_name The class to search for

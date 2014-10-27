@@ -48,8 +48,6 @@ if ($user->verifyPassword($_POST["password"])) {
     if ($user->enabled) {
         arcSetUser($user);
 
-        LastAccess::logAccess($user->id);
-
         echo "success|Login successful";
         return;
     } else {

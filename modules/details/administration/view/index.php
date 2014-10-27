@@ -31,7 +31,7 @@
 
 
 <?php
-if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access") {
+if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") {
     ?>
     <div class="tab-content">
         <div class="tab-pane active">
@@ -70,20 +70,33 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access") {
                             ?>
                         </table>
 
-                    <?php } elseif (arcGetURLData("data2") == "access") { ?>
+                    <?php } elseif (arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") { ?>
 
                         <table class="table table-striped">
-                            <tr><th>User</th><th>When</th><th>Browser</th><th>IP Address</th></tr>
+                            <tr><th>User</th><th>When</th><th>Browser</th><th>IP Address</th><th>Url</th><th>Referer</th></tr>
                             <?php
-                            $logs = LastAccess::getLogs();
-                            $page = ((int) arcGetURLData("data3"));
-                            $mark = 15;
+                            if (arcGetURLData("data2") == "access") {
+                                $logs = LastAccess::getLogs();
+                                $page = ((int) arcGetURLData("data3"));
+                                $mark = 15;
+                            } else {
+                                $logs = LastAccess::getLogsByIP(arcGetURLData("data3"));
+                                $page = 1;
+                                $mark = count($logs);
+                            }
                             $length = $mark * $page;
                             for ($i = $length - $mark; $i < $length; $i++) {
                                 $user = new User();
-                                $user->getByID($logs[$i]->userid);
-                                echo "<tr><td><a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->firstname . " " . $user->lastname . "</a></td><td>" . $logs[$i]->when
-                                . "</td><td>" . $logs[$i]->browser . "</td><td>" . $logs[$i]->ipaddress . "</td></tr>";
+                                if (isset($logs[$i]->userid)) {
+                                    $user->getByID($logs[$i]->userid);
+                                }
+                                echo "<tr><td>";
+                                if ($user->id == "0") {
+                                    echo "Anonymous";
+                                } else {
+                                    echo "<a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->firstname . " " . $user->lastname . "</a>";
+                                }
+                                echo "</td><td>" . $logs[$i]->when . "</td><td>" . $logs[$i]->browser . "</td><td><a href=\"" . arcGetModulePath() . "ip/" . $logs[$i]->ipaddress . "\">" . $logs[$i]->ipaddress . "</a></td><td>" . $logs[$i]->url . "</td><td>" . $logs[$i]->referer . "</td></tr>";
                             }
                             ?>
                         </table>
@@ -98,7 +111,6 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access") {
                             }
                             ?>
                         </ul>
-
                     <?php } ?>
                 </div>
             </div>
@@ -244,7 +256,7 @@ if (arcGetURLData("data2") == "user") {
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped">
-                            <tr><th>Permission</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location='<?php echo arcGetModulePath() . "group/add/" . arcGetURLData("data4"); ?>'"><span class="fa fa-plus"></span> New Permission</button></th></tr>
+                            <tr><th>Permission</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "group/add/" . arcGetURLData("data4"); ?>'"><span class="fa fa-plus"></span> New Permission</button></th></tr>
                             <?php
                             $permissions = $group->getPermissions();
                             $count = 0;
@@ -297,7 +309,7 @@ if (arcGetURLData("data2") == "user") {
         </div>
         <div class="text-right">      
             <?php if ($group->id != 1 && $group->id != 2 && $group->id != 3) { ?>
-                        <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savegroup', id: '<?php echo $group->id; ?>', name: '#groupname', description: '#groupdescription'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Save</button>
+                <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savegroup', id: '<?php echo $group->id; ?>', name: '#groupname', description: '#groupdescription'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Save</button>
             <?php } ?>         
         </div>
         <?php

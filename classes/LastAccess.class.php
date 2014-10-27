@@ -35,6 +35,8 @@ class LastAccess extends DataProvider {
     public $when;
     public $browser;
     public $ipaddress;
+    public $url;
+    public $referer;
 
     /**
      * LastAccess constructor
@@ -45,8 +47,10 @@ class LastAccess extends DataProvider {
         $this->when = date("y-m-d h:i:s");
         $this->browser = "";
         $this->ipaddress = "";
+        $this->url = "";
+        $this->referer = "";
         $this->table = ARCDBPREFIX . "last_access";
-        $this->columns = ["id", "userid", "when", "browser", "ipaddress"];
+        $this->columns = ["id", "userid", "when", "browser", "ipaddress", "url", "referer"];
     }
 
     /**
@@ -84,14 +88,18 @@ class LastAccess extends DataProvider {
 
     /**
      * 
-     * @param int $userid User's ID
+     * @param int $user User object
      * Logs the users browser details and IP address
      */
-    public static function logAccess($userid) {
+    public static function logAccess($user = null) {
         $access = new LastAccess();
-        $access->userid = $userid;
+        if (!empty($user)) {
+            $access->userid = $user->id;
+        }
         $access->browser = $_SERVER["HTTP_USER_AGENT"];
         $access->ipaddress = $_SERVER["REMOTE_ADDR"];
+        $access->url = $_SERVER["REQUEST_URI"];
+        $access->referer = $_SERVER["HTTP_REFERER"];
         $access->update();
     }
     
@@ -102,5 +110,21 @@ class LastAccess extends DataProvider {
     public static function getLogs() {
         $access = new LastAccess();
         return $access->getCollection(["ORDER" => "when DESC"]);
+    }
+    
+    /**
+     * 
+     * @return \LastAccess Returns all access logs
+     */
+    public static function getLogsByIP($ipaddress) {
+        $access = new LastAccess();
+        $data = $access->getCollection(["ORDER" => "when DESC"]);
+        $ips = array();
+        foreach ($data as $ip) {
+            if ($ip->ipaddress = $ipaddress) {
+                $ips[] = $ip;
+            }
+        }
+        return $ips;
     }
 }
