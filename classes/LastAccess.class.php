@@ -99,7 +99,9 @@ class LastAccess extends DataProvider {
         $access->browser = $_SERVER["HTTP_USER_AGENT"];
         $access->ipaddress = $_SERVER["REMOTE_ADDR"];
         $access->url = $_SERVER["REQUEST_URI"];
-        $access->referer = $_SERVER["HTTP_REFERER"];
+        if (isset($_SERVER["HTTP_REFERER"])) {
+            $access->referer = $_SERVER["HTTP_REFERER"];
+        }
         $access->update();
     }
     
