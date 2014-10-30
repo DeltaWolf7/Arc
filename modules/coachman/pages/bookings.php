@@ -194,8 +194,16 @@
     function updateMap() {
         var from = document.getElementById('from').value;
         var to = document.getElementById('arrive').value;
-        var via = document.getElementById('via').value;
-        var code = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyC2acbgzDMvZcXJNtDDdrlMPfNScTH3tv4&origin=' + from + '&destination=' + to + '&avoid=tolls|highways&waypoints=' + via + '"></iframe>';
+        var viaCode = '';
+        for (i = 1; i < 50; i++) {
+            var via = document.getElementById('via' + i).value;
+            if (via != null) {
+                viaCode = viaCode . '|' . via;
+            } else {
+                break;
+            }
+        }    
+        var code = '<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyC2acbgzDMvZcXJNtDDdrlMPfNScTH3tv4&origin=' + from + '&destination=' + to + '&avoid=tolls|highways&waypoints=' + viaCode + '"></iframe>';
         var view = document.getElementById('map');
         view.innerHTML = code;
     }
