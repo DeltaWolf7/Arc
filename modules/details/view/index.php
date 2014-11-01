@@ -23,7 +23,7 @@ $user = arcGetUser();
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>">
+                <input type="email" class="form-control" id="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>

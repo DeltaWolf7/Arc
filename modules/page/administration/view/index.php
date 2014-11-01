@@ -242,12 +242,12 @@ if (empty(arcGetURLData("data2"))) {
     <?php
 } elseif (arcGetURLData("data2") == "remove") {
     $page = new Page();
-    $page->delete($page->id);
+    $page->delete(arcGetURLData("data3"));
     arcRedirect(arcGetModulePath());
 } elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "remove") {
     $permission = new UserPermission();
-    $permission->delete($GLOBALS["arc"]->getURLData("data4"));
-    arcRedirect(arcGetURLData() . "edit/" . arcGetURLData("data5"));
+    $permission->delete(arcGetURLData("data4"));
+    arcRedirect(arcGetModulePath() . "edit/" . arcGetURLData("data5"));
 } elseif (arcGetURLData("data2") == "permission" && arcGetURLData("data3") == "add") {
     $permission = new UserPermission();
     $permission->delete(arcGetURLData("data4"));

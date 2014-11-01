@@ -120,24 +120,4 @@ class User extends DataProvider {
     public function getSettingByKey($key) {
          return UserSetting::getByUserID($this->id, $key);
     }
-    
-    
-    /**
-     * 
-     * Method used during testing phase to prvent the administrator being removed.
-     * 
-     */
-    public function update() {
-        if ($this->id == "1") {
-            return;
-        }
-        parent::update();
-    }
-    
-    public function delete($id) {
-        if ($id == "1") {
-            return;
-        }
-        parent::delete($id);
-    }
 }

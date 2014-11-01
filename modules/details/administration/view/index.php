@@ -90,13 +90,18 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGe
                                 if (isset($logs[$i]->userid)) {
                                     $user->getByID($logs[$i]->userid);
                                 }
-                                echo "<tr><td>";
-                                if ($user->id == "0") {
-                                    echo "Anonymous";
-                                } else {
-                                    echo "<a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->firstname . " " . $user->lastname . "</a>";
+
+                                // dirty hack until a better method is created
+                                if (isset($logs[$i])) {
+                                    echo "<tr><td>";
+                                    if ($user->id == "0") {
+                                        echo "Anonymous";
+                                    } else {
+                                        echo "<a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->firstname . " " . $user->lastname . "</a>";
+                                    }
+
+                                    echo "</td><td>" . $logs[$i]->when . "</td><td>" . $logs[$i]->browser . "</td><td><a href=\"" . arcGetModulePath() . "ip/" . $logs[$i]->ipaddress . "\">" . $logs[$i]->ipaddress . "</a></td><td>" . $logs[$i]->url . "</td><td>" . $logs[$i]->referer . "</td></tr>";
                                 }
-                                echo "</td><td>" . $logs[$i]->when . "</td><td>" . $logs[$i]->browser . "</td><td><a href=\"" . arcGetModulePath() . "ip/" . $logs[$i]->ipaddress . "\">" . $logs[$i]->ipaddress . "</a></td><td>" . $logs[$i]->url . "</td><td>" . $logs[$i]->referer . "</td></tr>";
                             }
                             ?>
                         </table>
