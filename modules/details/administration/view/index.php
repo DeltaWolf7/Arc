@@ -201,7 +201,6 @@ if (arcGetURLData("data2") == "user") {
                                 <div class="form-group">
                                     <ul class="list-unstyled">
                                         <?php
-                                        $user = arcGetUser();
                                         $ips = LastAccess::getIPsByUserID($user->id);
                                         foreach ($ips as $ip) {
                                             echo "<li class=\"list-group-item\">" . $ip->ipaddress;
