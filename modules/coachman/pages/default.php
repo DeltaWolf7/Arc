@@ -27,6 +27,14 @@
 <br />
 <div class="row">
     <div class="col-sm-4">
+        <div class="boxBody boxBodyPurple">
+            <a href="<?php echo arcGetModulePath(); ?>/customers"><span class="fa fa-life-bouy"></span> Customers</a>
+        </div>
+        <div class="boxFooter boxFooterPurple">
+            <span class="fa fa-search"></span> Show All
+        </div>
+    </div>
+    <div class="col-sm-4">
         <div class="boxBody boxBodyGreen">
             <a href="<?php echo arcGetModulePath(); ?>/schedule"><span class="fa fa-calendar"></span> Schedule</a>
         </div>
@@ -42,12 +50,4 @@
             <span class="fa fa-search"></span> Show All
         </div>
     </div>  
-    <!--<div class="col-sm-4">
-        <div class="boxBody boxBodyPurple">
-            <a href="#"><span class="fa fa-life-bouy"></span> Anything</a>
-        </div>
-        <div class="boxFooter boxFooterPurple">
-            <span class="fa fa-search"></span> Show All
-        </div>
-    </div>/-->
 </div>

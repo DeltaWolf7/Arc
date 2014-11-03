@@ -44,5 +44,10 @@ class Customer extends DataProvider {
         $this->table = "coachman_customers";
         $this->columns = ["id", "firstname", "lastname", "email", "phone", "mobile", "company"];
     }
+    
+    public static function getAll() {
+        $customers = new Customer();
+        return $customers->getCollection(["ORDER" => "firstname DESC"]);
+    }
 }
 
