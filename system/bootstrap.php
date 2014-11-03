@@ -608,6 +608,14 @@ function arcPoweredBy() {
 
 /**
  * 
+ * @return string domain name and path of Arc
+ */
+function arcGetHost() {
+    return "http://" . $_SERVER['SERVER_NAME'] . ARCWWW;
+}
+
+/**
+ * 
  * @param array $to Array containing Name and Email address of the recipients.
  * @param string $subject Subject of the email
  * @param string $message Content of the email

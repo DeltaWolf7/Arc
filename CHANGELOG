@@ -17,6 +17,12 @@ PHPMailer                   5.2.8               https://github.com/Synchro/PHPMa
 + Added Arc sendmail function.
 + Added toArray function to SystemSetting class.
 / Changed the way auto load works, now detects modules.
++ Added correct version numbers to modules.
++ Added getHost function.
+/ Changed the login module.
++ Added forgot password feature.
+/ Fixed details not updating when changed.
+- Removed override from default template.
 
 0.0.0.35
 --------

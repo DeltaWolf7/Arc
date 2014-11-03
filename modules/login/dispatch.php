@@ -31,29 +31,81 @@
  */
 require_once "../../system/bootstrap.php";
 
-if (empty($_POST["email"])) {
-    echo "danger|<strong>Email address</strong> must be provided";
-    return;
-}
+if ($_POST["action"] == "login") {
 
-if (empty($_POST["password"])) {
-    echo "danger|<strong>Password</strong> must be provided";
-    return;
-}
-
-$user = User::getByEmail($_POST["email"]);
-
-if ($user->verifyPassword($_POST["password"])) {
-
-    if ($user->enabled) {
-        arcSetUser($user);
-
-        echo "success|Login successful";
-        return;
-    } else {
-        echo "danger|Account disabled";
+    if (empty($_POST["email"])) {
+        echo "danger|<strong>Email address</strong> must be provided";
         return;
     }
-}
 
-echo "danger|Invalid username and/or password";
+    if (empty($_POST["password"])) {
+        echo "danger|<strong>Password</strong> must be provided";
+        return;
+    }
+
+    $user = User::getByEmail($_POST["email"]);
+
+    if ($user->verifyPassword($_POST["password"])) {
+
+        if ($user->enabled) {
+            arcSetUser($user);
+
+            echo "success|Login successful";
+            return;
+        } else {
+            echo "danger|Account disabled";
+            return;
+        }
+    }
+
+    echo "danger|Invalid username and/or password";
+} elseif ($_POST["action"] == "forgot") {
+
+    if (empty($_POST["email"])) {
+        echo "danger|<strong>Email address</strong> must be provided";
+        return;
+    }
+
+    $user = User::getByEmail($_POST["email"]);
+
+    if ($user->id == 0) {
+        echo "danger|No user found matching that email address";
+        return;
+    }
+
+    $to[$user->firstname . " " . $user->lastname] = $user->email;
+
+    $message = "Hi " . $user->firstname . ", <br />";
+    $message .= "You or someone else has requested a password reset.";
+    $message .= " If you have not requested a reset, ignore this email";
+    $message .= " else click the link below to reset your password.<br /><br />";
+
+    $message .= "<a href=\"" . arcGetHost() . "login/reset/" . $user->id . "/" . $user->email . "\">Reset Password</a>";
+
+    $mail = arcSendMail($to, "Password Reset Request", $message);
+
+    echo "success|Password reset request sent";
+} elseif ($_POST["action"] == "reset") {
+
+    if (empty($_POST["password"])) {
+        echo "danger|<strong>Password</strong> must be provided";
+        return;
+    }
+
+    if (empty($_POST["retype"])) {
+        echo "danger|<strong>Password retype</strong> must be provided";
+        return;
+    }
+
+    if ($_POST["password"] != $_POST["retype"]) {
+        echo "danger|Passwords do not match";
+        return;
+    }
+
+    $user = new User();
+    $user->getByID($_POST["id"]);
+    $user->setPassword($_POST["password"]);
+    $user->update();
+
+    echo "success|Password reset";
+}

@@ -49,5 +49,6 @@ $user->lastname = $_POST["lastname"];
 $user->email = $_POST["email"];
 
 $user->update();
+arcSetUser($user);
 
 echo "success|Settings saved";
