@@ -6,7 +6,17 @@ Bootstrap WYSIWYG           18/09/2014          http://mindmup.github.io/bootstr
 Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
 Medoo                       0.9.6.2             http://medoo.in/
 Moment.js                   2.8.3               http://momentjs.com/
+PHPMailer                   5.2.8               https://github.com/Synchro/PHPMailer
 
+
+
+0.0.0.36
+--------
++ Added PHPMailer
+/ General updates and corrections.
++ Added Arc sendmail function.
++ Added toArray function to SystemSetting class.
+/ Changed the way auto load works, now detects modules.
 
 0.0.0.35
 --------

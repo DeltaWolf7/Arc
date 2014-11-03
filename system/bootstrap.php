@@ -74,7 +74,6 @@ try {
     die();
 }
 
-
 // log access
 LastAccess::logAccess(arcGetUser());
 
@@ -88,6 +87,12 @@ function __autoload($class_name) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "classes/" . $class_name . ".class.php");
     } elseif (file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
         require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
+    } elseif (isset($_SERVER["REQUEST_URI"]) && arcGetURLData("module") == "page") {
+        // check if we are in a module, if so make the system aware for dispatch.
+        $path = explode("/", $_SERVER["REQUEST_URI"]);
+        if (isset($path[2]) && file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php")) {
+           require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php");
+        }
     }
 }
 
@@ -599,4 +604,52 @@ function arcGetTheme() {
  */
 function arcPoweredBy() {
     return "Powered by Arc, Version: " . ARCVERSION;
+}
+
+/**
+ * 
+ * @param array $to Array containing Name and Email address of the recipients.
+ * @param string $subject Subject of the email
+ * @param string $message Content of the email
+ * @param array $attachments Array of paths to attach
+ * @return string Null is returned on OK and the error on failure.
+ */
+function arcSendMail($to, $subject, $message, $attachments = null) {
+    require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
+    
+    $mail = new PHPMailer();
+    $mail->isSMTP();
+    if (ARCDEBUG == true) {
+        $mail->SMTPDebug = 2;
+    } else {
+        $mail->SMTPDebug = 0;
+    }
+    $mail->Debugoutput = "html";
+    $mailSettings = SystemSetting::getByKey("SMTP");
+    $settings = $mailSettings->getArray(",");
+    $mail->Host = $settings[0];
+    $mail->Port = $settings[1];
+    $mail->SMTPAuth = true;
+    $mail->Username = $settings[2];
+    $mail->Password = $settings[3];
+    $mail->setFrom($settings[4], $settings[5]);
+    
+    foreach ($to as $name => $email) {
+        $mail->addAddress($email, $name);
+    }
+    
+    $mail->Subject = $subject;
+    $mail->msgHTML($message);
+    
+    if (isset($attachments)) {
+        foreach ($attachments as $attachment) {
+            $mail->addAttachment($attachment);
+        }
+    }
+    
+    if (!$mail->send()) {
+        return $mail->ErrorInfo;
+    }
+    
+    return null;
 }

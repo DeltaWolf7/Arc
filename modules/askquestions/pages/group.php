@@ -39,7 +39,7 @@
         $sender = $sender . "userid: '" . arcGetUser()->id . "', time: '" . $time . "', action: 'answerquestion', groupid: '" . arcGetURLData("data2") . "'";
         ?>
         <div class="text-right">
-            <button type="button" class="btn btn-success" onclick="ajax.send('POST', {<?php echo $sender; ?>}, '<?php echo arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</button>
+            <button type="button" class="btn btn-success" onclick="ajax.send('POST', {<?php echo $sender; ?>}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</button>
         </div>
     </form>
 </div>

@@ -1,7 +1,6 @@
 <?php
 
 require_once "../../bootstrap.php";
-arcSetPage("will");
 
 if ($_POST["action"] == "saveaddress") {
     $address = new Address();

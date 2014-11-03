@@ -30,7 +30,6 @@
  * @author Craig Longford
  */
 require_once "../../system/bootstrap.php";
-arcSetPage("coachman");
 
 if ($_POST["action"] == "savevehicle") {
 

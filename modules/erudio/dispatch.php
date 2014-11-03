@@ -1,7 +1,6 @@
 <?php
 
 require_once "../../system/bootstrap.php";
-arcSetPage("erudio");
 
 if ($_POST["action"] == "antonyms") {
     $question = $_POST['question'];

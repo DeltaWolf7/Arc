@@ -1,7 +1,6 @@
 <?php
 
 require_once "../../system/bootstrap.php";
-arcSetPage("askquestions");
 
 if ($_POST["action"] == "answerquestion") {
     

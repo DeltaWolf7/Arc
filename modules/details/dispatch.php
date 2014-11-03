@@ -36,7 +36,6 @@ $user->getByID($_POST["userid"]);
 
 // password settings
 if (!empty($_POST["password"])) {
-
     if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
         $user->setPassword($_POST['password']);
     } else {

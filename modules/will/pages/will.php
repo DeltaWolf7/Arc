@@ -488,7 +488,7 @@ if ($address->pri == false) {
                             partnerid: '#partner', relationship: '#relationship', exe1: '#exe1', exe2: '#exe2', exe3: '#exe3', exe4: '#exe4',
                             guaChoice: '#hChildren', gua1: '#gua1', gua2: '#gua2', gua3: '#gua3', gua4: '#gua4', legacies: '#hLegacies', legs: '#legs',
                             charChoice: '#hcLegacies', char: '#char', property: '#hProperty', prop: '#prop', res1: '#res1', res2: '#res2', res3: '#res3', res4: '#res4',
-                            custom: '#customtxt'}, '<?php echo arcGetDispatch(); ?>', updateStatus, true);"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
+                            custom: '#customtxt'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="glyphicon glyphicon-floppy-disk"></span> Save</button>
         <button type="button" class="btn btn-primary" onclick="window.location='<?php echo arcGetModulePath() ?>/print/<?php echo $client->id; ?>'"><span class="fa fa-file-pdf-o"></span> Generate PDF</button>
         <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath() ?>/clients/<?php echo $client->id; ?>'"><span class="fa fa-remove"></span> Exit To Client</button>
     </div>

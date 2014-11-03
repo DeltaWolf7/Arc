@@ -153,7 +153,7 @@ if (arcGetURLData("data2") == "user") {
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="text" class="form-control" id="email" placeholder="Email" value="<?php echo $user->email; ?>">
+                                <input type="text" class="form-control" id="email" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>

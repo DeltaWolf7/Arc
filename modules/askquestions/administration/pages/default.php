@@ -44,7 +44,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savegroup', name: '#group'}, '<?php echo arcGetDispatch() ?>', updateGroup, true);">Save changes</button>
+                <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savegroup', name: '#group'}, '<?php arcGetDispatch() ?>', updateGroup, true);">Save changes</button>
             </div>
         </div>
     </div>

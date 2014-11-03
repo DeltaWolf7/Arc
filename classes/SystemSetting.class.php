@@ -60,4 +60,13 @@ class SystemSetting extends DataProvider {
         }
         return $setting;
     }
+    
+    /**
+     * 
+     * @param string $deliminater Deliminator to split the setting with.
+     * @return array Containing the split values
+     */
+    public function getArray($deliminater = ",") {
+        return explode($deliminater, $this->setting);
+    }
 }
