@@ -61,9 +61,7 @@ if ($_POST["password"] != $_POST["password2"]) {
     return;
 }
 
-$user = new User();
-$user->getByEmail($_POST["email"]);
-
+$user = User::getByEmail($_POST["email"]);
 if ($user->id > 0) {
     echo "danger|<strong>Email address</strong> already registered";
     return;
