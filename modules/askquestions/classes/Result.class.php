@@ -47,4 +47,9 @@ class Result extends DataProvider {
         $results = new Result();
         return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid]]);
     }
+    
+    public static function getByGroup($groupid) {
+        $results = new Result();
+        return $results->getCollection(["groupid" => $groupid]);
+    }
 }

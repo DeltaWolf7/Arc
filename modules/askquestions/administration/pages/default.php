@@ -11,12 +11,21 @@
             <?php
             $groups = Group::getGroups();
             foreach ($groups as $group) {
-                echo "<tr><td>" . $group->name . " <button class=\"btn btn-danger btn-xs\" onclick=\"window.location='" . arcGetModulePath() . "deletegroup/" . $group->id . "'\"><span class=\"fa fa-close\"></span> Delete</button></td><td>";
+                echo "<tr><td>" . $group->name . " <button class=\"btn btn-danger btn-xs\" onclick=\"window.location='" . arcGetModulePath() . "deletegroup/" . $group->id . "'\"><span class=\"fa fa-close\"></span> Delete</button> <button class=\"btn btn-success btn-xs\" onclick=\"window.location='" . arcGetModulePath() . "results/" . $group->id . "'\"><span class=\"fa fa-area-chart\"></span> View Results</button></td><td>";
 
                 $questions = Group::getQuestions($group->id);
+                $count = 1;
                 echo "<ul class=\"list-group\">";
                 foreach ($questions as $question) {
                     echo "<li class=\"list-group-item\"><a href=\"" . arcGetModulePath() . "question/" . $question->id . "\">" . $question->question . "</a></li>";
+                    $count++;
+                    if ($count == 6) {
+                        $no = count($questions) - 5;
+                        if ($no > 0) {
+                            echo "<li class=\"list-group-item\">Plus " . $no . " more question(s)..</li>";
+                        }
+                        break;
+                    }
                 }
                 echo "</ul>";
                 echo "</td></tr>";
