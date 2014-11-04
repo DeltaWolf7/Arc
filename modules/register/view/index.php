@@ -28,11 +28,11 @@
 
 <script>
     function register(data) {
+        updateStatus(data);
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
             window.location = "<?php echo ARCWWW; ?>";
         }
-        updateStatus(data);
     }
 </script>

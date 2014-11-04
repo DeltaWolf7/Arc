@@ -69,4 +69,13 @@ class SystemSetting extends DataProvider {
     public function getArray($deliminater = ",") {
         return explode($deliminater, $this->setting);
     }
+    
+    /**
+     * 
+     * @return array Collection of system settings
+     */
+    public static function getAll() {
+        $settings = new SystemSetting();
+        return $settings->getCollection(["ORDER" => "key ASC"]);
+    }
 }

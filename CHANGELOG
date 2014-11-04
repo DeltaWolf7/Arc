@@ -10,6 +10,12 @@ PHPMailer                   5.2.8               https://github.com/Synchro/PHPMa
 
 
 
+0.0.0.37
+--------
++ Added check to mail sender.
+/ Changed javascript function order in some modules.
++ Added getAll to SystemSettings class.
+
 0.0.0.36
 --------
 + Added PHPMailer

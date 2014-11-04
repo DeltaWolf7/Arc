@@ -91,7 +91,7 @@ function __autoload($class_name) {
         // check if we are in a module, if so make the system aware for dispatch.
         $path = explode("/", $_SERVER["REQUEST_URI"]);
         if (isset($path[2]) && file_exists($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php")) {
-           require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php");
+            require_once($_SERVER["DOCUMENT_ROOT"] . ARCFS . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php");
         }
     }
 }
@@ -205,34 +205,34 @@ function arcAddHeader($type, $content) {
     global $arc;
     switch ($type) {
         case "title":
-            $arc["headerdata"][] = "\t<title>" . $content . "</title>" . PHP_EOL;
+            $arc["headerdata"][] = "<title>" . $content . "</title>" . PHP_EOL;
             break;
         case "description":
-            $arc["headerdata"][] = "\t<meta name=\"description\" content=\"" . $content . "\">" . PHP_EOL;
+            $arc["headerdata"][] = "<meta name=\"description\" content=\"" . $content . "\">" . PHP_EOL;
             break;
         case "keywords":
-            $arc["headerdata"][] = "\t<meta name=\"keywords\" content=\"" . $content . "\">" . PHP_EOL;
+            $arc["headerdata"][] = "<meta name=\"keywords\" content=\"" . $content . "\">" . PHP_EOL;
             break;
         case "author":
-            $arc["headerdata"][] = "\t<meta name=\"author\" content=\"" . $content . "\">" . PHP_EOL;
+            $arc["headerdata"][] = "<meta name=\"author\" content=\"" . $content . "\">" . PHP_EOL;
             break;
         case "alternate":
-            $arc["headerdata"][] = "\t<link rel=\"alternate\" href=\"http://" . $_SERVER['HTTP_HOST'] . ARCWWW . $content . "\">" . PHP_EOL;
+            $arc["headerdata"][] = "<link rel=\"alternate\" href=\"http://" . $_SERVER['HTTP_HOST'] . ARCWWW . $content . "\">" . PHP_EOL;
             break;
         case "canonical":
-            $arc["headerdata"][] = "\t<link rel=\"canonical\" href=\"" . $content . "\" />" . PHP_EOL;
+            $arc["headerdata"][] = "<link rel=\"canonical\" href=\"" . $content . "\" />" . PHP_EOL;
             break;
         case "css":
-            $arc["headerdata"][] = "\t<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
+            $arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
             break;
         case "js":
-            $arc["headerdata"][] = "\t<script src=\"" . $content . "\"></script>" . PHP_EOL;
+            $arc["headerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
             break;
         case "favicon":
-            $arc["headerdata"][] = "\t<link href=\"" . arcGetPath() . ARCFAVICON . "\" rel=\"icon\">" . PHP_EOL;
+            $arc["headerdata"][] = "<link href=\"" . arcGetPath() . ARCFAVICON . "\" rel=\"icon\">" . PHP_EOL;
             break;
         default:
-            $arc["headerdata"][] = "\t" . $content;
+            $arc["headerdata"][] = $content;
             break;
     }
 }
@@ -285,7 +285,7 @@ function arcGetView() {
         arcSetPage("error", "419");
     } else {
         // update last activity time stamp
-        $_SESSION["LAST_ACTIVITY"] = time();  
+        $_SESSION["LAST_ACTIVITY"] = time();
 
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id != 0) {
@@ -328,7 +328,7 @@ function arcGetView() {
 /**
  * Include the content from the selected module
  */
-function arcGetContent() {  
+function arcGetContent() {
     if (file_exists(arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php")) {
         include_once arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php";
     } else {
@@ -337,7 +337,7 @@ function arcGetContent() {
             $path .= "/administration";
         }
         $path .= "/view/index.php";
-       
+
         if (file_exists($path)) {
             include_once $path;
         } else {
@@ -456,7 +456,7 @@ function arcAddMenuItem($name, $icon, $divider, $url, $group) {
     if (!isset($GLOBALS["arc"]["menus"])) {
         $GLOBALS["arc"]["menus"] = array();
     }
-    
+
     // build menu item
     $item = array();
     $item["name"] = $name;
@@ -624,7 +624,7 @@ function arcGetHost() {
  */
 function arcSendMail($to, $subject, $message, $attachments = null) {
     require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
-    
+
     $mail = new PHPMailer();
     $mail->isSMTP();
     if (ARCDEBUG == true) {
@@ -633,7 +633,14 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
         $mail->SMTPDebug = 0;
     }
     $mail->Debugoutput = "html";
-    $mailSettings = SystemSetting::getByKey("SMTP");
+    
+    $mailSettings = SystemSetting::getByKey("ARCSMTP");
+    
+    if (empty($mailSettings->setting)) {
+        return "Unable to get mail settings";
+        return;
+    }
+    
     $settings = $mailSettings->getArray(",");
     $mail->Host = $settings[0];
     $mail->Port = $settings[1];
@@ -641,23 +648,23 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
     $mail->Username = $settings[2];
     $mail->Password = $settings[3];
     $mail->setFrom($settings[4], $settings[5]);
-    
+
     foreach ($to as $name => $email) {
         $mail->addAddress($email, $name);
     }
-    
+
     $mail->Subject = $subject;
     $mail->msgHTML($message);
-    
+
     if (isset($attachments)) {
         foreach ($attachments as $attachment) {
             $mail->addAttachment($attachment);
         }
     }
-    
+
     if (!$mail->send()) {
         return $mail->ErrorInfo;
     }
-    
+
     return null;
 }
