@@ -42,7 +42,7 @@ if (arcGetURLData("data3") == null) {
     <div class="page-header">
         <h1>Results <?php
             if (!empty(arcGetURLData("data1"))) {
-                echo "<a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data2") . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+                echo "<a href=\"" . arcGetModulePath() . "/results/" . arcGetURLData("data2") . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
             }
             ?></h1>
     </div>
