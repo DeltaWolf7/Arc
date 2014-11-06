@@ -17,15 +17,19 @@
             ?>
             <div class="form-group">
                 <div class="well"><?php echo "Q" . $count . ". " . $question->question; ?></div>
-
+                <div class="form-group">
+                    <select class="form-control" id="Q<?php echo $count; ?>">
+                
                 <?php
                 $xml = simplexml_load_string($question->answer);
                 foreach ($xml as $answer) {
-                    echo "<div class=\"radio-inline\"><label><input type=\"radio\" id=\"Q" . $count . "\" name=\"Q" . $count . "\" value=\"" . $answer["text"] . "\">" . $answer["text"] . "</label></div>";
+                    echo "<option value='" . $answer["text"] . "'>" . $answer["text"] . "</option>";
                 }
 
                 $count++;
                 ?>
+                    </select>
+                </div>
             </div>
             <?php
         }
