@@ -1,7 +1,6 @@
 <?php
-global $page;
-$page = Page::getBySEOURL(arcGetURLData("data1"));
-if (empty($page->metatitle)) {
+$page = Page::getBySEOURL(arcGetURLData("module"));
+if ($page->id == 0) {
     arcAddHeader("title", ARCTITLE);
 } else {
     arcAddHeader("title", $page->metatitle);

@@ -51,9 +51,10 @@ if (arcGetURLData("data3") == null) {
         <tr><th>Question</th><th>Your Answer</th><th>Correct Answer</th></tr>
         <?php
         $count = 0;
+        $q = 1;
         foreach ($xml->result as $data) {
             $atts = $data->attributes();
-            echo "<tr><td>" . $questions[$count]->question . "</td><td>" . $atts["answer"] . "</td><td>";
+            echo "<tr><td>(Q" . $q . ") " . $questions[$count]->question . "</td><td>" . $atts["answer"] . "</td><td>";
             
             $xml2 = simplexml_load_string($questions[$count]->answer);
             foreach ($xml2->answer as $ans) {
@@ -71,6 +72,7 @@ if (arcGetURLData("data3") == null) {
                     break;
                 }
             }
+            $q++;
             
             echo "</td></tr>";
             $count++;

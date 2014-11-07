@@ -259,6 +259,12 @@ function arcGetController() {
         $path .= ".php";
         if (file_exists($path)) {
             include_once $path;
+            return;
+        }
+        
+        $page = Page::getBySEOURL(arcGetURLData("module"));
+        if ($page->id > 0) {
+            include_once arcGetPath(true) . "modules/page/controller/index.php";
         }
     }
 }

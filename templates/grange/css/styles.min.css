@@ -55,3 +55,23 @@ body > .container {
 code {
     font-size: 80%;
 }
+
+
+.whiteShadow {
+    color: white;
+    text-shadow: 2px 2px 3px #000000;
+}
+
+.boxDescription {
+    position: relative;
+    top: 250px;
+    left:0px;
+}
+
+.boxDescription a {
+    color: white;
+}
+
+.panel {
+    box-shadow: 2px 2px 5px #888888;
+}
