@@ -15,10 +15,10 @@ $poster->getByID($blog->posterid);
         if (!empty($blog->image)) {
             ?>
             <div class="row">
-                <div class="col-md-4">
-                    <a href="<?php echo arcGetModulePath() . "/post/" . $blog->seourl ?>"><img class="img-rounded" style="width: 300px;" src="<?php echo arcGetPath() . "modules" . arcGetModulePath() . "/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>" /></a>
+                <div class="col-md-3 text-center">
+                    <a href="<?php echo arcGetModulePath() . "/post/" . $blog->seourl ?>"><img class="img-rounded" src="<?php echo arcGetPath() . "images/blog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>" /></a>
                 </div>
-                <div class="col-md-8">             
+                <div class="col-md-9">             
                     <?php
                 }
                 ?>
