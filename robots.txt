@@ -1,9 +1,9 @@
 User-agent: *
-Disallow: /images
-Disallow: /js
-Disallow: /css
-Disallow: /fonts
-Disallow: /classes
-Disallow: /modules
-Disallow: /system
-Disallow: /templates
+Disallow: /images/
+Disallow: /js/
+Disallow: /css/
+Disallow: /fonts/
+Disallow: /classes/
+Disallow: /modules/
+Disallow: /system/
+Disallow: /templates/
