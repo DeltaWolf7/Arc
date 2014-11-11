@@ -13,7 +13,7 @@
                 echo "You do not have permission to access this resource.";
                 break;
             case "419":
-                echo "Your authentication has expired. Please login in.";
+                echo "Your authentication has expired. Please login.";
                 break;
         }
         ?>
