@@ -9,9 +9,9 @@ $module_info["www"] = "http://www.deltasblog.co.uk";
 $module_info["system"] = false;
 
 
-$pages = Pages::getAllPages();
+$pages = Page::getAllPages();
 foreach ($pages as $page) {
-    arcAddMenuItem($page->title, "fa-file-o", false, "/" . $page->seourl, "Pages");
+    arcAddMenuItem($page->title, "fa-file-o", false, "/../" . $page->seourl, "Pages");
 }
 
 ?>
