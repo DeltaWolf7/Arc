@@ -629,6 +629,8 @@ function arcGetHost() {
  * @return string Null is returned on OK and the error on failure.
  */
 function arcSendMail($to, $subject, $message, $attachments = null) {
+    $mailSettings = SystemSetting::getByKey("ARCSMTP");
+    
     require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
 
     $mail = new PHPMailer();
@@ -640,7 +642,7 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
     }
     $mail->Debugoutput = "html";
     
-    $mailSettings = SystemSetting::getByKey("ARCSMTP");
+    
     
     if (empty($mailSettings->setting)) {
         return "Unable to get mail settings";
