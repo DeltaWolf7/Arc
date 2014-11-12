@@ -19,7 +19,7 @@
                 <div class="well"><?php echo "Q" . $count . ". " . $question->question; ?></div>
                 <div class="form-group">
                     <select class="form-control" id="Q<?php echo $count; ?>">
-                
+                        <option value="Not Selected">Not Selected</option>
                 <?php
                 $xml = simplexml_load_string($question->answer);
                 foreach ($xml as $answer) {
