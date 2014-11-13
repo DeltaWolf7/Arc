@@ -261,7 +261,7 @@ function arcGetController() {
             include_once $path;
             return;
         }
-        
+
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id > 0) {
             include_once arcGetPath(true) . "modules/page/controller/index.php";
@@ -523,9 +523,12 @@ function arcGetMenu() {
             }
         }
     }
-    $GLOBALS["arc"]["menumodule"] = "logout";
-    // logout menu (last item)
-    arcAddMenuItem("Logout", "fa-lock", false, null, null);
+
+    if (arcGetUser() != null) {
+        $GLOBALS["arc"]["menumodule"] = "logout";
+        // logout menu (last item)
+        arcAddMenuItem("Logout", "fa-lock", false, null, null);
+    }
     $GLOBALS["arc"]["menumodule"] = null;
     arcProcessMenuItems($GLOBALS["arc"]["menus"]);
 }
@@ -639,14 +642,14 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
         $mail->SMTPDebug = 0;
     }
     $mail->Debugoutput = "html";
-    
+
     $mailSettings = SystemSetting::getByKey("ARCSMTP");
-    
+
     if (empty($mailSettings->setting)) {
         return "Unable to get mail settings";
         return;
     }
-    
+
     $settings = $mailSettings->getArray(",");
     $mail->Host = $settings[0];
     $mail->Port = $settings[1];
