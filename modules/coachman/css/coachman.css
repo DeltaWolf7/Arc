@@ -1,94 +1,24 @@
 .boxBody {
-    color: white;
-    padding: 25px 10px;
-    height: 100px;
+    height: 120px;
     font-size: 40px;
     text-align: center;
+    background-color: #00525E;
+    padding-top: 30px;
 }
 
 .boxBody a {
     color: white;
-}
-
-.boxBody a:hover {
-    color: white;
     text-decoration: none;
 }
 
+div.boxBody:hover {
+    text-decoration: none;
+    background-color: #97BF11; 
+}
+
 .boxFooter {
-    color: white;
-    padding: 10px;
+    padding: 3px;
+    margin-bottom: 10px;
     text-align: center;
-}
-
-.boxBodyBlue {
-    background-color: #5bc0de;  
-}
-
-.boxBodyBlue:hover {
-    background-color: #5bcfff;  
-}
-
-.boxFooterBlue {
-    background-color: #269abc;  
-}
-
-.boxBodyGreen {
-    background-color: #5cb85c;
-}
-
-.boxBodyGreen:hover {
-    background-color: #5cce61;
-}
-
-.boxFooterGreen {
-    background-color: #398439;
-}
-
-.boxBodyOrange {
-    background-color: #e38d13;
-}
-
-.boxBodyOrange:hover {
-    background-color: #e3a216;
-}
-
-.boxFooterOrange {
-    background-color: #cc6600;
-}
-
-.boxBodyRed {
-    background-color: #ff3333;
-}
-
-.boxBodyRed:hover {
-    background-color: #ff591b;
-}
-
-.boxFooterRed {
-    background-color: #b92c28;
-}
-
-.boxBodyYellow {
-    background-color: #d6d651;
-}
-
-.boxBodyYellow:hover {
-    background-color: #d6e04e;
-}
-
-.boxFooterYellow {
-    background-color: #adad42;
-}
-
-.boxBodyPurple {
-    background-color: #ccccff;
-}
-
-.boxBodyPurple:hover {
-    background-color: #ccd7fa;
-}
-
-.boxFooterPurple {
-    background-color: #9999ff;
+    background-color: #AFDB00; 
 }

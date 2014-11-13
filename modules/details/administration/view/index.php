@@ -1,3 +1,14 @@
+<?php
+if (arcGetURLData("data2") == "clear") {
+    $logs = LastAccess::getLogs();
+    foreach ($logs as $log) {
+        $log->delete($log->id);
+    }
+    arcRedirect(arcGetModulePath() . "access");
+}
+?>
+
+
 <div class="page-header">
     <h1>User Management
         <?php
@@ -40,7 +51,6 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGe
                     <?php
                     if (empty(arcGetURLData("data2")) || arcGetURLData("data2") == "user") {
                         ?>
-
                         <table class="table table-striped">
                             <tr><th>ID</th><th>Firstname</th><th>Lastname</th><th>Email</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "user/edit/0"; ?>'"><span class="fa fa-plus"></span> New User</button></th></tr>
                             <?php
@@ -71,7 +81,9 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGe
                         </table>
 
                     <?php } elseif (arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") { ?>
-
+                        <div class="text-right">
+                            <button type="button" class="btn btn-default" onclick="window.location = '<?php echo arcGetModulePath() . "clear" ?>'">Clear Logs</button>
+                        </div>
                         <table class="table table-striped">
                             <tr><th>User</th><th>When</th><th>Browser</th><th>IP Address</th><th>Url</th><th>Referer</th></tr>
                             <?php

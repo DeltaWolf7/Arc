@@ -1,53 +1,46 @@
 <div class="row">
     <div class="col-sm-4">
-        <div class="boxBody boxBodyBlue">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/bookings"><span class="fa fa-plus"></span> Bookings</a>
         </div>
-        <div class="boxFooter boxFooterBlue">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="boxBody boxBodyYellow">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/vehicles"><span class="fa fa-bus"></span> Vehicles</a>
         </div>
-        <div class="boxFooter boxFooterYellow">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="boxBody boxBodyOrange">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/drivers"><span class="fa fa-user"></span> Drivers</a>
         </div>
-        <div class="boxFooter boxFooterOrange">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>
 </div>
-<br />
 <div class="row">
     <div class="col-sm-4">
-        <div class="boxBody boxBodyPurple">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/customers"><span class="fa fa-life-bouy"></span> Customers</a>
         </div>
-        <div class="boxFooter boxFooterPurple">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="boxBody boxBodyGreen">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/schedule"><span class="fa fa-calendar"></span> Schedule</a>
         </div>
-        <div class="boxFooter boxFooterGreen">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>
     <div class="col-sm-4">
-        <div class="boxBody boxBodyRed">
+        <div class="boxBody">
             <a href="<?php echo arcGetModulePath(); ?>/settings"><span class="fa fa-cog"></span> Settings</a>
         </div>
-        <div class="boxFooter boxFooterRed">
-            <span class="fa fa-search"></span> Show All
+        <div class="boxFooter">
         </div>
     </div>  
 </div>

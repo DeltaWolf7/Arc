@@ -62,29 +62,28 @@ if ($_POST["action"] == "savevehicle") {
 
     echo "success|Vehicle saved";
 } elseif ($_POST['action'] == "savedriver") {
-    
+
     if (empty($_POST['firstname'])) {
         echo "danger|Invalid firstname";
         return;
     }
-    
+
     if (empty($_POST['lastname'])) {
         echo "danger|Invalid lastname";
         return;
     }
-    
+
     $cost = (double) $_POST["cost"];
     if ($cost <= 0.00) {
         echo "danger|Invalid cost per hour";
         return;
     }
-    
-    
+
     $driver = new Driver();
     if ($_POST['id'] != "0") {
         $driver->getByID($_POST['id']);
     }
-    
+
     $driver->firstname = ucwords($_POST['firstname']);
     $driver->lastname = ucwords($_POST['lastname']);
     $driver->email = strtolower($_POST['email']);
@@ -92,6 +91,33 @@ if ($_POST["action"] == "savevehicle") {
     $driver->mobile = $_POST['mobile'];
     $driver->costperhour = $_POST['cost'];
     $driver->update();
-    
+
     echo "success|Driver saved";
+} elseif ($_POST["action"] == "savecustomer") {
+
+    $customer = new Customer();
+    if ($_POST["id"] != "0") {
+        $customer->getByID($_POST["id"]);
+    }
+
+    if (empty($_POST["firstname"])) {
+        echo "danger|Please provide a firstname";
+        return;
+    }
+
+    if (empty($_POST["lastname"])) {
+        echo "danger|Please provide a lastname";
+        return;
+    }
+
+    $customer->firstname = ucwords($_POST["firstname"]);
+    $customer->lastname = ucwords($_POST["lastname"]);
+    $customer->email = strtolower($_POST["email"]);
+    $customer->phone = $_POST["phone"];
+    $customer->mobile = $_POST["mobile"];
+    $customer->company = ucwords($_POST["company"]);
+
+    $customer->update();
+
+    echo "success|Customer saved";
 }

@@ -38,6 +38,10 @@
                         }
                         ?>
                         <div class="form-group">
+                            <label for="company">Company</label>
+                            <input class="form-control" type="text" id="company" value="<?php echo $customer->company; ?>" maxlength="20" />
+                        </div>
+                        <div class="form-group">
                             <label for="firstname">Firstname</label>
                             <input class="form-control" type="text" id="firstname" value="<?php echo $customer->firstname; ?>" maxlength="20" />
                         </div>
@@ -51,14 +55,14 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone</label>
-                            <input class="form-control" type="text" id="phone" value="<?php echo $customer->phone; ?>" maxlength="10" />
+                            <input class="form-control" type="text" id="phone" value="<?php echo $customer->phone; ?>" maxlength="20" />
                         </div>
                         <div class="form-group">
                             <label for="mobile">Mobile</label>
-                            <input class="form-control" type="text" id="mobile" value="<?php echo $customer->mobile; ?>" maxlength="10" />
+                            <input class="form-control" type="text" id="mobile" value="<?php echo $customer->mobile; ?>" maxlength="20" />
                         </div>
-                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savecustomer', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $customer->id; ?>', cost: '#cost'}, '<?php arcGetDispatch(); ?>', updateDrivers, true);"><span class="fa fa-save"></span> Save</button>
-                        <button type="button" class="btn btn-info btn-block" onclick="window.location='<?php echo arcGetModulePath() . "customers/" . $customer->id; ?>'"><span class="fa fa-home"></span> Addresses</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savecustomer', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $customer->id; ?>', company: '#company'}, '<?php arcGetDispatch(); ?>', updateCustomer, true);"><span class="fa fa-save"></span> Save</button>
+                        <button type="button" class="btn btn-info btn-block" onclick="window.location = '<?php echo arcGetModulePath() . "/addresses/" . $customer->id; ?>'"><span class="fa fa-home"></span> Addresses</button>
                     </form>
                     <?php
                 }
@@ -68,7 +72,7 @@
     </div>
 </div>
 <script>
-    function updateDrivers(data) {
+    function updateCustomer(data) {
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
