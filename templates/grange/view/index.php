@@ -22,6 +22,7 @@
                     <ul class="nav navbar-nav">
                         <?php arcGetMenu(); ?>
                     </ul>
+                    <h2>Call Now: 01924 466212</h2>
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
