@@ -2,39 +2,45 @@
     <h1>Question Editor</h1>
 </div>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-        <table class="table table-striped">
-            <tr>
-                <th>Question Groups <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal">New Group</button></th><th>Questions <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0"; ?>'">New Question</button></th>
-            </tr>
-            <?php
-            $groups = Group::getGroups();
-            foreach ($groups as $group) {
-                echo "<tr><td>" . $group->name . " <button class=\"btn btn-danger btn-xs\" onclick=\"window.location='" . arcGetModulePath() . "deletegroup/" . $group->id . "'\"><span class=\"fa fa-close\"></span> Delete</button> <button class=\"btn btn-success btn-xs\" onclick=\"window.location='" . arcGetModulePath() . "results/" . $group->id . "'\"><span class=\"fa fa-area-chart\"></span> View Results</button></td><td>";
-
-                $questions = Group::getQuestions($group->id);
-                $count = 1;
-                echo "<ul class=\"list-group\">";
-                foreach ($questions as $question) {
-                    echo "<li class=\"list-group-item\">(Q" . $count . ") <a href=\"" . arcGetModulePath() . "question/" . $question->id . "\">" . $question->question . "</a></li>";
-                    $count++;
-                    //if ($count == 6) {
-                    //    $no = count($questions) - 5;
-                    //    if ($no > 0) {
-                     //       echo "<li class=\"list-group-item\">Plus " . $no . " more question(s)..</li>";
-                    //    }
-                    //    break;
-                    //}
-                }
-                echo "</ul>";
-                echo "</td></tr>";
-            }
-            ?>
-        </table>
-    </div>
+<div class="well">
+    Tip: Click the name of a group to show the groups contents. Clicking again will hide the contents.
 </div>
 
+<?php
+$groups = Group::getGroups();
+$col = 0;
+foreach ($groups as $group) {
+    ?>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading<?php echo $col; ?>">
+                <h4 class="panel-title">
+                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $col; ?>" aria-expanded="false" aria-controls="collapse<?php echo $col; ?>">
+                        <?php echo $group->name; ?> <button class="btn btn-danger btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "deletegroup/" . $group->id; ?>'"><span class="fa fa-close"></span> Delete</button> <button class="btn btn-success btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "results/" . $group->id; ?>'"><span class="fa fa-area-chart"></span> View Results</button>
+                    </a>
+                </h4>
+            </div>
+            <div id="collapse<?php echo $col; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $col; ?>">
+                <div class="panel-body">
+                    <?php
+                    $questions = Group::getQuestions($group->id);
+                    $count = 1;
+                    echo "<ul class=\"list-group\">";
+                    foreach ($questions as $question) {
+                        echo "<li class=\"list-group-item\">(Q" . $count . ") <a href=\"" . arcGetModulePath() . "question/" . $question->id . "\">" . $question->question . "</a></li>";
+                        $count++;
+                    }
+                    echo "</ul>";
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+    $col++;
+}
+?>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
