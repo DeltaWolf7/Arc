@@ -5,7 +5,11 @@
 <div class="well">
     Tip: Click the name of a group to show the groups contents. Clicking again will hide the contents.
 </div>
-
+<div class="text-right">
+    <p>
+        <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0"; ?>'"><span class="fa fa-plus"></span> New Question</button>
+    </p>
+</div>
 <?php
 $groups = Group::getGroups();
 $col = 0;
