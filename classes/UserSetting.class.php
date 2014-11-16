@@ -24,44 +24,49 @@
  * THE SOFTWARE.
  */
 
-/**
- * Description of user setting
- *
- * @author Craig Longford
- */
-class UserSetting extends DataProvider {
-
-    public $key;
-    public $userid;
-    public $setting;
+namespace Arc {
 
     /**
-     * UserSetting constructor
+     * Description of user setting
+     *
+     * @author Craig Longford
      */
-    public function __construct() {
-        parent::__construct();
-        $this->key = "";
-        $this->userid = 0;
-        $this->setting = "";
-        $this->table = ARCDBPREFIX . "user_settings";
-        $this->columns = ["id", "key", "userid", "setting"];
-    }
+    class UserSetting extends DataProvider {
 
-    /**
-     * 
-     * @param int $userid User's ID
-     * @param string $key Key of the setting
-     * @return \UserSetting
-     */
-    public static function getByUserID($userid, $key) {
-        $setting = new UserSetting();
-        $setting->get(["AND" => ["userid" => $userid, "key" => $key]]);
+        public $key;
+        public $userid;
+        public $setting;
 
-        // if no setting was found in the database, return empty setting with userid and key.
-        if ($setting->userid == 0) {
-            $setting->userid = $userid;
-            $setting->key = $key;
+        /**
+         * UserSetting constructor
+         */
+        public function __construct() {
+            parent::__construct();
+            $this->key = "";
+            $this->userid = 0;
+            $this->setting = "";
+            $this->table = ARCDBPREFIX . "user_settings";
+            $this->columns = ["id", "key", "userid", "setting"];
         }
-        return $setting;
+
+        /**
+         * 
+         * @param int $userid User's ID
+         * @param string $key Key of the setting
+         * @return \UserSetting
+         */
+        public static function getByUserID($userid, $key) {
+            $setting = new UserSetting();
+            $setting->get(["AND" => ["userid" => $userid, "key" => $key]]);
+
+            // if no setting was found in the database, return empty setting with userid and key.
+            if ($setting->userid == 0) {
+                $setting->userid = $userid;
+                $setting->key = $key;
+            }
+            return $setting;
+        }
+
     }
+
 }

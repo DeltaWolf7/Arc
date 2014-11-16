@@ -24,53 +24,58 @@
  * THE SOFTWARE.
  */
 
-/**
- * Description of page
- *
- * @author Craig
- */
-class Page extends DataProvider {
-
-    public $title;
-    public $content;
-    public $seourl;
-    public $metatitle;
-    public $metadescription;
-    public $metakeywords;
+namespace Arc {
 
     /**
-     * Page constructor
+     * Description of page
+     *
+     * @author Craig
      */
-    public function __construct() {
-        parent::__construct();
-        $this->title = "";
-        $this->content = "";
-        $this->metadescription = "";
-        $this->metakeywords = "";
-        $this->metatitle = "";
-        $this->seourl = "";
-        $this->table = ARCDBPREFIX . "pages";
-        $this->columns = ["id", "title", "content", "seourl", "metatitle", "metadescription", "metakeywords"];
+    class Page extends DataProvider {
+
+        public $title;
+        public $content;
+        public $seourl;
+        public $metatitle;
+        public $metadescription;
+        public $metakeywords;
+
+        /**
+         * Page constructor
+         */
+        public function __construct() {
+            parent::__construct();
+            $this->title = "";
+            $this->content = "";
+            $this->metadescription = "";
+            $this->metakeywords = "";
+            $this->metatitle = "";
+            $this->seourl = "";
+            $this->table = ARCDBPREFIX . "pages";
+            $this->columns = ["id", "title", "content", "seourl", "metatitle", "metadescription", "metakeywords"];
+        }
+
+        /**
+         * 
+         * @param string $seourl SEO Url
+         * @return \Page
+         */
+        public static function getBySEOURL($seourl) {
+            $page = new Page();
+            $page->get(["seourl" => $seourl]);
+            return $page;
+        }
+
+        public static function getAllPages() {
+            $page = new Page();
+            return $page->getCollection(["ORDER" => "seourl ASC"]);
+        }
+
+        public function getPermissions() {
+            $permissions = new UserPermission();
+            return $permissions->getCollection(["permission" => "page/" . $this->seourl]);
+        }
+
     }
 
-    /**
-     * 
-     * @param string $seourl SEO Url
-     * @return \Page
-     */
-    public static function getBySEOURL($seourl) {
-        $page = new Page();
-        $page->get(["seourl" => $seourl]);
-        return $page;
-    }
-
-    public static function getAllPages() {
-        $page = new Page();
-        return $page->getCollection(["ORDER" => "seourl ASC"]);
-    }
-    
-    public function getPermissions() {
-        $permissions = new UserPermission();
-        return $permissions->getCollection(["permission" => "page/" . $this->seourl]);
-    }
 }

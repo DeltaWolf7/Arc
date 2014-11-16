@@ -24,58 +24,63 @@
  * THE SOFTWARE.
  */
 
-/**
- * Description of system setting
- *
- * @author Craig Longford
- */
-class SystemSetting extends DataProvider {
-
-    public $key;
-    public $setting;
+namespace Arc {
 
     /**
-     * SystemSetting constructor
+     * Description of system setting
+     *
+     * @author Craig Longford
      */
-    public function __construct() {
-        parent::__construct();
-        $this->key = "";
-        $this->setting = "";
-        $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["id", "key", "setting"];
-    }
+    class SystemSetting extends DataProvider {
 
-    /**
-     * 
-     * @param string $key Key of the setting
-     * @return \SystemSetting setting if it exists
-     */
-    public static function getByKey($key) {
-        $setting = new SystemSetting();
-        $setting->get(["key" => $key]);
+        public $key;
+        public $setting;
 
-        // if no setting was found in the database, return empty setting with key.
-        if (empty($setting->key)) {
-            $setting->key = $key;
+        /**
+         * SystemSetting constructor
+         */
+        public function __construct() {
+            parent::__construct();
+            $this->key = "";
+            $this->setting = "";
+            $this->table = ARCDBPREFIX . "system_settings";
+            $this->columns = ["id", "key", "setting"];
         }
-        return $setting;
+
+        /**
+         * 
+         * @param string $key Key of the setting
+         * @return \SystemSetting setting if it exists
+         */
+        public static function getByKey($key) {
+            $setting = new SystemSetting();
+            $setting->get(["key" => $key]);
+
+            // if no setting was found in the database, return empty setting with key.
+            if (empty($setting->key)) {
+                $setting->key = $key;
+            }
+            return $setting;
+        }
+
+        /**
+         * 
+         * @param string $deliminater Deliminator to split the setting with.
+         * @return array Containing the split values
+         */
+        public function getArray($deliminater = ",") {
+            return explode($deliminater, $this->setting);
+        }
+
+        /**
+         * 
+         * @return array Collection of system settings
+         */
+        public static function getAll() {
+            $settings = new SystemSetting();
+            return $settings->getCollection(["ORDER" => "key ASC"]);
+        }
+
     }
-    
-    /**
-     * 
-     * @param string $deliminater Deliminator to split the setting with.
-     * @return array Containing the split values
-     */
-    public function getArray($deliminater = ",") {
-        return explode($deliminater, $this->setting);
-    }
-    
-    /**
-     * 
-     * @return array Collection of system settings
-     */
-    public static function getAll() {
-        $settings = new SystemSetting();
-        return $settings->getCollection(["ORDER" => "key ASC"]);
-    }
+
 }
