@@ -13,6 +13,3 @@ $pages = Page::getAllPages();
 foreach ($pages as $page) {
     arcAddMenuItem($page->title, "fa-file-o", false, "/../" . $page->seourl, "Pages");
 }
-
-?>
-

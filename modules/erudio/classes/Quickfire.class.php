@@ -1,27 +1,29 @@
 <?php
 
-class Quickfire extends DataProvider {
+namespace Erudio {
 
-    public $question;
-    public $solution;
-    public $image;
+    class Quickfire extends DataProvider {
 
-    public function __construct() {
-        parent::__construct();
-        $this->solution = "";
-        $this->question = "";
-        $this->image = "";
-        $this->table = "erudio_quickfire";
-        $this->columns = ["id", "question", "solution", "image"];
-    }
+        public $question;
+        public $solution;
+        public $image;
 
-    public static function getRandom() {
-        $quickfire = new Quickfire();
-        $data = $quickfire->getCollection([]);
-        shuffle($data);
-        return $data[0];
+        public function __construct() {
+            parent::__construct();
+            $this->solution = "";
+            $this->question = "";
+            $this->image = "";
+            $this->table = "erudio_quickfire";
+            $this->columns = ["id", "question", "solution", "image"];
+        }
+
+        public static function getRandom() {
+            $quickfire = new Quickfire();
+            $data = $quickfire->getCollection([]);
+            shuffle($data);
+            return $data[0];
+        }
+
     }
 
 }
-
-?>
