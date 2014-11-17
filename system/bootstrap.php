@@ -96,6 +96,14 @@ function __autoload($class_name) {
     }
 }
 
+function arcGetClass($path) {
+    if (file_exists($path)) {
+        require_once($path);
+        return true;
+    }
+    return false;
+}
+
 // javascript, add required javascript files to header
 arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
 arcAddHeader("js", arcGetPath() . "js/jquery-hotkeys.min.js");
@@ -180,7 +188,7 @@ function arcSplitURL() {
             $count++;
         }
     } else {
-        // get the default page of module.
+// get the default page of module.
         switch (ARCDEFAULTTYPE) {
             case "module":
                 arcSetPage(ARCDEFAULTPAGE, null);
@@ -243,7 +251,7 @@ function arcAddHeader($type, $content) {
 function arcGetController() {
     include arcGetTheme() . "controller/index.php";
 
-    // get module controllers
+// get module controllers
     if (!empty(arcGetURLData("module"))) {
         $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
         if (arcGetURLData("data1") == "administration") {
@@ -275,7 +283,7 @@ function arcGetController() {
  * Includes the specified view
  */
 function arcGetView() {
-    // logout user
+// logout user
     if (arcGetURLData("module") == "logout") {
         session_unset();
         session_destroy();
@@ -283,24 +291,24 @@ function arcGetView() {
         return;
     }
 
-    // expired session
+// expired session
     $timeout = ARCSESSIONTIMEOUT * 60;
     if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
         session_unset();
         session_destroy();
         arcSetPage("error", "419");
     } else {
-        // update last activity time stamp
+// update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
 
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id != 0) {
-            // if we have a page set it.
+// if we have a page set it.
             arcSetPage("page", arcGetURLData("module"));
         }
 
         if (!file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module"))) {
-            // module not found.
+// module not found.
             arcSetPage("error", "404");
         } else {
             if (!empty(arcGetUser())) {
@@ -312,22 +320,22 @@ function arcGetView() {
                 $permissions = $group->getPermissions();
             }
 
-            // permission check string
+// permission check string
             $pCheck = arcGetURLData("module") . "/" . arcGetURLData("data1");
 
-            // module is not a page
+// module is not a page
             if (arcGetURLData("module") != "page") {
                 $pCheck = "module/" . arcGetURLData("module");
             }
 
-            // user doesn't have permission to access module
+// user doesn't have permission to access module
             if (!UserPermission::hasPermission($permissions, $pCheck)) {
                 arcSetPage("error", "403");
             }
         }
     }
 
-    // include default theme view
+// include default theme view
     include arcGetTheme() . "view/index.php";
 }
 
@@ -359,7 +367,7 @@ function arcGetContent() {
  */
 function arcGetHeader() {
     global $arc;
-    // output header
+// output header
     foreach ($arc["headerdata"] as $line) {
         echo $line;
     }
@@ -458,12 +466,12 @@ function arcGetModulePath($filesystem = false) {
  * @param string $group Group to palce the item
  */
 function arcAddMenuItem($name, $icon, $divider, $url, $group) {
-    // setup menu storage if not already in existance
+// setup menu storage if not already in existance
     if (!isset($GLOBALS["arc"]["menus"])) {
         $GLOBALS["arc"]["menus"] = array();
     }
 
-    // build menu item
+// build menu item
     $item = array();
     $item["name"] = $name;
     $item["icon"] = $icon;
@@ -504,7 +512,7 @@ function arcGetMenu() {
 
     foreach ($modules as $module) {
         if ($module != ".." && $module != ".") {
-            // module menu
+// module menu
             if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
                 if ($perms->hasPermission($permissions, "module/" . $module)) {
                     $GLOBALS["arc"]["menumodule"] = $module;
@@ -512,7 +520,7 @@ function arcGetMenu() {
                 }
             }
 
-            // module administration menu
+// module administration menu
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                     $GLOBALS["arc"]["menumodule"] = $module;
@@ -526,7 +534,7 @@ function arcGetMenu() {
 
     if (arcGetUser() != null) {
         $GLOBALS["arc"]["menumodule"] = "logout";
-        // logout menu (last item)
+// logout menu (last item)
         arcAddMenuItem("Logout", "fa-lock", false, null, null);
     }
     $GLOBALS["arc"]["menumodule"] = null;
@@ -633,7 +641,7 @@ function arcGetHost() {
  */
 function arcSendMail($to, $subject, $message, $attachments = null) {
     $mailSettings = SystemSetting::getByKey("ARCSMTP");
-    
+
     require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
 
     $mail = new PHPMailer();
@@ -644,9 +652,9 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
         $mail->SMTPDebug = 0;
     }
     $mail->Debugoutput = "html";
-    
-    
-    
+
+
+
     if (empty($mailSettings->setting)) {
         return "Unable to get mail settings";
         return;

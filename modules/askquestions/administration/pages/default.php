@@ -7,7 +7,7 @@
 </div>
 <div class="text-right">
     <p>
-        <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0"; ?>'"><span class="fa fa-plus"></span> New Question</button>
+        <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0"; ?>'"><span class="fa fa-plus"></span> New Question</button> <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal"><span class="fa fa-plus"></span> New Group</button>
     </p>
 </div>
 <?php
