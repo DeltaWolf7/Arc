@@ -1,5 +1,6 @@
 <?php
 
+namespace Arc {
 /*
  * The MIT License
  *
@@ -85,3 +86,4 @@ DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
 DEFINE("ARCSESSIONTIMEOUT", 30);
+}

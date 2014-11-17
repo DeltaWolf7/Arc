@@ -24,49 +24,54 @@
  * THE SOFTWARE.
  */
 
-/**
- * Description of message
- *
- * @author Craig
- */
-class Message extends DataProvider {
-
-    public $subject;
-    public $content;
-    public $date;
-    public $userid;
-    public $read;
-    public $replied;
-    public $fromid;
-    public $fromuser;
-    public $folder;
+namespace Arc {
 
     /**
-     * Message constructor
+     * Description of message
+     *
+     * @author Craig
      */
-    public function __construct() {
-        parent::__construct();
-        $this->subject = "";
-        $this->content = "";
-        $this->date = date("y-m-d h:i:s");
-        $this->userid = 0;
-        $this->read = 0;
-        $this->replied = 0;
-        $this->fromid = 0;
-        $this->fromuser = "";
-        $this->folder = "Inbox";
-        $this->table = ARCDBPREFIX . "messages";
-        $this->columns = ["id", "subject", "content", "date", "userid", "read", "replied", "fromid", "fromuser", "folder"];
+    class Message extends DataProvider {
+
+        public $subject;
+        public $content;
+        public $date;
+        public $userid;
+        public $read;
+        public $replied;
+        public $fromid;
+        public $fromuser;
+        public $folder;
+
+        /**
+         * Message constructor
+         */
+        public function __construct() {
+            parent::__construct();
+            $this->subject = "";
+            $this->content = "";
+            $this->date = date("y-m-d h:i:s");
+            $this->userid = 0;
+            $this->read = 0;
+            $this->replied = 0;
+            $this->fromid = 0;
+            $this->fromuser = "";
+            $this->folder = "Inbox";
+            $this->table = ARCDBPREFIX . "messages";
+            $this->columns = ["id", "subject", "content", "date", "userid", "read", "replied", "fromid", "fromuser", "folder"];
+        }
+
+        /**
+         * 
+         * @param int $userid User's ID
+         * @param string $folder Folder name
+         * @return \Message collection
+         */
+        public static function getMessagesByFolder($userid, $folder) {
+            $message = new Message();
+            return $message->getCollection(["AND" => ['"userid' => $userid, "folder" => $folder], "ORDER" => "date DESC"]);
+        }
+
     }
 
-    /**
-     * 
-     * @param int $userid User's ID
-     * @param string $folder Folder name
-     * @return \Message collection
-     */
-    public static function getMessagesByFolder($userid, $folder) {
-        $message = new Message();
-        return $message->getCollection(["AND" => ['"userid' => $userid, "folder" => $folder], "ORDER" => "date DESC"]);
-    }
 }
