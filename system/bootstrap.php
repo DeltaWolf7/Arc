@@ -97,13 +97,13 @@ namespace Arc {
         }
     }
 
-function arcGetClass($path) {
-    if (file_exists($path)) {
-        require_once($path);
-        return true;
+    function arcGetClass($path) {
+        if (file_exists($path)) {
+            require_once($path);
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
 // javascript, add required javascript files to header
     arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
