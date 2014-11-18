@@ -9,6 +9,18 @@ Moment.js                   2.8.3               http://momentjs.com/
 PHPMailer                   5.2.8               https://github.com/Synchro/PHPMailer
 
 
+0.0.0.40
+--------
+/ Cleared out namespaces, change mind for now about this.
+/ Changed the way paths are detected.
++ Added get footer method.
+/ Shifted javascript to footer for faster page loading.
+/ Updated all modules and templates to suite changes.
+- Removed unused settings from config.
+/ Finished the blog module.
+/ Corrected issue in askquestions causing wrong answer.
+/ Fixed issue with menu building messing up some paths.
+/ Changed how the autoload works.
 
 0.0.0.37
 --------

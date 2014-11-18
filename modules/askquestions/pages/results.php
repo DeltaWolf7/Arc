@@ -19,7 +19,7 @@ if (arcGetURLData("data3") == null) {
         $results = Result::getByGroupAndUserID(arcGetURLData("data2"), arcGetUser()->id);
 
         foreach ($results as $result) {
-            echo "<tr><td><a href=\"" . arcGetModulePath() . "/results/" . arcGetURLData("data2") . "/" . $result->id . "\">" . $result->datedone . "</a></td><td>" . $result->timetaken . "</td></tr>";
+            echo "<tr><td><a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data2") . "/" . $result->id . "\">" . $result->datedone . "</a></td><td>" . $result->timetaken . "</td></tr>";
         }
         ?>
 
@@ -42,7 +42,7 @@ if (arcGetURLData("data3") == null) {
     <div class="page-header">
         <h1>Results <?php
             if (!empty(arcGetURLData("data1"))) {
-                echo "<a href=\"" . arcGetModulePath() . "/results/" . arcGetURLData("data2") . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+                echo "<a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data2") . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
             }
             ?></h1>
     </div>

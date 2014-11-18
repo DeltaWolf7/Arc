@@ -10,14 +10,14 @@
     <div class="col-sm-8">
         <table class="table table-striped">
             <tr>
-                <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "/vehicles/new" ?>'"><span class="fa fa-plus"></span> Create</button></th>
+                <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "vehicles/new" ?>'"><span class="fa fa-plus"></span> Create</button></th>
             </tr>
             <?php
             $vehicles = Vehicle::getAll();
             foreach ($vehicles as $vehicle) {
                 $type = new VehicleType();
                 $type->getByID($vehicle->typeid);
-                echo "<tr><td><a href=\"" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "/vehicles/" . $vehicle->id . "/delete" . "'\"><span class=\"fa fa-close\"></span> Delete</button></td></tr>";
+                echo "<tr><td><a href=\"" . arcGetModulePath() . "vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "vehicles/" . $vehicle->id . "/delete" . "'\"><span class=\"fa fa-close\"></span> Delete</button></td></tr>";
             }
             ?>
         </table>
@@ -38,7 +38,7 @@
                         $vehicle->getByID(arcGetURLData("data2"));
                         if (arcGetURLData("data3")) {
                             $vehicle->delete(arcGetURLData("data2"));
-                            echo "<script>window.location='" . arcGetModulePath() . "/vehicles" . "';</script>";
+                            echo "<script>window.location='" . arcGetModulePath() . "vehicles" . "';</script>";
                         }
                     }
                     ?>
@@ -84,7 +84,7 @@
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
-            window.location = "<?php echo arcGetModulePath() . "/vehicles"; ?>";
+            window.location = "<?php echo arcGetModulePath() . "vehicles"; ?>";
         }
         updateStatus(data);
     }

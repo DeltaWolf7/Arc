@@ -14,7 +14,7 @@ $multistage = Multistage::getRandomMultistage();
                 <p>
                 <?php
                 if ((string) $multistage->image <> "") {
-                    echo "<img class=\"img-rounded\" src=\"http://" . $_SERVER['SERVER_NAME'] . "/modules" . arcGetModulePath() . "/images/" . $multistage->image . "\" />";
+                    echo "<img class=\"img-rounded\" src=\"http://" . $_SERVER['SERVER_NAME'] . "/modules" . arcGetModulePath() . "images/" . $multistage->image . "\" />";
                 }
                ?>
                 </p>

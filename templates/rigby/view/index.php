@@ -27,9 +27,8 @@
                 </div>
             </nav>
             <?php arcGetContent(); ?>
-            <p>
-            <div id="status" style="display:none;" class="alert alert-success" role="alert"></div>
-        </p>
+            <?php arcGetStatus(); ?>
     </div>
+        <?php arcGetFooter(); ?>
 </body>
 </html>

@@ -24,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
 
     /**
      * Basic object data provider
@@ -126,4 +125,3 @@ namespace Arc {
 
     }
 
-}

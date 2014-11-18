@@ -22,7 +22,7 @@ if (arcGetURLData("data1") == null) {
             </div>
         </div>
         <button type="button" class="btn btn-default" onclick="ajax.send('POST', {action: 'login', email: '#email', password: '#password'}, '<?php arcGetDispatch(); ?>', login, true)">Login</button>
-        <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath() . "/forgot"; ?>'">Forgot Password</button>
+        <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath() . "forgot"; ?>'">Forgot Password</button>
     </form>
     <?php
 } elseif (arcGetURLData("data1") == "forgot") {
@@ -80,7 +80,7 @@ if (arcGetURLData("data1") == null) {
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
-            window.location = "<?php echo ARCWWW; ?>";
+            window.location = "<?php echo arcGetPath(); ?>";
         }
     }
 </script>

@@ -1,9 +1,9 @@
 <?php
 if (arcGetURLData("data2") == "edit") {
     if (arcGetURLData("data3") == "post") {
-        include arcGetModulePath(true) . "pages/post.php";
+        include arcGetModulePath(true) . "view/post.php";
     } elseif (arcGetURLData("data3") == "category") {
-        include arcGetModulePath(true) . "pages/category.php";
+        include arcGetModulePath(true) . "view/category.php";
     }
 } elseif (arcGetURLData("data2") == "delete") {
     if (arcGetURLData("data3") == "post") {
@@ -15,6 +15,6 @@ if (arcGetURLData("data2") == "edit") {
     }
     arcRedirect(arcGetModulePath());
 } else {
-    include arcGetModulePath(true) . "pages/default.php";
+    include arcGetModulePath(true) . "view/default.php";
 }
 ?>

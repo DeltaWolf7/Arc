@@ -5,7 +5,7 @@
 <script>
     function dosearch() {
         var search = document.getElementById('search').value;
-        window.location = '<?php echo arcGetModulePath(); ?>/search/' + search;
+        window.location = '<?php echo arcGetModulePath(); ?>search/' + search;
     }
 </script>
 
@@ -50,7 +50,7 @@ if (count($data) > 0) {
         <?php
         foreach ($data as $client) {
             if ($client->userid == $user->id) {
-                echo "<tr><td><span class=\"glyphicon glyphicon-user\"></span></td><td>" . $client->id . "</td><td><a href='" . arcGetModulePath() . "/clients/" . $client->id . "'>" . $client->name . "</a></td><td>" . $client->phone . "</td><td>" . $client->dob . "</td><td>" . $client->sex . "</td></tr>";
+                echo "<tr><td><span class=\"glyphicon glyphicon-user\"></span></td><td>" . $client->id . "</td><td><a href='" . arcGetModulePath() . "clients/" . $client->id . "'>" . $client->name . "</a></td><td>" . $client->phone . "</td><td>" . $client->dob . "</td><td>" . $client->sex . "</td></tr>";
             }
         }
         ?>
@@ -75,7 +75,7 @@ if (count($data) > 0) {
         <?php
         foreach ($data as $address) {
             if ($address->userid == $user->id) {
-                echo "<tr><td><span class=\"glyphicon glyphicon-home\"></span></td><td>" . $address->id . "</td><td><a href='" . arcGetModulePath() . "/addresses/" . $address->id . "/" . $address->clientid . "'>" . $address->address1 . ", " . $address->address2 . ", " . $address->address3 . "</a></td><td>" . $address->postcode . "</td></tr>";
+                echo "<tr><td><span class=\"glyphicon glyphicon-home\"></span></td><td>" . $address->id . "</td><td><a href='" . arcGetModulePath() . "addresses/" . $address->id . "/" . $address->clientid . "'>" . $address->address1 . ", " . $address->address2 . ", " . $address->address3 . "</a></td><td>" . $address->postcode . "</td></tr>";
             }
         }
         ?>

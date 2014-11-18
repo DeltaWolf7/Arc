@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
+
 
     /**
      * Description of page
@@ -78,4 +78,3 @@ namespace Arc {
 
     }
 
-}

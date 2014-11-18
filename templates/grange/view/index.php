@@ -30,9 +30,7 @@
         <!-- Begin page content -->
         <div class="container">
             <?php arcGetContent(); ?>
-            <p>
-            <div id="status" style="display:none;" class="alert alert-success" role="alert"></div>
-        </p>
+            <?php arcGetStatus(); ?>
     </div>
 
     <div class="footer">
@@ -40,5 +38,6 @@
             <p class="text-muted">Grange Computer Supplies © 2014</p>
         </div>
     </div>
+        <?php arcGetFooter(); ?>
 </body>
 </html>

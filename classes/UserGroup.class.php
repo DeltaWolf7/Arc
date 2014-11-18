@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
+
 
     /**
      * Description of usergroups
@@ -77,4 +77,3 @@ namespace Arc {
 
     }
 
-}

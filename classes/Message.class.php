@@ -24,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
 
     /**
      * Description of message
@@ -74,4 +73,3 @@ namespace Arc {
 
     }
 
-}

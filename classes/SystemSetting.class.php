@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
+
 
     /**
      * Description of system setting
@@ -83,4 +83,3 @@ namespace Arc {
 
     }
 
-}

@@ -9,11 +9,11 @@
 <div class="row">
     <div class="col-sm-8">
         <table class="table table-striped">
-            <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th>Cost P/H</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "/drivers/0" ?>'"><span class="fa fa-plus"></span> Create</button></th></tr>
+            <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th>Cost P/H</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "drivers/0" ?>'"><span class="fa fa-plus"></span> Create</button></th></tr>
             <?php
             $drivers = Driver::getAll();
             foreach ($drivers as $driver) {
-                echo "<tr><td><a href=\"" . arcGetModulePath() . "/drivers/" . $driver->id . "\">" . $driver->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "/drivers/" . $driver->id . "\">" . $driver->lastname . "</a></td><td>" . $driver->email . "</td><td>" . $driver->phone . "</td><td>" . $driver->mobile . "</td><td>£" . $driver->costperhour . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "/drivers/" . $driver->id . "/delete'\"><span class=\"fa fa-remove\"></span> Delete</button></td></tr>";
+                echo "<tr><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->lastname . "</a></td><td>" . $driver->email . "</td><td>" . $driver->phone . "</td><td>" . $driver->mobile . "</td><td>£" . $driver->costperhour . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "drivers/" . $driver->id . "/delete'\"><span class=\"fa fa-remove\"></span> Delete</button></td></tr>";
             }
             ?>
         </table>
@@ -33,7 +33,7 @@
                             $driver->getByID(arcGetURLData("data2"));
                             if (arcGetURLData("data3")) {
                                 $driver->delete(arcGetURLData("data2"));
-                                echo "<script>window.location='" . arcGetModulePath() . "/drivers" . "';</script>";
+                                echo "<script>window.location='" . arcGetModulePath() . "drivers" . "';</script>";
                             }
                         }
                         ?>
@@ -75,7 +75,7 @@
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
-            window.location = "<?php echo arcGetModulePath() . "/drivers"; ?>";
+            window.location = "<?php echo arcGetModulePath() . "drivers"; ?>";
         }
         updateStatus(data);
     }

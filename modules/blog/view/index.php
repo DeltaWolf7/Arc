@@ -13,7 +13,7 @@ if (!empty($path)) {
         if (!empty($blog->tags)) {
             $tags = $blog->tags;
         }
-        include arcGetModulePath(true) . "/pages/post.php";
+        include arcGetModulePath(true) . "/view/post.php";
     } elseif ($path == "category") {
         $category = BlogCategory::getBySEOUrl(arcGetURLData("data2"));
         $blogs = Blog::getAllByCategory($category->id);
@@ -21,7 +21,7 @@ if (!empty($path)) {
     } elseif ($path == "poster") {
         $poster = new User();
         $poster->getByID(arcGetURLData("data2"));
-        include arcGetModulePath(true) . "/pages/poster.php";
+        include arcGetModulePath(true) . "/view/poster.php";
     }
 } else {
     $blogs = Blog::getLatest();
@@ -35,7 +35,7 @@ function buildBlog($blogs) {
         if (strlen($blog->content) > $charCount) {
             $content = substr($blog->content, 0, $charCount - 1) . "..";
         }
-        include arcGetModulePath(true) . "/pages/post.php";
+        include arcGetModulePath(true) . "/view/post.php";
     }
 }
 ?>

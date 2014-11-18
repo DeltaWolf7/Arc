@@ -24,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
 
     /**
      * Description of userpermissions
@@ -84,4 +83,3 @@ namespace Arc {
 
     }
 
-}

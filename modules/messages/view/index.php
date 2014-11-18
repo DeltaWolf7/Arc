@@ -72,10 +72,10 @@
         <div class="row">
             <div class="col-md-3">
                 <ul class="list-group">
-                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/send"><span class="fa fa-pencil"></span> Compose</a></li>
-                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/"><span class="fa fa-inbox"></span> Inbox</a></li>
-                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/sent"><span class="fa fa-folder"></span> Sent</a></li>
-                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>/trash"><span class="fa fa-trash"></span> Trash</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>send"><span class="fa fa-pencil"></span> Compose</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>"><span class="fa fa-inbox"></span> Inbox</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>sent"><span class="fa fa-folder"></span> Sent</a></li>
+                    <li class="list-group-item"><a href="<?php echo arcGetModulePath(); ?>trash"><span class="fa fa-trash"></span> Trash</a></li>
                 </ul>
             </div>
             <div class="col-md-9">
@@ -104,9 +104,9 @@
                                         echo "&nbsp;<span class='fa fa-mail-reply-all'></span>";
                                     }
                                     ?>
-                                </td><td><a href='<?php echo arcGetModulePath() . "/message/" . $msg->id; ?>'><?php echo $msg->subject; ?></a></td>
+                                </td><td><a href='<?php echo arcGetModulePath() . "message/" . $msg->id; ?>'><?php echo $msg->subject; ?></a></td>
                             <td><?php echo $msg->date; ?></td>
-                            <td class="text-right"><a href='<?php echo arcGetModulePath() . "/reply/" . $msg->id; ?>'><span class="fa fa-mail-reply"></span></a> <a href='<?php echo arcGetModulePath() . "/delete/" . $msg->id; ?>'><span class="fa fa-remove"></span></a></td>
+                            <td class="text-right"><a href='<?php echo arcGetModulePath() . "reply/" . $msg->id; ?>'><span class="fa fa-mail-reply"></span></a> <a href='<?php echo arcGetModulePath() . "delete/" . $msg->id; ?>'><span class="fa fa-remove"></span></a></td>
                             <?php
                         }
                         echo "</table>";
@@ -151,7 +151,7 @@
                                             ?>
                                         </td></tr>
                                     <?php if (arcGetURLData("data1") == "message") { ?>
-                                        <tr><td>From</td><td><a href='<?php echo arcGetModulePath() . "/send/" . $m->fromid; ?>'><?php echo $m->fromuser; ?></a></td></tr>
+                                        <tr><td>From</td><td><a href='<?php echo arcGetModulePath() . "send/" . $m->fromid; ?>'><?php echo $m->fromuser; ?></a></td></tr>
 
                                         <tr><td>Date</td><td><?php echo $m->date; ?></td></tr>
                                     <?php } ?>
@@ -183,8 +183,8 @@
                                     <p>
                                     <div class="row">
                                         <div class="col-md-9">&nbsp;</div>
-                                        <div class="col-md-3 text-right"><a href='<?php echo arcGetModulePath() . "/reply/" . $m->id; ?>'><span class="fa fa-reply"></span> Reply</a>&nbsp;
-                                            <a href='<?php echo arcGetModulePath() . "/delete/" . $m->id; ?>'><span class="fa fa-remove"></span> Delete</a></div>
+                                        <div class="col-md-3 text-right"><a href='<?php echo arcGetModulePath() . "reply/" . $m->id; ?>'><span class="fa fa-reply"></span> Reply</a>&nbsp;
+                                            <a href='<?php echo arcGetModulePath() . "delete/" . $m->id; ?>'><span class="fa fa-remove"></span> Delete</a></div>
                                     </div>
 
                                     </p>

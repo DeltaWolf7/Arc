@@ -14,7 +14,7 @@ if ($_POST["action"] == "savequestion") {
     $xml = "<answers>";
     $count = 1;
     while ($count <= 5) {
-        if (!empty($_POST["answer" . $count])) {
+        if (isset($_POST["answer" . $count])) {
             $xml .= "<answer text=\"" . $_POST["answer" . $count] . "\"";
             if ($_POST["answer"] == $count) {
                 $xml .= " correct=\"true\"";

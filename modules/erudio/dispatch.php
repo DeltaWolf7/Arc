@@ -102,9 +102,9 @@ if ($_POST["action"] == "antonyms") {
     $resultx->update();
 
     if ($correct) {
-        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/multistage" . "\">Try another question</a>";
+        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "multistage" . "\">Try another question</a>";
     } else {
-        echo "danger|Sorry, don't give up.<br />Answer 1 <strong>'" . $data[2] . "'</strong>.<br />Answer 2 <strong>'" . $data[4] . "'</strong>.<br />Answer 3 <strong>'" . $data[6] . "'</strong>.<br />Answer 4 <strong>'" . $data[8] . "'</strong>.<br />Answer 5 <strong>'" . $data[10] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/multistage" . "\">Try another question</a>";
+        echo "danger|Sorry, don't give up.<br />Answer 1 <strong>'" . $data[2] . "'</strong>.<br />Answer 2 <strong>'" . $data[4] . "'</strong>.<br />Answer 3 <strong>'" . $data[6] . "'</strong>.<br />Answer 4 <strong>'" . $data[8] . "'</strong>.<br />Answer 5 <strong>'" . $data[10] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "multistage" . "\">Try another question</a>";
     }
 } elseif ($_POST["action"] == "oddoneout") {
     $question = $_POST['question'];
@@ -186,9 +186,9 @@ if ($_POST["action"] == "antonyms") {
     $result->update();
 
     if ($correct) {
-        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/quickfire" . "\">Try another question</a>";
+        echo "success|Great job! That's correct.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "quickfire" . "\">Try another question</a>";
     } else {
-        echo "danger|Sorry, don't give up.<br />The correct answer is <strong>'" . $data[1] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "/quickfire" . "\">Try another question</a>";
+        echo "danger|Sorry, don't give up.<br />The correct answer is <strong>'" . $data[1] . "'</strong>.<br />Time taken: " . $taken . " seconds.<br /><a href=\"" . arcGetModulePath() . "quickfire" . "\">Try another question</a>";
     }
 } elseif ($_POST["action"] == "shuffled") {
     $question = $_POST['question'];

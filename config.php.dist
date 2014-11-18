@@ -1,6 +1,5 @@
 <?php
 
-namespace Arc {
 /*
  * The MIT License
  *
@@ -53,16 +52,6 @@ DEFINE("ARCDBTYPE", "mysql");
 DEFINE("ARCDBPREFIX", "arc_");
 
 /*
- * Server Configuration
- */
-
-// Web path
-DEFINE("ARCWWW", "/");
-
-// FS path
-DEFINE("ARCFS", "/");
-
-/*
  * Project Configuration
  */
 
@@ -73,7 +62,7 @@ DEFINE('ARCTITLE', 'Arc Project');
 DEFINE("ARCFAVICON", "favicon.png");
 
 // Project version
-DEFINE("ARCVERSION", "0.0.0.37");
+DEFINE("ARCVERSION", "0.0.0.40");
 
 // Project debug mode
 DEFINE("ARCDEBUG", false);
@@ -85,5 +74,4 @@ DEFINE("ARCDEFAULTTYPE", "page");
 DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 30);
-}
+DEFINE("ARCSESSIONTIMEOUT", 60);

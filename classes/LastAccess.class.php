@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
+
 
     /**
      * Description of lastaccess
@@ -134,4 +134,3 @@ namespace Arc {
 
     }
 
-}

@@ -24,7 +24,6 @@
  * THE SOFTWARE.
  */
 
-namespace Arc {
 
     /**
      * Description of user
@@ -125,4 +124,3 @@ namespace Arc {
 
     }
 
-}

@@ -8,6 +8,10 @@
     </head>
     <body>
         <div class="container">
+            <div class="row">
+                <div class="col-md-6"><a href="<?php echo arcGetPath(); ?>"><img src="<?php echo arcGetPath(); ?>images/logo.png" alt="<?php echo ARCTITLE; ?>" /></a></div>
+                <div class="col-md-6 text-right"><h1>Call Today: 07551 015052</h1></div>
+            </div>
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -17,7 +21,6 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="<?php echo arcGetPath(); ?>"><?php echo ARCTITLE; ?></a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
@@ -27,7 +30,9 @@
                 </div>
             </nav>
             <?php arcGetContent(); ?>
-            <?php arcGetStatus(); ?>
+            <p>
+            <div id="status" style="display:none;" class="alert alert-success" role="alert"></div>
+        </p>
     </div>
         <?php arcGetFooter(); ?>
 </body>

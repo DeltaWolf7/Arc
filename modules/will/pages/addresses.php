@@ -8,7 +8,7 @@ if (arcGetURLData("data2") != "0") {
     $address->getByID(arcGetURLData("data2"));
 } elseif (arcGetURLData("data3") == "0") {
     echo "No client";
-    echo "<script>alert('You can only create addresses for valid clients.');window.location='" . arcGetModulePath() . "/clients/0';</script>";
+    echo "<script>alert('You can only create addresses for valid clients.');window.location='" . arcGetModulePath() . "clients/0';</script>";
     exit();
 }
 ?>
@@ -42,6 +42,6 @@ if (arcGetURLData("data2") != "0") {
     <p class="text-right">
         <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'saveaddress', id: '#id', userid: '#userid', address1: '#address1', clientid: '#clientid',
                     address2: '#address2', address3: '#address3', postcode: '#postcode', default:'#default'}, '<?php arcGetDispatch(); ?>', updateStatus, true)"><span class="glyphicon glyphicon-floppy-disk"></span> Save Address</button>
-        <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath(); ?>/clients/<?php echo arcGetURLData("data3"); ?>'"><span class="glyphicon glyphicon glyphicon-remove"></span> Exit To Client</button>
+        <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath(); ?>clients/<?php echo arcGetURLData("data3"); ?>'"><span class="glyphicon glyphicon glyphicon-remove"></span> Exit To Client</button>
     </p>
 </form>

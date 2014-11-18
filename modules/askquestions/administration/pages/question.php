@@ -22,14 +22,14 @@ $xml = simplexml_load_string($question->answer);
         <label>Group</label>
         <select class="form-control" id="group">
             <?php
-                $groups = Group::getGroups();
-                foreach ($groups as $group) {
-                    echo "<option value=\"" . $group->id . "\"";
-                    if ($group->id == $question->groupid) {
-                        echo " selected";
-                    }
-                    echo ">" . $group->name . "</option>";
+            $groups = Group::getGroups();
+            foreach ($groups as $group) {
+                echo "<option value=\"" . $group->id . "\"";
+                if ($group->id == $question->groupid) {
+                    echo " selected";
                 }
+                echo ">" . $group->name . "</option>";
+            }
             ?>
         </select>
     </div>
@@ -80,7 +80,7 @@ $xml = simplexml_load_string($question->answer);
             $count = 1;
             while ($count <= 5) {
                 echo "<option value=\"" . $count . "\"";
-                if (isset($xml->answer[$count]) && isset($xml->answer[$count]["correct"])) {
+                if (isset($xml->answer[$count - 1]["correct"])) {
                     echo " selected";
                 }
                 echo ">Answer " . $count . "</option>";
@@ -91,6 +91,6 @@ $xml = simplexml_load_string($question->answer);
     </div>
     <div class="form-group text-right">
         <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savequestion', questionid: '<?php echo arcGetURLData("data3"); ?>', answer1: '#answer1', answer2: '#answer2', answer3: '#answer3', answer4: '#answer4', answer5: '#answer5', answer: '#answer', group: '#group', question: '#question'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Save</button> 
-        <button type="button" class="btn btn-danger" onclick="window.location='<?php echo arcGetModulePath() . "delete/" . arcGetURLData("data3"); ?>'">Delete</button>
+        <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath() . "delete/" . arcGetURLData("data3"); ?>'">Delete</button>
     </div>
 </form>

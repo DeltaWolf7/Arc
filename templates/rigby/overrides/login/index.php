@@ -32,7 +32,7 @@
         var data2 = data.split('|');
         if (data2[0] == "success")
         {
-            window.location = "<?php echo ARCWWW; ?>";
+            window.location = "<?php echo arcGetPath(); ?>";
         }
         updateStatus(data);
     }
