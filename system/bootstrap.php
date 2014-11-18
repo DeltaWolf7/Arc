@@ -42,13 +42,13 @@ if (ARCDEBUG == true) {
 }
 
 // check that we are using PHP 5.3 or better.
-if (version_compare(phpversion(), '5.3.0', '<') == true) {
-    exit('PHP 5.3 or newer required');
+if (version_compare(phpversion(), "5.3.0", "<") == true) {
+    exit("PHP 5.3 or newer required");
 }
 
 // make sure we have the correct time zone.
-if (!ini_get('date.timezone')) {
-    date_default_timezone_set('UTC');
+if (!ini_get("date.timezone")) {
+    date_default_timezone_set("UTC");
 }
 
 // arc storage (stores system values)
@@ -381,7 +381,7 @@ function arcGetContent() {
         if (file_exists($path)) {
             include_once $path;
         } else {
-            exit("Missing view: " . $path);           
+            exit("Missing view: " . $path);
         }
     }
 }
@@ -655,12 +655,15 @@ function arcGetModules() {
  * 
  * @return string Path to template in use
  */
-function arcGetTheme() {
+function arcGetTheme($webpath = false) {
     $theme = SystemSetting::getByKey("ARCTHEME");
-    if (empty($theme->setting) || !file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
-        return "templates/default/";
+    if ($webpath == false) {
+        if (empty($theme->setting) || !file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
+            return "templates/default/";
+        }
+        return "templates/" . $theme->setting . "/";
     }
-    return "templates/" . $theme->setting . "/";
+    return arcGetPath() . "templates/" . $theme->setting . "/";
 }
 
 /**

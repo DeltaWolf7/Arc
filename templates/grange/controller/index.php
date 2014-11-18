@@ -1,4 +1,4 @@
 <?php
-    arcAddHeader("css", arcGetPath() . arcGetTheme() . "css/bootstrap.css");
-    arcAddHeader("css", arcGetPath() . arcGetTheme() . "css/styles.min.css");
+    arcAddHeader("css", arcGetTheme(true) . "css/bootstrap.css");
+    arcAddHeader("css", arcGetTheme(true) . "css/styles.min.css");
     arcAddHeader("favicon", arcGetPath() . "favicon.png");
