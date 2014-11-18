@@ -55,6 +55,8 @@ if (!ini_get("date.timezone")) {
 $arc = array();
 // setup empty menu array
 $arc["menu"] = array();
+$arc["headerdata"] = array();
+$arc["footerdata"] = array();
 
 // include required database system
 require_once arcGetPath(true) . "system/medoo.min.php";
@@ -110,21 +112,21 @@ function arcGetClass($path) {
 }
 
 // javascript, add required javascript files to header
-arcAddFooter("js", arcGetPath() . "js/jquery.min.js");
-arcAddFooter("js", arcGetPath() . "js/jquery-hotkeys.min.js");
-arcAddFooter("js", arcGetPath() . "js/moment.min.js");
-arcAddFooter("js", arcGetPath() . "js/bootstrap.min.js");
-arcAddFooter("js", arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-arcAddFooter("js", arcGetPath() . "js/bootstrap-filestyle.min.js");
-arcAddFooter("js", arcGetPath() . "js/bootstrap-wysiwyg.min.js");
-arcAddFooter("js", arcGetPath() . "js/delta-ajax.min.js");
-arcAddFooter("js", arcGetPath() . "js/status.min.js");
+arcAddHeader("js", arcGetPath() . "js/jquery.min.js");
+arcAddHeader("js", arcGetPath() . "js/moment.min.js");
+arcAddHeader("js", arcGetPath() . "js/bootstrap.min.js");
+arcAddHeader("js", arcGetPath() . "js/bootstrap-datetimepicker.min.js");
+arcAddHeader("js", arcGetPath() . "js/bootstrap-filestyle.min.js");
+arcAddHeader("js", arcGetPath() . "js/summernote.min.js");
+arcAddHeader("js", arcGetPath() . "js/delta-ajax.min.js");
+arcAddHeader("js", arcGetPath() . "js/status.min.js");
 
 // css, add required css files to header
 arcAddHeader("css", arcGetPath() . "css/bootstrap.min.css");
 arcAddHeader("css", arcGetPath() . "css/bootstrap-datetimepicker.min.css");
 arcAddHeader("css", arcGetPath() . "css/font-awesome.min.css");
 arcAddHeader("css", arcGetPath() . "css/status.min.css");
+arcAddHeader("css", arcGetPath() . "css/summernote.css");
 
 // favicon, add favicon it it exists.
 if (file_exists(arcGetPath() . ARCFAVICON)) {
