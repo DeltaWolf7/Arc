@@ -139,7 +139,7 @@ body {
 }
 
 a {
-    color: #9ed034;
+    color: #006bef;
     text-decoration: none;
     -webkit-transition: all 200ms ease-in-out;
     -moz-transition: all 200ms ease-in-out;
@@ -154,6 +154,7 @@ a:hover {
 h1,h2,h3,h4,h5,h6 {
     font-family: "Open Sans",Arial,sans-serif;
     color: #444;
+    font-size: 25px;
 }
 
 *,*:before,*:after {
@@ -224,19 +225,19 @@ hr {
 
 .main-header {
     background: #fff;
-    min-height: 100px;
-    height: 100px;
+    min-height: 80px;
+    height: 80px;
 }
 
 .logo {
-    margin: 25px;
+    margin: -20px 25px 25px 10px;
     overflow: hidden;
 }
 
 .main-menu {
     text-align: right;
     float: right;
-    margin-top: 35px;
+    margin-top: 25px;
 }
 
 .main-menu ul li {
@@ -423,32 +424,7 @@ h3.widget-title {
     left: 0;
 }
 
-#templatemo_services {
-    background: url(../images/templatemo_header_1.jpg);
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-position: center;
-}
-
-#templatemo_events {
-    background: url(../images/templatemo_header_2.jpg);
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-position: center;
-}
-
-#templatemo_about {
-    background: url(../images/templatemo_header_3.jpg);
-    background-repeat: no-repeat;
-    -webkit-background-size: cover;
-    background-size: cover;
-    background-position: center;
-}
-
-#templatemo_contact {
-    background: url(../images/templatemo_header_4.jpg);
+#templatemo {
     background-repeat: no-repeat;
     -webkit-background-size: cover;
     background-size: cover;
@@ -956,4 +932,8 @@ div.contact-form input.mainBtn {
         text-align: right;
         margin-top: 0;
     }
+}
+
+p {
+    margin-bottom: 10px;
 }

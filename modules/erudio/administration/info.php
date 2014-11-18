@@ -7,6 +7,6 @@ $module_info["author"] = "Craig Longford";
 $module_info["email"] = "deltawolf7@gmail.com";
 $module_info["www"] = "http://www.deltasblog.co.uk";
 
-arcAddMenuItem("Erudio Manager", "fa-book", true, null, "Administration");
+arcAddMenuItem("Erudio Manager", "fa-book", false, null, "Administration");
 ?>
 
