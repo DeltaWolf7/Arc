@@ -42,18 +42,21 @@
             </div> <!-- /.container -->
         </div> <!-- /.site-header -->
         <?php
-            $rnd = rand(1, 2);
+        $rnd = rand(1, 2);
         ?>
         <div class="page-top" id="templatemo" style="background-image: url('<?php echo arcGetTheme(true) . "images/banner" . $rnd . ".jpg" ?>')">
         </div> <!-- /.page-header -->
         <div class="middle-content">
             <div class="container">
                 <?php arcGetContent(); ?>
+
+                <?php arcGetStatus(); ?>
+
+                <p><?php echo arcPoweredBy(); ?></p>
             </div> <!-- /.container -->
         </div> <!-- /.middle-content -->
-        
-        <?php arcGetStatus(); ?>
-        
+
+
         <?php arcGetFooter(); ?>
     </body>
 </html>

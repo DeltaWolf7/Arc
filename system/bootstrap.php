@@ -673,7 +673,7 @@ function arcGetTheme($webpath = false) {
  * @return string Arc version information
  */
 function arcPoweredBy() {
-    return "Powered by Arc, Version: " . ARCVERSION;
+    return "<a href=\"http://www.github.com/deltawolf7/arc\" target=\"_new\">Powered by Arc, Version: " . ARCVERSION . "</a>";
 }
 
 /**
