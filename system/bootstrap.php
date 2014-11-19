@@ -76,6 +76,8 @@ try {
     die();
 }
 
+ob_start();
+
 // log access
 LastAccess::logAccess(arcGetUser());
 
@@ -303,7 +305,7 @@ function arcGetController() {
 
         $page = Page::getBySEOURL(arcGetURLData("module"));
         if ($page->id > 0) {
-            include_once arcGetPath(true) . "modules/page/controller/index.php";
+            include_once arcGetPath(true) . "modules/page/controller/module.php";
         }
     }
     
@@ -469,7 +471,6 @@ function arcSetUser($user) {
  * @param string $destination Outputs a javascript redirect to root or specified url
  */
 function arcRedirect($destination = null) {
-    flush();
     if (empty($destination)) {
         header("Location: " . arcGetPath());
     } else {

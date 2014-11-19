@@ -127,8 +127,8 @@
 $bookings = Booking::getBookingsByMonth(date("m"));
 $string = "";
 foreach ($bookings as $booking) {
-    $string .= "\"" . $booking->journeydate . "\": {\"number\": \"Ref: " . $booking->reference . "<br />Arrival: " . $booking->arrivaltime . "<br />Depart: " . $booking->departuretime . "\", \"badgeClass\": \"badge-green\", \"url\": \"" . arcGetModulePath() . "bookings/edit/" . $booking->id . "\"}," . PHP_EOL;
-    $string .= "\"" . $booking->returndate . "\": {\"number\": \"Ref: " . $booking->reference . "<br />Return: " . $booking->returntime . "\", \"badgeClass\": \"badge-yellow\", \"url\": \"" . arcGetModulePath() . "bookings/edit/" . $booking->id . "\"}," . PHP_EOL;
+    $string .= "\"" . $booking->journeydate . "\": {\"number\": \"1\", \"badgeClass\": \"badge-green\", \"url\": \"" . arcGetModulePath() . "bookings/edit/" . $booking->id . "\"}," . PHP_EOL;
+    $string .= "\"" . $booking->returndate . "\": {\"number\": \"2\", \"badgeClass\": \"badge-yellow\", \"url\": \"" . arcGetModulePath() . "bookings/edit/" . $booking->id . "\"}," . PHP_EOL;
 }
 echo $string;
 ?>

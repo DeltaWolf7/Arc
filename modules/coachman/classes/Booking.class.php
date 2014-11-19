@@ -55,7 +55,7 @@ class Booking extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->table = "coachman_bookings";
-        $this->columns = ["reference", "journeydate", "customername", "customerid", "address1", "address2", "city", "county", "postcode", "email", "phone",
+        $this->columns = ["id", "reference", "journeydate", "customername", "customerid", "address1", "address2", "city", "county", "postcode", "email", "phone",
             "mobile", "company", "orderdate", "coachsize", "departureaddress", "arrivaltime", "departuretime", "destination", "returndate",
             "returndropoff", "cost", "deposit", "returntime"];
         $this->reference = "";

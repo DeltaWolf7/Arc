@@ -31,7 +31,7 @@
  */
 if (isset($_POST["action"])) {
 
-    require "../../system/bootstrap.php";
+    require "../../../system/bootstrap.php";
     
     if ($_POST["action"] == "answerquestion") {
 

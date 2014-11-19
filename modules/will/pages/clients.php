@@ -162,7 +162,7 @@ if (arcGetURLData("data2") == null) {
             ?>
             </button>
             <button type="button" class="btn btn-primary" onclick="window.location = '<?php echo arcGetModulePath(); ?>addresses/0/<?php echo $client->id; ?>'"><span class="glyphicon glyphicon glyphicon-home"></span> New Address</button>
-            <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'saveclient', id: '#id', name: '#name', dob: '#dob', userid: '<?php echo $user->id; ?>',
+            <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'saveclient', id: '#id', name: '#name', dob: '#dob', userid: '<?php echo arcGetUser()->id; ?>',
                         sex: '#sex', disabled: '#disabled', phone: '#phone'}, '<?php arcGetDispatch(); ?>', updateStatus, true)"><span class="glyphicon glyphicon-floppy-disk"></span> Save Client</button>
             <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath(); ?>clients'"><span class="glyphicon glyphicon glyphicon-remove"></span> Exit To Clients</button>
         </p>
