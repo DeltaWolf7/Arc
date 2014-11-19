@@ -5,8 +5,8 @@ if (empty(arcGetURLData("data1"))) {
         <h1>Coach Manager</h1>
     </div>
     <?php
-    include arcGetModulePath(true) . "/pages/default.php";
+    include arcGetModulePath(true) . "/view/default.php";
 } else {
-    include arcGetModulePath(true) . "/pages/" . arcGetURLData("data1") . ".php";
+    include arcGetModulePath(true) . "/view/" . arcGetURLData("data1") . ".php";
 }
 ?>

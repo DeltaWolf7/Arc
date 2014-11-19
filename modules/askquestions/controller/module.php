@@ -25,50 +25,32 @@
  */
 
 /**
- * Application configuration
+ * AJAX data dispatch handler
  *
  * @author Craig Longford
  */
-/*
- *  Database Configuration
- */
+if (isset($_POST["action"])) {
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
+    require "../../system/bootstrap.php";
+    
+    if ($_POST["action"] == "answerquestion") {
 
-// Database name
-DEFINE("ARCDBNAME", "arc");
+        $count = 1;
+        $xml = "<results>";
+        while (isset($_POST["Q" . $count])) {
+            $xml .= "<result question=\"Q" . $count . "\" answer=\"" . $_POST["Q" . $count] . "\"></result>";
+            $count++;
+        }
+        $xml .= "</results>";
 
-// Database username
-DEFINE("ARCDBUSER", "username");
+        $result = new Result();
+        $result->groupid = $_POST["groupid"];
+        $result->userid = $_POST["userid"];
+        $time = $_POST["time"];
+        $result->timetaken = time() - $time;
+        $result->result = $xml;
+        $result->update();
 
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
-
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
-
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.41");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 60);
+        echo "success|Results saved";
+    }
+}

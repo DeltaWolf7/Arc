@@ -25,50 +25,33 @@
  */
 
 /**
- * Application configuration
+ * AJAX data dispatch handler
  *
  * @author Craig Longford
  */
-/*
- *  Database Configuration
- */
+if (isset($_POST["userid"])) {
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
+    require "../../../system/bootstrap.php";
+    
+    $user = new User();
+    $user->getByID($_POST["userid"]);
 
-// Database name
-DEFINE("ARCDBNAME", "arc");
+// password settings
+    if (!empty($_POST["password"])) {
+        if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
+            $user->setPassword($_POST['password']);
+        } else {
+            echo "danger|Password and retyped password do not match";
+            return;
+        }
+    }
 
-// Database username
-DEFINE("ARCDBUSER", "username");
+    $user->firstname = $_POST["firstname"];
+    $user->lastname = $_POST["lastname"];
+    $user->email = $_POST["email"];
 
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
+    $user->update();
+    arcSetUser($user);
 
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
-
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.41");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 60);
+    echo "success|Settings saved";
+}

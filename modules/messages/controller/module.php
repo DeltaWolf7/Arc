@@ -25,50 +25,44 @@
  */
 
 /**
- * Application configuration
+ * AJAX data dispatch handler
  *
  * @author Craig Longford
  */
-/*
- *  Database Configuration
- */
+if (isset($_POST["action"])) {
+    require "../../../system/bootstrap.php";
+    if ($_POST["action"] == "send") {
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
+        $from = new User();
+        $from->getByID($_POST["userid"]);
 
-// Database name
-DEFINE("ARCDBNAME", "arc");
+        if ($_POST["replyid"] != "0") {
+            $m = new Message();
+            $m->getByID($_POST["replyid"]);
+            $m->replied = 1;
+            $m->update();
+        }
 
-// Database username
-DEFINE("ARCDBUSER", "username");
+        $message = new Message();
+        $message->fromid = $from->id;
+        $message->fromuser = $from->firstname . " " . $from->lastname;
+        $message->content = $_POST["message"];
+        $message->subject = $_POST["subject"];
+        $message->userid = $_POST["touser"];
+        $message->folder = "Inbox";
 
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
+        $messageX = new Message();
+        $messageX->fromid = $from->id;
+        $messageX->fromuser = $from->firstname . " " . $from->lastname;
+        $messageX->content = $_POST["message"];
+        $messageX->subject = $_POST["subject"];
+        $messageX->userid = $from->id;
+        $messageX->read = true;
+        $messageX->folder = "Sent";
 
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
+        $message->update();
+        $messageX->update();
 
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.41");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 60);
+        echo "success|Message sent";
+    }
+}

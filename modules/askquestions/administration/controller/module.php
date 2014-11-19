@@ -25,50 +25,44 @@
  */
 
 /**
- * Application configuration
+ * AJAX data dispatch handler
  *
  * @author Craig Longford
  */
-/*
- *  Database Configuration
- */
+if (isset($_POST["action"])) {
+    
+    require "../../../../system/bootstrap.php";
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
+    if ($_POST["action"] == "savequestion") {
 
-// Database name
-DEFINE("ARCDBNAME", "arc");
+        $question = new Question();
+        if (!empty($_POST["questionid"])) {
+            $question->getByID($_POST["questionid"]);
+        }
+        $question->groupid = $_POST["group"];
+        $question->question = $_POST["question"];
 
-// Database username
-DEFINE("ARCDBUSER", "username");
+        $xml = "<answers>";
+        $count = 1;
+        while ($count <= 5) {
+            if (isset($_POST["answer" . $count])) {
+                $xml .= "<answer text=\"" . $_POST["answer" . $count] . "\"";
+                if ($_POST["answer"] == $count) {
+                    $xml .= " correct=\"true\"";
+                }
+                $xml .= "></answer>";
+            }
+            $count++;
+        }
+        $xml .= "</answers>";
+        $question->answer = $xml;
+        $question->update();
 
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
-
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
-
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.41");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 60);
+        echo "success|Question saved";
+    } else if ($_POST["action"] == "savegroup") {
+        $group = new Group();
+        $group->name = $_POST["name"];
+        $group->update();
+        echo "success|Group saved";
+    }
+}

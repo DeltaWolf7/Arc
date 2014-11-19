@@ -244,7 +244,7 @@ function arcAddHeader($type, $content) {
             $arc["headerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
             break;
         case "favicon":
-            $arc["headerdata"][] = "<link href=\"" . arcGetPath() . ARCFAVICON . "\" rel=\"icon\">" . PHP_EOL;
+            $arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"icon\">" . PHP_EOL;
             break;
         default:
             $arc["headerdata"][] = $content;
@@ -277,10 +277,16 @@ function arcAddFooter($type, $content) {
  * Includes the controller path used by the current page
  */
 function arcGetController() {
-    include arcGetTheme() . "controller/index.php";
-
+    
     // get module controllers
     if (!empty(arcGetURLData("module"))) {
+
+        if (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php") && arcGetURLData("data1") != "administration") {
+            include arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php";
+        } elseif (arcGetURLData("data1") == "administration" && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php")) {
+            include arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php";
+        }
+
         $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
         if (arcGetURLData("data1") == "administration") {
             $path .= "/administration";
@@ -288,14 +294,11 @@ function arcGetController() {
         $path .= "/controller/";
 
         if (!empty(arcGetURLData("data1")) && file_exists($path . arcGetURLData("data1") . ".php")) {
-            $path .= arcGetURLData("data1");
-        } else {
-            $path .= "index";
-        }
-        $path .= ".php";
-        if (file_exists($path)) {
-            include_once $path;
-            return;
+            $path .= arcGetURLData("data1") . ".php";
+            if (file_exists($path)) {
+                include_once $path;
+                return;
+            }
         }
 
         $page = Page::getBySEOURL(arcGetURLData("module"));
@@ -303,6 +306,8 @@ function arcGetController() {
             include_once arcGetPath(true) . "modules/page/controller/index.php";
         }
     }
+    
+    include arcGetTheme() . "controller/theme.php";
 }
 
 /**
@@ -464,25 +469,23 @@ function arcSetUser($user) {
  * @param string $destination Outputs a javascript redirect to root or specified url
  */
 function arcRedirect($destination = null) {
-    echo "<script>window.location = '";
+    flush();
     if (empty($destination)) {
-        echo arcGetPath();
+        header("Location: " . arcGetPath());
     } else {
-        echo $destination;
+        header("Location: " . $destination);
     }
-    echo "';</script>";
 }
 
 /**
  * Output the path the the modules dispatch file
  */
 function arcGetDispatch() {
-    $path = arcGetPath() . "modules/" . arcGetURLData("module");
-    if (arcGetURLData("data1") == "administration") {
-        $path .= "/administration";
+    if (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php") && arcGetURLData("data1") != "administration") {
+        echo arcGetPath() . "modules/" . arcGetURLData("module") . "/controller/module.php";
+    } elseif (arcGetURLData("data1") == "administration" && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php")) {
+        echo arcGetPath() . "modules/" . arcGetURLData("module") . "/administration/controller/module.php";
     }
-    $path .= "/dispatch.php";
-    echo $path;
 }
 
 /**

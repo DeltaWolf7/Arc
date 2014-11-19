@@ -25,50 +25,40 @@
  */
 
 /**
- * Application configuration
+ * AJAX data dispatch handler
  *
  * @author Craig Longford
  */
-/*
- *  Database Configuration
- */
+if (isset($_POST["action"])) {
+    require "../../../../system/bootstrap.php";
 
-// Database server
-DEFINE("ARCDBSERVER", "localhost");
+    if ($_POST['action'] == "savepage") {
 
-// Database name
-DEFINE("ARCDBNAME", "arc");
+        $page = Page::getBySEOURL($_POST["seourl"]);
+        if ($page->id == 0) {
+            $page->seourl = $_POST["seourl"];
+        }
 
-// Database username
-DEFINE("ARCDBUSER", "username");
+        if (empty($_POST["seourl"])) {
+            echo "danger|SEO Url can't be nothing.";
+            return;
+        }
 
-// Database password
-DEFINE("ARCDBPASSWORD", "password");
+        $input = html_entity_decode($_POST["editor"]);
+        $page->content = $input;
+        $page->title = $_POST["title"];
+        $page->metadescription = $_POST["metadescription"];
+        $page->metakeywords = $_POST["metakeywords"];
+        $page->metatitle = $_POST["metatitle"];
+        $page->update();
 
-// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
-DEFINE("ARCDBTYPE", "mysql");
-
-// Database prefix
-DEFINE("ARCDBPREFIX", "arc_");
-
-/*
- * Project Configuration
- */
-
-// Project Title
-DEFINE('ARCTITLE', 'Arc Project');
-
-// Project version
-DEFINE("ARCVERSION", "0.0.0.41");
-
-// Project debug mode
-DEFINE("ARCDEBUG", false);
-
-// Project default page type (page or module)
-DEFINE("ARCDEFAULTTYPE", "page");
-
-// Project default page
-DEFINE("ARCDEFAULTPAGE", "welcome");
-
-// Session Timeout (minutes)
-DEFINE("ARCSESSIONTIMEOUT", 60);
+        echo "success|Page updated";
+    } elseif ($_POST['action'] == "addpermission") {
+        $permission = new UserPermission();
+        $permission->groupid = $_POST['groupid'];
+        $page = new Page();
+        $page->getByID($_POST['pageid']);
+        $permission->permission = "page/" . $page->seourl;
+        $permission->update();
+    }
+}

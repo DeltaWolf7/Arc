@@ -121,6 +121,10 @@
         public function getSettingByKey($key) {
             return UserSetting::getByUserID($this->id, $key);
         }
+        
+        public function getFullname() {
+            return $this->firstname . " " . $this->lastname;
+        }
 
     }
 

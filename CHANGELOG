@@ -9,6 +9,17 @@ Moment.js                   2.8.3               http://momentjs.com/
 PHPMailer                   5.2.8               https://github.com/Synchro/PHPMailer
 
 
+0.0.0.41
+--------
+/ Changed the way dispatch for ajax is done.
+/ Changed theme controllers.
+/ Changed modules controllers.
++ Added per page module controllers.
++ Added per module controller.
++ Added fullname to users.
++ Favicon now set by themes not system.
+/ Cleaned config.
+
 0.0.0.40
 --------
 / Cleared out namespaces, change mind for now about this.

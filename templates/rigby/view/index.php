@@ -7,28 +7,51 @@
         <?php arcGetHeader(); ?>
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="<?php echo arcGetPath(); ?>">Rigby Transport and Travel</a>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <?php arcGetMenu(); ?>
-                        </ul>
-                    </div>
+        <div id="wrapper">
+
+            <!-- Navigation -->
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="<?php echo arcGetPath(); ?>">Rigby Transport and Travel</a>
                 </div>
+                <!-- Top Menu Items -->
+                <ul class="nav navbar-right top-nav">
+                    <?php arcGetMenu(); ?>
+                </ul>
+                <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+
             </nav>
-            <?php arcGetContent(); ?>
-            <?php arcGetStatus(); ?>
-    </div>
+
+            <div id="page-wrapper" style="background-image: url('<?php echo arcGetTheme(true) . "images/openroad.jpg"; ?>');">
+
+                <div class="container-fluid">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+
+                            <?php arcGetContent(); ?>
+                            <?php arcGetStatus(); ?>
+
+                        </div>
+                    </div>
+                    <!-- /.row -->
+
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- /#page-wrapper -->
+
+        </div>
+        <!-- /#wrapper -->
+
         <?php arcGetFooter(); ?>
-</body>
+    </body>
 </html>
