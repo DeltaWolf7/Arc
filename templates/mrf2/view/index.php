@@ -52,7 +52,6 @@
 
                 <?php arcGetStatus(); ?>
 
-                <p><?php echo arcPoweredBy(); ?></p>
             </div> <!-- /.container -->
         </div> <!-- /.middle-content -->
 
