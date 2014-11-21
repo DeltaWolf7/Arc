@@ -279,7 +279,7 @@ function arcAddFooter($type, $content) {
  * Includes the controller path used by the current page
  */
 function arcGetController() {
-    
+
     // get module controllers
     if (!empty(arcGetURLData("module"))) {
 
@@ -308,7 +308,7 @@ function arcGetController() {
             include_once arcGetPath(true) . "modules/page/controller/module.php";
         }
     }
-    
+
     include arcGetTheme() . "controller/theme.php";
 }
 
@@ -733,4 +733,12 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
     }
 
     return null;
+}
+
+function arcUKDateToSql($date) {
+    $date_year = substr($date, 6, 4);
+    $date_month = substr($date, 3, 2);
+    $date_day = substr($date, 0, 2);
+    $date = date("Y-m-d", mktime(0, 0, 0, $date_month, $date_day, $date_year));
+    return $date;
 }

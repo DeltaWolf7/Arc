@@ -6,6 +6,13 @@
         ?></h1>
 </div>
 
+<?php
+$booking = new Booking();
+if (arcGetURLData("data3") != null) {
+    $booking->getByID(arcGetURLData("data3"));
+}
+?>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         Booking Information
@@ -17,30 +24,34 @@
                 <div class="form-group">
                     <label for="journeydate">Journey Date</label>
                     <div class="input-group date" id="journeydate">                           
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="journeydatedata" data-date-format="DD/MM/YYYY">
                         <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
-
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date">Booking Date</label>
-                    <input id="date" type="text" class="form-control" disabled="true" value="<?php echo date("d/m/y"); ?>">
+                    <label for="date">Order Date</label>
+                    <input id="date" type="text" class="form-control" disabled="true" value="<?php $date = new DateTime($booking->orderdate);
+echo $date->format("d/m/Y"); ?>">
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="ref">Reference</label>
-                    <input id="ref" type="text" class="form-control" disabled="true" value="SOMEVALUE">
+                    <input id="ref" type="text" class="form-control" disabled="true" value="<?php echo $booking->reference; ?>">
                 </div>
                 <div class="form-group">
                     <label for="ref">Coach</label>
-                    <select class="form-control">
+                    <select class="form-control" id="coach">
                         <?php
                         $vehicles = Vehicle::getAll();
                         foreach ($vehicles as $vehicle) {
                             $type = new VehicleType();
                             $type->getByID($vehicle->typeid);
-                            echo "<option value=\"" . $vehicle->id . "\">Type: " . $type->name . ", Reg: " . $vehicle->regno . ", Seats: " . $vehicle->seats . "</option>";
+                            echo "<option value=\"" . $vehicle->id . "\"";
+                            if ($booking->coachsize == $vehicle->id) {
+                                echo " selected";
+                            }
+                            echo ">Type: " . $type->name . ", Seats: " . $vehicle->seats . "</option>";
                         }
                         ?>
                     </select>
@@ -52,9 +63,6 @@
 
 <div class="row">
     <div class="col-sm-6">
-
-
-
         <div class="panel panel-default">
             <div class="panel-heading">
                 Customer Details
@@ -63,13 +71,28 @@
                 <div class="form-group">
                     <label for="name">Name</label>
                     <div class="input-group">
-                        <input id="customer" type="text" class="form-control">
+                        <input id="customer" type="text" class="form-control" value="<?php echo $booking->customername; ?>">
                         <span class="input-group-addon"><span class="fa fa-search"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input id="address" type="text" class="form-control">
+                    <textarea id="address" class="form-control" rows="5"><?php echo $booking->address; ?></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Costing Information
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label for="cost">Cost</label>
+                    <input id="cost" type="text" class="form-control" value="<?php echo $booking->cost; ?>">
+                </div>
+                <div class="form-group">
+                    <label for="deposit">Deposit</label>
+                    <input id="deposit" type="text" class="form-control" value="<?php echo $booking->deposit; ?>">
                 </div>
             </div>
         </div>
@@ -83,21 +106,19 @@
                         <div class="col-sm-8">
                             <div class="form-group">
                                 <label for="from">Departure</label>
-                                <input id="from" type="text" class="form-control">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="arrive">Arrival</label>
-                                <input id="arrive" type="text" class="form-control">
+                                <input id="from" type="text" class="form-control" value="<?php echo $booking->departureaddress; ?>">
                             </div>
                             <div id="viaDiv"></div>
                             <div class="form-group">
-                                <label for="returndate">Return Date</label>
-                                <div class="input-group date" id="returntimepicker">                           
-                                    <input type="text" class="form-control">
-                                    <span class="input-group-addon"><span class="fa fa-clock"></span></span>
-                                </div>
+                                <label for="arrive">Destination</label>
+                                <input id="arrive" type="text" class="form-control" value="<?php echo $booking->destination; ?>">
                             </div>
+                            <div class="form-group">
+                                <label for="arrive">Return</label>
+                                <input id="returnplace" type="text" class="form-control" value="<?php echo $booking->returnplace; ?>">
+                            </div>
+
+
                             <button type="button" class="btn btn-primary" onclick="updateMap();" /><span class="fa fa-road"></span> Get Directions</button> 
                             <button type="button" class="btn btn-default" onclick="addViaRow();"><span class="fa fa-plus"> Via</span></button>
                         </div>
@@ -105,14 +126,28 @@
                             <div class="form-group">
                                 <label for="departtime">Depart time</label>
                                 <div class="input-group date" id="departtimepicker">                           
-                                    <input type="text" class="form-control" data-date-format="HH:mm" value="00:00">
+                                    <input id="departuretime" type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->departuretime; ?>">
                                     <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="departtime">Arrival time</label>
                                 <div class="input-group date" id="departtimepicker">                           
-                                    <input type="text" class="form-control" data-date-format="HH:mm" value="00:00">
+                                    <input type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->arrivaltime; ?>" id="arrivaltime">
+                                    <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="returndate">Return Date</label>
+                                <div class="input-group date" id="returndatepicker">                           
+                                    <input type="text" class="form-control" id="returndate" data-date-format="DD/MM/YYYY">
+                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="departtime">Return Time</label>
+                                <div class="input-group date" id="returntimepicker">                           
+                                    <input id="returntime" type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->returntime; ?>">
                                     <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                 </div>
                             </div>
@@ -131,25 +166,26 @@
             </div>
             <div class="panel-body">
                 <div class="form-group">
+                    <label for="company">Company</label>
+                    <input id="company" type="text" class="form-control" value="<?php echo $booking->company; ?>">
+                </div>
+                <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input id="phone" type="text" class="form-control">
+                    <input id="phone" type="text" class="form-control" value="<?php echo $booking->phone; ?>">
                 </div>
                 <div class="form-group">
                     <label for="mobile">Mobile</label>
-                    <input id="mobile" type="text" class="form-control">
+                    <input id="mobile" type="text" class="form-control" value="<?php echo $booking->mobile; ?>">
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input id="email" type="text" class="form-control">
+                    <input id="email" type="text" class="form-control" value="<?php echo $booking->email; ?>">
                 </div>
             </div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="row">
-                    <div class="col-sm-6">Route Overview</div>
-                    <div class="col-sm-6 text-right"><button type="button" class="btn btn-default btn-xs" onclick="openBackWindow();"><span class="fa fa-eye"></span> Enlarge</button></div>
-                </div> 
+                Route Overview
             </div>
             <div class="panel-body">
                 <div id="map">
@@ -163,6 +199,7 @@
         </div>
     </div>
 </div>
+<p class="text-right"><button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savebooking', departuretime: '#departuretime', returntime: '#returntime', returnplace: '#returnplace', deposit: '#deposit', cost: '#cost', company: '#company', journeydate: '#journeydatedata', orderdate: '#date', reference: '#ref', coach: '#coach', customer: '#customer', address: '#address', from: '#from', destination: '#arrive', returndate: '#returndate', arrivaltime: '#arrivaltime', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $booking->id; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</button></p>
 
 <script>
     $(function () {
@@ -172,12 +209,23 @@
     });
     $(function () {
         $('#journeydate').datetimepicker({
+            defaultDate: <?php $jdate = new DateTime($booking->journeydate);
+                        echo "\"" . $jdate->format("d/m/Y") . "\""; ?>,
             pickTime: false
         });
     });
     $(function () {
-        $('#returntimepicker').datetimepicker({
+        $('#returndatepicker').datetimepicker({
+            defaultDate: <?php $rdate = new DateTime($booking->returndate);
+                        echo "\"" . $rdate->format("d/m/Y") . "\""; ?>,
             pickTime: false
+        });
+    });
+    $(function () {
+        yy
+        $('#returntimepicker').datetimepicker({
+            pickTime: true,
+            pickDate: false
         });
     });
 </script>
@@ -186,15 +234,13 @@
     var count = 1;
     function addViaRow() {
         var via = document.getElementById('viaDiv');
-        via.innerHTML = via.innerHTML + '<div class="form-group"><label for="via' + count + '">Via</label><input id="via' + count + '" type="text" class="form-control"></div>';
+        via.innerHTML += '<div class="form-group"><label for="via' + count + '">Via</label><input id="via' + count + '" type="text" class="form-control"></div>';
         $('html,body').animate({scrollTop: $("#via" + count).offset().top}, 'slow');
         count++;
     }
 </script>
 
 <script>
-    var gurl = '';
-
     function updateMap() {
         var from = document.getElementById('from').value;
         if (from == '') {
@@ -220,8 +266,7 @@
         viaCode = viaCode.substring(1, viaCode.length);
         var key = 'AIzaSyC2acbgzDMvZcXJNtDDdrlMPfNScTH3tv4';
         var code = '<iframe width="100%" height="500px" frameborder="0" style="border:0" src="';
-        gurl = 'https://www.google.com/maps/embed/v1/directions?key=' + key + '&origin=' + from + '&destination=' + to + '&avoid=tolls|highways';
-        code += 'https://www.google.com/maps/embed/v1/directions?key=' + key + '&origin=' + from + '&destination=' + to + '&avoid=tolls|highways';
+        code += 'https://www.google.com/maps/embed/v1/directions?key=' + key + '&origin=' + from + '&destination=' + to + '&avoid=tolls|highways&mode=driving';
         if (viaCode != '') {
             code += '&waypoints=' + viaCode;
         }
@@ -230,28 +275,4 @@
         view.innerHTML = code;
         $('html,body').animate({scrollTop: $("#map").offset().top}, 'slow');
     }
-
-    function openBackWindow() {
-        if (gurl == '') {
-            updateStatus('danger|No route defined');
-            return;
-        }
-        var popupWindow = window.open(gurl, 'Route Overview', 'scrollbars=1,height=768,width=1024');
-        if ($.browser.msie) {
-            popupWindow.blur();
-            window.focus();
-        } else {
-            blurPopunder();
-        }
-    }
-    ;
-
-    function blurPopunder() {
-        var winBlankPopup = window.open("about:blank");
-        if (winBlankPopup) {
-            winBlankPopup.focus();
-            winBlankPopup.close()
-        }
-    }
-    ;
 </script>
