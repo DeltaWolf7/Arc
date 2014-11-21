@@ -35,6 +35,22 @@ if (isset($_POST["action"])) {
 
         $booking = new Booking();
         $booking->getByID($_POST["id"]);
+        
+        if (empty($_POST["address"])) {
+            echo "danger|Please provide a customer address.";
+            return;
+        }
+        
+        if (!is_int($_POST["cost"])) {
+            echo "danger|Invalid cost price.";
+            return;
+        }
+        
+        if (!is_int($_POST["deposit"])) {
+            echo "danger|Invalid deposit amount.";
+            return;
+        }
+        
         $booking->address = $_POST["address"];
         $booking->arrivaltime = $_POST["arrivaltime"];
         $booking->coachsize = $_POST["coach"];
@@ -53,9 +69,12 @@ if (isset($_POST["action"])) {
         $booking->phone = $_POST["phone"];
         $booking->reference = $_POST["reference"];
         $booking->returndate = arcUKDateToSql($_POST["returndate"]);
-        //$booking->returndropoff = $_POST["returndropoff"];
+        //$booking->returndropoff = $_POST["returndropoff"]; //-missing from page
         $booking->returnplace = $_POST["returnplace"];
         $booking->returntime = $_POST["returntime"];
+        
+        // missing via
+        
         $booking->update();
 
         echo "success|Booking Saved";
