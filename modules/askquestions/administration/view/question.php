@@ -16,7 +16,7 @@ $xml = simplexml_load_string($question->answer);
 <form>
     <div class="form-group">
         <label>Question</label>
-        <textarea class="form-control" id="question" rows="5"><?php echo $question->question; ?></textarea>
+        <div class="summernote"><?php echo html_entity_decode($question->question); ?></div>
     </div>
     <div class="form-group">
         <label>Group</label>
@@ -90,7 +90,18 @@ $xml = simplexml_load_string($question->answer);
         </select>
     </div>
     <div class="form-group text-right">
-        <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savequestion', questionid: '<?php echo arcGetURLData("data3"); ?>', answer1: '#answer1', answer2: '#answer2', answer3: '#answer3', answer4: '#answer4', answer5: '#answer5', answer: '#answer', group: '#group', question: '#question'}, '<?php arcGetDispatch(); ?>', updateStatus, true);">Save</button> 
+        <button type="button" class="btn btn-success" onclick="doSave();">Save</button> 
         <button type="button" class="btn btn-danger" onclick="window.location = '<?php echo arcGetModulePath() . "delete/" . arcGetURLData("data3"); ?>'">Delete</button>
     </div>
 </form>
+
+<script>
+    function doSave() {
+        var txt = $('.summernote').code();
+        ajax.send('POST', {action: 'savequestion', questionid: '<?php echo arcGetURLData("data3"); ?>', answer1: '#answer1', answer2: '#answer2', answer3: '#answer3', answer4: '#answer4', answer5: '#answer5', answer: '#answer', group: '#group', question: txt}, '<?php arcGetDispatch(); ?>', updateStatus, true);
+    }
+    
+    $(document).ready(function () {
+        $('.summernote').summernote();
+    });
+</script>

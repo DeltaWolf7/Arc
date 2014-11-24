@@ -16,7 +16,7 @@
         foreach ($questions as $question) {
             ?>
             <div class="form-group">
-                <div class="well"><?php echo "Q" . $count . ". " . $question->question; ?></div>
+                <div class="well"><?php echo "Q" . $count . ". " . html_entity_decode($question->question); ?></div>
                 <div class="form-group">
                     <select class="form-control" id="Q<?php echo $count; ?>">
                         <option value="Not Selected">Not Selected</option>
