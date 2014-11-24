@@ -20,7 +20,7 @@ foreach ($groups as $group) {
             <div class="panel-heading" role="tab" id="heading<?php echo $col; ?>">
                 <h4 class="panel-title">
                     <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $col; ?>" aria-expanded="false" aria-controls="collapse<?php echo $col; ?>">
-                        <?php echo $group->name; ?> <button class="btn btn-danger btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "deletegroup/" . $group->id; ?>'"><span class="fa fa-close"></span> Delete</button> <button class="btn btn-success btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "results/" . $group->id; ?>'"><span class="fa fa-area-chart"></span> View Results</button>
+                        <?php echo $group->name; ?> <button class="btn btn-danger btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "deletegroup/" . $group->id; ?>'"><span class="fa fa-close"></span> Delete</button> <button class="btn btn-success btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "results/" . $group->id; ?>'"><span class="fa fa-area-chart"></span> View Results</button> <button class="btn btn-warning btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "visible/" . $group->id; ?>'"><span class="fa fa-eye"></span> <?php if ($group->visible == 1) { echo "Make Invisible"; } else { echo "Make Visible"; } ?></button>
                     </a>
                 </h4>
             </div>

@@ -27,12 +27,14 @@
 class Group extends DataProvider {
 
     public $name;
+    public $visible;
 
     public function __construct() {
         parent::__construct();
         $this->name = "";
+        $this->false;
         $this->table = "arc_askquestion_groups";
-        $this->columns = ["id", "name"];
+        $this->columns = ["id", "name", "visible"];
     }
 
     public static function getQuestions($groupid) {
