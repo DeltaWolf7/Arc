@@ -30,11 +30,7 @@ class Booking extends DataProvider {
     public $journeydate;
     public $customername;
     public $customerid;
-    public $address1;
-    public $address2;
-    public $city;
-    public $county;
-    public $postcode;
+    public $address;
     public $email;
     public $phone;
     public $mobile;
@@ -55,29 +51,25 @@ class Booking extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->table = "coachman_bookings";
-        $this->columns = ["id", "reference", "journeydate", "customername", "customerid", "address1", "address2", "city", "county", "postcode", "email", "phone",
+        $this->columns = ["id", "reference", "journeydate", "customername", "customerid", "address", "email", "phone",
             "mobile", "company", "orderdate", "coachsize", "departureaddress", "arrivaltime", "departuretime", "destination", "returndate",
-            "returndropoff", "cost", "deposit", "returntime"];
+            "returndropoff", "cost", "deposit", "returntime", "returnplace"];
         $this->reference = "";
-        $this->journeydate = date("y-m-d");
+        $this->journeydate = date("d-m-Y");
         $this->customername = "";
         $this->customerid = 0;
-        $this->address1 = "";
-        $this->address2 = "";
-        $this->city = "";
-        $this->county = "";
-        $this->postcode = "";
+        $this->address = "";
         $this->email = "";
         $this->phone = "";
         $this->mobile = "";
         $this->company = "";
-        $this->orderdate = "";
-        $this->coachsize = "";
+        $this->orderdate = date("d-m-Y");
+        $this->coachsize = 0;
         $this->departureaddress = "";
-        $this->arrivaltime = "";
-        $this->departuretime = "";
+        $this->arrivaltime = date("h:i:s");
+        $this->departuretime = date("h:i:s");
         $this->destination = "";
-        $this->returndate = date("y-m-d");
+        $this->returndate = date("d-m-Y");
         $this->returnplace = "";
         $this->returndropoff = "";
         $this->cost = 0.0;
