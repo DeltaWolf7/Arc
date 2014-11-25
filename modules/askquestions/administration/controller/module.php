@@ -40,7 +40,7 @@ if (isset($_POST["action"])) {
             $question->getByID($_POST["questionid"]);
         }
         $question->groupid = $_POST["group"];
-        $question->question = $_POST["question"];
+        $question->question = htmlspecialchars($_POST["question"]);
 
         $xml = "<answers>";
         $count = 1;

@@ -31,7 +31,7 @@ foreach ($groups as $group) {
                     $count = 1;
                     echo "<ul class=\"list-group\">";
                     foreach ($questions as $question) {
-                        echo "<li class=\"list-group-item\">(Q" . $count . ") <a href=\"" . arcGetModulePath() . "question/" . $question->id . "\">" . $question->question . "</a></li>";
+                        echo "<li class=\"list-group-item\">(Q" . $count . ") <a href=\"" . arcGetModulePath() . "question/" . $question->id . "\">" . html_entity_decode($question->question) . "</a></li>";
                         $count++;
                     }
                     echo "</ul>";

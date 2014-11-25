@@ -74,6 +74,11 @@
             $groups = new UserGroup();
             return $groups->getCollection(["ORDER" => "name ASC"]);
         }
+        
+        public function getUsers() {
+            $users = new User();
+            return $users->getCollection(["usergroupid" => $this->id]);
+        }
 
     }
 

@@ -55,8 +55,12 @@ if (!ini_get("date.timezone")) {
 $arc = array();
 // setup empty menu array
 $arc["menu"] = array();
+// setup header data
 $arc["headerdata"] = array();
+// setup footer data
 $arc["footerdata"] = array();
+// setup view data
+$arc["viewdata"] = array();
 
 // include required database system
 require_once arcGetPath(true) . "system/medoo.min.php";
@@ -76,6 +80,7 @@ try {
     die();
 }
 
+// turn on output buffering
 ob_start();
 
 // log access
@@ -276,6 +281,17 @@ function arcAddFooter($type, $content) {
 }
 
 /**
+ * 
+ * @param string $view Name of view file excluding .php
+ */
+function arcAddView($view) {
+    global $arc;
+    if (file_exists(arcGetModulePath(true) . "view/" . $view . ".php")) {
+        $arc["viewdata"][] = arcGetModulePath(true) . "view/" . $view . ".php";
+    }
+}
+
+/**
  * Includes the controller path used by the current page
  */
 function arcGetController() {
@@ -325,7 +341,6 @@ function arcGetView() {
         arcRedirect();
         return;
     }
-
     // expired session
     $timeout = ARCSESSIONTIMEOUT * 60;
     if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
@@ -378,19 +393,23 @@ function arcGetView() {
  * Include the content from the selected module
  */
 function arcGetContent() {
-    if (file_exists(arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php")) {
-        include_once arcGetTheme() . "overrides/" . arcGetURLData("module") . "/index.php";
-    } else {
-        $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
-        if (arcGetURLData("data1") == "administration") {
-            $path .= "/administration";
-        }
-        $path .= "/view/index.php";
+    $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
+    if (arcGetURLData("data1") == "administration") {
+        $path .= "/administration";
+    }
+    $path .= "/view/index.php";
 
-        if (file_exists($path)) {
-            include_once $path;
-        } else {
-            exit("Missing view: " . $path);
+    if (file_exists($path)) {
+        include_once $path;
+    } else {
+        exit("Missing view: " . $path);
+    }
+
+    // allow access to global
+    global $arc;
+    if (isset($arc["viewdata"]) && count($arc["viewdata"]) > 0) {
+        foreach ($arc["viewdata"] as $view) {
+            include $view;
         }
     }
 }
