@@ -405,11 +405,13 @@ function arcGetContent() {
         exit("Missing view: " . $path);
     }
 
-    // allow access to global
-    global $arc;
-    if (isset($arc["viewdata"]) && count($arc["viewdata"]) > 0) {
-        foreach ($arc["viewdata"] as $view) {
-            include $view;
+    if (arcGetURLData("module") != "error") {
+        // allow access to global
+        global $arc;
+        if (isset($arc["viewdata"]) && count($arc["viewdata"]) > 0) {
+            foreach ($arc["viewdata"] as $view) {
+                include $view;
+            }
         }
     }
 }
@@ -754,10 +756,26 @@ function arcSendMail($to, $subject, $message, $attachments = null) {
     return null;
 }
 
+/**
+ * 
+ * @param string $date Date to convert
+ * @return date In UK format
+ */
 function arcUKDateToSql($date) {
     $date_year = substr($date, 6, 4);
     $date_month = substr($date, 3, 2);
     $date_day = substr($date, 0, 2);
-    $date = date("Y-m-d", mktime(0, 0, 0, $date_month, $date_day, $date_year));
-    return $date;
+    return date("Y-m-d", mktime(0, 0, 0, $date_month, $date_day, $date_year));
+}
+
+/**
+ * 
+ * @param array $objects Collection of objects
+ * @param int $page Page number
+ * @param int $amount Amount of object per page
+ * @return array Collection of objects
+ */
+function arcPagination($objects, $page, $amount) {
+    $pagecount = $amount * $page;
+    return array_slice($objects, $pagecount, $amount);
 }

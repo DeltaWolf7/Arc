@@ -47,9 +47,9 @@ if (isset($_POST["action"])) {
             }
         }
 
-        $user->firstname = $_POST["firstname"];
-        $user->lastname = $_POST["lastname"];
-        $user->email = $_POST["email"];
+        $user->firstname = ucwords($_POST["firstname"]);
+        $user->lastname = ucwords($_POST["lastname"]);
+        $user->email = strtolower($_POST["email"]);
 
         $user->usergroupid = $_POST["group"];
 
@@ -65,7 +65,7 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "savegroup") {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
-        $group->name = $_POST["name"];
+        $group->name = ucwords($_POST["name"]);
         $group->description = $_POST["description"];
         $group->update();
         echo "success|Group saved";

@@ -46,9 +46,9 @@ if (isset($_POST["userid"])) {
         }
     }
 
-    $user->firstname = $_POST["firstname"];
-    $user->lastname = $_POST["lastname"];
-    $user->email = $_POST["email"];
+    $user->firstname = ucfirst($_POST["firstname"]);
+    $user->lastname = ucfirst($_POST["lastname"]);
+    $user->email = strtolower($_POST["email"]);
 
     $user->update();
     arcSetUser($user);

@@ -32,7 +32,7 @@ class Group extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->name = "";
-        $this->false;
+        $this->visible = false;
         $this->table = "arc_askquestion_groups";
         $this->columns = ["id", "name", "visible"];
     }

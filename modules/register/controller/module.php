@@ -67,9 +67,9 @@ if (isset($_POST["email"])) {
         return;
     }
 
-    $user->firstname = $_POST["firstname"];
-    $user->lastname = $_POST["lastname"];
-    $user->email = $_POST["email"];
+    $user->firstname = ucfirst($_POST["firstname"]);
+    $user->lastname = ucfirst($_POST["lastname"]);
+    $user->email = strtolower($_POST["email"]);
     $user->setPassword($_POST["password"]);
     $user->usergroupid = 2;
     $user->update();
