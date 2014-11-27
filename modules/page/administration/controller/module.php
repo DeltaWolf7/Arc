@@ -44,7 +44,7 @@ if (isset($_POST["action"])) {
             return;
         }
 
-        $input = htmlspecialchars($_POST["editor"]);
+        $input = htmlentities($_POST["editor"]);
         $page->content = $input;
         $page->title = $_POST["title"];
         $page->metadescription = $_POST["metadescription"];
