@@ -38,12 +38,12 @@ if (isset($_POST["action"])) {
         if ($page->id == 0) {
             $page->seourl = $_POST["seourl"];
         }
-
+        
         if (empty($_POST["seourl"])) {
             echo "danger|SEO Url can't be nothing.";
             return;
         }
-
+        
         $input = htmlentities($_POST["editor"]);
         $page->content = $input;
         $page->title = $_POST["title"];

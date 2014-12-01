@@ -49,6 +49,13 @@ if (isset($_POST["action"])) {
         }
         
         $product->price = $_POST["price"];
+        
+        $seoproduct = Product::getBySEOUrl($_POST["seourl"]);
+        if ($seoproduct->id != $product->id) {
+            echo "danger|SEO Url already in use..";
+            return;
+        }
+        
         $product->seourl = $_POST["seourl"];
         $product->sku = $_POST["sku"];
         $product->taxable = $_POST["taxable"];

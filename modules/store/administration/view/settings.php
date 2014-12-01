@@ -18,6 +18,9 @@ if ($vat->id == 0) {
 }
 
 $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
+if (empty($ordernumber->setting)) {
+    $ordernumber->setting = "No order placed";
+}
 ?>
 
 <form>
