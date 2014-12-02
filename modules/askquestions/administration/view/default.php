@@ -26,6 +26,8 @@ foreach ($groups as $group) {
             </div>
             <div id="collapse<?php echo $col; ?>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<?php echo $col; ?>">
                 <div class="panel-body">
+                   
+                        
                     <?php
                     $questions = Group::getQuestions($group->id);
                     $count = 1;
