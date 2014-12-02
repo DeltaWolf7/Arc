@@ -12,13 +12,47 @@ if (arcGetURLData("data4") == null) {
             ?></h1>
     </div>
 
+<?php
+$group = new Group();
+        $group->getByID(arcGetURLData("data3"));
+        $results = Result::getByGroup(arcGetURLData("data3"));
+?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Student's who have not taken this test</div>
+    <div class='panel-body'>
+        <?php
+            $studentGroup = UserGroup::getByName("Students");
+            $students = $studentGroup->getUsers();
+            $sc = 0;
+            foreach ($results as $result) {
+                foreach ($students as $student) {
+                    if ($student != null) {
+                        if ($result->userid == $student->id) {
+                            $students[$sc] = null;
+                        }
+                    }
+                    $sc++;
+                }
+                $sc = 0;
+            }
+            ?>
+        <ul class="list-inline">
+        <?php
+            foreach ($students as $student) {
+                if ($student != null) {
+                    echo "<li><span class=\"fa fa-user\"></span> " . $student->getFullname() . "</li>";
+                }
+            }
+        ?>
+        </ul>
+    </div>
+</div>
+
     <table class="table table-striped">
         <tr><th>User</th><th>When</th><th>Time Taken (sec)</th></tr>
         <?php
-        $group = new Group();
-        $group->getByID(arcGetURLData("data3"));
-        $results = Result::getByGroup(arcGetURLData("data3"));
-
+        
         foreach ($results as $result) {
             $user = new User();
             $user->getByID($result->userid);
@@ -57,7 +91,7 @@ if (arcGetURLData("data4") == null) {
         $q = 1;
         foreach ($xml->result as $data) {
             $atts = $data->attributes();
-            echo "<tr><td>(Q" . $q . ") " .  $questions[$count]->question . "</td><td>" . $atts["answer"] . "</td><td>";
+            echo "<tr><td>(Q" . $q . ") " .  html_entity_decode($questions[$count]->question) . "</td><td>" . $atts["answer"] . "</td><td>";
             
             $xml2 = simplexml_load_string($questions[$count]->answer);
             foreach ($xml2->answer as $ans) {

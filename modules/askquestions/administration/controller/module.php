@@ -64,5 +64,11 @@ if (isset($_POST["action"])) {
         $group->name = $_POST["name"];
         $group->update();
         echo "success|Group saved";
+    } else if ($_POST["action"] == "editgroup") {
+        $group = new Group();
+        $group->getByID($_POST["id"]);
+        $group->name = $_POST["name"];
+        $group->update();
+        echo "success|Group saved";
     }
 }

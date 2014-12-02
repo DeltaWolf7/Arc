@@ -23,9 +23,13 @@ $xml = simplexml_load_string($question->answer);
         <select class="form-control" id="group">
             <?php
             $groups = Group::getGroups();
+            $count = 0;
             foreach ($groups as $group) {
+                $count++;
                 echo "<option value=\"" . $group->id . "\"";
                 if ($group->id == $question->groupid) {
+                    echo " selected";
+                } elseif ($question->groupid == 0 && count($groups) == $count) {
                     echo " selected";
                 }
                 echo ">" . $group->name . "</option>";

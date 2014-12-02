@@ -54,7 +54,7 @@ if (arcGetURLData("data3") == null) {
         $q = 1;
         foreach ($xml->result as $data) {
             $atts = $data->attributes();
-            echo "<tr><td>(Q" . $q . ") " . $questions[$count]->question . "</td><td>" . $atts["answer"] . "</td><td>";
+            echo "<tr><td>(Q" . $q . ") " . html_entity_decode($questions[$count]->question) . "</td><td>" . $atts["answer"] . "</td><td>";
             
             $xml2 = simplexml_load_string($questions[$count]->answer);
             foreach ($xml2->answer as $ans) {
@@ -82,7 +82,6 @@ if (arcGetURLData("data3") == null) {
 <div class="well"><?php echo $correct; ?> correct answers and <?php echo $incorrect; ?> incorrect answers out of <?php echo count($questions); ?> questions.
 <br />You scored <?php echo 100 / count($questions) * $correct; ?>%.
 </div>
-
     <?php
 }
 ?>
