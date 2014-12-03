@@ -46,7 +46,7 @@ class OrderLine extends DataProvider {
         $this->qty = 1;
         $this->sku = "";
         $this->taxable = false;
-        $this->table = "arc_store_orderlines";
+        $this->table = ARCDBPREFIX . "store_orderlines";
         $this->columns = ["id", "orderid", "productid", "qty", "sku", "price", "taxable"];
     }
 }

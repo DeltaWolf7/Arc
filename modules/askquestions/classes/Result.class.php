@@ -39,7 +39,7 @@ class Result extends DataProvider {
         $this->userid = 0;
         $this->datedone = date("Y-m-d H:i:s");
         $this->timetaken = 0;
-        $this->table = "arc_askquestion_results";
+        $this->table = ARCDBPREFIX . "askquestion_results";
         $this->columns = ["id", "groupid", "result", "userid", "datedone", "timetaken"];
     }
     

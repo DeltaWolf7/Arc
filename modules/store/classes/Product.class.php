@@ -58,7 +58,7 @@ class Product extends DataProvider {
         $this->price = 0.0;
         $this->taxable = false;
         $this->keywords = "";
-        $this->table = "arc_store_products";
+        $this->table = ARCDBPREFIX . "store_products";
         $this->columns = ["id", "name", "description", "sku", "model", "seourl", "metakeywords", "metatitle", "metadescription", 
             "image", "price", "taxable", "keywords"];
     }

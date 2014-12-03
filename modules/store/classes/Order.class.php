@@ -52,7 +52,7 @@ class Order extends DataProvider {
         $this->subtotal = 0.0;
         $this->userid = 0;
         $this->vattotal = 0.0;
-        $this->table = "arc_store_orders";
+        $this->table = ARCDBPREFIX . "store_orders";
         $this->columns = ["id", "ordernumber", "orderdate", "userid", "deliveryid", "billingid", "postage", "subtotal", "vattotal", "status"];
     }
 

@@ -35,7 +35,7 @@ class Question extends DataProvider {
         $this->groupid = 0;
         $this->question = "";
         $this->answer = "";
-        $this->table = "arc_askquestions";
+        $this->table = ARCDBPREFIX . "askquestions";
         $this->columns = ["id", "groupid", "question", "answer"];
     } 
 }

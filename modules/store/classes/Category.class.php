@@ -44,7 +44,7 @@ class Category extends DataProvider {
         $this->parentid = 0;
         $this->image = "";
         $this->keywords = "";
-        $this->table = "arc_store_categories";
+        $this->table = ARCDBPREFIX . "store_categories";
         $this->columns = ["id", "name", "sortorder", "parentid", "image", "keywords"];
     }
     

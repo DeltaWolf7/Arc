@@ -19,7 +19,7 @@ class Address extends DataProvider {
         $this->postcode = "";
         $this->county = "";
         $this->country = "";
-        $this->table = "arc_store_addresses";
+        $this->table = ARCDBPREFIX . "store_addresses";
         $this->columns = ["id", "userid", "address1", "address2", "city", "county", "country", "postcode"];
     }
 

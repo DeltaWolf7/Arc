@@ -36,7 +36,7 @@ class ProductCatgeory extends DataProvider {
     
     public function __construct() {
         parent::__construct();
-        $this->table = "arc_store_productcategories";
+        $this->table = ARCDBPREFIX . "store_productcategories";
         $this->columns = ["id", "productid", "categoryid"];
     }
 }
