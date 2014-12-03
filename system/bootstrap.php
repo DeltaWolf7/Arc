@@ -29,8 +29,21 @@
  *
  * @author Craig Longford
  */
-// start session
-session_start();
+
+// check that we are using PHP 5.3 or better.
+if (version_compare(phpversion(), "5.3.0", "<") == true) {
+    exit("PHP 5.3 or newer required");
+}
+
+// make sure we have the correct time zone.
+if (!ini_get("date.timezone")) {
+    date_default_timezone_set("Europe/London");
+}
+
+// check for config
+if (!file_exists($_SERVER["DOCUMENT_ROOT"] . "/config.php")) {
+    exit("Config.php was not found in the root directory.");
+}
 
 // get config file
 require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
@@ -41,15 +54,8 @@ if (ARCDEBUG == true) {
     ini_set("display_errors", "1");
 }
 
-// check that we are using PHP 5.3 or better.
-if (version_compare(phpversion(), "5.3.0", "<") == true) {
-    exit("PHP 5.3 or newer required");
-}
-
-// make sure we have the correct time zone.
-if (!ini_get("date.timezone")) {
-    date_default_timezone_set("UTC");
-}
+// start session
+session_start();
 
 // arc storage (stores system values)
 $arc = array();
@@ -295,7 +301,6 @@ function arcAddView($view) {
  * Includes the controller path used by the current page
  */
 function arcGetController() {
-
     // get module controllers
     if (!empty(arcGetURLData("module"))) {
 
@@ -384,20 +389,25 @@ function arcGetView() {
             }
         }
     }
-
-    // include default theme view
-    include arcGetTheme() . "view/index.php";
 }
 
 /**
  * Include the content from the selected module
  */
 function arcGetContent() {
+    arcGetController();
+
+    // get theme header
+    include arcGetTheme() . "view/header.php";
+    
+    arcGetView();
+    
     $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
     if (arcGetURLData("data1") == "administration") {
         $path .= "/administration";
     }
     $path .= "/view/index.php";
+
 
     if (file_exists($path)) {
         include_once $path;
@@ -414,6 +424,9 @@ function arcGetContent() {
             }
         }
     }
+
+    // get theme footer
+    include arcGetTheme() . "view/footer.php";
 }
 
 /**
@@ -667,7 +680,8 @@ function arcGetModules() {
 
                 $module_info["module"] = $module;
                 $module_list[] = $module_info;
-            } elseif (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
+            } elseif (file_exists(    
+                arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                 include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
 
                 $module_info["module"] = $module;

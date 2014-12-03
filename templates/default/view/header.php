@@ -26,9 +26,3 @@
                     </div>
                 </div>
             </nav>
-            <?php arcGetContent(); ?>
-            <?php arcGetStatus(); ?>
-    </div>
-        <?php arcGetFooter(); ?>
-</body>
-</html>

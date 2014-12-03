@@ -8,7 +8,6 @@ if (arcGetURLData("data2") == "clear") {
 }
 ?>
 
-
 <div class="page-header">
     <h1>User Management
         <?php
@@ -18,7 +17,6 @@ if (arcGetURLData("data2") == "clear") {
         ?>
     </h1>
 </div>
-
 
 <p>
 <ul class="nav nav-pills" role="tablist">
@@ -33,13 +31,12 @@ if (arcGetURLData("data2") == "clear") {
     }
     ?>><a href="<?php echo arcGetModulePath() . "group" ?>"><span class="fa fa-group"></span> Groups</a></li>
     <li<?php
-    if (arcGetURLData("data2") == "access") {
+    if (arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") {
         echo " class=\"active\"";
     }
     ?>><a href="<?php echo arcGetModulePath() . "access/1" ?>"><span class="fa fa-file-text"></span> Access Logs</a></li>
 </ul>
 </p> 
-
 
 <?php
 if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") {
@@ -80,43 +77,57 @@ if (empty(arcGetURLData("data3")) || arcGetURLData("data2") == "access" || arcGe
                             ?>
                         </table>
 
-                    <?php } elseif (arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") { ?>
-                        <div class="text-right">
-                            <button type="button" class="btn btn-default" onclick="window.location = '<?php echo arcGetModulePath() . "clear" ?>'">Clear Logs</button>
+                    <?php } elseif (arcGetURLData("data2") == "access" || arcGetURLData("data2") == "ip") { ?>                   
+                        <div class="row">
+                            <div class="col-md-12 text-right">
+                                <button type="button" class="btn btn-default btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "clear" ?>'"><span class="fa fa-trash"></span> Clear All Logs</button>
+                            </div>
                         </div>
-                        <table class="table table-striped">
-                            <tr><th>User</th><th>When</th><th>Browser</th><th>IP Address</th><th>Url</th><th>Referer</th></tr>
-                            <?php
-                            if (arcGetURLData("data2") == "access") {
-                                $logs = LastAccess::getLogs();
-                                $page = ((int) arcGetURLData("data3"));
-                                $mark = 15;
-                            } else {
-                                $logs = LastAccess::getLogsByIP(arcGetURLData("data3"));
-                                $page = 1;
-                                $mark = count($logs);
+                        <?php
+                        if (arcGetURLData("data2") == "access") {
+                            $logs = LastAccess::getLogs();
+                            $page = ((int) arcGetURLData("data3"));
+                            $mark = 15;
+                        } else {
+                            $logs = LastAccess::getLogsByIP(arcGetURLData("data3"));
+                            $page = 1;
+                            $mark = count($logs);
+                        }
+                        $length = $mark * $page;
+                        for ($i = $length - $mark; $i < $length; $i++) {
+                            $user = new User();
+                            if (isset($logs[$i]->userid)) {
+                                $user->getByID($logs[$i]->userid);
                             }
-                            $length = $mark * $page;
-                            for ($i = $length - $mark; $i < $length; $i++) {
-                                $user = new User();
-                                if (isset($logs[$i]->userid)) {
-                                    $user->getByID($logs[$i]->userid);
-                                }
 
-                                // dirty hack until a better method is created
-                                if (isset($logs[$i])) {
-                                    echo "<tr><td>";
-                                    if ($user->id == "0") {
-                                        echo "Anonymous";
-                                    } else {
-                                        echo "<a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->firstname . " " . $user->lastname . "</a>";
-                                    }
+                            if (isset($logs[$i])) {
+                                ?>
 
-                                    echo "</td><td>" . $logs[$i]->when . "</td><td>" . $logs[$i]->browser . "</td><td><a href=\"" . arcGetModulePath() . "ip/" . $logs[$i]->ipaddress . "\">" . $logs[$i]->ipaddress . "</a></td><td>" . $logs[$i]->url . "</td><td>" . $logs[$i]->referer . "</td></tr>";
-                                }
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <strong>Who:</strong> <?php
+                                        if ($user->id == "0") {
+                                            echo "Anonymous";
+                                        } else {
+                                            echo "<a href=\"" . arcGetModulePath() . "user/edit/" . $user->id . "\">" . $user->getFullname() . "</a>";
+                                        }
+                                        ?>
+                                        <br />
+                                        <strong>When: </strong><?php echo date("d/m/Y H:i:s", strtotime($logs[$i]->when)); ?><br />
+                                        <strong>IP:</strong> <a href="<?php echo arcGetModulePath() . "ip/" . $logs[$i]->ipaddress; ?>"><?php echo $logs[$i]->ipaddress; ?></a>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <strong>Location:</strong> <?php echo $logs[$i]->url; ?><br />
+                                        <strong>Referer:</strong> <?php echo $logs[$i]->referer; ?><br />
+                                        <strong>Browser:</strong> <?php echo $logs[$i]->browser; ?>
+                                    </div>
+                                </div>
+                                <hr />
+                                <?php
                             }
-                            ?>
-                        </table>
+                        }
+                        ?>
+
                         <ul class="pagination">
                             <?php
                             for ($i = 1; $i <= count($logs) / $mark; $i++) {

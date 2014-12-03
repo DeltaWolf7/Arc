@@ -24,113 +24,113 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Description of lastaccess
+ *
+ * @author Craig Longford
+ */
+class LastAccess extends DataProvider {
 
+    public $userid;
+    public $when;
+    public $browser;
+    public $ipaddress;
+    public $url;
+    public $referer;
 
     /**
-     * Description of lastaccess
-     *
-     * @author Craig Longford
+     * LastAccess constructor
      */
-    class LastAccess extends DataProvider {
-
-        public $userid;
-        public $when;
-        public $browser;
-        public $ipaddress;
-        public $url;
-        public $referer;
-
-        /**
-         * LastAccess constructor
-         */
-        public function __construct() {
-            parent::__construct();
-            $this->userid = 0;
-            $this->when = date("y-m-d h:i:s");
-            $this->browser = "";
-            $this->ipaddress = "";
-            $this->url = "";
-            $this->referer = "";
-            $this->table = ARCDBPREFIX . "last_access";
-            $this->columns = ["id", "userid", "when", "browser", "ipaddress", "url", "referer"];
-        }
-
-        /**
-         * 
-         * @param int $userid User's ID
-         * @return \LastAccess collection
-         */
-        public static function getByUserID($userid) {
-            $access = new LastAccess();
-            return $access->getCollection(["userid" => $userid, "ORDER" => "when DESC"]);
-        }
-
-        /**
-         * 
-         * @param int $userid User's ID
-         * @return \LastAccess collection
-         */
-        public static function getIPsByUserID($userid) {
-            $accesses = LastAccess::getByUserID($userid);
-            $data = array();
-            foreach ($accesses as $access) {
-                $found = false;
-                foreach ($data as $dt) {
-                    if ($dt->ipaddress == $access->ipaddress) {
-                        $found = true;
-                        continue;
-                    }
-                }
-                if ($found == false) {
-                    $data[] = $access;
-                }
-            }
-            return $data;
-        }
-
-        /**
-         * 
-         * @param int $user User object
-         * Logs the users browser details and IP address
-         */
-        public static function logAccess($user = null) {
-            $access = new LastAccess();
-            if (!empty($user)) {
-                $access->userid = $user->id;
-            }
-            $access->browser = $_SERVER["HTTP_USER_AGENT"];
-            $access->ipaddress = $_SERVER["REMOTE_ADDR"];
-            $access->url = $_SERVER["REQUEST_URI"];
-            if (isset($_SERVER["HTTP_REFERER"])) {
-                $access->referer = $_SERVER["HTTP_REFERER"];
-            }
-            $access->update();
-        }
-
-        /**
-         * 
-         * @return \LastAccess Returns all access logs
-         */
-        public static function getLogs() {
-            $access = new LastAccess();
-            return $access->getCollection(["ORDER" => "when DESC"]);
-        }
-
-        /**
-         * 
-         * @return \LastAccess Returns all access logs
-         */
-        public static function getLogsByIP($ipaddress) {
-            $access = new LastAccess();
-            $data = $access->getCollection(["ORDER" => "when DESC"]);
-            $ips = array();
-            foreach ($data as $ip) {
-                if ($ip->ipaddress = $ipaddress) {
-                    $ips[] = $ip;
-                }
-            }
-            return $ips;
-        }
-
+    public function __construct() {
+        parent::__construct();
+        $this->userid = 0;
+        $this->when = date("y-m-d H:i:s");
+        $this->browser = "";
+        $this->ipaddress = "";
+        $this->url = "";
+        $this->referer = "";
+        $this->table = ARCDBPREFIX . "last_access";
+        $this->columns = ["id", "userid", "when", "browser", "ipaddress", "url", "referer"];
     }
 
+    /**
+     * 
+     * @param int $userid User's ID
+     * @return \LastAccess collection
+     */
+    public static function getByUserID($userid) {
+        $access = new LastAccess();
+        return $access->getCollection(["userid" => $userid, "ORDER" => "when DESC"]);
+    }
+
+    /**
+     * 
+     * @param int $userid User's ID
+     * @return \LastAccess collection
+     */
+    public static function getIPsByUserID($userid) {
+        $accesses = LastAccess::getByUserID($userid);
+        $data = array();
+        foreach ($accesses as $access) {
+            $found = false;
+            foreach ($data as $dt) {
+                if ($dt->ipaddress == $access->ipaddress) {
+                    $found = true;
+                    continue;
+                }
+            }
+            if ($found == false) {
+                $data[] = $access;
+            }
+        }
+        return $data;
+    }
+
+    /**
+     * 
+     * @param int $user User object
+     * Logs the users browser details and IP address
+     */
+    public static function logAccess($user = null) {
+        $access = new LastAccess();
+        if (!empty($user)) {
+            $access->userid = $user->id;
+        }
+        $access->browser = $_SERVER["HTTP_USER_AGENT"];
+        $access->ipaddress = $_SERVER["REMOTE_ADDR"];
+        $access->url = $_SERVER["REQUEST_URI"];
+        if (isset($_SERVER["HTTP_REFERER"])) {
+            $access->referer = $_SERVER["HTTP_REFERER"];
+        }
+        $access->update();
+    }
+
+    /**
+     * 
+     * @return \LastAccess Returns all access logs
+     */
+    public static function getLogs($user = null) {
+        $access = new LastAccess();
+        if ($user == null) {
+            return $access->getCollection(["ORDER" => "when DESC"]);
+        }
+        return $access->getCollection(["AND" => ["ORDER" => "when DESC", "userid" => $user->id]]);
+    }
+
+    /**
+     * 
+     * @return \LastAccess Returns all access logs
+     */
+    public static function getLogsByIP($ipaddress) {
+        $access = new LastAccess();
+        $data = $access->getCollection(["ORDER" => "when DESC"]);
+        $ips = array();
+        foreach ($data as $ip) {
+            if ($ip->ipaddress = $ipaddress) {
+                $ips[] = $ip;
+            }
+        }
+        return $ips;
+    }
+
+}

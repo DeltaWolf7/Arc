@@ -25,10 +25,7 @@
  */
 
 // include the required system file
-require_once __DIR__ . "/system/bootstrap.php";
-
-// get the controller of the page
-arcGetController();
+require_once $_SERVER["DOCUMENT_ROOT"] . "/system/bootstrap.php";
 
 // get the view of the page
-arcGetView();
+arcGetContent();
