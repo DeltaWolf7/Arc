@@ -31,6 +31,7 @@
  */
 if (isset($_POST["action"])) {
     require "../../../system/bootstrap.php";
+    
     if ($_POST["action"] == "login") {
 
         if (empty($_POST["email"])) {
@@ -108,5 +109,14 @@ if (isset($_POST["action"])) {
         $user->update();
 
         echo "success|Password reset";
+    }
+} else {
+    switch (arcGetURLData("data2")) {
+        case "forgot":
+            arcAddView("products");
+            break;
+        default:
+            arcAddView("overview");
+            break;
     }
 }

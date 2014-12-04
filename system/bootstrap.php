@@ -67,6 +67,8 @@ $arc["headerdata"] = array();
 $arc["footerdata"] = array();
 // setup view data
 $arc["viewdata"] = array();
+// setup routes data
+$arc["routes"] = array();
 
 // include required database system
 require_once arcGetPath(true) . "system/medoo.min.php";
