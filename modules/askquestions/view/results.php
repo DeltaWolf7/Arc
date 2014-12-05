@@ -12,14 +12,21 @@ if (arcGetURLData("data3") == null) {
     </div>
 
     <table class="table table-striped">
-        <tr><th>When</th><th>Time Taken (sec)</th></tr>
+        <tr><th>When</th><th>Time Taken</th></tr>
         <?php
         $group = new Group();
         $group->getByID(arcGetURLData("data2"));
         $results = Result::getByGroupAndUserID(arcGetURLData("data2"), arcGetUser()->id);
 
         foreach ($results as $result) {
-            echo "<tr><td><a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data2") . "/" . $result->id . "\">" . $result->datedone . "</a></td><td>" . $result->timetaken . "</td></tr>";
+            echo "<tr><td><a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data2") . "/" . $result->id . "\">" . $result->datedone . "</a></td><td>";
+            if ($result->timetaken < 60) {
+                echo $result->timetaken . " seconds";
+            } else {
+                $time = $result->timetaken / 60;
+                echo number_format($time, 2, '.', '') . " minutes";
+            }
+            echo "</td></tr>";
         }
         ?>
 
