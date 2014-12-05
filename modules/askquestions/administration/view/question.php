@@ -1,6 +1,8 @@
 <?php
 $question = new Question();
-$question->getByID(arcGetURLData("data3"));
+if (arcGetURLData("data3") != "0") {
+    $question->getByID(arcGetURLData("data3"));
+}
 
 $xml = simplexml_load_string($question->answer);
 ?>
@@ -23,13 +25,11 @@ $xml = simplexml_load_string($question->answer);
         <select class="form-control" id="group">
             <?php
             $groups = Group::getGroups();
-            $count = 0;
             foreach ($groups as $group) {
-                $count++;
                 echo "<option value=\"" . $group->id . "\"";
                 if ($group->id == $question->groupid) {
                     echo " selected";
-                } elseif ($question->groupid == 0 && count($groups) == $count) {
+                } elseif (arcGetURLData("data4") != null && arcGetURLData("data4") == $group->id) {
                     echo " selected";
                 }
                 echo ">" . $group->name . "</option>";

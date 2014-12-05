@@ -7,7 +7,7 @@
 </div>
 <div class="text-right">
     <p>
-        <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0"; ?>'"><span class="fa fa-plus"></span> New Question</button> <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal"><span class="fa fa-plus"></span> New Group</button>
+        <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal"><span class="fa fa-plus"></span> New Group</button>
     </p>
 </div>
 <?php
@@ -30,6 +30,7 @@ foreach ($groups as $group) {
                         
                     </div>
                     <div class="col-md-5 text-right">
+                        <button class="btn btn-primary btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "question/0/" . $group->id; ?>'"><span class="fa fa-plus"></span> New Question</button>
                         <button class="btn btn-default btn-xs" onclick="editGroup('<?php echo $group->id; ?>', '<?php echo $group->name; ?>')"><span class="fa fa-edit"></span> Rename</button> 
                         <button class="btn btn-danger btn-xs" onclick="deleteGroup('<?php echo $group->id; ?>', '<?php echo $group->name; ?>')"><span class="fa fa-close"></span> Delete</button> 
                         <button class="btn btn-success btn-xs" onclick="window.location = '<?php echo arcGetModulePath() . "results/" . $group->id; ?>'"><span class="fa fa-area-chart"></span> All Results</button> 
