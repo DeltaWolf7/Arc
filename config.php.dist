@@ -72,3 +72,6 @@ DEFINE("ARCDEFAULTPAGE", "welcome");
 
 // Session Timeout (minutes)
 DEFINE("ARCSESSIONTIMEOUT", 60);
+
+/* DO NOT EDIT BELOW THIS LINE */
+DEFINE("ABSPATH", dirname(__FILE__));

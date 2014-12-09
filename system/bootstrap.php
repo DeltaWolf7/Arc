@@ -30,33 +30,6 @@
  * @author Craig Longford
  */
 
-// check that we are using PHP 5.3 or better.
-if (version_compare(phpversion(), "5.3.0", "<") == true) {
-    exit("PHP 5.3 or newer required");
-}
-
-// make sure we have the correct time zone.
-if (!ini_get("date.timezone")) {
-    date_default_timezone_set("Europe/London");
-}
-
-// check for config
-if (!file_exists($_SERVER["DOCUMENT_ROOT"] . "/config.php")) {
-    exit("Config.php was not found in the root directory.");
-}
-
-// get config file
-require_once $_SERVER["DOCUMENT_ROOT"] . "/config.php";
-
-// check if debug is enabled
-if (ARCDEBUG == true) {
-    error_reporting(E_ALL);
-    ini_set("display_errors", "1");
-}
-
-// start session
-session_start();
-
 // arc storage (stores system values)
 $arc = array();
 // setup empty menu array
@@ -168,7 +141,7 @@ function arcGetDatabase() {
  */
 function arcGetPath($filesystem = false) {
     if ($filesystem) {
-        return $_SERVER["DOCUMENT_ROOT"] . "/";
+        return ABSPATH . "/";
     }
     return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/";
 }
