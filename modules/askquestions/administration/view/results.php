@@ -50,13 +50,20 @@ $group = new Group();
 </div>
 
     <table class="table table-striped">
-        <tr><th>User</th><th>When</th><th>Time Taken (sec)</th></tr>
+        <tr><th>User</th><th>When</th><th>Time Taken)</th></tr>
         <?php
         
         foreach ($results as $result) {
             $user = new User();
             $user->getByID($result->userid);
-            echo "<tr><td><a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data3") . "/" . $result->id . "\">" . $user->firstname . " " . $user->lastname . "</a></td><td>" . $result->datedone . "</td><td>" . $result->timetaken . "</td></tr>";
+            echo "<tr><td><a href=\"" . arcGetModulePath() . "results/" . arcGetURLData("data3") . "/" . $result->id . "\">" . $user->firstname . " " . $user->lastname . "</a></td><td>" . $result->datedone . "</td><td>";
+            if ($result->timetaken < 60) {
+                echo $result->timetaken . " seconds";
+            } else {
+                $time = $result->timetaken / 60;
+                echo number_format($time, 2, '.', '') . " minutes";
+            }
+            echo "</td></tr>";
         }
         ?>
 
