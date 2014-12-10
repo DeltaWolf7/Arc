@@ -28,9 +28,19 @@
 if (!file_exists("config.php")) {
     exit("Config.php was not found in the root directory.");
 }
-
 // include the required system file
 require_once "config.php";
+
+// create htaccess if it doesn't exist.
+if (!file_exists(".htaccess")) {
+    $text = "RewriteEngine On\n"
+            . "RewriteBase /" . ARCWEBPATH . "\n"
+            . "RewriteRule ^index\.php$ - [L]\n"
+            . "RewriteCond %{REQUEST_FILENAME} !-f\n"
+            . "RewriteCond %{REQUEST_FILENAME} !-d\n"
+            . "RewriteRule ^(.*)$ /" . ARCWEBPATH . "index.php?url=$1 [L,QSA]";
+    file_put_contents(".htaccess", $text);
+}
 
 // get the view of the page
 arcGetContent();
