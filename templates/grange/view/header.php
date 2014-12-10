@@ -16,7 +16,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <div class="logo"><a href="<?php echo arcGetPath(); ?>"><img src="<?php echo arcGetPath() . arcGetTheme() . "images/logo.png" ?>" alt="<?php echo ARCTITLE; ?>" /></a></div>
+                    <div class="logo"><a href="<?php echo arcGetPath(); ?>"><img src="<?php echo arcGetTheme() . "images/logo.png" ?>" alt="<?php echo ARCTITLE; ?>" /></a></div>
                 </div>
                 <div id="navbar" class="collapse navbar-collapse navbar-right">
                     <ul class="nav navbar-nav">

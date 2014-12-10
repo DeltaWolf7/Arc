@@ -40,22 +40,14 @@ if (!ini_get("date.timezone")) {
     date_default_timezone_set("Europe/London");
 }
 
-// check for config
-if (!file_exists(__DIR__  . "/config.php")) {
-    exit("Config.php was not found in the root directory. '" . __DIR__  . "/config.php" . "'");
-}
-
-// start session
-session_start();
-
-// get config file
-require_once __DIR__  . "/config.php";
-
 // check if debug is enabled
 if (ARCDEBUG == true) {
     error_reporting(E_ALL);
     ini_set("display_errors", "1");
 }
+
+// start session
+session_start();
 
 // arc storage (stores system values)
 $arc = array();
@@ -102,13 +94,15 @@ function __autoload($class_name) {
     // check for system classes and check for classes in modules.
     if (file_exists(arcGetPath(true) . "classes/" . $class_name . ".class.php")) {
         require_once(arcGetPath(true) . "classes/" . $class_name . ".class.php");
-    } elseif (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
+    } elseif (arcGetURLData("module") != null && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php")) {
         require_once(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/classes/" . $class_name . ".class.php");
     } elseif (isset($_SERVER["REQUEST_URI"]) && arcGetURLData("module") == "page") {
         // check if we are in a module, if so make the system aware for dispatch.
         $path = explode("/", $_SERVER["REQUEST_URI"]);
-        if (isset($path[2]) && file_exists(arcGetPath(true) . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php")) {
-            require_once(arcGetPath(true) . "modules/" . $path[2] . "/classes/" . $class_name . ".class.php");
+        $pathPoint = explode("/", ARCWEBPATH);
+        $mark = 2 + count($pathPoint) - 1;
+         if (isset($path[$mark]) && file_exists(arcGetPath(true) . "modules/" . $path[$mark] . "/classes/" . $class_name . ".class.php")) {
+            require_once(arcGetPath(true) . "modules/" . $path[$mark] . "/classes/" . $class_name . ".class.php");
         }
     }
 }
@@ -168,9 +162,9 @@ function arcGetDatabase() {
  */
 function arcGetPath($filesystem = false) {
     if ($filesystem) {
-        return ABSPATH . "/";
+        return $_SERVER["DOCUMENT_ROOT"] . ARCFSPATH .  "/";
     }
-    return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/";
+    return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/" . ARCWEBPATH;
 }
 
 /**
@@ -332,7 +326,7 @@ function arcGetController() {
         }
     }
 
-    include arcGetTheme() . "controller/theme.php";
+    include arcGetTheme(true) . "controller/theme.php";
 }
 
 /**
@@ -400,7 +394,7 @@ function arcGetContent() {
     arcGetController();
 
     // get theme header
-    include arcGetTheme() . "view/header.php";
+    include arcGetTheme(true) . "view/header.php";
     
     arcGetView();
     
@@ -428,7 +422,7 @@ function arcGetContent() {
     }
 
     // get theme footer
-    include arcGetTheme() . "view/footer.php";
+    include arcGetTheme(true) . "view/footer.php";
 }
 
 /**
@@ -698,15 +692,21 @@ function arcGetModules() {
  * 
  * @return string Path to template in use
  */
-function arcGetTheme($webpath = false) {
+function arcGetTheme($fs = false) {
     $theme = SystemSetting::getByKey("ARCTHEME");
-    if ($webpath == false) {
-        if (empty($theme->setting) || !file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
-            return "templates/default/";
+    if (empty($theme->setting) || !file_exists(arcGetPath(true) . "templates/" . $theme->setting)) {
+        if ($fs) {
+            return arcGetPath(true) . "templates/default/";
+        } else {
+            return arcGetPath() . "templates/default/";
         }
-        return "templates/" . $theme->setting . "/";
+    } else {
+        if ($fs) {
+            return arcGetPath(true) . "templates/" . $theme->setting . "/";
+        } else {
+            return arcGetPath() . "templates/" . $theme->setting . "/";
+        }
     }
-    return arcGetPath() . "templates/" . $theme->setting . "/";
 }
 
 /**

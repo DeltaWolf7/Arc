@@ -24,8 +24,13 @@
  * THE SOFTWARE.
  */
 
+// check for config
+if (!file_exists("config.php")) {
+    exit("Config.php was not found in the root directory.");
+}
+
 // include the required system file
-require_once __DIR__  . "/system/bootstrap.php";
+require_once "config.php";
 
 // get the view of the page
 arcGetContent();

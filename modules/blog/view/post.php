@@ -13,7 +13,7 @@ $poster->getByID($blog->posterid);
     if (!empty($blog->image)) {
         ?>
         <a class="media-left" href="<?php echo arcGetModulePath() . "post/" . $blog->seourl ?>">
-            <img class="img-rounded" data-src="<?php echo arcGetPath() . "images/blog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
+            <img class="img-rounded" src="<?php echo arcGetPath() . "images/blog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
         </a>
         <?php
     }

@@ -30,7 +30,7 @@
  * @author Craig Longford
  */
 if (isset($_POST["action"])) {
-    require "../../../../system/bootstrap.php";
+    require "../../../../config.php";
     if (empty($_POST["key"])) {
         echo "danger|Key must be provided";
         return;

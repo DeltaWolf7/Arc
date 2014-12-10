@@ -62,7 +62,7 @@ DEFINE('ARCTITLE', 'Arc Project');
 DEFINE("ARCVERSION", "0.0.0.41");
 
 // Project debug mode
-DEFINE("ARCDEBUG", false);
+DEFINE("ARCDEBUG", true);
 
 // Project default page type (page or module)
 DEFINE("ARCDEFAULTTYPE", "page");
@@ -73,5 +73,11 @@ DEFINE("ARCDEFAULTPAGE", "welcome");
 // Session Timeout (minutes)
 DEFINE("ARCSESSIONTIMEOUT", 60);
 
-/* DO NOT EDIT BELOW THIS LINE */
-DEFINE("ABSPATH", dirname(__FILE__));
+// Project Web Subdirectory (directory/)
+DEFINE("ARCWEBPATH", "");
+
+// Project Filesystem Directory (/directory)
+DEFINE("ARCFSPATH", "");
+
+/** DO NOT EDIT BELOW THIS LINE **/
+require_once $_SERVER["DOCUMENT_ROOT"] . ARCFSPATH . "/system/bootstrap.php";

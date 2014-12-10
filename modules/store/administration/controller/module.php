@@ -2,7 +2,7 @@
 
 if (isset($_POST["action"])) {
     
-    include "../../../../system/bootstrap.php";
+    require "../../../../config.php";
     
     if ($_POST["action"] == "savesettings") {
 

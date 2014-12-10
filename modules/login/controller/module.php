@@ -30,7 +30,7 @@
  * @author Craig Longford
  */
 if (isset($_POST["action"])) {
-    require "../../../system/bootstrap.php";
+    require "../../../config.php";
     
     if ($_POST["action"] == "login") {
 

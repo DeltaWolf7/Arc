@@ -61,9 +61,9 @@ if (arcGetURLData("data4") != "0") {
                 <div class="panel-body">
                     <div class="form-group text-center">
                         <?php
-                        echo "<img id=\"img\" style=\"cursor: pointer;\" onclick=\"$('#imageModal').modal('show');\" ";
+                          echo "<img id=\"img\" style=\"cursor: pointer;\" onclick=\"$('#imageModal').modal('show');\" ";
                         if (empty($page->image)) {
-                            echo "src=\"/modules/blog/images/placeholder.png\"";
+                            echo "src=\"" . arcGetPath() . "modules/blog/images/placeholder.png\"";
                         } else {
                             echo "src=\"" . arcGetPath() . "images/blog/" . $page->image . "\"";
                         }
@@ -101,7 +101,7 @@ if (arcGetURLData("data4") != "0") {
                     mkdir(arcGetPath() . "images/blog");
                 }
                 ?>
-                <img onclick="selectImage('');" style="cursor: pointer;" src="/modules/blog/images/placeholder.png" class="img-rounded"/> 
+                <img onclick="selectImage('');" style="cursor: pointer;" src="<?php echo arcGetPath(); ?>modules/blog/images/placeholder.png" class="img-rounded"/> 
                 <?php
                 $files = scandir(arcGetPath(true) . "images/blog");
                 foreach ($files as $file) {
@@ -125,9 +125,9 @@ if (arcGetURLData("data4") != "0") {
         ajax.send('POST', {action: 'setimage', id: '<?php echo $page->id; ?>', image: image}, '<?php echo arcGetDispatch(); ?>', null, true);
         var img = document.getElementById('img');
         if (image == '') {
-            img.src = '/modules/blog/images/placeholder.png';
+            img.src = '<?php echo arcGetPath(); ?>/modules/blog/images/placeholder.png';
         } else {
-            img.src = '/images/blog/' + image;
+            img.src = '<?php echo arcGetPath(); ?>/images/blog/' + image;
         }
         $('#imageModal').modal('hide');
     }

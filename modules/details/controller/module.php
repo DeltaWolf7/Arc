@@ -31,7 +31,7 @@
  */
 if (isset($_POST["userid"])) {
 
-    require "../../../system/bootstrap.php";
+    require "../../../config.php";
     
     $user = new User();
     $user->getByID($_POST["userid"]);

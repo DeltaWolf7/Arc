@@ -30,7 +30,7 @@
  * @author Craig Longford
  */
 if (isset($_POST["email"])) {
-    require "../../../system/bootstrap.php";
+    require "../../../config.php";
     if (empty($_POST["firstname"])) {
         echo "danger|<strong>Firstname</strong> must be provided";
         return;

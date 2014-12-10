@@ -14,7 +14,7 @@
                         <div class="col-md-3 col-sm-4 col-xs-8">
                             <div class="logo">
                                 <a href="<?php echo arcGetPath(); ?>">
-                                    <img src="<?php echo arcGetTheme(true); ?>images/logo.png" alt="<?php echo ARCTITLE; ?>" title="<?php echo ARCTITLE; ?>">
+                                    <img src="<?php echo arcGetTheme(); ?>images/logo.png" alt="<?php echo ARCTITLE; ?>" title="<?php echo ARCTITLE; ?>">
                                 </a>
                             </div> <!-- /.logo -->
                         </div> <!-- /.col-md-4 -->
@@ -44,7 +44,7 @@
         <?php
         $rnd = rand(1, 2);
         ?>
-        <div class="page-top" id="templatemo" style="background-image: url('<?php echo arcGetTheme(true) . "images/banner" . $rnd . ".jpg" ?>')">
+        <div class="page-top" id="templatemo" style="background-image: url('<?php echo arcGetTheme() . "images/banner" . $rnd . ".jpg" ?>')">
         </div> <!-- /.page-header -->
         <div class="middle-content">
             <div class="container">
