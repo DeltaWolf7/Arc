@@ -37,4 +37,4 @@ if ($page->id == 0) {
 }
 arcAddHeader("description", $page->metadescription);
 arcAddHeader("keywords", $page->metakeywords);
-arcAddHeader("canonical", "/" . $page->seourl);
+arcAddHeader("canonical", arcGetPath() . $page->seourl);

@@ -29,7 +29,6 @@
  *
  * @author Craig Longford
  */
-
 // check that we are using PHP 5.3 or better.
 if (version_compare(phpversion(), "5.3.0", "<") == true) {
     exit("PHP 5.3 or newer required");
@@ -101,7 +100,7 @@ function __autoload($class_name) {
         $path = explode("/", $_SERVER["REQUEST_URI"]);
         $pathPoint = explode("/", ARCWEBPATH);
         $mark = 2 + count($pathPoint) - 1;
-         if (isset($path[$mark]) && file_exists(arcGetPath(true) . "modules/" . $path[$mark] . "/classes/" . $class_name . ".class.php")) {
+        if (isset($path[$mark]) && file_exists(arcGetPath(true) . "modules/" . $path[$mark] . "/classes/" . $class_name . ".class.php")) {
             require_once(arcGetPath(true) . "modules/" . $path[$mark] . "/classes/" . $class_name . ".class.php");
         }
     }
@@ -162,7 +161,7 @@ function arcGetDatabase() {
  */
 function arcGetPath($filesystem = false) {
     if ($filesystem) {
-        return $_SERVER["DOCUMENT_ROOT"] . ARCFSPATH .  "/";
+        return $_SERVER["DOCUMENT_ROOT"] . ARCFSPATH . "/";
     }
     return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/" . ARCWEBPATH;
 }
@@ -299,7 +298,6 @@ function arcAddView($view) {
 function arcGetController() {
     // get module controllers
     if (!empty(arcGetURLData("module"))) {
-
         if (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php") && arcGetURLData("data1") != "administration") {
             include arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php";
         } elseif (arcGetURLData("data1") == "administration" && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php")) {
@@ -325,7 +323,6 @@ function arcGetController() {
             include_once arcGetPath(true) . "modules/page/controller/module.php";
         }
     }
-
     include arcGetTheme(true) . "controller/theme.php";
 }
 
@@ -395,15 +392,14 @@ function arcGetContent() {
 
     // get theme header
     include arcGetTheme(true) . "view/header.php";
-    
+
     arcGetView();
-    
+
     $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
     if (arcGetURLData("data1") == "administration") {
         $path .= "/administration";
     }
     $path .= "/view/index.php";
-
 
     if (file_exists($path)) {
         include_once $path;
@@ -567,7 +563,6 @@ function arcAddMenuItem($name, $icon, $divider, $url, $group) {
     if (isset($GLOBALS["arc"]["menuadmin"]) && $GLOBALS["arc"]["menuadmin"] == true) {
         $item["module"] = $item["module"] . "/administration";
     }
-
     if (!empty($group)) {
         $GLOBALS["arc"]["menus"][$group][] = $item;
     } else {
@@ -601,7 +596,6 @@ function arcGetMenu() {
                     include arcGetPath(true) . "modules/" . $module . "/info.php";
                 }
             }
-
             // module administration menu
             if ($group->name == "Administrators") {
                 if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
@@ -676,8 +670,8 @@ function arcGetModules() {
 
                 $module_info["module"] = $module;
                 $module_list[] = $module_info;
-            } elseif (file_exists(    
-                arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
+            } elseif (file_exists(
+                            arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
                 include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
 
                 $module_info["module"] = $module;
@@ -727,7 +721,6 @@ function arcPoweredBy() {
  */
 function arcSendMail($to, $subject, $message, $attachments = null) {
     $mailSettings = SystemSetting::getByKey("ARCSMTP");
-
     require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
 
     $mail = new PHPMailer();
