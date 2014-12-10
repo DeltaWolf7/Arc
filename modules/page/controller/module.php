@@ -29,11 +29,11 @@
  *
  * @author Craig Longford
  */
-$page = Page::getBySEOURL(arcGetURLData("module"));
+$page = Page::getBySEOURL(arcGetURLData("data1"));
 if ($page->id == 0) {
-    arcAddHeader("title", ARCTITLE);
+    arcAddHeader("title", ARCTITLE); 
 } else {
-    arcAddHeader("title", $page->metatitle);
+    arcAddHeader("title", $page->title);
 }
 arcAddHeader("description", $page->metadescription);
 arcAddHeader("keywords", $page->metakeywords);
