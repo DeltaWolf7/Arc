@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * The MIT License
@@ -24,23 +24,60 @@
  * THE SOFTWARE.
  */
 
-// check for config
-if (!file_exists("config.php")) {
-    exit("Config.php was not found in the root directory.");
-}
-// include the required system file
-require_once "config.php";
+/**
+ * Application configuration
+ *
+ * @author Craig Longford
+ */
+/*
+ *  Database Configuration
+ */
 
-// create htaccess if it doesn't exist.
-if (!file_exists(".htaccess")) {
-    $text = "RewriteEngine On\n"
-            . "RewriteBase /" . ARCWEBPATH . "\n"
-            . "RewriteRule ^index\.php$ - [L]\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-f\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-d\n"
-            . "RewriteRule ^(.*)$ /" . ARCWEBPATH . "index.php?url=$1 [L,QSA]";
-    file_put_contents(".htaccess", $text);
-}
+// Database server
+DEFINE("ARCDBSERVER", "localhost");
 
-// get the view of the page
-arcGetContent();
+// Database name
+DEFINE("ARCDBNAME", "arc");
+
+// Database username
+DEFINE("ARCDBUSER", "username");
+
+// Database password
+DEFINE("ARCDBPASSWORD", "password");
+
+// Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
+DEFINE("ARCDBTYPE", "mysql");
+
+// Database prefix
+DEFINE("ARCDBPREFIX", "arc_");
+
+/*
+ * Project Configuration
+ */
+
+// Project Title
+DEFINE('ARCTITLE', 'Arc Project');
+
+// Project version
+DEFINE("ARCVERSION", "0.0.0.41");
+
+// Project debug mode
+DEFINE("ARCDEBUG", true);
+
+// Project default page type (page or module)
+DEFINE("ARCDEFAULTTYPE", "page");
+
+// Project default page
+DEFINE("ARCDEFAULTPAGE", "welcome");
+
+// Session Timeout (minutes)
+DEFINE("ARCSESSIONTIMEOUT", 60);
+
+// Project Web Subdirectory (directory/)
+DEFINE("ARCWEBPATH", "");
+
+// Project Filesystem Directory (/directory)
+DEFINE("ARCFSPATH", "");
+
+/** DO NOT EDIT BELOW THIS LINE **/
+require_once $_SERVER["DOCUMENT_ROOT"] . ARCFSPATH . "/system/bootstrap.php";

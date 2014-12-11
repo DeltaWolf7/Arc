@@ -43,8 +43,6 @@ if (!ini_get("date.timezone")) {
 if (ARCDEBUG == true) {
     error_reporting(E_ALL);
     ini_set("display_errors", "1");
-} else {
-    ini_set("display_errors", "0");
 }
 
 // start session
@@ -139,9 +137,9 @@ arcAddHeader("css", arcGetPath() . "css/status.min.css");
 arcAddHeader("css", arcGetPath() . "css/summernote.css");
 
 // favicon, add favicon it it exists.
-if (file_exists(arcGetPath() . ARCFAVICON)) {
-    arcAddHeader("facicon", arcGetPath() . ARCFAVICON);
-}
+//if (file_exists(arcGetPath() . ARCFAVICON)) {
+//    arcAddHeader("facicon", arcGetPath() . ARCFAVICON);
+//}
 
 // split the url and get module and data.
 arcSplitURL();
