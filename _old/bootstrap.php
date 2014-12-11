@@ -43,6 +43,8 @@ if (!ini_get("date.timezone")) {
 if (ARCDEBUG == true) {
     error_reporting(E_ALL);
     ini_set("display_errors", "1");
+} else {
+    ini_set("display_errors", "0");
 }
 
 // start session

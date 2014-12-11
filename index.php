@@ -24,23 +24,20 @@
  * THE SOFTWARE.
  */
 
-// check for config
-if (!file_exists("config.php")) {
-    exit("Config.php was not found in the root directory.");
-}
-// include the required system file
-require_once "config.php";
+error_reporting(E_ALL);
+ini_set("display_errors", "1");
 
-// create htaccess if it doesn't exist.
-if (!file_exists(".htaccess")) {
-    $text = "RewriteEngine On\n"
-            . "RewriteBase /" . ARCWEBPATH . "\n"
-            . "RewriteRule ^index\.php$ - [L]\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-f\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-d\n"
-            . "RewriteRule ^(.*)$ /" . ARCWEBPATH . "index.php?url=$1 [L,QSA]";
-    file_put_contents(".htaccess", $text);
+if (!is_readable('app/system/Config.php')) {
+    die('No config.php found, configure and rename config.php.dist to config.php in app/system.');
 }
 
-// get the view of the page
-arcGetContent();
+spl_autoload_extensions(".php");
+spl_autoload_register();
+
+new app\core\system\Config();
+
+if (ARCDEBUG) {
+    error_reporting(E_ALL);
+} else {
+    error_reporting(0);
+}
