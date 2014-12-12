@@ -58,8 +58,8 @@ system\Helper::init();
 
 // Setup autoloader.
 spl_autoload_register(function($class) {
-    if (file_exists("app/system/classes/{$class}.class.php")) {
-        require_once "app/system/classes/{$class}.class.php";
+    if (file_exists("app/classes/{$class}.class.php")) {
+        require_once "app/classes/{$class}.class.php";
     } elseif (!empty(system\Helper::arcGetURLData("module")) && file_exists("app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php")) {
         require_once "app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php";
     }

@@ -1,7 +1,9 @@
-/* 
+<?php
+
+/*
  * The MIT License
  *
- * Copyright 2014 Craig.
+ * Copyright 2014 Craig Longford.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,37 +22,38 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- * 
- * Written by Craig Longford (deltawolf7@gmail.com)
- * http://www.deltasblog.co.uk
  */
 
-function updateStatus(data) {
-    var dataArray = data.split("|");
-    if (dataArray.length > 1) {
-        if (dataArray[0] != "success" && dataArray[0] != "danger" && dataArray[0] != "warning") {
-            alert(data);
+if (isset($_POST["action"])) {
+    require "../../../../config.php";
+
+    if ($_POST['action'] == "savepage") {
+
+        $page = Page::getBySEOURL($_POST["seourl"]);
+        if ($page->id == 0) {
+            $page->seourl = $_POST["seourl"];
+        }
+        
+        if (empty($_POST["seourl"])) {
+            echo "danger|SEO Url can't be nothing.";
             return;
         }
-        updateStatusDiv(dataArray[1], dataArray[0]);
-    } else {
-        updateStatusDiv(data, '');
+        
+        $input = htmlentities($_POST["editor"]);
+        $page->content = $input;
+        $page->title = $_POST["title"];
+        $page->metadescription = $_POST["metadescription"];
+        $page->metakeywords = $_POST["metakeywords"];
+        $page->metatitle = $_POST["metatitle"];
+        $page->update();
+
+        echo "success|Page updated";
+    } elseif ($_POST['action'] == "addpermission") {
+        $permission = new UserPermission();
+        $permission->groupid = $_POST['groupid'];
+        $page = new Page();
+        $page->getByID($_POST['pageid']);
+        $permission->permission = "page/" . $page->seourl;
+        $permission->update();
     }
 }
-;
-
-function updateStatusDiv(content, status) {
-    var element = document.getElementById("status");
-    element.innerHTML = content;
-    element.style.display = "block";
-    element.className = "alert alert-" + status;
-    $('html,body').animate({scrollTop: $("#status").offset().top}, 'slow');
-    window.setTimeout(function () {
-        $("#status").fadeTo(500, 0).slideUp(500, function () {
-            element.style.display = "none";
-            element.style.opacity = "1";
-        });
-    }, 3000);
-
-}
-;

@@ -1,7 +1,9 @@
-/* 
+<?php
+
+/*
  * The MIT License
  *
- * Copyright 2014 Craig.
+ * Copyright 2014 Craig Longford.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,37 +22,15 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- * 
- * Written by Craig Longford (deltawolf7@gmail.com)
- * http://www.deltasblog.co.uk
  */
 
-function updateStatus(data) {
-    var dataArray = data.split("|");
-    if (dataArray.length > 1) {
-        if (dataArray[0] != "success" && dataArray[0] != "danger" && dataArray[0] != "warning") {
-            alert(data);
-            return;
-        }
-        updateStatusDiv(dataArray[1], dataArray[0]);
-    } else {
-        updateStatusDiv(data, '');
-    }
+system\Helper::arcOverrideView("display", false, [system\Helper::arcGetURLData("action")]);
+$page = Page::getBySEOURL(system\Helper::arcGetURLData("data1"));
+if ($page->id == 0) {
+    system\Helper::arcAddHeader("title", ARCTITLE); 
+} else {
+    system\Helper::arcAddHeader("title", $page->title);
 }
-;
-
-function updateStatusDiv(content, status) {
-    var element = document.getElementById("status");
-    element.innerHTML = content;
-    element.style.display = "block";
-    element.className = "alert alert-" + status;
-    $('html,body').animate({scrollTop: $("#status").offset().top}, 'slow');
-    window.setTimeout(function () {
-        $("#status").fadeTo(500, 0).slideUp(500, function () {
-            element.style.display = "none";
-            element.style.opacity = "1";
-        });
-    }, 3000);
-
-}
-;
+system\Helper::arcAddHeader("description", $page->metadescription);
+system\Helper::arcAddHeader("keywords", $page->metakeywords);
+system\Helper::arcAddHeader("canonical", system\Helper::arcGetPath() . $page->seourl);

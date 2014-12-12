@@ -32,27 +32,36 @@ class Helper {
     private static $arc = Array();
 
     public static function init() {
+        // Start session
+        session_start();
+
         // Get the current URI and break up the path into parts.
         if ($_SERVER["REQUEST_URI"] != "/") {
             $uri = parse_url($_SERVER["REQUEST_URI"]);
             $routes = explode("/", trim($uri["path"], "/"));
+            $count = 1;
             foreach ($routes as $route) {
-                if (empty(self::$arc["urldata"])) {
+                if (!isset(self::$arc["urldata"]["module"])) {
                     self::$arc["urldata"]["module"] = $route;
-                } elseif (count(self::$arc["urldata"]) == 1) {
+                } elseif ($route == "adminsitration") {
+                    self::$arc["urldata"]["administration"] = true;
+                } elseif (!isset(self::$arc["urldata"]["action"])) {
                     self::$arc["urldata"]["action"] = $route;
                 } else {
-                    $count = count(self::$arc["urldata"]) - 1;
-                    self::$arc["urldata"]["data{$count}"] = $route;
+                    self::$arc["urldata"]["data" . $count] = $route;
+                    $count++;
                 }
             }
         }
-        
+
         if (empty(self::$arc["urldata"])) {
             self::$arc["urldata"]["module"] = ARCDEFAULTMODULE;
             self::$arc["urldata"]["action"] = ARCDEFAULTACTION;
         }
-        
+
+        // Initilise menu
+        self::$arc["menus"] = Array();
+
         // Create database connection
         try {
             self::$arc["database"] = new \medoo([
@@ -65,7 +74,7 @@ class Helper {
         } catch (Exception $e) {
             die("Unable to connect to database. Please check 'Config.php'.<br />Exception: " . $e->getMessage());
         }
-        
+
         // Javascript, add required javascript files to header
         self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
@@ -73,7 +82,6 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-filestyle.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/delta-ajax.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
         // CSS, add required css files to header
@@ -160,8 +168,8 @@ class Helper {
         }
         return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/";
     }
-    
-     /**
+
+    /**
      * 
      * @global array $arc Arc settings storage
      * Adds header information to a page from header array
@@ -188,7 +196,7 @@ class Helper {
             }
         }
     }
-    
+
     /**
      * 
      * @global array $arc Arc settings storage
@@ -204,15 +212,15 @@ class Helper {
         }
         return self::$arc["urldata"];
     }
-    
+
     public static function arcGetTemplatePath($filesystem = false) {
         if ($filesystem) {
             return self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/";
         }
         return self::arcGetPath() . "app/templates/" . ARCTEMPLATE . "/";
     }
-    
-    public static function arcGetView() {         
+
+    public static function arcGetView() {
         if (count($_POST) == 0) {
             // Check the template in config exists.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
@@ -224,52 +232,45 @@ class Helper {
                 require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php";
             }
 
+            if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
+                die("Module '" . self::arcGetURLData("module") . "' was not found.");
+            }
+        }
+
+        // Get module controller
+        if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
+            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
+        } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
+            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+        }
+
+        if (count($_POST) == 0) {
             // Check if the template has a header and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
                 die("Unable to find template header.php.");
             }
             require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php";
-
-            if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
-                die("Module '" . self::arcGetURLData("module") . "' was not found.");
-            }
-
-            // Get module controller
-            $moduleController = self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module");
-            if (self::arcGetURLData("action") == "adminstration") {
-                $moduleController .= "/adminstration";               
-            }
-            $moduleController .= "/controller/controller.php";
-            if (file_exists($moduleController)) {
-                require_once $moduleController;
-            }
         }
-        
+
         // Get module view controller
-        $moduleViewController = self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module");
-        if (self::arcGetURLData("action") == "administration") {
-            $moduleViewController .= "/administration/controller/" . self::arcGetURLData("data1");
-        } else {
-            $moduleViewController .= "/controller/" . self::arcGetURLData("action");
+        if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
+            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
+        } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
+            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
         }
-        $moduleViewController .=  ".php";
-        if (file_exists($moduleViewController)) {
-            require_once $moduleViewController;
-        }
-        
+
         if (count($_POST) == 0) {
-            // Get module view
-            $moduleView = self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module");
-            if (self::arcGetURLData("action") == "administration") {
-                $moduleView .= "/administration/view/" . self::arcGetURLData("data1") . ".php";
-                if (!file_exists($moduleView)) {
-                    die("Unable to find view '" . self::arcGetURLData("data1") . "' for module '" . self::arcGetURLData("module") . "'.");
-                }
-            } else {
-                $moduleView .= "/view/" . self::arcGetURLData("action") . ".php";
-                if (!file_exists($moduleView)) {
+            // Get module view          
+            if (self::arcGetURLData("administration") == null) {
+                if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
                 }
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
+            } else {
+                if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php")) {
+                    die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
+                }
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
 
             // Check if the template has a footer and include if it does.
@@ -280,213 +281,28 @@ class Helper {
         }
     }
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /* NOT DONE YET NOT DONE YET NOT DONE YET NOT DONE YET NOT DONE YET NOT DONE YET  */
-    
-
-    /**
-     * 
-     * @param string $view Name of view file excluding .php
-     */
-    function arcAddView_dead($view) {
-        global $arc;
-        if (file_exists(arcGetModulePath(true) . "view/" . $view . ".php")) {
-            $arc["viewdata"][] = arcGetModulePath(true) . "view/" . $view . ".php";
+    public static function arcOverrideView($action, $administration = false, $data = Array()) {
+        self::$arc["urldata"]["action"] = $action;
+        self::$arc["urldata"]["administration"] = $administration;
+        $count = 1;
+        foreach ($data as $item) {
+            self::$arc["urldata"]["data" . $count] = $item;
+            $count++;
         }
     }
-
-    /**
-     * Includes the controller path used by the current page
-     */
-    function arcGetController() {
-        // get module controllers
-        if (!empty(arcGetURLData("module"))) {
-            if (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php") && arcGetURLData("data1") != "administration") {
-                include arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php";
-            } elseif (arcGetURLData("data1") == "administration" && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php")) {
-                include arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php";
-            }
-
-            $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
-            if (arcGetURLData("data1") == "administration") {
-                $path .= "/administration";
-            }
-            $path .= "/controller/";
-
-            if (!empty(arcGetURLData("data1")) && file_exists($path . arcGetURLData("data1") . ".php")) {
-                $path .= arcGetURLData("data1") . ".php";
-                if (file_exists($path)) {
-                    include_once $path;
-                    return;
-                }
-            }
-
-            $page = Page::getBySEOURL(arcGetURLData("module"));
-            if ($page->id > 0) {
-                include_once arcGetPath(true) . "modules/page/controller/module.php";
-            }
-        }
-        include arcGetTheme(true) . "controller/theme.php";
-    }
-
-    /**
-     * 
-     * @return null Returns on user logout
-     * Includes the specified view
-     */
-    function arcGetView_dead() {
-        // logout user
-        if (arcGetURLData("module") == "logout") {
-            session_unset();
-            session_destroy();
-            arcRedirect();
-            return;
-        }
-        // expired session
-        $timeout = ARCSESSIONTIMEOUT * 60;
-        if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
-            session_unset();
-            session_destroy();
-            arcSetPage("error", "419");
-        } else {
-            // update last activity time stamp
-            $_SESSION["LAST_ACTIVITY"] = time();
-
-            $page = Page::getBySEOURL(arcGetURLData("module"));
-            if ($page->id != 0) {
-                // if we have a page set it.
-                arcSetPage("page", arcGetURLData("module"));
-            }
-
-            if (!file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module"))) {
-                // module not found.
-                arcSetPage("error", "404");
-            } else {
-                if (!empty(arcGetUser())) {
-                    $user = arcGetUser();
-                    $group = $user->getGroup();
-                    $permissions = $group->getPermissions();
-                } else {
-                    $group = UserGroup::getByName("Anyone");
-                    $permissions = $group->getPermissions();
-                }
-
-                // permission check string
-                $pCheck = arcGetURLData("module") . "/" . arcGetURLData("data1");
-
-                // module is not a page
-                if (arcGetURLData("module") != "page") {
-                    $pCheck = "module/" . arcGetURLData("module");
-                }
-
-                // user doesn't have permission to access module
-                if (!UserPermission::hasPermission($permissions, $pCheck)) {
-                    arcSetPage("error", "403");
-                }
-            }
-        }
-    }
-
-    /**
-     * Include the content from the selected module
-     */
-    function arcGetContent_dead() {
-        arcGetController();
-
-        // get theme header
-        include arcGetTheme(true) . "view/header.php";
-
-        arcGetView();
-
-        $path = arcGetPath(true) . "modules/" . arcGetURLData("module");
-        if (arcGetURLData("data1") == "administration") {
-            $path .= "/administration";
-        }
-        $path .= "/view/index.php";
-
-        if (file_exists($path)) {
-            include_once $path;
-        } else {
-            exit("Missing view: " . $path);
-        }
-
-        if (arcGetURLData("module") != "error") {
-            // allow access to global
-            global $arc;
-            if (isset($arc["viewdata"]) && count($arc["viewdata"]) > 0) {
-                foreach ($arc["viewdata"] as $view) {
-                    include $view;
-                }
-            }
-        }
-
-        // get theme footer
-        include arcGetTheme(true) . "view/footer.php";
-    }
-
-   
 
     /**
      * Output a standard status div.
      */
-    function arcGetStatus() {
+    public static function arcGetStatus() {
         echo "<p><div id=\"status\" style=\"display:none;\" class=\"alert alert-success\" role=\"alert\"></div></p>";
-    }
-
-    /**
-     * 
-     * @global array $arc Arc settings storage
-     * @param string $name Section to change, eg module
-     * @param string $data Data if any
-     * Can be used to force a module. Required for calling classes in dispatch from modules.
-     */
-    function arcSetPage($name, $data = null) {
-        global $arc;
-        $arc["urldata"] = array();
-        $arc["urldata"]["module"] = $name;
-        $count = 1;
-        $url = explode("/", $data);
-        foreach ($url as $item) {
-            $arc["urldata"]["data" . $count] = $item;
-            $count++;
-        }
     }
 
     /**
      * 
      * @return \User Return the logged in user object or null if no one
      */
-    function arcGetUser() {
+    public static function arcGetUser() {
         if (isset($_SESSION["arc_user"])) {
             return unserialize($_SESSION["arc_user"]);
         }
@@ -497,7 +313,7 @@ class Helper {
      * 
      * @param User $user Sets the logged in user
      */
-    function arcSetUser($user) {
+    public static function arcSetUser($user) {
         $_SESSION["arc_user"] = serialize($user);
     }
 
@@ -505,9 +321,9 @@ class Helper {
      * 
      * @param string $destination Outputs a javascript redirect to root or specified url
      */
-    function arcRedirect($destination = null) {
+    public static function arcRedirect($destination = null) {
         if (empty($destination)) {
-            header("Location: " . arcGetPath());
+            header("Location: " . self::arcGetPath());
         } else {
             header("Location: " . $destination);
         }
@@ -516,32 +332,65 @@ class Helper {
     /**
      * Output the path the the modules dispatch file
      */
-    function arcGetDispatch() {
-        if (file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/controller/module.php") && arcGetURLData("data1") != "administration") {
-            echo arcGetPath() . "modules/" . arcGetURLData("module") . "/controller/module.php";
-        } elseif (arcGetURLData("data1") == "administration" && file_exists(arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/controller/module.php")) {
-            echo arcGetPath() . "modules/" . arcGetURLData("module") . "/administration/controller/module.php";
+    public static function arcGetDispatch() {
+        if (self::arcGetURLData("administration") == null) {
+            $url =  self::arcGetPath() . self::arcGetURLData("module");
+        } else {
+            $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
         }
+        
+        if (self::arcGetURLData("action") != null) {
+            $url .= "/" . self::arcGetURLData("action");
+        }
+        
+        echo $url;
     }
 
     /**
-     * 
-     * @param bool $filesystem True for filesystem path, False for web path
-     * @return string Path to module
+     * Processes modules and building menus from info data
      */
-    function arcGetModulePath($filesystem = false) {
-        if ($filesystem == true) {
-            if (arcGetURLData("data1") == "administration") {
-                return arcGetPath(true) . "modules/" . arcGetURLData("module") . "/administration/";
-            } else {
-                return arcGetPath(true) . "modules/" . arcGetURLData("module");
+    public static function arcGetMenu() {
+        $modules = scandir(self::arcGetPath(true) . "app/modules");
+
+        $group = new \UserGroup();
+        if (!empty(self::arcGetUser())) {
+            $user = self::arcGetUser();
+            $group = $user->getGroup();
+        } else {
+            $group = \UserGroup::getByName("Anyone");
+        }
+
+        $permissions = $group->getPermissions();
+        $perms = new \UserPermission();
+
+        foreach ($modules as $module) {
+            if ($module != ".." && $module != ".") {
+                // module menu
+                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.php")) {
+                    if ($perms->hasPermission($permissions, "module/" . $module)) {
+                        self::$arc["menumodule"] = $module;
+                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/info.php";
+                    }
+                }
+                // module administration menu
+                if ($group->name == "Administrators") {
+                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php")) {
+                        self::$arc["menumodule"] = $module;
+                        self::$arc["menuadmin"] = true;
+                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php";
+                        unset(self::$arc["menuadmin"]);
+                    }
+                }
             }
         }
-        if (arcGetURLData("data1") == "administration") {
-            return arcGetPath() . arcGetURLData("module") . "/administration/";
-        } else {
-            return arcGetPath() . arcGetURLData("module") . "/";
+
+        if (self::arcGetUser() != null) {
+            self::$arc["menumodule"] = "logout";
+            // logout menu (last item)
+            self::arcAddMenuItem("Logout", "fa-lock", false, null, null);
         }
+        self::$arc["menumodule"] = null;
+        self::arcProcessMenuItems(self::$arc["menus"]);
     }
 
     /**
@@ -552,10 +401,10 @@ class Helper {
      * @param string $url Url of this link, null for default
      * @param string $group Group to palce the item
      */
-    function arcAddMenuItem($name, $icon, $divider, $url, $group) {
+    public static function arcAddMenuItem($name, $icon, $divider, $url, $group) {
         // setup menu storage if not already in existance
-        if (!isset($GLOBALS["arc"]["menus"])) {
-            $GLOBALS["arc"]["menus"] = array();
+        if (!isset(self::$arc["menus"])) {
+            self::$arc["menus"] = array();
         }
 
         // build menu item
@@ -568,62 +417,15 @@ class Helper {
         if (!empty($url)) {
             $item["url"] = $url;
         }
-        $item["module"] = $GLOBALS["arc"]["menumodule"];
-        if (isset($GLOBALS["arc"]["menuadmin"]) && $GLOBALS["arc"]["menuadmin"] == true) {
+        $item["module"] = self::$arc["menumodule"];
+        if (isset(self::$arc["menuadmin"]) && self::$arc["menuadmin"] == true) {
             $item["module"] = $item["module"] . "/administration";
         }
         if (!empty($group)) {
-            $GLOBALS["arc"]["menus"][$group][] = $item;
+            self::$arc["menus"][$group][] = $item;
         } else {
-            $GLOBALS["arc"]["menus"][] = $item;
+            self::$arc["menus"][] = $item;
         }
-    }
-
-    /**
-     * Processes modules and building menus from info data
-     */
-    function arcGetMenu() {
-        $modules = scandir(arcGetPath(true) . "modules");
-
-        $group = new UserGroup();
-        if (!empty(arcGetUser())) {
-            $user = arcGetUser();
-            $group = $user->getGroup();
-        } else {
-            $group = UserGroup::getByName("Anyone");
-        }
-
-        $permissions = $group->getPermissions();
-        $perms = new UserPermission();
-
-        foreach ($modules as $module) {
-            if ($module != ".." && $module != ".") {
-                // module menu
-                if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
-                    if ($perms->hasPermission($permissions, "module/" . $module)) {
-                        $GLOBALS["arc"]["menumodule"] = $module;
-                        include arcGetPath(true) . "modules/" . $module . "/info.php";
-                    }
-                }
-                // module administration menu
-                if ($group->name == "Administrators") {
-                    if (file_exists(arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
-                        $GLOBALS["arc"]["menumodule"] = $module;
-                        $GLOBALS["arc"]["menuadmin"] = true;
-                        include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
-                        unset($GLOBALS["arc"]["menuadmin"]);
-                    }
-                }
-            }
-        }
-
-        if (arcGetUser() != null) {
-            $GLOBALS["arc"]["menumodule"] = "logout";
-            // logout menu (last item)
-            arcAddMenuItem("Logout", "fa-lock", false, null, null);
-        }
-        $GLOBALS["arc"]["menumodule"] = null;
-        arcProcessMenuItems($GLOBALS["arc"]["menus"]);
     }
 
     /**
@@ -631,13 +433,13 @@ class Helper {
      * @param Array $menus Array containing menu data
      * Builds the html for the menu items
      */
-    function arcProcessMenuItems($menus) {
+    public static function arcProcessMenuItems($menus) {
         foreach ($menus as $menu => $value) {
             if ($menu != "" && !is_numeric($menu)) {
                 echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
                 . "<span class='fa fa-list'></span> " . $menu . " <span class=\"caret\"></span></a>" . PHP_EOL
                 . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
-                arcProcessMenuItems($value);
+                self::arcProcessMenuItems($value);
                 echo "</ul>" . PHP_EOL
                 . "</li>" . PHP_EOL;
             } elseif (isset($value["module"])) {
@@ -648,13 +450,28 @@ class Helper {
                 if (isset($value["url"])) {
                     echo $value["url"];
                 } else {
-                    echo arcGetPath() . $value["module"];
+                    echo self::arcGetPath() . $value["module"];
                 }
-                echo "\"><span class='fa " . $value["icon"] . "'></span> "
-                . $value['name'] . "</a></li>";
+                echo "\"><span class='fa " . $value["icon"] . "'></span> " . $value['name'] . "</a></li>";
             } else {
-                arcProcessMenuItems($value);
+                self::arcProcessMenuItems($value);
             }
+        }
+    }
+
+    public static function arcGetModulePath($filesystem = false) {
+        if ($filesystem) {
+            if (self::arcGetURLData("administration") == null) {
+                return self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/";
+            } else {
+                return self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/";
+            }
+        }
+
+        if (self::arcGetURLData("administration") == null) {
+            return self::arcGetPath() . self::arcGetURLData("module") . "/";
+        } else {
+            return self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
         }
     }
 
@@ -662,8 +479,8 @@ class Helper {
      * 
      * @return Array Containing the modules installed on the system and their details
      */
-    function arcGetModules() {
-        $modules = scandir(arcGetPath(true) . "modules");
+    public static function arcGetModules() {
+        $modules = scandir(self::arcGetPath(true) . "app/modules");
         $module_list = array();
         foreach ($modules as $module) {
             $module_info["name"] = 'Unknown';
@@ -674,15 +491,12 @@ class Helper {
             $module_info["www"] = 'Unknown';
             $module_info["system"] = false;
             if ($module != ".." && $module != ".") {
-                if (file_exists(arcGetPath(true) . "modules/" . $module . "/info.php")) {
-                    include arcGetPath(true) . "modules/" . $module . "/info.php";
-
+                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.php")) {
+                    include self::arcGetPath(true) . "app/modules/" . $module . "/info.php";
                     $module_info["module"] = $module;
                     $module_list[] = $module_info;
-                } elseif (file_exists(
-                                arcGetPath(true) . "modules/" . $module . "/administration/info.php")) {
-                    include arcGetPath(true) . "modules/" . $module . "/administration/info.php";
-
+                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php")) {
+                    include self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php";
                     $module_info["module"] = $module;
                     $module_list[] = $module_info;
                 }
@@ -695,7 +509,7 @@ class Helper {
      * 
      * @return string Arc version information
      */
-    function arcPoweredBy() {
+    public static function arcPoweredBy() {
         return "<a href=\"http://www.github.com/deltawolf7/arc\" target=\"_new\">Powered by Arc, Version: " . ARCVERSION . "</a>";
     }
 
@@ -707,11 +521,11 @@ class Helper {
      * @param array $attachments Array of paths to attach
      * @return string Null is returned on OK and the error on failure.
      */
-    function arcSendMail($to, $subject, $message, $attachments = null) {
-        $mailSettings = SystemSetting::getByKey("ARCSMTP");
-        require_once arcGetPath(true) . "system/PHPMailer/PHPMailerAutoload.php";
-
-        $mail = new PHPMailer();
+    public static function arcSendMail($to, $subject, $message, $attachments = null) {
+        $mailSettings = \SystemSetting::getByKey("ARCSMTP");
+        require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
+        
+        $mail = new \PHPMailer();
         $mail->isSMTP();
         if (ARCDEBUG == true) {
             $mail->SMTPDebug = 2;
@@ -749,7 +563,7 @@ class Helper {
         if (!$mail->send()) {
             return $mail->ErrorInfo;
         }
-
+        
         return null;
     }
 
@@ -758,7 +572,7 @@ class Helper {
      * @param string $date Date to convert
      * @return date In UK format
      */
-    function arcUKDateToSql($date) {
+    public static function arcUKDateToSql($date) {
         $date_year = substr($date, 6, 4);
         $date_month = substr($date, 3, 2);
         $date_day = substr($date, 0, 2);
@@ -772,7 +586,7 @@ class Helper {
      * @param int $amount Amount of object per page
      * @return array Collection of objects
      */
-    function arcPagination($objects, $page, $amount) {
+    public static function arcPagination($objects, $page, $amount) {
         $pagecount = $amount * $page;
         return array_slice($objects, $pagecount, $amount);
     }

@@ -8,7 +8,4 @@ $module_info["email"] = "deltawolf7@gmail.com";
 $module_info["www"] = "http://www.deltasblog.co.uk";
 $module_info["system"] = true;
 
-arcAddMenuItem("Login", "fa-user", false, null, null);
-
-?>
-
+system\Helper::arcAddMenuItem("Login", "fa-user", false, null, null);
