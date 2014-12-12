@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <?php arcGetHeader(); ?>
+        <?php system\Helper::arcGetHeader(); ?>
     </head>
     <body>
         <div class="container">
@@ -17,11 +17,11 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="<?php echo arcGetPath(); ?>"><?php echo ARCTITLE; ?></a>
+                        <a class="navbar-brand" href="<?php echo system\Helper::arcGetPath(); ?>"><?php echo ARCTITLE; ?></a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-                            <?php arcGetMenu(); ?>
+                            <?php //system\Helper::arcGetMenu(); ?>
                         </ul>
                     </div>
                 </div>

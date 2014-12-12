@@ -24,23 +24,46 @@
  * THE SOFTWARE.
  */
 
-// check for config
-if (!file_exists("config.php")) {
-    exit("Config.php was not found in the root directory.");
-}
-// include the required system file
-require_once "config.php";
-
-// create htaccess if it doesn't exist.
-if (!file_exists(".htaccess")) {
-    $text = "RewriteEngine On\n"
-            . "RewriteBase /" . ARCWEBPATH . "\n"
-            . "RewriteRule ^index\.php$ - [L]\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-f\n"
-            . "RewriteCond %{REQUEST_FILENAME} !-d\n"
-            . "RewriteRule ^(.*)$ /" . ARCWEBPATH . "index.php?url=$1 [L,QSA]";
-    file_put_contents(".htaccess", $text);
+// Check that we are using PHP 5.3 or better.
+if (version_compare(phpversion(), "5.3.0", "<") == true) {
+    die("PHP 5.3 or newer required");
 }
 
-// get the view of the page
-arcGetContent();
+// Check we have a config file and include
+if (!is_readable("app/system/Config.php")) {
+    die("No Config.php found, configure and rename Config.php.dist to Config.php in app/system.");
+}
+require_once "app/system/Config.php";
+new system\Config();
+
+// Set debug environment.
+switch (ARCDEBUG) {
+    case true:
+        error_reporting(E_ALL);
+        ini_set('display_errors', 1);
+        break;
+    case false:
+        error_reporting(0);
+        ini_set('display_errors', 0);
+        break;
+    default:
+        die("Unknown debug setting in Config.php");
+        break;
+}
+
+// Include and initilise helper class.
+require_once "app/system/Helper.php";
+system\Helper::init();
+
+
+// Setup autoloader.
+spl_autoload_register(function($class) {
+    if (file_exists("app/system/classes/{$class}.class.php")) {
+        require_once "app/system/classes/{$class}.class.php";
+    } elseif (!empty(system\Helper::arcGetURLData("module")) && file_exists("app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php")) {
+        require_once "app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php";
+    }
+});
+
+// Get content.
+system\Helper::arcGetView();
