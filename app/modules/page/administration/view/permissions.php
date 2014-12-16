@@ -55,7 +55,7 @@ if (system\Helper::arcGetURLData("data1") != "0") {
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal" onclick="ajax.send('POST', {action: 'addpermission', pageid: '<?php echo $page->id; ?>', groupid: '#pagegroup'}, '<?php arcGetDispatch(); ?>', null, true);"><span class="fa fa-plus"></span> Add To Group</button>
+                <button type="button" class="btn btn-success" data-dismiss="modal" onclick=""><span class="fa fa-plus"></span> Add To Group</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="fa fa-close"></span> Close</button>
             </div>
         </div>

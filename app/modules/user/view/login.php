@@ -37,6 +37,6 @@
                     window.location = "<?php echo system\Helper::arcGetPath(); ?>";
                 }
             }
-        })
+        });
     });
 </script>

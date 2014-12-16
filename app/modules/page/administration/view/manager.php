@@ -15,7 +15,7 @@
                     <td><?php echo $page->seourl; ?></td>
                     <td><?php echo $page->title; ?></td>
                     <td class="text-right"><a class="btn btn-default btn-sm" onclick="editPage(<?php echo $page->id; ?>);"><span class='fa fa-edit'></span>&nbsp;Edit</a>
-                        &nbsp;<a href="<?php echo system\Helper::arcGetModulePath() . "remove/" . $page->id; ?>" class="btn btn-default btn-sm"><span class='fa fa-remove'></span>&nbsp;Remove</button></td>
+                        &nbsp;<a onclick="removePage(<?php echo $page->id; ?>);" class="btn btn-default btn-sm"><span class='fa fa-remove'></span>&nbsp;Remove</button></td>
                 </tr>
                 <?php
             }
@@ -93,7 +93,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="form-group">
-                                <div class="summernote" id="html"></div>
+                                <div class="summernote"></div>
                             </div>
                         </div>
                     </div>
@@ -101,14 +101,17 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="savePage();">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
+    var page;
+    
     function editPage(pageid) {
+        page = pageid;
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -121,14 +124,41 @@
                 $("#seourl").val(jdata.seourl);
                 $("#metadescription").val(jdata.metadescription);
                 $("#metakeywords").val(jdata.metakeywords);
-                $("#seourl").val(jdata.seourl);
-                $("#html").html(jdata.html);
+                $('.summernote').code(jdata.html);
                 $("#myModal").modal('show');
             }
-        })
+        });
+    }
+    
+    function savePage() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {id: page, action: "save", title: "#title", seourl: "#seourl",
+                metadescription: "#metadescription", metakewords: "#metakeywords",
+                html: $('.summernote').code(jdata.html)},
+            success: function () {
+                $("#myModal").modal('hide');
+            }
+        });
+    }
+    
+    function removePage(pageid) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {id: pageid, action: "remove"},
+            success: function () {
+                window.location = '<?php echo system\Helper::arcGetModulePath(); ?>';
+            }
+        });
     }
     
     $(document).ready(function () {
-        $('.summernote').summernote();
+        $('.summernote').summernote({height: 250});
     });
 </script>
