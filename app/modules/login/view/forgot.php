@@ -22,12 +22,13 @@
     $("#forgotBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "text",
+            dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {email: $("#email").val()},
-            success: function (data, textStatus, jQxhr) {
-                updateStatus(data);
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
             }
         })
     });

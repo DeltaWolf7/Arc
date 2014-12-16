@@ -295,7 +295,7 @@ class Helper {
      * Output a standard status div.
      */
     public static function arcGetStatus() {
-        echo "<p><div id=\"status\" style=\"display:none;\" class=\"alert alert-success\" role=\"alert\"></div></p>";
+        echo "<p><div id=\"status\" style=\"display:none;\" role=\"alert\"></div></p>";
     }
 
     /**
@@ -334,15 +334,15 @@ class Helper {
      */
     public static function arcGetDispatch() {
         if (self::arcGetURLData("administration") == null) {
-            $url =  self::arcGetPath() . self::arcGetURLData("module");
+            $url = self::arcGetPath() . self::arcGetURLData("module");
         } else {
             $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
         }
-        
+
         if (self::arcGetURLData("action") != null) {
             $url .= "/" . self::arcGetURLData("action");
         }
-        
+
         echo $url;
     }
 
@@ -522,9 +522,10 @@ class Helper {
      * @return string Null is returned on OK and the error on failure.
      */
     public static function arcSendMail($to, $subject, $message, $attachments = null) {
+        ob_start();
         $mailSettings = \SystemSetting::getByKey("ARCSMTP");
         require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
-        
+
         $mail = new \PHPMailer();
         $mail->isSMTP();
         if (ARCDEBUG == true) {
@@ -536,7 +537,6 @@ class Helper {
 
         if (empty($mailSettings->setting)) {
             return "Unable to get mail settings";
-            return;
         }
 
         $settings = $mailSettings->getArray(",");
@@ -560,10 +560,13 @@ class Helper {
             }
         }
 
-        if (!$mail->send()) {
-            return $mail->ErrorInfo;
+
+        $mail->send();
+        $error = ob_get_contents();
+        ob_end_clean();
+        if (!empty($error)) {
+            return $error;
         }
-        
         return null;
     }
 
@@ -589,6 +592,20 @@ class Helper {
     public static function arcPagination($objects, $page, $amount) {
         $pagecount = $amount * $page;
         return array_slice($objects, $pagecount, $amount);
+    }
+
+    public static function arcEncrypt($pure_string) {
+        $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, ARCKEY, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
+        return $encrypted_string;
+    }
+
+    public static function arcDecrypt($encrypted_string) {
+        $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
+        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+        $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, ARCKEY, $encrypted_string, MCRYPT_MODE_ECB, $iv);
+        return $decrypted_string;
     }
 
 }

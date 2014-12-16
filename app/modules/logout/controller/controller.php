@@ -1,4 +1,4 @@
 <?php
 
 session_destroy();
-system\Helper::arcRedirect();
+echo "<script>window.location='" . system\Helper::arcGetPath() . "'</script>";
