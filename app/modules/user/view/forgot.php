@@ -33,3 +33,6 @@
         })
     });
 </script>
+
+<?php
+//echo system\Helper::arcSendMail("craig@grangecomputers.co.uk", "test", "test2");

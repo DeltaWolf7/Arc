@@ -36,7 +36,6 @@
         public $title;
         public $content;
         public $seourl;
-        public $metatitle;
         public $metadescription;
         public $metakeywords;
 
@@ -52,7 +51,7 @@
             $this->metatitle = "";
             $this->seourl = "";
             $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metatitle", "metadescription", "metakeywords"];
+            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords"];
         }
 
         /**

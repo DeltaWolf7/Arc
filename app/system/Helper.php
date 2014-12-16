@@ -43,7 +43,7 @@ class Helper {
             foreach ($routes as $route) {
                 if (!isset(self::$arc["urldata"]["module"])) {
                     self::$arc["urldata"]["module"] = $route;
-                } elseif ($route == "adminsitration") {
+                } elseif ($route == "administration") {
                     self::$arc["urldata"]["administration"] = true;
                 } elseif (!isset(self::$arc["urldata"]["action"])) {
                     self::$arc["urldata"]["action"] = $route;
@@ -88,8 +88,8 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
     }
 
     public static function arcGetDatabase() {
@@ -260,7 +260,7 @@ class Helper {
         }
 
         if (count($_POST) == 0) {
-            // Get module view          
+            // Get module view      
             if (self::arcGetURLData("administration") == null) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
@@ -268,7 +268,7 @@ class Helper {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
             } else {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php")) {
-                    die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
+                    die("Unable to find view '" . self::arcGetURLData("action") . "' for administrative module '" . self::arcGetURLData("module") . "'.");
                 }
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
@@ -282,6 +282,9 @@ class Helper {
     }
 
     public static function arcOverrideView($action, $administration = false, $data = Array()) {
+        $module = self::$arc["urldata"]["module"];
+        unset(self::$arc["urldata"]);
+        self::$arc["urldata"]["module"] = $module;
         self::$arc["urldata"]["action"] = $action;
         self::$arc["urldata"]["administration"] = $administration;
         $count = 1;
@@ -322,6 +325,8 @@ class Helper {
      * @param string $destination Outputs a javascript redirect to root or specified url
      */
     public static function arcRedirect($destination = null) {
+        ob_start();
+        ob_clean();
         if (empty($destination)) {
             header("Location: " . self::arcGetPath());
         } else {
@@ -336,7 +341,7 @@ class Helper {
         if (self::arcGetURLData("administration") == null) {
             $url = self::arcGetPath() . self::arcGetURLData("module");
         } else {
-            $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
+            $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration";
         }
 
         if (self::arcGetURLData("action") != null) {
@@ -362,6 +367,7 @@ class Helper {
 
         $permissions = $group->getPermissions();
         $perms = new \UserPermission();
+        $lastModule = self::arcGetURLData("module");
 
         foreach ($modules as $module) {
             if ($module != ".." && $module != ".") {
@@ -369,6 +375,7 @@ class Helper {
                 if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.php")) {
                     if ($perms->hasPermission($permissions, "module/" . $module)) {
                         self::$arc["menumodule"] = $module;
+                        self::$arc["urldata"]["module"] = $module;
                         require_once self::arcGetPath(true) . "app/modules/" . $module . "/info.php";
                     }
                 }
@@ -377,6 +384,7 @@ class Helper {
                     if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php")) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["menuadmin"] = true;
+                        self::$arc["urldata"]["module"] = $module;
                         require_once self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php";
                         unset(self::$arc["menuadmin"]);
                     }
@@ -384,11 +392,9 @@ class Helper {
             }
         }
 
-        if (self::arcGetUser() != null) {
-            self::$arc["menumodule"] = "logout";
-            // logout menu (last item)
-            self::arcAddMenuItem("Logout", "fa-lock", false, null, null);
-        }
+        self::$arc["urldata"]["module"] = $lastModule;
+
+
         self::$arc["menumodule"] = null;
         self::arcProcessMenuItems(self::$arc["menus"]);
     }
@@ -547,8 +553,12 @@ class Helper {
         $mail->Password = $settings[3];
         $mail->setFrom($settings[4], $settings[5]);
 
-        foreach ($to as $name => $email) {
-            $mail->addAddress($email, $name);
+        if (is_array($to)) {
+            foreach ($to as $name => $email) {
+                $mail->addAddress($email, $name);
+            }
+        } else {
+            $mail->addAddress($to);
         }
 
         $mail->Subject = $subject;
@@ -592,20 +602,6 @@ class Helper {
     public static function arcPagination($objects, $page, $amount) {
         $pagecount = $amount * $page;
         return array_slice($objects, $pagecount, $amount);
-    }
-
-    public static function arcEncrypt($pure_string) {
-        $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $encrypted_string = mcrypt_encrypt(MCRYPT_BLOWFISH, ARCKEY, utf8_encode($pure_string), MCRYPT_MODE_ECB, $iv);
-        return $encrypted_string;
-    }
-
-    public static function arcDecrypt($encrypted_string) {
-        $iv_size = mcrypt_get_iv_size(MCRYPT_BLOWFISH, MCRYPT_MODE_ECB);
-        $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
-        $decrypted_string = mcrypt_decrypt(MCRYPT_BLOWFISH, ARCKEY, $encrypted_string, MCRYPT_MODE_ECB, $iv);
-        return $decrypted_string;
     }
 
 }

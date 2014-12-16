@@ -8,4 +8,8 @@ $module_info["email"] = "deltawolf7@gmail.com";
 $module_info["www"] = "http://www.deltasblog.co.uk";
 $module_info["system"] = true;
 
-system\Helper::arcAddMenuItem("Login", "fa-user", false, null, null);
+if (system\Helper::arcGetUser() == null) {
+    system\Helper::arcAddMenuItem("Login", "fa-user", false, system\Helper::arcGetPath() . "user/login", null);
+} else {
+    system\Helper::arcAddMenuItem("Logout", "fa-user", false, system\Helper::arcGetPath() . "user/logout", null);
+}
