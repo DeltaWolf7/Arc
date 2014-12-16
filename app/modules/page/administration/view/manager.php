@@ -125,7 +125,7 @@
                 $("#html").html(jdata.html);
                 $("#myModal").modal('show');
             }
-        })
+        });
     }
     
     $(document).ready(function () {
