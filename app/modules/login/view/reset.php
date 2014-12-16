@@ -2,6 +2,10 @@
     <h1>Login :: Forgot Password</h1>
 </div>
 
+<?php
+    $data = system\Helper::arcDecrypt(system\Helper::arcGetURLData("data1"));
+?>
+
 <form role="form">
         <div class="panel panel-default">
             <div class="panel-heading">
