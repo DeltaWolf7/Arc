@@ -60,9 +60,12 @@
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $('#sKey').val(jdata.skey);
                 $('#sValue').val(jdata.svalue);
+            },
+            complete: function () {
+                $("#editSetting").modal("show");
             }
         });
-        $("#editSetting").modal("show");
+        
     }
 
     $(document).ready(function () {
