@@ -6,7 +6,7 @@ if (isset($_POST["action"])) {
                 . "<tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>&nbsp;</th></tr>";
         $users = User::getAllUsers();
         foreach ($users as $user) {
-            $table .= "<tr><td>{$user->firstname}</td><td>{$user->lastname}</td><td>{$user->email}</td><td class=\"text-right\"><a onclick=\"editUser({$user->id});\" class=\"btn btn-default\"><span class=\"fa fa-edit\"></span>&nbsp;Edit</a>&nbsp;<a onclick=\"removeUser({$user->id});\" class=\"btn btn-default\"><span class=\"fa fa-remove\"></span>&nbsp;Remove</a></td></tr>";
+            $table .= "<tr><td>{$user->firstname}</td><td>{$user->lastname}</td><td>{$user->email}</td><td class=\"text-right\"><a onclick=\"editUser({$user->id});\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-edit\"></span>&nbsp;Edit</a>&nbsp;<a onclick=\"removeUser({$user->id});\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-remove\"></span>&nbsp;Remove</a></td></tr>";
         }
         $table .= "</table>";
         echo json_encode(["html" => $table]);
@@ -15,7 +15,7 @@ if (isset($_POST["action"])) {
                 . "<tr><th>Name</th><th>Description</th><th>&nbsp;</th></tr>";
         $groups = UserGroup::getAllGroups();
         foreach ($groups as $group) {
-            $table .= "<tr><td>{$group->name}</td><td>{$group->description}</td><td class=\"text-right\"><a onclick=\"editGroup({$group->id});\" class=\"btn btn-default\"><span class=\"fa fa-edit\"></span>&nbsp;Edit</a>&nbsp;<a onclick=\"removeGroup({$group->id});\" class=\"btn btn-default\"><span class=\"fa fa-remove\"></span>&nbsp;Remove</a></td></tr>";
+            $table .= "<tr><td>{$group->name}</td><td>{$group->description}</td><td class=\"text-right\"><a onclick=\"editGroup({$group->id});\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-edit\"></span>&nbsp;Edit</a>&nbsp;<a onclick=\"removeGroup({$group->id});\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-remove\"></span>&nbsp;Remove</a></td></tr>";
         }
         $table .= "</table>";
         echo json_encode(["html" => $table]);

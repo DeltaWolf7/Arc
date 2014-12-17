@@ -8,7 +8,7 @@ $module_info["email"] = "deltawolf7@gmail.com";
 $module_info["www"] = "http://www.deltasblog.co.uk";
 $module_info["system"] = true;
 
-arcAddMenuItem("System Settings", "fa-cog", false, null, "Administration");
+system\Helper::arcAddMenuItem("System Settings", "fa-cog", false, null, "Administration");
 
 ?>
 
