@@ -79,6 +79,18 @@
             $users = new User();
             return $users->getCollection(["usergroupid" => $this->id]);
         }
-
+        
+        public function update() {
+            if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
+                parent::update();
+            }
+        }
+        
+        public function delete($id) {
+            $group = new UserGroup();
+            $group->getByID($id);
+            if ($group->name != "Administrators" && $group->name != "Guests" && $group->name != "Users") {
+                parent::delete($id);
+            }
+        }
     }
-

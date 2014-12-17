@@ -10,7 +10,7 @@
         <div class="panel-body">
             <div class="form-group">
                 <label for="email">Email address</label>
-                <input maxlength="100" type="text" class="form-control" id="email" placeholder="Enter email">
+                <input maxlength="100" type="text" class="form-control" id="email" placeholder="Enter email" autocomplete="off">
             </div>
         </div>
     </div>

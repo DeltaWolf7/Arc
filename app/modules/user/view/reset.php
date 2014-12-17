@@ -17,11 +17,11 @@
             <div class="panel-body">
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password">
+                    <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="password2">Retype Password</label>
-                    <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password">
+                    <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password" autocomplete="off">
                 </div>
             </div>
         </div>
