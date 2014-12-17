@@ -8,7 +8,4 @@ $module_info["email"] = "deltawolf7@gmail.com";
 $module_info["www"] = "http://www.deltasblog.co.uk";
 $module_info["system"] = false;
 
-arcAddMenuItem("Questions", "fa-question", false, null, "Applications");
-
-?>
-
+system\Helper::arcAddMenuItem("Questions", "fa-question", false, system\Helper::arcGetPath() . "askquestions/questions", "Applications");

@@ -28,14 +28,25 @@ class Question extends DataProvider {
     
     public $groupid;
     public $question;
-    public $answer;
+    public $answer1;
+    public $answer2;
+    public $answer3;
+    public $answer4;
+    public $answer5;
+    public $correctAnswer;
     
     public function __construct() {
         parent::__construct();
         $this->groupid = 0;
         $this->question = "";
-        $this->answer = "";
+        $this->answer1 = "";
+        $this->answer2 = "";
+        $this->answer3 = "";
+        $this->answer4 = "";
+        $this->answer5 = "";
+        $this->correctAnswer = 1;
         $this->table = ARCDBPREFIX . "askquestions";
-        $this->columns = ["id", "groupid", "question", "answer"];
+        $this->columns = ["id", "groupid", "question", "answer1", "answer2",
+            "answer3", "answer4", "answer5", "correctAnswer"];
     } 
 }

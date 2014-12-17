@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2014 Craig Longford.
+ * Copyright 2014 craig.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,33 +24,29 @@
  * THE SOFTWARE.
  */
 
-/**
- * AJAX data dispatch handler
- *
- * @author Craig Longford
- */
-if (isset($_POST["action"])) {
+class Group extends DataProvider {
 
-    require "../../../config.php";
-    
-    if ($_POST["action"] == "answerquestion") {
+    public $name;
+    public $text;
+    public $visible;
 
-        $count = 1;
-        $xml = "<results>";
-        while (isset($_POST["Q" . $count])) {
-            $xml .= "<result question=\"Q" . $count . "\" answer=\"" . $_POST["Q" . $count] . "\"></result>";
-            $count++;
-        }
-        $xml .= "</results>";
-
-        $result = new Result();
-        $result->groupid = $_POST["groupid"];
-        $result->userid = $_POST["userid"];
-        $time = $_POST["time"];
-        $result->timetaken = time() - $time;
-        $result->result = $xml;
-        $result->update();
-
-        echo "success|Results saved";
+    public function __construct() {
+        parent::__construct();
+        $this->name = "";
+        $this->text = "";
+        $this->visible = false;
+        $this->table = ARCDBPREFIX . "askquestion_groups";
+        $this->columns = ["id", "name", "txt", "visible"];
     }
+
+    public static function getQuestions($groupid) {
+        $questions = new Question();
+        return $questions->getCollection(["groupid" => $groupid]);
+    }
+
+    public static function getGroups() {
+        $groups = new Group();
+        return $groups->getCollection(["ORDER" => "name ASC"]);
+    }
+
 }
