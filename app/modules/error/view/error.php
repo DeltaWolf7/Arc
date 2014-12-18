@@ -9,19 +9,24 @@
             case "404":
                 ?>
                 The resource you're looking for cannot be found.<br />
-                Request Module: '<?php echo system\Helper::arcGetURLData("data2"); ?>'
                 <?php
                 break;
             case "403":
-                echo "You do not have permission to access this resource.";
+                ?>
+                You do not have permission to access this resource.<br />
+                <?php
                 break;
             case "419":
-                echo "Your authentication has expired. Please login.";
+                ?>
+                Your authentication has expired. Please login.<br />
+
+                <?php
                 break;
             default:
                 break;
         }
         ?>
+        Requested Module: '<?php echo system\Helper::arcGetURLData("data2"); ?>'<br />
     </p>
 </div>
 

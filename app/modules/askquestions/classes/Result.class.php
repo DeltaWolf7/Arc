@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2014 craig.
@@ -25,31 +25,37 @@
  */
 
 class Result extends DataProvider {
-    
+
     public $groupid;
-    public $result;
+    public $questionid;
+    public $resultno;
     public $userid;
-    public $datedone;
     public $timetaken;
-    
+
     public function __construct() {
         parent::__construct();
         $this->groupid = 0;
-        $this->result = "";
+        $this->resultno = 0;
         $this->userid = 0;
-        $this->datedone = date("Y-m-d H:i:s");
+        $this->questionid = 0;
         $this->timetaken = 0;
         $this->table = ARCDBPREFIX . "askquestion_results";
-        $this->columns = ["id", "groupid", "result", "userid", "datedone", "timetaken"];
+        $this->columns = ["id", "groupid", "questionid", "resultno", "userid", "timetaken"];
     }
-    
+
     public static function getByGroupAndUserID($groupid, $userid) {
         $results = new Result();
         return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid]]);
     }
-    
+
+    public static function getByGroupAndUserIDAndQuestionID($groupid, $userid, $questionid) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid, "questionid" => $questionid]]);
+    }
+
     public static function getByGroup($groupid) {
         $results = new Result();
         return $results->getCollection(["groupid" => $groupid]);
     }
+
 }
