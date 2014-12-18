@@ -1,13 +1,16 @@
 <div class="page-header">
-    <h1><?php echo arcGetURLData("data1"); ?></h1>
+    <h1><?php echo system\Helper::arcGetURLData("data1"); ?></h1>
 </div>
 
 <div class="jumbotron">
     <p><span class="fa fa-warning"></span> 
         <?php
-        switch (arcGetURLData("data1")) {
+        switch (system\Helper::arcGetURLData("data1")) {
             case "404":
-                echo "The resource you're looking for cannot be found.";
+                ?>
+                The resource you're looking for cannot be found.<br />
+                Request Module: '<?php echo system\Helper::arcGetURLData("data2"); ?>'
+                <?php
                 break;
             case "403":
                 echo "You do not have permission to access this resource.";

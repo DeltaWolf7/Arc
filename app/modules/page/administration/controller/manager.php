@@ -8,11 +8,10 @@ if (isset($_POST["action"])) {
         echo json_encode(["title" => $page->title, "seourl" => $page->seourl,
             "metadescription" => $page->metadescription, "metakeywords" => $page->metakeywords,
             "seourl" => $page->seourl, "html" => html_entity_decode($page->content)]);
-        return;
     } elseif ($_POST["action"] == "remove") {
         $page = new Page();
         $page->delete($_POST["id"]);
-        return;
+        echo json_encode(["status" => "success", "data" => "Page deleted"]);
     } elseif ($_POST["action"] == "save") {
         $page = new Page();
         $page->getByID($_POST["id"]);
@@ -21,8 +20,15 @@ if (isset($_POST["action"])) {
         $page->metadescription = $_POST["metadescription"];
         $page->metakeywords = $_POST["metakeywords"];
         $page->title = $_POST["title"];
+        
+        $seo = Page::getBySEOURL($_POST["seourl"]);
+        if ($seo->id != $page->id) {
+            echo json_encode(["status" => "danger", "data" => "Duplicate SEO Url found, please choose another"]);
+            return;
+        }
+        
         $page->update();
-        return;
+        echo json_encode(["status" => "success", "data" => "Page saved"]);
     } elseif ($_POST["action"] == "getpages") {
         $table = "<tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><span class=\"fa fa-plus\"></span> New Page</a></th></tr>";
         $pages = Page::getAllPages();
@@ -35,6 +41,5 @@ if (isset($_POST["action"])) {
                     . "</tr>";
         }
         echo json_encode(["html" => $table]);
-        return;
     }
 }

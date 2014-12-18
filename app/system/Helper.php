@@ -233,7 +233,7 @@ class Helper {
             }
 
             if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
-                die("Module '" . self::arcGetURLData("module") . "' was not found.");
+                self::arcForceView("error", "error", false, ["404", self::arcGetURLData("module")]);
             }
         }
 
@@ -278,6 +278,18 @@ class Helper {
                 die("Unable to find template footer.php.");
             }
             require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
+        }
+    }
+
+    private static function arcForceView($module, $action, $administration = false, $data = Array()) {
+        unset(self::$arc["urldata"]);
+        self::$arc["urldata"]["module"] = $module;
+        self::$arc["urldata"]["action"] = $action;
+        self::$arc["urldata"]["administration"] = $administration;
+        $count = 1;
+        foreach ($data as $item) {
+            self::$arc["urldata"]["data" . $count] = $item;
+            $count++;
         }
     }
 
@@ -362,7 +374,7 @@ class Helper {
             $user = self::arcGetUser();
             $group = $user->getGroup();
         } else {
-            $group = \UserGroup::getByName("Anyone");
+            $group = \UserGroup::getByName("Guests");
         }
 
         $permissions = $group->getPermissions();

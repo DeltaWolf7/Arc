@@ -68,9 +68,5 @@ class Config {
         
         // Timezone
         date_default_timezone_set('Europe/London');
-        
-        // Custom error handling
-	set_exception_handler('system\logger::exception_handler');
-	set_error_handler('system\logger::error_handler');
     }
 }

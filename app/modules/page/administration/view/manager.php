@@ -2,14 +2,8 @@
     <h1>Page Management</h1>
 </div>
 
-
-<div class="panel panel-default">
-    <div class="panel-body">
-        <table class="table table-striped" id="pages">
-
-        </table>
-    </div>
-</div>
+<table class="table table-striped" id="pages">
+</table>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -35,7 +29,7 @@
                                         <label for="seourl">SEO Url</label>
                                         <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50" value="<?php echo $page->seourl; ?>">
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -75,6 +69,24 @@
     </div>
 </div>
 
+<div class="modal fade" id="deletePage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Page</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to permanently delete this page?                    
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" onclick="doRemove();">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     var page;
 
@@ -107,22 +119,40 @@
             data: {id: page, action: "save", title: $("#title").val(), seourl: $("#seourl").val(),
                 metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
                 html: $('.summernote').code()},
-            complete: function () {
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#myModal").modal('hide');
-                getPages();
+                updateStatus(jdata.status, jdata.data);
+                if (jdata.status == "success") {
+                    getPages();
+                } else {
+                    setTimeout(function () {
+                        $("#myModal").modal('show');
+                    }, 2000);
+                }
             }
         });
     }
 
     function removePage(pageid) {
+        page = pageid;
+        $("#deletePage").modal("show");
+    }
+
+    function doRemove() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {id: pageid, action: "remove"},
+            data: {id: page, action: "remove"},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+            },
             complete: function () {
                 getPages();
+                $("#deletePage").modal("hide");
             }
         });
     }
