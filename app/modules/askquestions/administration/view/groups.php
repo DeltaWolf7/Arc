@@ -3,11 +3,11 @@
 </div>
 
 <p  class="text-right">
-    <button class="btn btn-primary btn-xs" data-toggle="modal" data-target="#myModal"><span class="fa fa-plus"></span> New Question Group</button>
+    <button class="btn btn-default btn-sm" data-toggle="modal" onclick="editGroup(0);"><span class="fa fa-plus"></span> New Question Group</button>
 </p>
 
 <div id="data">
-    
+
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -21,17 +21,20 @@
                 <form>
                     <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control" id="group">
+                        <input type="text" class="form-control" id="group" />
                     </div>
                     <div class="form-group">
                         <label>Text</label>
-                        <textarea id="text" class="form-control"></textarea>
+                        <textarea id="text" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="visible" /> Visible to students?</label>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" onclick="saveGroup();">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveGroup();">Save</button>
             </div>
         </div>
     </div>
@@ -54,8 +57,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button id="editButton" type="button" class="btn btn-success">Save changes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id="editButton" type="button" class="btn btn-primary">Save</button>
             </div>
         </div>
     </div>
@@ -70,12 +73,86 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Group</h4>
             </div>
-            <div class="modal-body" id="deleteBody">
-
+            <div class="modal-body">
+                Are you sure you want to permanently delete this group?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
-                <button id="deleteButton" type="button" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="doDeleteGroup();">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Question</h4>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to permanently delete this question?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-danger" onclick="doDeleteQuestion();">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="deleteModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Question Editor</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="question">Question</label>
+                        <div class="summernote"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="answer1">Answer 1</label>
+                        <input type="text" class="form-control" id="answer1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="answer2">Answer 2</label>
+                        <input type="text" class="form-control" id="answer2" />
+                    </div>
+                    <div class="form-group">
+                        <label for="answer3">Answer 3</label>
+                        <input type="text" class="form-control" id="answer3" />
+                    </div>
+                    <div class="form-group">
+                        <label for="answer4">Answer 4</label>
+                        <input type="text" class="form-control" id="answer4" />
+                    </div>
+                    <div class="form-group">
+                        <label for="answer5">Answer 5</label>
+                        <input type="text" class="form-control" id="answer5" />
+                    </div>
+                    <div class="form-group">
+                        <label for="correct">Correct Answer</label>
+                        <select id="correct" class="form-control">
+                            <option value="1">Answer 1</option>
+                            <option value="2">Answer 2</option>
+                            <option value="3">Answer 3</option>
+                            <option value="4">Answer 4</option>
+                            <option value="5">Answer 5</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="groupSelect">
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="saveQuestion();">Save</button>
             </div>
         </div>
     </div>
@@ -83,48 +160,90 @@
 
 
 <script>
-    function updateGroup(data) {
-        var data2 = data.split('|');
-        if (data2[0] == "success")
-        {
-            window.location = "<?php echo system\Helper::arcGetModulePath(); ?>";
-        }
-        updateStatus(data);
-    }
+    var question;
+    var questions;
+    var group;
 
-    function deleteGroup(id, name) {
-        var text = 'Are you sure you want to delete the group \'' + name + '\'?';
-        var link = "window.location = '<?php echo system\Helper::arcGetModulePath() . "deletegroup/"; ?>" + id + "'";
-        $('#deleteButton').attr("onclick", link);
-        $('#deleteBody').html(text);
-        $('#deleteModal').modal('show');
-    }
-
-    function editGroup(id, name) {
-        var link = "ajax.send('POST', {action: 'editgroup', name: '#editgroup', id: '" + id + "'}, '<?php system\Helper::arcGetDispatch() ?>', updateGroup, true)";
-        $('#editButton').attr("onclick", link);
-        $('#editgroup').val(name);
-        $('#editModal').modal('show');
-    }
-    
-    function saveGroup() {
-         $.ajax({
+    function editGroup(id) {
+        group = id;
+        $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val()},
+            data: {action: "getgroup", id: group},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#group").val(jdata.name);
+                $("#text").val(jdata.txt);
+                $("#visible").prop('checked', jdata.visible);
+                $("#myModal").modal("show");
+            }
+        });
+    }
+
+    function deleteGroup(id) {
+        group = id;
+        $("#deleteModal").modal("show");
+    }
+
+    function doDeleteGroup() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "deletegroup", id: group},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus(jdata.status, jdata.data);
-                $("#myModal").modal("hide");
+                $("#deleteModal").modal("hide");
                 getData();
             }
         });
     }
-    
+
+    function saveGroup() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").val()},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                if (jdata.status == "success") {
+                    $("#myModal").modal("hide");
+                    getData();
+                }
+            }
+        });
+    }
+
+    function deleteQuestion(id) {
+        question = id;
+        $("#deleteQuestionModal").modal("show");
+    }
+
+    function doDeleteQuestion() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "deletequestion", id: question},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                $("#deleteQuestionModal").modal("hide");
+                getQuestions(questions);
+            }
+        });
+    }
+
     function getData() {
-     $.ajax({
+        $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
@@ -136,8 +255,9 @@
             }
         });
     }
-    
+
     function getQuestions(id) {
+        questions = id;
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -150,8 +270,55 @@
             }
         });
     }
+
+    function getQuestion(id) {
+        question = id;
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getquestion", id: id, group: questions},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $('.summernote').code(jdata.question);
+                $("#answer1").val(jdata.answer1);
+                $("#answer2").val(jdata.answer2);
+                $("#answer3").val(jdata.answer3);
+                $("#answer4").val(jdata.answer4);
+                $("#answer5").val(jdata.answer5);
+                $("#groupSelect").html(jdata.group);
+                $("#correct").val(jdata.correct);
+                $("#questionModal").modal("show");
+            }
+        });
+    }
+
+    function saveQuestion() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "savequestion", id: question, question: $('.summernote').code(),
+                answer1: $("#answer1").val(), answer2: $("#answer2").val(), answer3: $("#answer3").val(),
+                answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                if (jdata.status == "success") {
+                    $("#questionModal").modal("hide");
+                    getQuestions(questions);
+                }
+            }
+        });
+    }
+    function viewResults(id) {
     
+    }
+
     $(document).ready(function () {
+        $('.summernote').summernote({height: 250});
         getData();
     });
 </script>

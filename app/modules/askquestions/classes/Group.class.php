@@ -49,4 +49,11 @@ class Group extends DataProvider {
         return $groups->getCollection(["ORDER" => "name ASC"]);
     }
 
+    public function delete($id) {
+        parent::delete($id);
+        $questions = self::getQuestions($id);
+        foreach ($questions as $question) {
+            $question->delete($question->id);
+        }
+    }
 }

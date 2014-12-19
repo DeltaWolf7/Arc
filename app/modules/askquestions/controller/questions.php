@@ -28,7 +28,7 @@ if (isset($_POST["action"])) {
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
                 $table .= "<td><a class=\"btn btn-default btn-xs\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
-                $table .= "<td class=\"text-right\"><button class=\"btn btn-success btn-xs\" onclick=\"getResult(" . $group->id . ");\"><span class=\"fa fa-area-chart\"></span> View My Results</button></td>";
+                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult(" . $group->id . ");\"><span class=\"fa fa-area-chart\"></span> View My Results</button></td>";
                 $table .= "</tr>";
             }
         }
@@ -36,10 +36,17 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "getGroup") {
         $done = false;
         $questions = Group::getQuestions($_POST["id"]);
+        $group = new Group();
+        $group->getByID($_POST["id"]);
         $time = time();
+        $data = "";
         $questionno = $_POST["question"] + 1;
         if (count($questions) >= $questionno) {
-            $data = "<form>";
+            if (!empty($group->txt)) {
+                $data .= "<strong>Group Text</strong><div class=\"well\">" . $group->txt . "</div>";
+            }
+
+            $data .= "<form>";
             $question = $questions[$_POST["question"]];
             $data .= "<div class=\"form-group\">";
             $data .= "<strong>Question " . $questionno . " of " . count($questions) . "</strong>";
