@@ -118,6 +118,7 @@
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus(jdata.status, jdata.data);
                 $("#myModal").modal("hide");
+                getData();
             }
         });
     }
@@ -128,7 +129,21 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "getdata"},
+            data: {action: "getgroups"},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#data").html(jdata.html);
+            }
+        });
+    }
+    
+    function getQuestions(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getquestions", id: id},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#data").html(jdata.html);
