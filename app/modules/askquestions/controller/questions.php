@@ -152,8 +152,8 @@ if (isset($_POST["action"])) {
             $table .= $min . " minutes";
         }
         $table .= "<br />Score: " . $correct . "/" . count($questions);
-        $percent = (count($questions) / 100) * $correct;
-        $table .= " (" . $percent . "%)";
+        $percent = (100 / count($questions)) * $correct;
+        $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
         echo json_encode(["html" => $table]);
     }

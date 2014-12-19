@@ -92,5 +92,115 @@ if (isset($_POST["action"])) {
         $question = new Question();
         $question->delete($_POST["id"]);
         echo json_encode(["status" => "success", "data" => "Question deleted"]);
+    } elseif ($_POST["action"] == "getresults") {
+        $group = UserGroup::getByName("Students");
+        $users = $group->getUsers();
+        $data = "<table class=\"table table-striped\"><tr><td>Student</td><td>Score</td></tr>";
+        $groupCount = Group::getQuestions($_POST["id"]);
+        foreach ($users as $user) {
+            $results = Result::getByGroupAndUserID($_POST["id"], $user->id);
+            if (count($results) > 0) {
+                $score = 0;
+                $correct = 0;
+                $time = 0;
+                foreach ($results as $result) {
+                    $question = new Question();
+                    $question->getByID($result->questionid);
+                    if ($result->resultno == $question->correctAnswer) {
+                        $correct++;
+                    }
+                    $time += $result->timetaken;
+                }
+                $score = (100 / count($groupCount)) * $correct;
+                if ($time > 60) {
+                    $t = (60 / $time) . " minutes";
+                } else {
+                    $t = $time + " seconds";
+                }
+                $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult(" . $user->id . "," . $_POST["id"] . ")\">" . $user->getFullname() . "</a></td><td>" . $correct . "/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
+            }
+        }
+        $data .= "</table>";
+        echo json_encode(["data" => $data]);
+    } elseif ($_POST["action"] == "getresult") {
+        $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"]);
+        if (count($results) == 0) {
+            echo json_encode(["html" => "No results for this question group recorded."]);
+            return;
+        }
+        $questions = Group::getQuestions($results[0]->groupid);
+        $count = 0;
+        $totalTime = 0;
+        $correct = 0;
+        $user = new User();
+        $user->getByID($_POST["id"]);
+        $table = "Student: " . $user->getFullname();
+        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><span class=\"fa fa-backward\"></span> Back</a><p>";
+        $table .= "<table class=\"table table-striped\">";
+        $table .= "<tr><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        foreach ($questions as $question) {
+            if (isset($results[$count])) {
+                $table .= "<tr><td>" . $question->question . "</td><td>";
+                switch ($question->correctAnswer) {
+                    case 1:
+                        $table .= $question->answer1;
+                        break;
+                    case 2:
+                        $table .= $question->answer2;
+                        break;
+                    case 3:
+                        $table .= $question->answer3;
+                        break;
+                    case 4:
+                        $table .= $question->answer4;
+                        break;
+                    case 5:
+                        $table .= $question->answer5;
+                        break;
+                }
+                $table .= "</td><td>";
+                switch ($results[$count]->resultno) {
+                    case 1:
+                        $table .= $question->answer1;
+                        break;
+                    case 2:
+                        $table .= $question->answer2;
+                        break;
+                    case 3:
+                        $table .= $question->answer3;
+                        break;
+                    case 4:
+                        $table .= $question->answer4;
+                        break;
+                    case 5:
+                        $table .= $question->answer5;
+                        break;
+                }
+                $table .= "</td><td>";
+                if ($results[$count]->resultno == $question->correctAnswer) {
+                    $table .= "<span class=\"fa fa-check\"></span>";
+                    $correct++;
+                } else {
+                    $table .= "<span class=\"fa fa-remove\"></span>";
+                }
+                $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
+                $totalTime += $results[$count]->timetaken;
+            }
+            $count++;
+        }
+        $table .= "</table>";
+        $table .= "<div class=\"well\">";
+        $table .= "Total time taken: ";
+        if ($totalTime < 60) {
+            $table .= $totalTime . " seconds";
+        } else {
+            $min = $totalTime / 60;
+            $table .= $min . " minutes";
+        }
+        $table .= "<br />Score: " . $correct . "/" . count($questions);
+        $percent = (100 / count($questions)) * $correct;
+        $table .= " (" . number_Format($percent, 2) . "%)";
+        $table .= "</div>";
+        echo json_encode(["data" => $table]);
     }
 }

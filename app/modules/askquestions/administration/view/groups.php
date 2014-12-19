@@ -158,6 +158,23 @@
     </div>
 </div>
 
+<div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Results</h4>
+            </div>
+            <div class="modal-body" id="resultsData">
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
     var question;
@@ -313,8 +330,36 @@
             }
         });
     }
-    function viewResults(id) {
     
+    function viewResults(id) {
+        groups = id;
+        $("#resultsModal").modal("show");
+         $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getresults", id: groups},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#resultsData").html(jdata.data);
+            }
+        });
+    }
+    
+    function viewResult(userid, groupid) {
+        $("#resultsModal").modal("show");
+         $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getresult", id: userid, group: groupid},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#resultsData").html(jdata.data);
+            }
+        });
     }
 
     $(document).ready(function () {
