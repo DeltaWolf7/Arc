@@ -27,7 +27,7 @@
 class Group extends DataProvider {
 
     public $name;
-    public $text;
+    public $txt;
     public $visible;
 
     public function __construct() {

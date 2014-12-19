@@ -23,6 +23,10 @@
                         <label>Name</label>
                         <input type="text" class="form-control" id="group">
                     </div>
+                    <div class="form-group">
+                        <label>Text</label>
+                        <textarea id="text" class="form-control"></textarea>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -109,7 +113,7 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savegroup", group: $("#group").val()},
+            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus(jdata.status, jdata.data);

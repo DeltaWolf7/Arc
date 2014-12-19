@@ -30,6 +30,7 @@ if (isset($_POST["action"])) {
     } else if ($_POST["action"] == "savegroup") {
         $group = new Group();
         $group->name = $_POST["group"];
+        $group->text = $_POST["text"];
         $group->update();
         echo json_encode(["status" => "success", "data" => "Group created"]);
     } else if ($_POST["action"] == "editgroup") {
