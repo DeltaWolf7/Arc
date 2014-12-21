@@ -384,29 +384,26 @@ class Helper {
         foreach ($modules as $module) {
             if ($module != ".." && $module != ".") {
                 // module menu
-                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.php")) {
-                    if ($perms->hasPermission($permissions, "module/" . $module)) {
+                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/module.php")) {
+                    if ($perms->hasPermission($permissions, $module)) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/info.php";
+                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/module.php";
                     }
                 }
                 // module administration menu
                 if ($group->name == "Administrators") {
-                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php")) {
+                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/module.php")) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["menuadmin"] = true;
                         self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php";
+                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/administration/module.php";
                         unset(self::$arc["menuadmin"]);
                     }
                 }
             }
         }
-
         self::$arc["urldata"]["module"] = $lastModule;
-
-
         self::$arc["menumodule"] = null;
         self::arcProcessMenuItems(self::$arc["menus"]);
     }
@@ -424,7 +421,6 @@ class Helper {
         if (!isset(self::$arc["menus"])) {
             self::$arc["menus"] = array();
         }
-
         // build menu item
         $item = array();
         $item["name"] = $name;
@@ -507,20 +503,40 @@ class Helper {
             $module_info["author"] = 'Unknown';
             $module_info["email"] = 'Unknown';
             $module_info["www"] = 'Unknown';
-            $module_info["system"] = false;
             if ($module != ".." && $module != ".") {
-                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.php")) {
-                    include self::arcGetPath(true) . "app/modules/" . $module . "/info.php";
-                    $module_info["module"] = $module;
-                    $module_list[] = $module_info;
-                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php")) {
-                    include self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.php";
-                    $module_info["module"] = $module;
-                    $module_list[] = $module_info;
+                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.json")) {
+                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/" . $module . "/info.json", $module);
+                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.json")) {
+                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.json", $module);
                 }
             }
         }
         return $module_list;
+    }
+
+    private static function arcGetModuleDetails($file, $module) {
+        $json = file_get_contents($file);
+        $data = json_decode($json);
+        $module_info["name"] = 'Unknown';
+        $module_info["description"] = 'No description provided';
+        $module_info["version"] = '0.0.0.0';
+        $module_info["author"] = 'Unknown';
+        $module_info["email"] = 'Unknown';
+        $module_info["www"] = 'Unknown';
+        if (isset($data->name))
+            $module_info["name"] = $data->name;
+        if (isset($data->description))
+            $module_info["description"] = $data->description;
+        if (isset($data->version))
+            $module_info["version"] = $data->version;
+        if (isset($data->author))
+            $module_info["author"] = $data->author;
+        if (isset($data->email))
+            $module_info["email"] = $data->email;
+        if (isset($data->www))
+            $module_info["www"] = $data->www;
+        $module_info["module"] = $module;
+        return $module_info;
     }
 
     /**

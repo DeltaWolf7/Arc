@@ -132,10 +132,10 @@ if (isset($_POST["action"])) {
                 }
                 $table .= "</td><td>";
                 if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<span class=\"fa fa-check\"></span>";
+                    $table .= "<div class=\"label label-success\"><span class=\"fa fa-check\"></span></div>";
                     $correct++;
                 } else {
-                    $table .= "<span class=\"fa fa-remove\"></span>";
+                    $table .= "<div class=\"label label-danger\"><span class=\"fa fa-remove\"></span></div>";
                 }
                 $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
                 $totalTime += $results[$count]->timetaken;
