@@ -56,7 +56,7 @@ if (isset($_POST["action"])) {
         $data = "<table class=\"table table-striped\">";
         $data .= "<tr><th>Question</th><th class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"getData();\"><span class=\"fa fa-backward\"></span> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><span class=\"fa fa-plus\"></span> New Question</a></th></tr>";
         foreach ($questions as $question) {
-            $data .= "<tr><td><a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(" . $question->id . ")\">" . $question->question . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
+            $data .= "<tr><td><a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(" . $question->id . ")\">" . $question->question . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><span class=\"fa fa-copy\"></span> Duplicate</a> <a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
         }
         $data .= "</table>";
         echo json_encode(["html" => $data]);
@@ -140,7 +140,7 @@ if (isset($_POST["action"])) {
         $table .= "<tr><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
-                $table .= "<tr><td>" . $question->question . "</td><td>";
+                $table .= "<tr><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
                         $table .= $question->answer1;
@@ -202,5 +202,22 @@ if (isset($_POST["action"])) {
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
         echo json_encode(["data" => $table]);
+    } elseif ($_POST["action"] == "copyquestion") {
+        $question = new Question();
+        
+        $oquestion = new Question();
+        $oquestion->getByID($_POST["id"]);
+        
+        $question->answer1 = $oquestion->answer1;
+        $question->answer2 = $oquestion->answer2;
+        $question->answer3 = $oquestion->answer3;
+        $question->answer4 = $oquestion->answer4;
+        $question->answer5 = $oquestion->answer5;
+        $question->correctAnswer = $oquestion->correctAnswer;
+        $question->groupid = $oquestion->groupid;    
+        $txt = html_entity_decode($oquestion->question);     
+        $question->question = htmlentities("Copy of: " . $txt);
+        $question->update();
+        echo json_encode(["status"=> "success", "data" => "Question duplicated"]);
     }
 }

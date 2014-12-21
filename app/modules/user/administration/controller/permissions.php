@@ -34,9 +34,31 @@ if (isset($_POST["action"])) {
                 . "<select id=\"module\" class=\"form-control\">";
         $modules = system\Helper::arcGetModules();
         foreach ($modules as $module) {
-            $data .= "<option value=\"" . $module["module"] . "\">" . $module["module"] . "</option>";
+            $data .= "<option value=\"" . $module["module"] . "\"";
+            if ($module["module"] == $permission->permission) {
+                $data .= " selected";
+            }
+            $data .= ">" . $module["module"] . "</option>";
         }
         $data .= "</select></div></form>";
         echo json_encode(["data" => $data]);
+    } elseif ($_POST["action"] == "savepermission") {
+        $permission = new UserPermission();
+        $permission->getByID($_POST["id"]);
+        $permission->groupid = $_POST["group"];
+        $permission->permission = $_POST["module"];
+        
+        $group = new UserGroup();
+        $group->getByID($_POST["group"]);
+        $permissions = $group->getPermissions();
+        foreach ($permissions as $perm) {
+            if ($perm->permission == $permission->permission && $perm->id != $permission->id) {
+                echo json_encode(["status" => "danger", "data" => "Permission for this module already exists in this group"]);
+                return;
+            }
+        }
+        
+        $permission->update();
+        echo json_encode(["status" => "success", "data" => "Permission saved"]);
     }
 }

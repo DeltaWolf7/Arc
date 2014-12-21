@@ -361,6 +361,21 @@
             }
         });
     }
+    
+    function copyQuestion(id) {
+         $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "copyquestion", id: id},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                getQuestions(questions);
+            }
+        });
+    }
 
     $(document).ready(function () {
         $('.summernote').summernote({height: 250});

@@ -17,7 +17,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="editButton" type="button" class="btn btn-primary">Save</button>
+                <button id="editButton" type="button" class="btn btn-primary" onclick="savePermission();">Save</button>
             </div>
         </div>
     </div>
@@ -25,9 +25,29 @@
 
 <script>
     var groupid;
+    var pid;
+    
+    function savePermission() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "savepermission", id: pid, group: groupid, module: $("#module").val()},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                if (jdata.status == "success") {
+                    $("#editModal").modal("hide");
+                    getData();
+                }
+            }
+        });
+    }
     
     function editPermission(group, id) {
         groupid = group;
+        pid = id;
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
