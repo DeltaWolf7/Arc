@@ -366,7 +366,7 @@ class Helper {
     /**
      * Processes modules and building menus from info data
      */
-    public static function arcGetMenu() {
+    public static function arcGetMenu($menuItems = array()) {
         $modules = scandir(self::arcGetPath(true) . "app/modules");
 
         $group = new \UserGroup();
@@ -383,6 +383,21 @@ class Helper {
 
         foreach ($modules as $module) {
             if ($module != ".." && $module != ".") {
+                
+                if (count($menuItems) > 0) {
+                    $found = false;
+                    foreach ($menuItems as $item) {
+                        if ($module == $item) {
+                            $found = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!$found) {
+                        continue;
+                    }
+                }
+                
                 // module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/module.php")) {
                     if ($perms->hasPermission($permissions, $module)) {

@@ -49,7 +49,7 @@ class Config {
         // Project Title
         define('ARCTITLE', 'Arc Project');
         // Project version
-        define('ARCVERSION', '0.0.0.41');
+        define('ARCVERSION', '1.0.0.0');
         
         // Project debug mode
         define('ARCDEBUG', true);

@@ -21,7 +21,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
-                            <?php system\Helper::arcGetMenu(); ?>
+                            <?php system\Helper::arcGetMenu(["page"]); ?>
                         </ul>
                     </div>
                 </div>

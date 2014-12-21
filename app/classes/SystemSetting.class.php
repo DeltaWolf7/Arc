@@ -60,6 +60,12 @@ class SystemSetting extends DataProvider {
         }
         return $setting;
     }
+    
+    public static function keyExists($key) {
+        $setting = new SystemSetting();
+        $setting->get(["key" => $key]);
+        return $setting;
+    }
 
     /**
      * 
@@ -87,12 +93,18 @@ class SystemSetting extends DataProvider {
         $columns = array_slice($this->columns, 1);
         $dataColumns = array();
         $properties = get_object_vars($this);
-        foreach ($columns as $column) {
+        foreach ($this->columns as $column) {
             if ($column != "table" && $column != "columns") {
                 $dataColumns[$column] = $properties[$column];
             }
         }
-        system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["key" => $this->key]);
+        $setting = SystemSetting::keyExists($this->key);
+        if (empty($setting->key)) {
+            $dataColumns["key"] = $this->key;
+            system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
+        } else {
+            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["key" => $this->key]);
+        }
     }
 
 }

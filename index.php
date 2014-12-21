@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /*
  * The MIT License
@@ -64,6 +64,14 @@ spl_autoload_register(function($class) {
         require_once "app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php";
     }
 });
+
+$mail = SystemSetting::keyExists("ARC_SMTP");
+if (empty($mail->key)) {
+    $mail = new SystemSetting();
+    $mail->key = "ARC_SMTP";
+    $mail->setting = "localhost,25,user@server.com,password,noreply@server.com,noreply";
+    $mail->update();
+}
 
 // Get content.
 system\Helper::arcGetView();
