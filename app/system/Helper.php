@@ -310,7 +310,7 @@ class Helper {
      * Output a standard status div.
      */
     public static function arcGetStatus() {
-        echo "<p><div id=\"status\" style=\"display:none;\" role=\"alert\"></div></p>";
+        echo "<br /><div id=\"status\" style=\"display:none;\" role=\"alert\"></div>";
     }
 
     /**

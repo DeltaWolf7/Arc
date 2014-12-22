@@ -23,11 +23,11 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200" value="<?php echo $page->title; ?>">
+                                        <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
                                     </div>
                                     <div class="form-group">
                                         <label for="seourl">SEO Url</label>
-                                        <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50" value="<?php echo $page->seourl; ?>">
+                                        <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
                                     </div>
 
                                 </div>
@@ -41,11 +41,11 @@
                                 <div class="panel-body">
                                     <div class="form-group">
                                         <label for="metadescription">META Description</label>
-                                        <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description" value="<?php echo $page->metadescription; ?>">
+                                        <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
                                     </div>
                                     <div class="form-group">
                                         <label for="metakeywords">META Keywords</label>
-                                        <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" value="<?php echo $page->metakeywords; ?>">
+                                        <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
                                     </div> 
                                 </div>
                             </div>
