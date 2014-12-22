@@ -18,3 +18,14 @@
 .modal-backdrop {
     z-index: 1000;
 }
+
+body {
+    background-image: url('../images/background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+}
+
+.container {
+    background-color: #FFF;
+}
