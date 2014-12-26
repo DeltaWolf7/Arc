@@ -226,7 +226,7 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").val()},
+            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus(jdata.status, jdata.data);

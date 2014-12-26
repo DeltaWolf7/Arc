@@ -29,14 +29,14 @@ if (isset($_POST["action"])) {
         $group = new Group();
         $group->getByID($_POST["id"]);
         $group->name = $_POST["group"];
-        $group->visible = $_POST["visible"];
+        $group->visible = boolval($_POST["visible"]);
         if (empty($group->name)) {
             echo json_encode(["status" => "danger", "data" => "Group must have a name"]);
             return;
         }
         $group->txt = $_POST["text"];
         $group->update();
-        echo json_encode(["status" => "success", "data" => "Group created"]);
+        echo json_encode(["status" => "success", "data" => "Group saved"]);
     } elseif ($_POST["action"] == "deletegroup") {
         $group = new Group();
         $group->delete($_POST["id"]);
@@ -56,7 +56,7 @@ if (isset($_POST["action"])) {
         $data = "<table class=\"table table-striped\">";
         $data .= "<tr><th>Question</th><th class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"getData();\"><span class=\"fa fa-backward\"></span> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><span class=\"fa fa-plus\"></span> New Question</a></th></tr>";
         foreach ($questions as $question) {
-            $data .= "<tr><td><a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(" . $question->id . ")\">" . $question->question . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><span class=\"fa fa-copy\"></span> Duplicate</a> <a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
+            $data .= "<tr><td><a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(" . $question->id . ")\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><span class=\"fa fa-copy\"></span> Duplicate</a> <a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
         }
         $data .= "</table>";
         echo json_encode(["html" => $data]);
@@ -87,7 +87,7 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "getgroup") {
         $group = new Group();
         $group->getByID($_POST["id"]);
-        echo json_encode(["name" => $group->name, "txt" => $group->txt, "visible" => $group->visible]);
+        echo json_encode(["name" => $group->name, "txt" => $group->txt, "visible" => boolval($group->visible)]);
     } elseif ($_POST["action"] == "deletequestion") {
         $question = new Question();
         $question->delete($_POST["id"]);
