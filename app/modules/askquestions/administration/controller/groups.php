@@ -29,7 +29,11 @@ if (isset($_POST["action"])) {
         $group = new Group();
         $group->getByID($_POST["id"]);
         $group->name = $_POST["group"];
-        $group->visible = boolval($_POST["visible"]);
+        if ($_POST["visible"] == "true") {
+            $group->visible = 1;
+        } else {
+            $group->visible = 0;
+        }
         if (empty($group->name)) {
             echo json_encode(["status" => "danger", "data" => "Group must have a name"]);
             return;
@@ -204,20 +208,20 @@ if (isset($_POST["action"])) {
         echo json_encode(["data" => $table]);
     } elseif ($_POST["action"] == "copyquestion") {
         $question = new Question();
-        
+
         $oquestion = new Question();
         $oquestion->getByID($_POST["id"]);
-        
+
         $question->answer1 = $oquestion->answer1;
         $question->answer2 = $oquestion->answer2;
         $question->answer3 = $oquestion->answer3;
         $question->answer4 = $oquestion->answer4;
         $question->answer5 = $oquestion->answer5;
         $question->correctAnswer = $oquestion->correctAnswer;
-        $question->groupid = $oquestion->groupid;    
-        $txt = html_entity_decode($oquestion->question);     
+        $question->groupid = $oquestion->groupid;
+        $txt = html_entity_decode($oquestion->question);
         $question->question = htmlentities("Copy of: " . $txt);
         $question->update();
-        echo json_encode(["status"=> "success", "data" => "Question duplicated"]);
+        echo json_encode(["status" => "success", "data" => "Question duplicated"]);
     }
 }

@@ -64,13 +64,20 @@ class Helper {
 
         // Create database connection
         try {
-            self::$arc["database"] = new \medoo([
-                "database_type" => ARCDBTYPE,
-                "database_name" => ARCDBNAME,
-                "server" => ARCDBSERVER,
-                "username" => ARCDBUSER,
-                "password" => ARCDBPASSWORD
-            ]);
+            if (ARCDBTYPE != "sqlite") {
+                self::$arc["database"] = new \medoo([
+                    "database_type" => ARCDBTYPE,
+                    "database_name" => ARCDBNAME,
+                    "server" => ARCDBSERVER,
+                    "username" => ARCDBUSER,
+                    "password" => ARCDBPASSWORD
+                ]);
+            } else {
+                self::$arc["database"] = new \medoo([
+                    'database_type' => ARCDBTYPE,
+                    'database_file' => ARCDBSERVER
+                ]);
+            }
         } catch (Exception $e) {
             die("Unable to connect to database. Please check 'Config.php'.<br />Exception: " . $e->getMessage());
         }
@@ -166,7 +173,10 @@ class Helper {
         if ($filesystem) {
             return $_SERVER["DOCUMENT_ROOT"] . "/";
         }
-        return 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERVER['HTTP_HOST']}/";
+        if (ARCFORCENOSSL == true) {
+            return "http://{$_SERVER['HTTP_HOST']}/";
+        }
+        return "http" . (isset($_SERVER['HTTPS']) ? "s" : "") . "://" . "{$_SERVER['HTTP_HOST']}/";
     }
 
     /**
@@ -383,7 +393,7 @@ class Helper {
 
         foreach ($modules as $module) {
             if ($module != ".." && $module != ".") {
-                
+
                 if (count($menuItems) > 0) {
                     $found = false;
                     foreach ($menuItems as $item) {
@@ -392,12 +402,12 @@ class Helper {
                             break;
                         }
                     }
-                    
+
                     if (!$found) {
                         continue;
                     }
                 }
-                
+
                 // module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/module.php")) {
                     if ($perms->hasPermission($permissions, $module)) {

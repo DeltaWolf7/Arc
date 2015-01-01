@@ -33,7 +33,7 @@ class Config {
         // Turn on output buffering
         ob_start();
         
-        // Database server
+        // Database server or file path
         define('ARCDBSERVER', 'localhost');
         // Database name
         define('ARCDBNAME', 'arc');
@@ -68,5 +68,8 @@ class Config {
         
         // Timezone
         date_default_timezone_set('Europe/London');
+        
+        // Force SSL off, required for some special applications
+        define('ARCFORCENOSSL', false);
     }
 }
