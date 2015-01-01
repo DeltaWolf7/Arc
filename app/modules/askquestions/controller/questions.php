@@ -94,7 +94,7 @@ if (isset($_POST["action"])) {
         $table .= "<tr><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
-                $table .= "<tr><td>" . $question->question . "</td><td>";
+                $table .= "<tr><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
                         $table .= $question->answer1;
