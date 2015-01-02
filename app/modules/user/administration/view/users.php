@@ -80,16 +80,26 @@
                                     <h3 class="panel-title">User Group</h3>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="form-group">
-                                        <label for="retype">Group</label>
-                                        <select id="group" class='form-control'>
-                                            <?php
-                                            $groups = UserGroup::getAllGroups();
-                                            foreach ($groups as $group) {
-                                                echo "<option value=\"{$group->id}\">{$group->name}</option>";
-                                            }
-                                            ?>
-                                        </select>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="groups">Groups</label>
+                                                <select id="groups" class="form-control" size="10">
+                                                    <?php
+                                                    $groups = UserGroup::getAllGroups();
+                                                    foreach ($groups as $group) {
+                                                        echo "<option value=\"{$group->name}\">{$group->name}</option>";
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6" id="grp2">
+
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <a class="btn btn-default" onclick="addGroup();"><span class="fa fa-plus"></span> Add to group</a> <a class="btn btn-default" onclick="removeFromGroup();"><span class="fa fa-remove"></span> Remove from group</a> 
                                     </div>
                                 </div>
                             </div>
@@ -190,6 +200,44 @@
         });
     }
 
+    function addGroup() {
+        if ($('#groups').val() != null) {
+            $.ajax({
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
+                dataType: "json",
+                type: "post",
+                contentType: "application/x-www-form-urlencoded",
+                data: {action: "addgroup", id: userid, group: $('#groups').val()},
+                success: function (data) {
+                    var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    updateStatus(jdata.status, jdata.data);
+                },
+                complete: function () {
+                    editUser(userid);
+                }
+            });
+        }
+    }
+
+    function removeFromGroup() {
+    if ($('#groups2').val() != null) {
+            $.ajax({
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
+                dataType: "json",
+                type: "post",
+                contentType: "application/x-www-form-urlencoded",
+                data: {action: "removefromgroup", id: userid, group: $('#groups2').val()},
+                success: function (data) {
+                    var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    updateStatus(jdata.status, jdata.data);
+                },
+                complete: function () {
+                    editUser(userid);
+                }
+            });
+        }
+    }
+
     function editUser(id) {
         userid = id;
         $.ajax({
@@ -203,7 +251,7 @@
                 $('#firstname').val(jdata.firstname);
                 $('#lastname').val(jdata.lastname);
                 $('#email').val(jdata.email);
-                $('#group').val(jdata.group);
+                $('#grp2').html(jdata.group);
             },
             complete: function () {
                 $("#editUserModal").modal("show");
@@ -237,7 +285,7 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {action: "saveuser", id: userid, firstname: $('#firstname').val(),
-                lastname: $('#lastname').val(), email: $('#email').val(), group: $('#group').val(),
+                lastname: $('#lastname').val(), email: $('#email').val(),
                 password: $('#password').val(), retype: $('#retype').val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));

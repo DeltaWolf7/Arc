@@ -25,7 +25,12 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "user") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $user->usergroupid]);
+        $data = "<label for=\"groups2\">In Groups</label><select id=\"groups2\" class=\"form-control\" size=\"10\">";
+        foreach ($user->getGroups() as $group) {
+            $data .= "<option value=\"" . $group->name . "\">" . $group->name . "</option>";
+        }
+        $data .= "</select>";
+        echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data]);
     } elseif ($_POST["action"] == "saveuser") {
         $user = new User();
         $user->getByID($_POST["id"]);
@@ -43,9 +48,6 @@ if (isset($_POST["action"])) {
         $user->firstname = ucwords($_POST["firstname"]);
         $user->lastname = ucwords($_POST["lastname"]);
         $user->email = strtolower($_POST["email"]);
-
-        $user->usergroupid = $_POST["group"];
-
         $user->update();
 
         echo json_encode(["status" => "success", "data" => "Changes saved"]);
@@ -69,5 +71,15 @@ if (isset($_POST["action"])) {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
         echo json_encode(["name" => $group->name, "description" => $group->description]);
+    } elseif ($_POST["action"] == "addgroup") {
+        $user = new User();
+        $user->getByID($_POST["id"]);
+        $user->addToGroup($_POST["group"]);        
+        echo json_encode(["status" => "success", "data" => "User added to group"]);
+    } elseif ($_POST["action"] == "removefromgroup") {
+        $user = new User();
+        $user->getByID($_POST["id"]);
+        $user->removeFromGroup($_POST["group"]);        
+        echo json_encode(["status" => "success", "data" => "User removed from group"]);
     }
 }

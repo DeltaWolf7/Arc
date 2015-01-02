@@ -24,62 +24,64 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Description of userpermissions
+ *
+ * @author craig
+ */
+class UserPermission extends DataProvider {
+
+    public $groupid;
+    public $permission;
 
     /**
-     * Description of userpermissions
-     *
-     * @author craig
+     * UserPermission constructor
      */
-    class UserPermission extends DataProvider {
-
-        public $groupid;
-        public $permission;
-
-        /**
-         * UserPermission constructor
-         */
-        public function __construct() {
-            parent::__construct();
-            $this->groupid = 0;
-            $this->permission = "";
-            $this->table = ARCDBPREFIX . "user_permissions";
-            $this->columns = ["id", "groupid", "permission"];
-        }
-
-        /**
-         * 
-         * @param \UserPermission $permissions Permission collection
-         * @param string $entry Permission to check for
-         * @return boolean True if authorised
-         */
-        public static function hasPermission($permissions, $entry) {
-            foreach ($permissions as $permission) {
-                if ($permission->permission == $entry) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /**
-         * 
-         * @param int $groupid Group ID
-         * @return \UserPermission
-         */
-        public static function getByGroupID($groupid) {
-            $permission = new UserPermission();
-            return $permission->getCollection(["groupid" => $groupid]);
-        }
-
-        /**
-         * 
-         * @return \UserGroup Gets user's group
-         */
-        public function getGroup() {
-            $group = new UserGroup();
-            $group->getByID($this->groupid);
-            return $group;
-        }
-
+    public function __construct() {
+        parent::__construct();
+        $this->groupid = 0;
+        $this->permission = "";
+        $this->table = ARCDBPREFIX . "user_permissions";
+        $this->columns = ["id", "groupid", "permission"];
     }
 
+    /**
+     * 
+     * @param \UserPermission $permissions Permission collection
+     * @param string $entry Permission to check for
+     * @return boolean True if authorised
+     */
+    public static function hasPermission($groups, $entry) {
+        if (is_array($groups)) {
+            foreach ($groups as $group) {
+                foreach ($group->getPermissions() as $permission) {
+                    if ($permission->permission == $entry) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 
+     * @param int $groupid Group ID
+     * @return \UserPermission
+     */
+    public static function getByGroupID($groupid) {
+        $permission = new UserPermission();
+        return $permission->getCollection(["groupid" => $groupid]);
+    }
+
+    /**
+     * 
+     * @return \UserGroup Gets user's group
+     */
+    public function getGroup() {
+        $group = new UserGroup();
+        $group->getByID($this->groupid);
+        return $group;
+    }
+
+}

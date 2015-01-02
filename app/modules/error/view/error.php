@@ -26,7 +26,6 @@
                 break;
         }
         ?>
-        Requested Module: '<?php echo system\Helper::arcGetURLData("data2"); ?>'<br />
     </p>
 </div>
 

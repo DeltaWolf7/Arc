@@ -247,11 +247,20 @@ class Helper {
             }
         }
 
-        // Get module controller
-        if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
-            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
-        } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
-            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+        $groups[] = \UserGroup::getByName("Guests");
+        if (self::arcIsUserLoggedIn() == true) {
+            $groups = self::arcGetUser()->getGroups();
+        }
+
+        if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
+            // Get module controller
+            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
+            } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+            }
+        } else {
+            self::arcForceView("error", "error", false, ["403"]);
         }
 
         if (count($_POST) == 0) {
@@ -262,11 +271,15 @@ class Helper {
             require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php";
         }
 
-        // Get module view controller
-        if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
-            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
-        } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
-            require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
+        if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
+            // Get module view controller
+            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
+            } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
+            }
+        } else {
+            self::arcForceView("error", "error", false, ["403"]);
         }
 
         if (count($_POST) == 0) {
@@ -297,9 +310,11 @@ class Helper {
         self::$arc["urldata"]["action"] = $action;
         self::$arc["urldata"]["administration"] = $administration;
         $count = 1;
-        foreach ($data as $item) {
-            self::$arc["urldata"]["data" . $count] = $item;
-            $count++;
+        if (is_array($data)) {
+            foreach ($data as $item) {
+                self::$arc["urldata"]["data" . $count] = $item;
+                $count++;
+            }
         }
     }
 
@@ -342,6 +357,43 @@ class Helper {
         $_SESSION["arc_user"] = serialize($user);
     }
 
+    public static function arcIsUserLoggedIn() {
+        if (self::arcGetUser() != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function arcIsUserInGroup($groups = Array()) {
+        if (self::arcIsUserLoggedIn() == true) {
+            if (is_array($groups)) {
+                $grps = self::arcGetUser()->getGroups();
+                foreach ($groups as $group) {
+                    foreach ($grps as $grp) {
+                        if ($group == $grp->name) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function arcIsUserAdmin() {
+        if (self::arcGetUser() == null) {
+            return false;
+        } else {
+            foreach (self::arcGetUser()->getGroups() as $group) {
+                if ($group->name == "Adminsitrators") {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 
      * @param string $destination Outputs a javascript redirect to root or specified url
@@ -365,11 +417,9 @@ class Helper {
         } else {
             $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration";
         }
-
         if (self::arcGetURLData("action") != null) {
             $url .= "/" . self::arcGetURLData("action");
         }
-
         echo $url;
     }
 
@@ -379,16 +429,11 @@ class Helper {
     public static function arcGetMenu($menuItems = array()) {
         $modules = scandir(self::arcGetPath(true) . "app/modules");
 
-        $group = new \UserGroup();
-        if (!empty(self::arcGetUser())) {
-            $user = self::arcGetUser();
-            $group = $user->getGroup();
-        } else {
-            $group = \UserGroup::getByName("Guests");
+        $groups[] = \UserGroup::getByName("Guests");
+        if (self::arcIsUserLoggedIn() == true) {
+            $groups = self::arcGetUser()->getGroups();
         }
-
-        $permissions = $group->getPermissions();
-        $perms = new \UserPermission();
+       
         $lastModule = self::arcGetURLData("module");
 
         foreach ($modules as $module) {
@@ -410,14 +455,14 @@ class Helper {
 
                 // module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/module.php")) {
-                    if ($perms->hasPermission($permissions, $module)) {
+                    if (\UserPermission::hasPermission($groups, $module)) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["urldata"]["module"] = $module;
                         require_once self::arcGetPath(true) . "app/modules/" . $module . "/module.php";
                     }
                 }
                 // module administration menu
-                if ($group->name == "Administrators") {
+                if (self::arcIsUserInGroup(["Administrators"]) == true) {
                     if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/module.php")) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["menuadmin"] = true;

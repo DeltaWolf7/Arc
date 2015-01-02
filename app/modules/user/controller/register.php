@@ -47,7 +47,6 @@ if (isset($_POST["email"])) {
     $user->lastname = ucfirst($_POST["lastname"]);
     $user->email = strtolower($_POST["email"]);
     $user->setPassword($_POST["password"]);
-    $user->usergroupid = 2;
     $user->update();
 
     system\Helper::arcSetUser($user);
