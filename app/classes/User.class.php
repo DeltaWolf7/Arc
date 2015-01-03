@@ -81,10 +81,12 @@ class User extends DataProvider {
      */
     public function getGroups() {
         $groups = [];
-        foreach (json_decode($this->groups) as $group) {
-            $grp = UserGroup::getByName($group);
-            if ($grp->id != 0) {
-                $groups[] = $grp;
+        if (strlen($this->groups) > 0) {
+            foreach (json_decode($this->groups) as $group) {
+                $grp = UserGroup::getByName($group);
+                if ($grp->id != 0) {
+                    $groups[] = $grp;
+                }
             }
         }
         return $groups;
