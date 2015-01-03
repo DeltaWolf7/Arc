@@ -1,13 +1,24 @@
-Bootstrap                   3.2.0               http://getbootstrap.com/
-Boostrap Datetimepicker     24/10/2014          http://eonasdan.github.io/bootstrap-datetimepicker/
-JQuery                      2.1.1               http://jquery.com/download/
+Bootstrap                   3.3.1               http://getbootstrap.com/
+Boostrap Datetimepicker     3.1.3               http://eonasdan.github.io/bootstrap-datetimepicker/
+JQuery                      2.1.3               http://jquery.com/download/
 Font Awesome                4.2.0               http://fortawesome.github.io/Font-Awesome/
-Summernote                  0.5.1               http://hackerwins.github.io/summernote/
-Bootstrap Filestyle         26/09/2014          http://markusslima.github.io/bootstrap-filestyle/
-Medoo                       0.9.6.2             http://medoo.in/
-Moment.js                   2.8.3               http://momentjs.com/
+Summernote                  0.6                 http://summernote.org/
+Bootstrap Filestyle         1.1.2               http://markusslima.github.io/bootstrap-filestyle/
+Medoo                       0.9.7               http://medoo.in/
+Moment.js                   2.8.4               http://momentjs.com/
 PHPMailer                   5.2.8               https://github.com/Synchro/PHPMailer
 
+
+
+1.0.0.0
+--------
+/ Updated all 3rd party libraries and scripts.
++ Rewrote the entire Arc framework.
++ Added support for multi group users.
+/ Changed the interface style throughout.
++ Added customer MVC style system for modules and themes.
++ Added module initialisation system.
++ Added support for desktop systems such as PHPDesktop and Sqlite.
 
 0.0.0.41
 --------
