@@ -14,11 +14,6 @@
 .season .season-name{padding:8px;width:235px;display:block;position:absolute;bottom:0;left:0;color:#FFF;background-color:#000;opacity: 0.4;}
 .season p{padding:10px;border-top:0;top:132px}
 
-/* fix for modals falling behind background. Really modals should be positioned outside of any containers. */
-.modal-backdrop {
-    z-index: 1000;
-}
-
 body {
     background-image: url('../images/background.jpg');
     background-repeat: no-repeat;

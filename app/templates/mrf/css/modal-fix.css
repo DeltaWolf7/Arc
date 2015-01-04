@@ -1,4 +1,0 @@
-/* fix for modals falling behind background. Really modals should be positioned outside of any containers. */
-.modal-backdrop {
-    z-index: 1000;
-}

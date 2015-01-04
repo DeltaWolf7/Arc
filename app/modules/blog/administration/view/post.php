@@ -1,17 +1,11 @@
 <div class="page-header">
-    <h1>Blog Manager
-        <?php
-        if (arcGetURLData("data3") != null) {
-            echo "<a href='" . arcGetModulePath() . "'><span class='fa fa-arrow-circle-left'></span></a>";
-        }
-        ?>
-    </h1>
+    <h1>Blog Manager</h1>
 </div>
 
 <?php
 $page = new Blog();
-if (arcGetURLData("data4") != "0") {
-    $page->getByID(arcGetURLData("data4"));
+if (system\Helper::arcGetURLData("data4") != "0") {
+    $page->getByID(system\Helper::arcGetURLData("data4"));
 }
 ?>
 <form role="form">
@@ -63,9 +57,9 @@ if (arcGetURLData("data4") != "0") {
                         <?php
                           echo "<img id=\"img\" style=\"cursor: pointer;\" onclick=\"$('#imageModal').modal('show');\" ";
                         if (empty($page->image)) {
-                            echo "src=\"" . arcGetPath() . "modules/blog/images/placeholder.png\"";
+                            echo "src=\"" . system\Helper::arcGetPath() . "modules/blog/images/placeholder.png\"";
                         } else {
-                            echo "src=\"" . arcGetPath() . "images/blog/" . $page->image . "\"";
+                            echo "src=\"" . system\Helper::arcGetPath() . "images/blog/" . $page->image . "\"";
                         }
                         echo " alt=\"Post Image\" class=\"img-rounded\" />";
                         ?>
@@ -97,17 +91,17 @@ if (arcGetURLData("data4") != "0") {
             </div>
             <div class="modal-body">
                 <?php
-                if (!file_exists(arcGetPath(true) . "images/blog")) {
-                    mkdir(arcGetPath() . "images/blog");
+                if (!file_exists(system\Helper::arcGetPath(true) . "images/blog")) {
+                    mkdir(system\Helper::arcGetPath() . "images/blog");
                 }
                 ?>
-                <img onclick="selectImage('');" style="cursor: pointer;" src="<?php echo arcGetPath(); ?>modules/blog/images/placeholder.png" class="img-rounded"/> 
+                <img onclick="selectImage('');" style="cursor: pointer;" src="<?php echo system\Helper::arcGetPath(); ?>modules/blog/images/placeholder.png" class="img-rounded"/> 
                 <?php
-                $files = scandir(arcGetPath(true) . "images/blog");
+                $files = scandir(system\Helper::arcGetPath(true) . "images/blog");
                 foreach ($files as $file) {
                     if ($file != "." && $file != "..") {
                         ?>
-                        <img onclick="selectImage('<?php echo $file; ?>');" style="cursor: pointer;" src="<?php echo arcGetPath(); ?>images/blog/<?php echo $file; ?>" height="150px" width="150px" class="img-rounded"/> 
+                        <img onclick="selectImage('<?php echo $file; ?>');" style="cursor: pointer;" src="<?php echo system\Helper::arcGetPath(); ?>images/blog/<?php echo $file; ?>" height="150px" width="150px" class="img-rounded"/> 
                         <?php
                     }
                 }
@@ -122,12 +116,12 @@ if (arcGetURLData("data4") != "0") {
 
 <script>
     function selectImage(image) {
-        ajax.send('POST', {action: 'setimage', id: '<?php echo $page->id; ?>', image: image}, '<?php echo arcGetDispatch(); ?>', null, true);
+        ajax.send('POST', {action: 'setimage', id: '<?php echo $page->id; ?>', image: image}, '<?php echo system\Helper::arcGetDispatch(); ?>', null, true);
         var img = document.getElementById('img');
         if (image == '') {
-            img.src = '<?php echo arcGetPath(); ?>/modules/blog/images/placeholder.png';
+            img.src = '<?php echo system\Helper::arcGetPath(); ?>/modules/blog/images/placeholder.png';
         } else {
-            img.src = '<?php echo arcGetPath(); ?>/images/blog/' + image;
+            img.src = '<?php echo system\Helper::arcGetPath(); ?>/images/blog/' + image;
         }
         $('#imageModal').modal('hide');
     }
