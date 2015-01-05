@@ -76,8 +76,14 @@
         }
         
         public function getUsers() {
-            $users = new User();
-            return $users->getCollection(["usergroupid" => $this->id]);
+            $users = User::getAllUsers();
+            $grpUsers = Array();
+            foreach ($users as $user) {
+                if ($user->inGroup($this->name)) {
+                    $grpUsers[] = $user;
+                }
+            }
+            return $grpUsers;
         }
         
         public function update() {

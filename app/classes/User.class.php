@@ -74,6 +74,16 @@ class User extends DataProvider {
         $user = new User();
         return $user->getCollection(["ORDER" => "firstname ASC"]);
     }
+    
+    public function inGroup($name) {
+        $groups = $this->getGroups();
+        foreach ($groups as $group) {
+            if ($group->name == $name) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 
