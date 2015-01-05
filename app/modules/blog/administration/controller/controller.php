@@ -1,11 +1,10 @@
 <?php
 
 if (system\Helper::arcGetURLData("action") == null) {
-    system\Helper::arcOverrideView("default");
+    system\Helper::arcOverrideView("default", true);
 }
 
-if (isset($_POST["action"])) {
-   
+if (isset($_POST["action"])) {  
     if ($_POST["action"] == "setimage") {
         $post = new Blog();
         $post->getByID($_POST["id"]);

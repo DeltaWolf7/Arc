@@ -12,21 +12,21 @@ $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
 <form>
     <table class="table table-striped">
         <tr><th>Setting</th><th>Value</th></tr>
-        <tr><td>Currency Symbol</td><td><input type="text" class="form-control" id="currencySymbol" value="<?php echo $currencySymbol->setting; ?>"></td></tr>
+        <tr><td>Currency Symbol</td><td><input type="text" class="form-control" id="currencySymbol" value="<?php echo utf8_encode($currencySymbol->value); ?>"></td></tr>
         <tr><td>Currency Display Location</td><td><select class="form-control" id="currencyDisplay">
                     <option value="Left" <?php
-                    if ($currencyDisplay->setting == "Left") {
+                    if ($currencyDisplay->value == "Left") {
                         echo " selected";
                     }
                     ?>>Left</option>
                     <option value="Right"<?php
-                    if ($currencyDisplay->setting == "Right") {
+                    if ($currencyDisplay->value == "Right") {
                         echo " selected";
                     }
                     ?>>Right</option>
                 </select></td></tr>
-        <tr><td>VAT Percent (%)</td><td><input type="text" class="form-control" id="vat" value="<?php echo $storeVat->setting; ?>"></td></tr>
-        <tr><td>Next Order Number</td><td><?php echo $ordernumber->setting; ?></td></tr>
+        <tr><td>VAT Percent (%)</td><td><input type="text" class="form-control" id="vat" value="<?php echo $storeVat->value; ?>"></td></tr>
+        <tr><td>Next Order Number</td><td><?php echo $ordernumber->value; ?></td></tr>
     </table>
     <div class="text-right">
         <button type="button" class="btn btn-default" onclick="saveSettings();"><span class="fa fa-save"></span> Save</button>

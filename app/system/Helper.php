@@ -650,7 +650,7 @@ class Helper {
         }
         $mail->Debugoutput = "html";
 
-        if (empty($mailSettings->setting)) {
+        if (empty($mailSettings->value)) {
             return "Unable to get mail settings";
         }
 

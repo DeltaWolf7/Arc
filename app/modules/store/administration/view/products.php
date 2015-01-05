@@ -50,12 +50,12 @@ $currenyDisplay = SystemSetting::getByKey("ARC_STORE_CURRENCYDISPLAY");
                 </td>
                 <td class="valign">
                     <?php
-                    if ($currenyDisplay->setting == "Left") {
-                        echo $currenySymbol->setting;
+                    if ($currenyDisplay->value == "Left") {
+                        echo $currenySymbol->value;
                     }
                     echo $product->price;
-                    if ($currenyDisplay->setting == "Right") {
-                        echo $currenySymbol->setting;
+                    if ($currenyDisplay->value == "Right") {
+                        echo $currenySymbol->value;
                     }
                     ?>
                 </td>

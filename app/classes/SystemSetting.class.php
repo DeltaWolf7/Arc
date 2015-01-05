@@ -32,7 +32,7 @@
 class SystemSetting extends DataProvider {
 
     public $key;
-    public $setting;
+    public $value;
 
     /**
      * SystemSetting constructor
@@ -40,9 +40,9 @@ class SystemSetting extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->key = "";
-        $this->setting = "";
+        $this->value = "";
         $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["key", "setting"];
+        $this->columns = ["key", "value"];
     }
 
     /**
@@ -73,7 +73,7 @@ class SystemSetting extends DataProvider {
      * @return array Containing the split values
      */
     public function getArray($deliminater = ",") {
-        return explode($deliminater, $this->setting);
+        return explode($deliminater, $this->value);
     }
 
     /**

@@ -4,6 +4,7 @@ class BlogCategory extends DataProvider {
    
     public $name;
     public $seourl;
+    public $id;
     
     public function __construct() {
         parent::__construct();

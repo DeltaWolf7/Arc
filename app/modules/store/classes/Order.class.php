@@ -59,11 +59,11 @@ class Order extends DataProvider {
     public static function getNextOrderNumber() {
         $setting = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
         if ($setting->id == 0) {
-            $setting->setting = 100000;
+            $setting->value = 100000;
         }
-        $setting->setting = (((int) $setting->setting) + 1);
+        $setting->value = (((int) $setting->value) + 1);
         $setting->update();
-        return $setting->setting;
+        return $setting->value;
     }
     
     public function getOrderlines() {

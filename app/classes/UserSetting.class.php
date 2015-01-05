@@ -44,7 +44,7 @@
             parent::__construct();
             $this->key = "";
             $this->userid = 0;
-            $this->setting = "";
+            $this->value = "";
             $this->table = ARCDBPREFIX . "user_settings";
             $this->columns = ["id", "key", "userid", "setting"];
         }

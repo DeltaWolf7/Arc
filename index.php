@@ -24,6 +24,13 @@
  * THE SOFTWARE.
  */
 
+// Check for old versons of Internet Explorer
+if (preg_match('/(?i)msie [1-8]/', $_SERVER['HTTP_USER_AGENT'])) {
+// if IE<=8
+    echo "<div class=\"alert alert-danger\">Warning! You are using an old unsupported version of Internet Explorer."
+    . " Please upgrade to version 9 or newer</div>";
+}
+
 // Check that we are using PHP 5.3 or better.
 if (version_compare(phpversion(), "5.3.0", "<") == true) {
     die("PHP 5.3 or newer required");
@@ -69,7 +76,7 @@ $mail = SystemSetting::keyExists("ARC_SMTP");
 if (empty($mail->key)) {
     $mail = new SystemSetting();
     $mail->key = "ARC_SMTP";
-    $mail->setting = "localhost,25,user@server.com,password,noreply@server.com,noreply";
+    $mail->value = "localhost,25,user@server.com,password,noreply@server.com,noreply";
     $mail->update();
 }
 
