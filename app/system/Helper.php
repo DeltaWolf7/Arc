@@ -30,7 +30,7 @@ require_once "medoo.min.php";
 class Helper {
 
     private static $arc = Array();
-
+    
     public static function init() {
         // Start session
         session_start();
@@ -102,7 +102,7 @@ class Helper {
     public static function arcGetDatabase() {
         return self::$arc["database"];
     }
-
+       
     /**
      * 
      * @global array $arc Arc settings storage

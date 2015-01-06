@@ -5,15 +5,19 @@ if (isset($_POST["action"])) {
         $questionno = $_POST["question"] + 1;
         $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $questionno);
         if (count($result) == 0) {
-            $result = new Result();
-            $result->groupid = $_POST["grpid"];
-            $result->userid = $_POST["id"];
-            $result->questionid = $questionno;
-            $time = $_POST["time"];
-            $result->timetaken = time() - $time;
-            $result->resultno = $_POST["answer"];
-            $result->update();
-            echo json_encode(["status" => "success", "data" => "Answer saved"]);
+            if ($_POST["answer"] == "0") {
+                echo json_encode(["status" => "warning", "data" => "Question skipped"]);
+            } else {
+                $result = new Result();
+                $result->groupid = $_POST["grpid"];
+                $result->userid = $_POST["id"];
+                $result->questionid = $questionno;
+                $time = $_POST["time"];
+                $result->timetaken = time() - $time;
+                $result->resultno = $_POST["answer"];
+                $result->update();
+                echo json_encode(["status" => "success", "data" => "Answer saved"]);
+            }
         } else {
             echo json_encode(["status" => "warning", "data" => "Question already answered."]);
         }
@@ -27,7 +31,7 @@ if (isset($_POST["action"])) {
                 $table .= "<tr><td>";
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
-                $table .= "<td><a class=\"btn btn-default btn-xs\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
+                $table .= "<td><a href=\"#\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
                 $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult(" . $group->id . ");\"><span class=\"fa fa-area-chart\"></span> View My Results</button></td>";
                 $table .= "</tr>";
             }
@@ -53,6 +57,7 @@ if (isset($_POST["action"])) {
             $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
             $data .= "<div class=\"form-group\">";
             $data .= "<select class=\"form-control\" id=\"answer\">";
+            $data .= "<option value='0'>Not Answered</option>";
 
             if (!empty($question->answer1)) {
                 $data .= "<option value='1'>" . $question->answer1 . "</option>";
@@ -79,7 +84,7 @@ if (isset($_POST["action"])) {
             $done = true;
         }
 
-        echo json_encode(["time" => "{$time}", "html" => $data, "done" => $done], JSON_HEX_QUOT | JSON_HEX_TAG);
+        echo json_encode(["time" => "{$time}", "html" => utf8_encode($data), "done" => $done], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "getresults") {
         $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"]);
         if (count($results) == 0) {
@@ -155,6 +160,6 @@ if (isset($_POST["action"])) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo json_encode(["html" => $table]);
+        echo json_encode(["html" => utf8_encode($table)]);
     }
 }

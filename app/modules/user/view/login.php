@@ -18,8 +18,8 @@
             </div>
         </div>
     </div>
-    <button type="button" id="loginBtn" class="btn btn-default">Login</button>
-    <a class="btn btn-danger" href="<?php echo system\Helper::arcGetModulePath() . "forgot"; ?>">Forgot Password</a>
+    <button type="button" id="loginBtn" class="btn btn-primary">Login</button>
+    <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath() . "forgot"; ?>">Forgot Password</a>
 </form>
 
 <script>

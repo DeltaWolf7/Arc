@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" id="btnReset" class="btn btn-default">Reset</button>
+        <button type="button" id="btnReset" class="btn btn-primary">Reset</button>
     </form>
 
 <script>

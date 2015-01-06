@@ -23,7 +23,7 @@
         <label for="password2">Retype Password</label>
         <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password" autocomplete="off">
     </div>
-    <button id="registerBtn" type="button" class="btn btn-default">Register</button>
+    <button id="registerBtn" type="button" class="btn btn-primary">Register</button>
 </form>
 
 <script>

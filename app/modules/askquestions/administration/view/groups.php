@@ -2,10 +2,6 @@
     <h1>Question Editor</h1>
 </div>
 
-<p  class="text-right">
-    <button class="btn btn-default btn-sm" data-toggle="modal" onclick="editGroup(0);"><span class="fa fa-plus"></span> New Question Group</button>
-</p>
-
 <div id="data">
 
 </div>

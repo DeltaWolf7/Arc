@@ -22,8 +22,10 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="doClose();">Close</button>
-                <button id="nextBtn" type="button" class="btn btn-primary" onclick="nextQuestion();">Next</button>
+                <p><span class="fa fa-exclamation-circle"></span> You can take a break at any time by clicking the close button. Your progress will be saved.</p> 
+                <button id="prevBtn" type="button" class="btn btn-default" onclick="previousQuestion();"><span class="fa fa-backward"></span> Previous</button>
+                <button id="nextBtn" type="button" class="btn btn-primary" onclick="nextQuestion();"><span class="fa fa-forward"></span> Next</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="doClose();"><span class="fa fa-close"></span> Close</button>
             </div>
         </div>
     </div>
@@ -95,7 +97,7 @@
                 time = jdata.time;
                 $("#nextBtn").prop("disabled", false);
                 if (jdata.done == true) {
-                    question = 0;
+
                     $("#nextBtn").prop("disabled", true);
                 }
             },
@@ -119,13 +121,18 @@
                 updateStatus(jdata.status, jdata.data);
             },
             complete: function () {
-                $("#questionModal").modal("hide");
-                setTimeout(function () {
-                    question = question + 1;
-                    getGroup(groupid);
-                }, 500);
+                question = question + 1;
+                getGroup(groupid);
             }
         });
+    }
+
+    function previousQuestion() {
+        if (question > 0) {
+            question = question - 1;
+            $("#nextBtn").prop("disabled", false);
+            getGroup(groupid);
+        }
     }
 
     function doClose() {

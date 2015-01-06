@@ -17,3 +17,11 @@ if (empty($charCount->value)) {
     $charCount->value = "600";
     $charCount->update();
 }
+
+$thumbWidth = SystemSetting::getByKey("ARC_BLOG_THUMB_WIDTH");
+if (empty($thumbWidth->value)) {
+    $thumbWidth = new SystemSetting();
+    $thumbWidth->key = "ARC_BLOG_THUMB_WIDTH";
+    $thumbWidth->value = "80";
+    $thumbWidth->update();
+}

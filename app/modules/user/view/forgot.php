@@ -14,8 +14,8 @@
             </div>
         </div>
     </div>
-    <button type="button" id="forgotBtn" class="btn btn-success">Request Reset</button>
-    <a class="btn btn-danger" href="<?php echo system\Helper::arcGetModulePath(); ?>">Cancel</a>
+    <button type="button" id="forgotBtn" class="btn btn-primary">Request Reset</button>
+    <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath(); ?>">Cancel</a>
 </form>
 
 <script>

@@ -30,7 +30,7 @@ if (isset($_POST["action"])) {
         $page->update();
         echo json_encode(["status" => "success", "data" => "Page saved"]);
     } elseif ($_POST["action"] == "getpages") {
-        $table = "<tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-plus\"></span> New Page</a></th></tr>";
+        $table = "<tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><span class=\"fa fa-plus\"></span> New Page</a></th></tr>";
         $pages = Page::getAllPages();
         foreach ($pages as $page) {
             $table .= "<tr>"

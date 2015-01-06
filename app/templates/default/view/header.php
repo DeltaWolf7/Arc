@@ -7,7 +7,6 @@
         <?php system\Helper::arcGetHeader(); ?>
     </head>
     <body>
-        <?php if (ARCDEBUG) { echo "<div class=\"alert alert-warning\">Warning! Debug is enabled</div>"; } ?>
         <div class="container">
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">

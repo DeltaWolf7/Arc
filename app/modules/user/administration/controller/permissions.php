@@ -8,7 +8,7 @@ if (isset($_POST["action"])) {
             $permissions = UserPermission::getByGroupID($group->id);
             $table .= "<h3>" . $group->name . " (" . count($permissions) . ")</h3>";
             $table .= "<table class=\"table table-striped\">";
-            $table .= "<tr><th>Module</th><th>Status</th><th class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><span class=\"fa fa-plus\"></span> New Permission</a></th></tr>";
+            $table .= "<tr><th>Module</th><th>Status</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><span class=\"fa fa-plus\"></span> New Permission</a></th></tr>";
             foreach ($permissions as $permission) {
                 $table .= "<tr><td>" . $permission->permission . "</td><td>";
                 if (file_exists(system\Helper::arcGetPath(true) . "/app/modules/" . $permission->permission)) {

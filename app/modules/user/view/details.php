@@ -37,7 +37,7 @@ $user = system\Helper::arcGetUser();
     </div>
 
     <div class="text-right">
-        <button type="button" id="saveBtn" class="btn btn-success"><span class="fa fa-save"></span> Save</button>
+        <button type="button" id="saveBtn" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
     </div>
 </form>
 
