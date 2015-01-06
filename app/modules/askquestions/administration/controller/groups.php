@@ -101,31 +101,33 @@ if (isset($_POST["action"])) {
         $users = $group->getUsers();
         $data = "<table class=\"table table-striped\"><tr><td>Student</td><td>Score</td></tr>";
         $groupCount = Group::getQuestions($_POST["id"]);
+        $count = 0;
         foreach ($users as $user) {
+            $score = 0;
+            $correct = 0;
+            $time = 0;
+            $count = 0;
             $results = Result::getByGroupAndUserID($_POST["id"], $user->id);
             if (count($results) > 0) {
-                $score = 0;
-                $correct = 0;
-                $time = 0;
                 foreach ($results as $result) {
-                    $question = new Question();
-                    $question->getByID($result->questionid);
-                    if ($result->resultno == $question->correctAnswer) {
+                    if ($result->resultno == $groupCount[$count]->correctAnswer) {
                         $correct++;
                     }
                     $time += $result->timetaken;
+                    $count++;
                 }
                 $score = (100 / count($groupCount)) * $correct;
                 if ($time > 60) {
-                    $t = (60 / $time) . " minutes";
+                    $t2 = 60 / $time;
+                    $t = number_format($t2, 2) . " minutes";
                 } else {
-                    $t = $time + " seconds";
+                    $t = number_format($time, 2) . " seconds";
                 }
                 $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult(" . $user->id . "," . $_POST["id"] . ")\">" . $user->getFullname() . "</a></td><td>" . $correct . "/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
             }
         }
         $data .= "</table>";
-        echo json_encode(["data" => $data]);
+        echo json_encode(["data" => $data], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "getresult") {
         $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"]);
         if (count($results) == 0) {
@@ -192,20 +194,23 @@ if (isset($_POST["action"])) {
             }
             $count++;
         }
+        
         $table .= "</table>";
         $table .= "<div class=\"well\">";
         $table .= "Total time taken: ";
         if ($totalTime < 60) {
-            $table .= $totalTime . " seconds";
+            $table .= number_format($totalTime, 2) . " seconds";
         } else {
             $min = $totalTime / 60;
-            $table .= $min . " minutes";
+            $table .= number_format($min, 2) . " minutes";
         }
         $table .= "<br />Score: " . $correct . "/" . count($questions);
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo json_encode(["data" => $table]);
+        echo $table;
+        return;
+        echo json_encode(["data" => $table], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "copyquestion") {
         $question = new Question();
 

@@ -12,7 +12,7 @@ $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
 <form>
     <table class="table table-striped">
         <tr><th>Setting</th><th>Value</th></tr>
-        <tr><td>Currency Symbol</td><td><input type="text" class="form-control" id="currencySymbol" value="<?php echo utf8_encode($currencySymbol->value); ?>"></td></tr>
+        <tr><td>Currency Symbol</td><td><input type="text" class="form-control" id="currencySymbol" value="<?php echo $currencySymbol->value; ?>"></td></tr>
         <tr><td>Currency Display Location</td><td><select class="form-control" id="currencyDisplay">
                     <option value="Left" <?php
                     if ($currencyDisplay->value == "Left") {

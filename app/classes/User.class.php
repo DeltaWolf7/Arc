@@ -49,7 +49,7 @@ class User extends DataProvider {
         $this->email = "";
         $this->enabled = true;
         $this->passwordhash = "";
-        $this->groups = ["Users"];
+        $this->groups = "[\"Users\"]";
         $this->created = date("y-m-d h:i:s");
         $this->table = ARCDBPREFIX . "users";
         $this->columns = ["id", "firstname", "lastname", "email", "passwordhash", "created", "enabled", "groups"];
