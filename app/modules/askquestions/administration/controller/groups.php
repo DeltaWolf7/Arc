@@ -13,7 +13,7 @@ if (isset($_POST["action"])) {
             return;
         }
         $question->answer1 = $_POST["answer1"];
-        if (empty($question->answer1)) {
+        if ($question->answer1 == "") {
             echo json_encode(["status" => "danger", "data" => "Question must have answer 1"]);
             return;
         }
@@ -119,8 +119,8 @@ if (isset($_POST["action"])) {
                     $count++;
                 }
                 $score = (100 / count($groupCount)) * $correct;
-                if ($time > 60) {
-                    $t2 = 60 / $time;
+                if ($time >= 60) {
+                    $t2 = $time / 60;
                     $t = number_format($t2, 2) . " minutes";
                 } else {
                     $t = number_format($time, 2) . " seconds";
@@ -145,10 +145,11 @@ if (isset($_POST["action"])) {
         $table = "Student: " . $user->getFullname();
         $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><span class=\"fa fa-backward\"></span> Back</a><p>";
         $table .= "<table class=\"table table-striped\">";
-        $table .= "<tr><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        $table .= "<tr><th></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
-                $table .= "<tr><td>" . html_entity_decode($question->question) . "</td><td>";
+                $no = $count + 1;
+                $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
                         $table .= $question->answer1;
@@ -210,8 +211,6 @@ if (isset($_POST["action"])) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo $table;
-        return;
         echo json_encode(["data" => utf8_encode($table)]);
     } elseif ($_POST["action"] == "copyquestion") {
         $question = new Question();

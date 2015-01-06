@@ -96,10 +96,11 @@ if (isset($_POST["action"])) {
         $totalTime = 0;
         $correct = 0;
         $table = "<table class=\"table table-striped\">";
-        $table .= "<tr><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        $table .= "<tr><th></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
-                $table .= "<tr><td>" . html_entity_decode($question->question) . "</td><td>";
+                $no = $count + 1;
+                $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
                         $table .= $question->answer1;
