@@ -65,7 +65,7 @@ if (isset($_POST["action"])) {
             $count++;
         }
         $data .= "</table>";
-        echo json_encode(["html" => utf8_encode($data)]);
+        echo json_encode(["html" => $data]);
     } elseif ($_POST["action"] == "getquestion") {
         $question = new Question();
         $question->getByID($_POST["id"]);

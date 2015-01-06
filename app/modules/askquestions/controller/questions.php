@@ -60,19 +60,19 @@ if (isset($_POST["action"])) {
             $data .= "<option value='0'>Not Answered</option>";
 
             if (!empty($question->answer1)) {
-                $data .= "<option value='1'>" . $question->answer1 . "</option>";
+                $data .= "<option value='1'>" . utf8_encode($question->answer1) . "</option>";
             }
             if (!empty($question->answer2)) {
-                $data .= "<option value='2'>" . $question->answer2 . "</option>";
+                $data .= "<option value='2'>" . utf8_encode($question->answer2) . "</option>";
             }
             if (!empty($question->answer3)) {
-                $data .= "<option value='3'>" . $question->answer3 . "</option>";
+                $data .= "<option value='3'>" . utf8_encode($question->answer3) . "</option>";
             }
             if (!empty($question->answer4)) {
-                $data .= "<option value='4'>" . $question->answer4 . "</option>";
+                $data .= "<option value='4'>" . utf8_encode($question->answer4) . "</option>";
             }
             if (!empty($question->answer5)) {
-                $data .= "<option value='5'>" . $question->answer5 . "</option>";
+                $data .= "<option value='5'>" . utf8_encode($question->answer5) . "</option>";
             }
 
             $data .= "</select>";
@@ -84,7 +84,7 @@ if (isset($_POST["action"])) {
             $done = true;
         }
 
-        echo json_encode(["time" => "{$time}", "html" => utf8_encode($data), "done" => $done], JSON_HEX_QUOT | JSON_HEX_TAG);
+        echo json_encode(["time" => $time, "html" => $data, "done" => $done], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "getresults") {
         $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"]);
         if (count($results) == 0) {
