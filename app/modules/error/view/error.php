@@ -3,7 +3,7 @@
 </div>
 
 <div class="jumbotron">
-    <p><span class="fa fa-warning"></span> 
+    <p><i class="fa fa-warning"></i> 
         <?php
         switch (system\Helper::arcGetURLData("data1")) {
             case "404":

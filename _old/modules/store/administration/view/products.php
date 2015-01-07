@@ -9,7 +9,7 @@ $currenyDisplay = SystemSetting::getByKey("ARC_STORE_CURRENCYDISPLAY");
 <?php if (system\Helper::arcGetURLData("data3") == null) { ?>
     <div class="text-right">
         <p>
-            <button type="button" class="btn btn-default btn-sm" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products/view/0"; ?>'"><span class="fa fa-plus"></span> New Product</button>
+            <button type="button" class="btn btn-default btn-sm" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products/view/0"; ?>'"><i class="fa fa-plus"></i> New Product</button>
         </p>
     </div>
     <table class="table table-bordered table-hover">
@@ -60,8 +60,8 @@ $currenyDisplay = SystemSetting::getByKey("ARC_STORE_CURRENCYDISPLAY");
                     ?>
                 </td>
                 <td class="valign text-right">
-                    <button type="button" class="btn btn-default btn-xs" title="Edit" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products/view/" . $product->id; ?>'"><span class="fa fa-edit"></span></button>
-                    <button type="button" class="btn btn-default btn-xs" title="Delete" onclick="ajax.send('POST', {action: 'deleteproduct', id: '<?php echo $product->id; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-close"></span></button>
+                    <button type="button" class="btn btn-default btn-xs" title="Edit" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products/view/" . $product->id; ?>'"><i class="fa fa-edit"></i></button>
+                    <button type="button" class="btn btn-default btn-xs" title="Delete" onclick="ajax.send('POST', {action: 'deleteproduct', id: '<?php echo $product->id; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><i class="fa fa-close"></i></button>
                 </td>
             </tr>
             <?php
@@ -140,8 +140,8 @@ $currenyDisplay = SystemSetting::getByKey("ARC_STORE_CURRENCYDISPLAY");
         <input type="text" class="form-control" id="keywords" placeholder="keyword,keywords" value="<?php echo $product->keywords; ?>">
     </div>
     <div class="form-group text-right">
-        <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'saveproduct', id: '<?php echo $product->id; ?>', name: '#name', description: '#description', sku: '#sku', model: '#model', seourl: '#seo', metakeywords: '#metakeywords', metadescription: '#metadescription', metatitle: '#metatitle', price: '#price', taxable: '#taxable', keywords: '#keywords'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</button>
-        <button type="button" class="btn btn-danger" onclick="ajax.send('POST', {action: 'deleteproduct', id: '<?php echo $product->id; ?>'}, '<?php system\Helper::arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-remove"></span> Delete</button>
-        <button type="button" class="btn btn-primary" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products" ?>'"><span class="fa fa-close"></span> Close</button>
+        <button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'saveproduct', id: '<?php echo $product->id; ?>', name: '#name', description: '#description', sku: '#sku', model: '#model', seourl: '#seo', metakeywords: '#metakeywords', metadescription: '#metadescription', metatitle: '#metatitle', price: '#price', taxable: '#taxable', keywords: '#keywords'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><i class="fa fa-save"></i> Save</button>
+        <button type="button" class="btn btn-danger" onclick="ajax.send('POST', {action: 'deleteproduct', id: '<?php echo $product->id; ?>'}, '<?php system\Helper::arcGetDispatch(); ?>', updateStatus, true);"><i class="fa fa-remove"></i> Delete</button>
+        <button type="button" class="btn btn-primary" onclick="window.location = '<?php echo system\Helper::arcGetModulePath() . "products" ?>'"><i class="fa fa-close"></i> Close</button>
     </div>
 <?php } ?>

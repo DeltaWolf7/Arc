@@ -18,8 +18,8 @@
             </div>
             <a href="<?php echo system\Helper::arcGetModulePath(); ?>orders">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -40,8 +40,8 @@
             </div>
             <a href="<?php echo system\Helper::arcGetModulePath(); ?>customers">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -64,8 +64,8 @@
             </div>
             <a href="<?php echo system\Helper::arcGetModulePath(); ?>products">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -86,8 +86,8 @@
             </div>
             <a href="<?php echo system\Helper::arcGetModulePath(); ?>settings">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>

@@ -30,14 +30,14 @@ if (isset($_POST["action"])) {
         $page->update();
         echo json_encode(["status" => "success", "data" => "Page saved"]);
     } elseif ($_POST["action"] == "getpages") {
-        $table = "<tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><span class=\"fa fa-plus\"></span> New Page</a></th></tr>";
+        $table = "<tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> New Page</a></th></tr>";
         $pages = Page::getAllPages();
         foreach ($pages as $page) {
             $table .= "<tr>"
                     . "<td>" . $page->seourl . "</td>"
                     . "<td>" . $page->title . "</td>"
-                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPage(" . $page->id . ");\"><span class='fa fa-edit'></span>&nbsp;Edit</a>"
-                    . "&nbsp;<a onclick=\"removePage(" . $page->id . ");\" class=\"btn btn-default btn-sm\"><span class='fa fa-remove'></span>&nbsp;Remove</button></td>"
+                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPage(" . $page->id . ");\"><i class='fa fa-edit'></i>&nbsp;Edit</a>"
+                    . "&nbsp;<a onclick=\"removePage(" . $page->id . ");\" class=\"btn btn-default btn-sm\"><i class='fa fa-remove'></i>&nbsp;Remove</button></td>"
                     . "</tr>";
         }
         echo json_encode(["html" => $table]);

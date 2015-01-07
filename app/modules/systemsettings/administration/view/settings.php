@@ -9,11 +9,11 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Setting</h4>
             </div>
             <div class="modal-body">
-                <form role="form">
+              
                     <div class="panel-body">
                         <div class="form-group">
                             <label for="sKey">Key</label>
@@ -24,11 +24,11 @@
                             <input type="text" class="form-control" id="sValue" maxlength="69" placeholder="Setting Value">
                         </div> 
                     </div>
-                </form>
+            
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveSetting();">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a class="btn btn-primary" id="saveSettingBtn">Save</a>
             </div>
         </div>
     </div>
@@ -38,15 +38,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Setting</h4>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this setting?                    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" onclick="doDelete();">Yes</button>
+                <a class="btn btn-default" data-dismiss="modal">No</a>
+                <a class="btn btn-primary" id="doDeleteBtn">Yes</a>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
         $("#deleteSetting").modal("show");
     }
 
-    function doDelete() {
+    $("#doDeleteBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -109,9 +109,9 @@
                 getSettings();
             }
         });
-    }
+    });
 
-    function saveSetting() {
+    $("#saveSettingBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -127,7 +127,7 @@
                 getSettings();
             }
         });
-    }
+    });
 
     $(document).ready(function () {
         getSettings();

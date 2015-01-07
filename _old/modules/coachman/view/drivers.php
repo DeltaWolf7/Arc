@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>Coach Manager :: Drivers <?php
         if (!empty(arcGetURLData("data1"))) {
-            echo "<a href=\"" . arcGetModulePath() . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+            echo "<a href=\"" . arcGetModulePath() . "\"><i class=\"fa fa-arrow-circle-left\"></i></a>";
         }
         ?></h1>
 </div>
@@ -12,11 +12,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <table class="table table-striped">
-                    <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th>Cost P/H</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "drivers/0" ?>'"><span class="fa fa-plus"></span> Create</button></th></tr>
+                    <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th>Cost P/H</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "drivers/0" ?>'"><i class="fa fa-plus"></i> Create</button></th></tr>
                     <?php
                     $drivers = Driver::getAll();
                     foreach ($drivers as $driver) {
-                        echo "<tr><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->lastname . "</a></td><td>" . $driver->email . "</td><td>" . $driver->phone . "</td><td>" . $driver->mobile . "</td><td>£" . $driver->costperhour . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "drivers/" . $driver->id . "/delete'\"><span class=\"fa fa-remove\"></span> Delete</button></td></tr>";
+                        echo "<tr><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "drivers/" . $driver->id . "\">" . $driver->lastname . "</a></td><td>" . $driver->email . "</td><td>" . $driver->phone . "</td><td>" . $driver->mobile . "</td><td>£" . $driver->costperhour . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "drivers/" . $driver->id . "/delete'\"><i class=\"fa fa-remove\"></i> Delete</button></td></tr>";
                     }
                     ?>
                 </table>
@@ -65,7 +65,7 @@
                             <label for="cost">Cost Per Hour</label>
                             <input class="form-control" type="text" id="cost" value="<?php echo $driver->costperhour; ?>" maxlength="10" />
                         </div>
-                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savedriver', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $driver->id; ?>', cost: '#cost'}, '<?php arcGetDispatch(); ?>', updateDrivers, true);"><span class="fa fa-save"></span> Save</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savedriver', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $driver->id; ?>', cost: '#cost'}, '<?php arcGetDispatch(); ?>', updateDrivers, true);"><i class="fa fa-save"></i> Save</button>
                     </form>
                     <?php
                 }

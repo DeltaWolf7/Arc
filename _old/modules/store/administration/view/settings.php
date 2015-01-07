@@ -29,7 +29,7 @@ $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
         <tr><td>Next Order Number</td><td><?php echo $ordernumber->value; ?></td></tr>
     </table>
     <div class="text-right">
-        <button type="button" class="btn btn-primary" onclick="saveSettings();"><span class="fa fa-save"></span> Save</button>
+        <button type="button" class="btn btn-primary" onclick="saveSettings();"><i class="fa fa-save"></i> Save</button>
     </div>
 </form>
 

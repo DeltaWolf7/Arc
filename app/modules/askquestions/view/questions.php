@@ -15,17 +15,17 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" onclick="doClose();" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" onclick="doClose();" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Questions</h4>
             </div>
             <div class="modal-body" id="questionData">
 
             </div>
             <div class="modal-footer">
-                <p><span class="fa fa-exclamation-circle"></span> You can take a break at any time by clicking the close button. Your progress will be saved.</p> 
-                <button id="prevBtn" type="button" class="btn btn-default" onclick="previousQuestion();"><span class="fa fa-backward"></span> Previous</button>
-                <button id="nextBtn" type="button" class="btn btn-primary" onclick="nextQuestion();"><span class="fa fa-forward"></span> Next</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="doClose();"><span class="fa fa-close"></span> Close</button>
+                <p><i class="fa fa-exclamation-circle"></i> You can take a break at any time by clicking the close button. Your progress will be saved.</p> 
+                <button id="prevBtn" type="button" class="btn btn-default" onclick="previousQuestion();"><i class="fa fa-backward"></i> Previous</button>
+                <button id="nextBtn" type="button" class="btn btn-primary" onclick="nextQuestion();"><i class="fa fa-forward"></i> Next</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="doClose();"><i class="fa fa-close"></i> Close</button>
             </div>
         </div>
     </div>
@@ -36,7 +36,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>
             <div class="modal-body" id="resultsData">

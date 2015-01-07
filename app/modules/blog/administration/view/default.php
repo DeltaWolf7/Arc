@@ -2,52 +2,53 @@
     <h1>Blog Manager</h1>
 </div>
 
-<div class="text-right"><a class="btn btn-default btn-sm" onclick="clearCache()"><span class="fa fa-trash-o"></span> Clear Cache</a></div>
+<p class="text-right"><a class="btn btn-default btn-sm" id="clearCache"><i class="fa fa-trash-o"></i> Clear Cache</a></p>
 
-<div class="row">
-    <div class="col-md-7">
-        <div class="panel panel-default">
-            <div class="panel-heading">Posts</div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <tr><th>Title</th><th>Category</th><th class="text-right"><button class="btn btn-primary btn-sm" onclick=""><span class="fa fa-plus"></span> New Post</button></th></tr>
-                    <?php
-                    $cats = BlogCategory::getAllCategories();
-                    foreach ($cats as $cat) {
-                        $posts = Blog::getAllByCategory($cat->id);
-                        foreach ($posts as $post) {
-                            ?>
-                            <tr><td><?php echo $post->title; ?></td><td><span class="label label-default"> <?php echo $cat->name; ?></span></td><td class="text-right"><button class="btn btn-default btn-sm" onclick=""><span class="fa fa-plus"></span> Edit</button> <button class="btn btn-default btn-sm" onclick=""><span class="fa fa-remove"></span> Delete</button></td></tr>
-                            <?php
-                        }
-                    }
-                    ?>
-                </table>
-            </div>
+<div role="tabpanel">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#" aria-controls="posts" role="tab" data-toggle="tab" id="posts">Posts</a></li>
+        <li role="presentation"><a href="#" aria-controls="categories" role="tab" data-toggle="tab" id="categories">Categories</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="data">
         </div>
     </div>
-    <div class="col-md-5">
-        <div class="panel panel-default">
-            <div class="panel-heading">Categories</div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <tr><th>Name</th><th class="text-right"><button class="btn btn-primary btn-sm" onclick=""><span class="fa fa-plus"></span> New Category</button></th></tr>
-                    <?php
-                    $cats = BlogCategory::getAllCategories();
-                    foreach ($cats as $cat) {
-                        ?>
-                        <tr><td><?php echo $cat->name ?></td><td class="text-right"><button class="btn btn-default btn-sm" onclick=""><span class="fa fa-plus"></span> Edit</button> <button class="btn btn-default btn-sm" onclick=""><span class="fa fa-remove"></span> Delete</button></td></tr>
-                        <?php
-                    }
-                    ?>
-                </table>
+</div>
+
+<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" class="form-control" id="title" />
+                </div>
+                <div class="form-group">
+                            <div class="summernote"></div>
+                        </div>
+                <div class="form-group">
+                    <label>Tags</label>
+                    <input type="text" class="form-control" id="tags" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a class="btn btn-primary">Save</a>
             </div>
         </div>
     </div>
 </div>
 
+
 <script>
-    function clearCache() {
+    $("#clearCache").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -59,5 +60,53 @@
                 updateStatus(jdata.status, jdata.data);
             }
         });
+    });
+    
+    function editPost(id){
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getpost"},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#postModal").modal('show');
+            }
+        });
     }
+
+    $("#posts").click(function () {
+        get("posts");
+    });
+
+    $("#categories").click(function () {
+        get("categories");
+    });
+
+    function get(action) {
+        if (action == "users") {
+            $("#posts").attr("class", "active");
+            $("#categories").removeClass("active");
+        } else {
+            $("#posts").removeClass("active");
+            $("#categories").attr("class", "active");
+        }
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: action},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $('#data').html(jdata.html);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        get("posts");
+        $('.summernote').summernote({height: 250});
+    });
 </script>

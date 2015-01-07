@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>Coach Manager :: Vehicles <?php
         if (!empty(arcGetURLData("data1"))) {
-            echo "<a href=\"" . arcGetModulePath() . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+            echo "<a href=\"" . arcGetModulePath() . "\"><i class=\"fa fa-arrow-circle-left\"></i></a>";
         }
         ?></h1>
 </div>
@@ -12,14 +12,14 @@
             <div class="panel-body">
                 <table class="table table-striped">
                     <tr>
-                        <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "vehicles/new" ?>'"><span class="fa fa-plus"></span> Create</button></th>
+                        <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "vehicles/new" ?>'"><i class="fa fa-plus"></i> Create</button></th>
                     </tr>
                     <?php
                     $vehicles = Vehicle::getAll();
                     foreach ($vehicles as $vehicle) {
                         $type = new VehicleType();
                         $type->getByID($vehicle->typeid);
-                        echo "<tr><td><a href=\"" . arcGetModulePath() . "vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "vehicles/" . $vehicle->id . "/delete" . "'\"><span class=\"fa fa-close\"></span> Delete</button></td></tr>";
+                        echo "<tr><td><a href=\"" . arcGetModulePath() . "vehicles/" . $vehicle->id . "\">" . $vehicle->regno . "</a></td><td>" . $vehicle->seats . "</td><td>" . $type->name . "</td><td>£" . $vehicle->fuelcostpermile . "</td><td class=\"text-right\"><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "vehicles/" . $vehicle->id . "/delete" . "'\"><i class=\"fa fa-close\"></i> Delete</button></td></tr>";
                     }
                     ?>
                 </table>
@@ -74,7 +74,7 @@
                             <label for="fuel">Fuel Cost Per Mile</label>
                             <input type="text" class="form-control" id="fuel" placeholder="Cost of fuel per mile" value="<?php echo $vehicle->fuelcostpermile; ?>" maxlength="18">
                         </div>
-                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', updateVehicles, true);"><span class="fa fa-save"></span> Save</button></div>
+                        <div class="text-right"><button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savevehicle', regNo: '#regNo', seats: '#seats', type: '#type', fuel: '#fuel', id: '#id'}, '<?php arcGetDispatch(); ?>', updateVehicles, true);"><i class="fa fa-save"></i> Save</button></div>
                     </form>
                     <?php
                 }

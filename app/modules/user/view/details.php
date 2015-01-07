@@ -6,40 +6,40 @@
 $user = system\Helper::arcGetUser();
 ?>
 
-<form role="form">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Personal</h3>
-        </div>
-        <div class="panel-body">
 
-            <div class="form-group">
-                <label for="firstname">Firstname</label>
-                <input type="firstname" class="form-control" id="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
-            </div>
-            <div class="form-group">
-                <label for="lastname">Lastname</label>
-                <input type="lastname" class="form-control" id="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" maxlength="100" placeholder="Password" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="retype">Retype</label>
-                <input type="password" class="form-control" id="password2" maxlength="100" placeholder="Retype" autocomplete="off">
-            </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">Personal</h3>
+    </div>
+    <div class="panel-body">
+
+        <div class="form-group">
+            <label for="firstname">Firstname</label>
+            <input type="firstname" class="form-control" id="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
+        </div>
+        <div class="form-group">
+            <label for="lastname">Lastname</label>
+            <input type="lastname" class="form-control" id="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" maxlength="100" placeholder="Password" autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label for="retype">Retype</label>
+            <input type="password" class="form-control" id="password2" maxlength="100" placeholder="Retype" autocomplete="off">
         </div>
     </div>
+</div>
 
-    <div class="text-right">
-        <button type="button" id="saveBtn" class="btn btn-primary"><span class="fa fa-save"></span> Save</button>
-    </div>
-</form>
+<div class="text-right">
+    <a id="saveBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
+</div>
+
 
 <script>
     $("#saveBtn").click(function () {

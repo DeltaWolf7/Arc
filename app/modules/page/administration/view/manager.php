@@ -9,61 +9,61 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Page</h4>
             </div>
             <div class="modal-body">
-                <form role="form">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Page Details</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label for="title">Title</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="seourl">SEO Url</label>
-                                        <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
-                                    </div>
 
-                                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Page Details</h3>
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">META Details</h3>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
                                 </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label for="metadescription">META Description</label>
-                                        <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="metakeywords">META Keywords</label>
-                                        <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
-                                    </div> 
+                                <div class="form-group">
+                                    <label for="seourl">SEO Url</label>
+                                    <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
                                 </div>
+
                             </div>
                         </div>
                     </div>
-
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <div class="form-group">
-                                <div class="summernote"></div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">META Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="metadescription">META Description</label>
+                                    <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
+                                </div>
+                                <div class="form-group">
+                                    <label for="metakeywords">META Keywords</label>
+                                    <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
+                                </div> 
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <div class="summernote"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="savePage();">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a class="btn btn-primary" id="savePageBtn">Save</a>
             </div>
         </div>
     </div>
@@ -73,15 +73,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Page</h4>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this page?                    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" onclick="doRemove();">Yes</button>
+                <a class="btn btn-default" data-dismiss="modal">No</a>
+                <a class="btn btn-primary" id="doRemoveBtn">Yes</a>
             </div>
         </div>
     </div>
@@ -110,7 +110,7 @@
         });
     }
 
-    function savePage() {
+    $("#savePageBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -132,14 +132,14 @@
                 }
             }
         });
-    }
+    });
 
     function removePage(pageid) {
         page = pageid;
         $("#deletePage").modal("show");
     }
 
-    function doRemove() {
+    $("#doRemoveBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -155,7 +155,7 @@
                 $("#deletePage").modal("hide");
             }
         });
-    }
+    });
 
     function getPages() {
         $.ajax({

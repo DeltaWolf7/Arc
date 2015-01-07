@@ -32,7 +32,7 @@ if (isset($_POST["action"])) {
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
                 $table .= "<td><a href=\"#\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
-                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult(" . $group->id . ");\"><span class=\"fa fa-area-chart\"></span> View My Results</button></td>";
+                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult(" . $group->id . ");\"><i class=\"fa fa-area-chart\"></i> View My Results</button></td>";
                 $table .= "</tr>";
             }
         }
@@ -50,7 +50,6 @@ if (isset($_POST["action"])) {
                 $data .= "<strong>Group Text</strong><div class=\"well\">" . $group->txt . "</div>";
             }
 
-            $data .= "<form>";
             $question = $questions[$_POST["question"]];
             $data .= "<div class=\"form-group\">";
             $data .= "<strong>Question " . $questionno . " of " . count($questions) . "</strong>";
@@ -78,7 +77,6 @@ if (isset($_POST["action"])) {
             $data .= "</select>";
             $data .= "</div>";
             $data .= "</div>";
-            $data .= "</form>";
         } else {
             $data = "No more questions remaining.";
             $done = true;
@@ -103,45 +101,45 @@ if (isset($_POST["action"])) {
                 $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
-                        $table .= $question->answer1;
+                        $table .= utf8_encode($question->answer1);
                         break;
                     case 2:
-                        $table .= $question->answer2;
+                        $table .= utf8_encode($question->answer2);
                         break;
                     case 3:
-                        $table .= $question->answer3;
+                        $table .= utf8_encode($question->answer3);
                         break;
                     case 4:
-                        $table .= $question->answer4;
+                        $table .= utf8_encode($question->answer4);
                         break;
                     case 5:
-                        $table .= $question->answer5;
+                        $table .= utf8_encode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
                 switch ($results[$count]->resultno) {
                     case 1:
-                        $table .= $question->answer1;
+                        $table .= utf8_encode($question->answer1);
                         break;
                     case 2:
-                        $table .= $question->answer2;
+                        $table .= utf8_encode($question->answer2);
                         break;
                     case 3:
-                        $table .= $question->answer3;
+                        $table .= utf8_encode($question->answer3);
                         break;
                     case 4:
-                        $table .= $question->answer4;
+                        $table .= utf8_encode($question->answer4);
                         break;
                     case 5:
-                        $table .= $question->answer5;
+                        $table .= utf8_encode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
                 if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<div class=\"label label-success\"><span class=\"fa fa-check\"></span></div>";
+                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
                     $correct++;
                 } else {
-                    $table .= "<div class=\"label label-danger\"><span class=\"fa fa-remove\"></span></div>";
+                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
                 }
                 $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
                 $totalTime += $results[$count]->timetaken;
@@ -161,6 +159,6 @@ if (isset($_POST["action"])) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo json_encode(["html" => utf8_encode($table)]);
+        echo json_encode(["html" => $table]);
     }
 }

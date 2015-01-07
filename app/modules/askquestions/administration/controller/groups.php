@@ -48,9 +48,9 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "getgroups") {
         $groups = Group::getGroups();
         $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><span class=\"fa fa-plus\"></span> New Question Group</button></th></tr>";
+        $data .= "<tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr>";
         foreach ($groups as $group) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions(" . $group->id . ");\">" . $group->name . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $group->id . ");\"><span class=\"fa fa-area-chart\"></span> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup(" . $group->id . ");\"><span class=\"fa fa-pencil\"></span> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup(" . $group->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions(" . $group->id . ");\">" . $group->name . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $group->id . ");\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup(" . $group->id . ");\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup(" . $group->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</table>";
         echo json_encode(["html" => utf8_encode($data)]);
@@ -59,9 +59,9 @@ if (isset($_POST["action"])) {
         $questions = $groups->getQuestions($_POST["id"]);
         $count = 1;
         $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th></th><th>Question</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><span class=\"fa fa-backward\"></span> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><span class=\"fa fa-plus\"></span> New Question</a></th></tr>";
+        $data .= "<tr><th></th><th>Question</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr>";
         foreach ($questions as $question) {
-            $data .= "<tr><td>" . $count . "</td><td><a href=\"#\" onclick=\"getQuestion(" . $question->id . ")\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><span class=\"fa fa-copy\"></span> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><span class=\"fa fa-remove\"></span> Delete</a></td></tr>";
+            $data .= "<tr><td>" . $count . "</td><td><a href=\"#\" onclick=\"getQuestion(" . $question->id . ")\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             $count++;
         }
         $data .= "</table>";
@@ -143,7 +143,7 @@ if (isset($_POST["action"])) {
         $user = new User();
         $user->getByID($_POST["id"]);
         $table = "Student: " . $user->getFullname();
-        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><span class=\"fa fa-backward\"></span> Back</a><p>";
+        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><i class=\"fa fa-backward\"></i> Back</a><p>";
         $table .= "<table class=\"table table-striped\">";
         $table .= "<tr><th></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
@@ -152,45 +152,45 @@ if (isset($_POST["action"])) {
                 $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
-                        $table .= $question->answer1;
+                        $table .= utf8_encode($question->answer1);
                         break;
                     case 2:
-                        $table .= $question->answer2;
+                        $table .= utf8_encode($question->answer2);
                         break;
                     case 3:
-                        $table .= $question->answer3;
+                        $table .= utf8_encode($question->answer3);
                         break;
                     case 4:
-                        $table .= $question->answer4;
+                        $table .= utf8_encode($question->answer4);
                         break;
                     case 5:
-                        $table .= $question->answer5;
+                        $table .= utf8_encode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
                 switch ($results[$count]->resultno) {
                     case 1:
-                        $table .= $question->answer1;
+                        $table .= utf8_encode($question->answer1);
                         break;
                     case 2:
-                        $table .= $question->answer2;
+                        $table .= utf8_encode($question->answer2);
                         break;
                     case 3:
-                        $table .= $question->answer3;
+                        $table .= utf8_encode($question->answer3);
                         break;
                     case 4:
-                        $table .= $question->answer4;
+                        $table .= utf8_encode($question->answer4);
                         break;
                     case 5:
-                        $table .= $question->answer5;
+                        $table .= utf8_encode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
                 if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<div class=\"label label-success\"><span class=\"fa fa-check\"></span></div>";
+                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
                     $correct++;
                 } else {
-                    $table .= "<div class=\"label label-danger\"><span class=\"fa fa-remove\"></span></div>";
+                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
                 }
                 $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
                 $totalTime += $results[$count]->timetaken;
@@ -211,7 +211,7 @@ if (isset($_POST["action"])) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo json_encode(["data" => utf8_encode($table)]);
+        echo json_encode(["data" => $table]);
     } elseif ($_POST["action"] == "copyquestion") {
         $question = new Question();
 

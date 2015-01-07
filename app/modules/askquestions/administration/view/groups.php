@@ -10,27 +10,27 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">New Group</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control" id="group" />
-                    </div>
-                    <div class="form-group">
-                        <label>Text</label>
-                        <textarea id="text" class="form-control" rows="5"></textarea>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" id="visible" /> Visible to students?</label>
-                    </div>
-                </form>
+
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" id="group" />
+                </div>
+                <div class="form-group">
+                    <label>Text</label>
+                    <textarea id="text" class="form-control" rows="5"></textarea>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" id="visible" /> Visible to students?</label>
+                </div>
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveGroup();">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a class="btn btn-primary" id="saveGroupBtn">Save</a>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Group</h4>
             </div>
             <div class="modal-body">
@@ -53,8 +53,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="editButton" type="button" class="btn btn-primary">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a id="editButton" class="btn btn-primary">Save</a>
             </div>
         </div>
     </div>
@@ -66,15 +66,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Group</h4>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this group?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-danger" onclick="doDeleteGroup();">Yes</button>
+                <a class="btn btn-default" data-dismiss="modal">No</a>
+                <a class="btn btn-danger" id="doDeleteGroupBtn">Yes</a>
             </div>
         </div>
     </div>
@@ -84,15 +84,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Delete Question</h4>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this question?
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-danger" onclick="doDeleteQuestion();">Yes</button>
+                <a class="btn btn-default" data-dismiss="modal">No</a>
+                <a class="btn btn-danger" id="doDeleteQuestionBtn">Yes</a>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Question Editor</h4>
             </div>
             <div class="modal-body">
@@ -147,8 +147,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveQuestion();">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a class="btn btn-primary" id="saveQuestionBtn">Save</a>
             </div>
         </div>
     </div>
@@ -158,14 +158,14 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>
             <div class="modal-body" id="resultsData">
-                
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
             </div>
         </div>
     </div>
@@ -200,7 +200,7 @@
         $("#deleteModal").modal("show");
     }
 
-    function doDeleteGroup() {
+    $("#doDeleteGroupBtn").click(function() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -214,9 +214,9 @@
                 getData();
             }
         });
-    }
+    });
 
-    function saveGroup() {
+    $("#saveGroupBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -232,14 +232,14 @@
                 }
             }
         });
-    }
+    });
 
     function deleteQuestion(id) {
         question = id;
         $("#deleteQuestionModal").modal("show");
     }
 
-    function doDeleteQuestion() {
+    $("#doDeleteQuestionBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -253,7 +253,7 @@
                 getQuestions(questions);
             }
         });
-    }
+    });
 
     function getData() {
         $.ajax({
@@ -307,7 +307,7 @@
         });
     }
 
-    function saveQuestion() {
+    $("#saveQuestionBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -325,12 +325,12 @@
                 }
             }
         });
-    }
-    
+    });
+
     function viewResults(id) {
         groups = id;
         $("#resultsModal").modal("show");
-         $.ajax({
+        $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
@@ -342,10 +342,10 @@
             }
         });
     }
-    
+
     function viewResult(userid, groupid) {
         $("#resultsModal").modal("show");
-         $.ajax({
+        $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
@@ -357,9 +357,9 @@
             }
         });
     }
-    
+
     function copyQuestion(id) {
-         $.ajax({
+        $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",

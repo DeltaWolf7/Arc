@@ -8,16 +8,16 @@ if (isset($_POST["action"])) {
             $permissions = UserPermission::getByGroupID($group->id);
             $table .= "<h3>" . $group->name . " (" . count($permissions) . ")</h3>";
             $table .= "<table class=\"table table-striped\">";
-            $table .= "<tr><th>Module</th><th>Status</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><span class=\"fa fa-plus\"></span> New Permission</a></th></tr>";
+            $table .= "<tr><th>Module</th><th>Status</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> New Permission</a></th></tr>";
             foreach ($permissions as $permission) {
                 $table .= "<tr><td>" . $permission->permission . "</td><td>";
                 if (file_exists(system\Helper::arcGetPath(true) . "/app/modules/" . $permission->permission)) {
-                    $table .= "<div class=\"label label-success\"><span class=\"fa fa-check\"></span></div>";
+                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
                 } else {
-                    $table .= "<div class=\"label label-danger\"><span class=\"fa fa-close\"></span></div>";
+                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
                 }
                 $table .= "</td>"
-                        . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPermission(" . $group->id . "," . $permission->id . ");\"><span class=\"fa fa-pencil\"></span> Edit<a/> <a onclick=\"deletePermission(" . $permission->id . ");\" class=\"btn btn-default btn-sm\"><span class=\"fa fa-remove\"></span> Delete<a/></td>"
+                        . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPermission(" . $group->id . "," . $permission->id . ");\"><i class=\"fa fa-pencil\"></i> Edit<a/> <a onclick=\"deletePermission(" . $permission->id . ");\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete<a/></td>"
                         . "</tr>";
             }
             $table .= "</table>";
@@ -30,7 +30,7 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "editpermission") {
         $permission = new UserPermission();
         $permission->getByID($_POST["id"]);
-        $data = "<form><div class=\"form-group\"><label for=\"module\">Module</label>"
+        $data = "<div class=\"form-group\"><label for=\"module\">Module</label>"
                 . "<select id=\"module\" class=\"form-control\">";
         $modules = system\Helper::arcGetModules();
         foreach ($modules as $module) {
@@ -40,7 +40,7 @@ if (isset($_POST["action"])) {
             }
             $data .= ">" . $module["module"] . "</option>";
         }
-        $data .= "</select></div></form>";
+        $data .= "</select></div>";
         echo json_encode(["data" => $data]);
     } elseif ($_POST["action"] == "savepermission") {
         $permission = new UserPermission();

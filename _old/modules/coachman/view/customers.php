@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>Coach Manager :: Customers <?php
         if (!empty(arcGetURLData("data1"))) {
-            echo "<a href=\"" . arcGetModulePath() . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+            echo "<a href=\"" . arcGetModulePath() . "\"><i class=\"fa fa-arrow-circle-left\"></i></a>";
         }
         ?></h1>
 </div>
@@ -11,11 +11,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
         <table class="table table-striped">
-            <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "customers/0" ?>'"><span class="fa fa-plus"></span> Create</button></th></tr>
+            <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "customers/0" ?>'"><i class="fa fa-plus"></i> Create</button></th></tr>
             <?php
             $customers = Customer::getAll();
             foreach ($customers as $customer) {
-                echo "<tr><td><a href=\"" . arcGetModulePath() . "customers/" . $customer->id . "\">" . $customer->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "customers/" . $customer->id . "\">" . $customer->lastname . "</a></td><td>" . $customer->email . "</td><td>" . $customer->phone . "</td><td>" . $customer->mobile . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "customers/" . $customer->id . "/delete'\"><span class=\"fa fa-remove\"></span> Delete</button></td></tr>";
+                echo "<tr><td><a href=\"" . arcGetModulePath() . "customers/" . $customer->id . "\">" . $customer->firstname . "</a></td><td><a href=\"" . arcGetModulePath() . "customers/" . $customer->id . "\">" . $customer->lastname . "</a></td><td>" . $customer->email . "</td><td>" . $customer->phone . "</td><td>" . $customer->mobile . "</td><td><button type=\"button\" class=\"btn btn-default btn-sm\" onclick=\"window.location='" . arcGetModulePath() . "customers/" . $customer->id . "/delete'\"><i class=\"fa fa-remove\"></i> Delete</button></td></tr>";
             }
             ?>
         </table>
@@ -65,8 +65,8 @@
                             <label for="mobile">Mobile</label>
                             <input class="form-control" type="text" id="mobile" value="<?php echo $customer->mobile; ?>" maxlength="20" />
                         </div>
-                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savecustomer', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $customer->id; ?>', company: '#company'}, '<?php arcGetDispatch(); ?>', updateCustomer, true);"><span class="fa fa-save"></span> Save</button>
-                        <button type="button" class="btn btn-info btn-block" onclick="window.location = '<?php echo arcGetModulePath() . "addresses/" . $customer->id; ?>'"><span class="fa fa-home"></span> Addresses</button>
+                        <button type="button" class="btn btn-success btn-block" onclick="ajax.send('POST', {action: 'savecustomer', firstname: '#firstname', lastname: '#lastname', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $customer->id; ?>', company: '#company'}, '<?php arcGetDispatch(); ?>', updateCustomer, true);"><i class="fa fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-info btn-block" onclick="window.location = '<?php echo arcGetModulePath() . "addresses/" . $customer->id; ?>'"><i class="fa fa-home"></i> Addresses</button>
                     </form>
                     <?php
                 }

@@ -26,9 +26,9 @@ function buildBlog($blog, $limit = 0) {
         <hr />
         <div class="text-right">
             <?php if (isset($tags)) { ?> 
-                <span class="fa fa-tags"></span> <?php echo $tags; ?>
+                <i class="fa fa-tags"></i> <?php echo $tags; ?>
             <?php } ?>
-            <span class="fa fa-folder"></span> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/" . $category->seourl ?>"><?php echo $category->name ?></a> on <span class="fa fa-clock-o"></span> <?php echo $blog->date ?>
+            <i class="fa fa-folder"></i> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/" . $category->seourl ?>"><?php echo $category->name ?></a> on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
         </div>
     </div>
 

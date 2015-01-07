@@ -14,8 +14,8 @@
             </div>
             <a href="<?php echo arcGetModulePath(); ?>bookings">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -36,8 +36,8 @@
             </div>
             <a href="<?php echo arcGetModulePath(); ?>vehicles">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -58,8 +58,8 @@
             </div>
             <a href="<?php echo arcGetModulePath(); ?>drivers">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -80,8 +80,8 @@
             </div>
             <a href="<?php echo arcGetModulePath(); ?>customers">
                 <div class="panel-footer">
-                    <span class="pull-left">View Details</span>
-                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <i class="pull-left">View Details</i>
+                    <i class="pull-right"><i class="fa fa-arrow-circle-right"></i></i>
                     <div class="clearfix"></div>
                 </div>
             </a>
@@ -96,7 +96,7 @@
     <div class="responsive-calendar">
         <div class="controls">
             <a class="pull-left" data-go="prev"><div class="btn"><i class="fa fa-chevron-left"></i> Previous</div></a>
-            <h4><span data-head-year></span> <span data-head-month></span></h4>
+            <h4><i data-head-year></i> <i data-head-month></i></h4>
             <a class="pull-right" data-go="next"><div class="btn">Next <i class="fa fa-chevron-right"></i></div></a>
         </div><hr/>
         <div class="day-headers">

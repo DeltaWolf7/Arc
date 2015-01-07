@@ -7,7 +7,7 @@ class Blog extends DataProvider {
     public $content;
     public $image;
     public $tags;
-    public $posterid;
+    public $poster;
     public $categoryid;
     public $seourl;
 
@@ -18,7 +18,7 @@ class Blog extends DataProvider {
         $this->content = "";
         $this->image = "";
         $this->tags = "";
-        $this->posterid = 0;
+        $this->poster = "";
         $this->categoryid = 0;
         $this->seourl = "";
         $this->table = ARCDBPREFIX . "blog";

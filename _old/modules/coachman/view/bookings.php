@@ -1,7 +1,7 @@
 <div class="page-header">
     <h1>Coach Manager :: Bookings <?php
         if (!empty(arcGetURLData("data1"))) {
-            echo "<a href=\"" . arcGetModulePath() . "\"><span class=\"fa fa-arrow-circle-left\"></span></a>";
+            echo "<a href=\"" . arcGetModulePath() . "\"><i class=\"fa fa-arrow-circle-left\"></i></a>";
         }
         ?></h1>
 </div>
@@ -25,7 +25,7 @@ if (arcGetURLData("data3") != null) {
                     <label for="journeydate">Journey Date</label>
                     <div class="input-group date" id="journeydate">                           
                         <input type="text" class="form-control" id="journeydatedata" data-date-format="DD/MM/YYYY">
-                        <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                        <i class="input-group-addon"><i class="fa fa-calendar"></i></i>
                     </div>
                 </div>
                 <div class="form-group">
@@ -72,7 +72,7 @@ echo $date->format("d/m/Y"); ?>">
                     <label for="name">Name</label>
                     <div class="input-group">
                         <input id="customer" type="text" class="form-control" value="<?php echo $booking->customername; ?>">
-                        <span class="input-group-addon"><span class="fa fa-search"></span></span>
+                        <i class="input-group-addon"><i class="fa fa-search"></i></i>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,36 +119,36 @@ echo $date->format("d/m/Y"); ?>">
                             </div>
 
 
-                            <button type="button" class="btn btn-primary" onclick="updateMap();" /><span class="fa fa-road"></span> Get Directions</button> 
-                            <button type="button" class="btn btn-default" onclick="addViaRow();"><span class="fa fa-plus"> Via</span></button>
+                            <button type="button" class="btn btn-primary" onclick="updateMap();" /><i class="fa fa-road"></i> Get Directions</button> 
+                            <button type="button" class="btn btn-default" onclick="addViaRow();"><i class="fa fa-plus"> Via</i></button>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="departtime">Depart time</label>
                                 <div class="input-group date" id="departtimepicker">                           
                                     <input id="departuretime" type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->departuretime; ?>">
-                                    <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                    <i class="input-group-addon"><i class="fa fa-clock-o"></i></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="departtime">Arrival time</label>
                                 <div class="input-group date" id="departtimepicker">                           
                                     <input type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->arrivaltime; ?>" id="arrivaltime">
-                                    <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                    <i class="input-group-addon"><i class="fa fa-clock-o"></i></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="returndate">Return Date</label>
                                 <div class="input-group date" id="returndatepicker">                           
                                     <input type="text" class="form-control" id="returndate" data-date-format="DD/MM/YYYY">
-                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                    <i class="input-group-addon"><i class="fa fa-calendar"></i></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="departtime">Return Time</label>
                                 <div class="input-group date" id="returntimepicker">                           
                                     <input id="returntime" type="text" class="form-control" data-date-format="HH:mm" value="<?php echo $booking->returntime; ?>">
-                                    <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
+                                    <i class="input-group-addon"><i class="fa fa-clock-o"></i></i>
                                 </div>
                             </div>
                         </div>
@@ -190,8 +190,8 @@ echo $date->format("d/m/Y"); ?>">
             <div class="panel-body">
                 <div id="map">
                     <div class="text-center">
-                        <span class="fa fa-bus fa-3x"></span><br />
-                        <span class="fa fa-road fa-5x"></span><br />
+                        <i class="fa fa-bus fa-3x"></i><br />
+                        <i class="fa fa-road fa-5x"></i><br />
                         No route planned
                     </div>
                 </div>
@@ -199,7 +199,7 @@ echo $date->format("d/m/Y"); ?>">
         </div>
     </div>
 </div>
-<p class="text-right"><button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savebooking', departuretime: '#departuretime', returntime: '#returntime', returnplace: '#returnplace', deposit: '#deposit', cost: '#cost', company: '#company', journeydate: '#journeydatedata', orderdate: '#date', reference: '#ref', coach: '#coach', customer: '#customer', address: '#address', from: '#from', destination: '#arrive', returndate: '#returndate', arrivaltime: '#arrivaltime', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $booking->id; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><span class="fa fa-save"></span> Save</button></p>
+<p class="text-right"><button type="button" class="btn btn-success" onclick="ajax.send('POST', {action: 'savebooking', departuretime: '#departuretime', returntime: '#returntime', returnplace: '#returnplace', deposit: '#deposit', cost: '#cost', company: '#company', journeydate: '#journeydatedata', orderdate: '#date', reference: '#ref', coach: '#coach', customer: '#customer', address: '#address', from: '#from', destination: '#arrive', returndate: '#returndate', arrivaltime: '#arrivaltime', email: '#email', phone: '#phone', mobile: '#mobile', id: '<?php echo $booking->id; ?>'}, '<?php arcGetDispatch(); ?>', updateStatus, true);"><i class="fa fa-save"></i> Save</button></p>
 
 <script>
     $(function () {

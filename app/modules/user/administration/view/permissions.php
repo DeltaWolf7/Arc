@@ -9,15 +9,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Permission</h4>
             </div>
             <div class="modal-body" id="edit">
-                
+
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id="editButton" type="button" class="btn btn-primary" onclick="savePermission();">Save</button>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a id="editButton" class="btn btn-primary" id="savePermissionsBtn">Save</a>
             </div>
         </div>
     </div>
@@ -26,8 +26,8 @@
 <script>
     var groupid;
     var pid;
-    
-    function savePermission() {
+
+    $("#savePermissionsBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -43,8 +43,8 @@
                 }
             }
         });
-    }
-    
+    });
+
     function editPermission(group, id) {
         groupid = group;
         pid = id;
@@ -61,7 +61,7 @@
             }
         });
     }
-    
+
     function deletePermission(id) {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -78,7 +78,7 @@
             }
         });
     }
-    
+
     function getData() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -92,8 +92,8 @@
             }
         });
     }
-    
-    $(document).ready(function() {
-       getData(); 
+
+    $(document).ready(function () {
+        getData();
     });
 </script>
