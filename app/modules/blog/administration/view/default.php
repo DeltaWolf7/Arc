@@ -31,8 +31,8 @@
                     <input type="text" class="form-control" id="title" />
                 </div>
                 <div class="form-group">
-                            <div class="summernote"></div>
-                        </div>
+                    <div class="summernote"></div>
+                </div>
                 <div class="form-group">
                     <label>Tags</label>
                     <input type="text" class="form-control" id="tags" />
@@ -61,8 +61,8 @@
             }
         });
     });
-    
-    function editPost(id){
+
+    function editPost(id) {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
