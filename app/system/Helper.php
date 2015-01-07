@@ -30,7 +30,7 @@ require_once "medoo.min.php";
 class Helper {
 
     private static $arc = Array();
-    
+
     public static function init() {
         // Start session
         session_start();
@@ -102,7 +102,7 @@ class Helper {
     public static function arcGetDatabase() {
         return self::$arc["database"];
     }
-       
+
     /**
      * 
      * @global array $arc Arc settings storage
@@ -237,81 +237,81 @@ class Helper {
             session_unset();
             session_destroy();
             self::arcForceView("error", "error", false, ["419"]);
+        }
+
+        // update last activity time stamp
+        $_SESSION["LAST_ACTIVITY"] = time();
+
+        if (count($_POST) == 0) {
+            // Check the template in config exists.
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
+                die("Unable to find template '" . ARCTEMPLATE . "' specified in Config.php.");
+            }
+
+            // Check if the template has a controller and include it if it does.
+            if (file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php";
+            }
+
+            if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
+                self::arcForceView("error", "error", false, ["404", self::arcGetURLData("module")]);
+            }
+        }
+
+        $groups[] = \UserGroup::getByName("Guests");
+        if (self::arcIsUserLoggedIn() == true) {
+            $groups = self::arcGetUser()->getGroups();
+        }
+
+        if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
+            // Get module controller
+            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
+            } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+            }
         } else {
-            // update last activity time stamp
-            $_SESSION["LAST_ACTIVITY"] = time();
+            self::arcForceView("error", "error", false, ["403"]);
+        }
 
-            if (count($_POST) == 0) {
-                // Check the template in config exists.
-                if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
-                    die("Unable to find template '" . ARCTEMPLATE . "' specified in Config.php.");
-                }
-
-                // Check if the template has a controller and include it if it does.
-                if (file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php")) {
-                    require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php";
-                }
-
-                if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
-                    self::arcForceView("error", "error", false, ["404", self::arcGetURLData("module")]);
-                }
+        if (count($_POST) == 0) {
+            // Check if the template has a header and include if it does.
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
+                die("Unable to find template header.php.");
             }
+            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php";
+        }
 
-            $groups[] = \UserGroup::getByName("Guests");
-            if (self::arcIsUserLoggedIn() == true) {
-                $groups = self::arcGetUser()->getGroups();
+        if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
+            // Get module view controller
+            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
+            } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
             }
+        } else {
+            self::arcForceView("error", "error", false, ["403"]);
+        }
 
-            if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-                // Get module controller
-                if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
-                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+        if (count($_POST) == 0) {
+            // Get module view      
+            if (self::arcGetURLData("administration") == null) {
+                if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
+                    die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
                 }
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
             } else {
-                self::arcForceView("error", "error", false, ["403"]);
+                if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php")) {
+                    die("Unable to find view '" . self::arcGetURLData("action") . "' for administrative module '" . self::arcGetURLData("module") . "'.");
+                }
+                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
 
-            if (count($_POST) == 0) {
-                // Check if the template has a header and include if it does.
-                if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
-                    die("Unable to find template header.php.");
-                }
-                require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php";
+            // Check if the template has a footer and include if it does.
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
+                die("Unable to find template footer.php.");
             }
-
-            if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-                // Get module view controller
-                if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
-                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
-                }
-            } else {
-                self::arcForceView("error", "error", false, ["403"]);
-            }
-
-            if (count($_POST) == 0) {
-                // Get module view      
-                if (self::arcGetURLData("administration") == null) {
-                    if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
-                        die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
-                    }
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
-                } else {
-                    if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php")) {
-                        die("Unable to find view '" . self::arcGetURLData("action") . "' for administrative module '" . self::arcGetURLData("module") . "'.");
-                    }
-                    require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
-                }
-
-                // Check if the template has a footer and include if it does.
-                if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
-                    die("Unable to find template footer.php.");
-                }
-                require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
-            }
+            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
         }
     }
 
