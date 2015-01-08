@@ -12,7 +12,7 @@ if (isset($_POST["action"])) {
             echo json_encode(["status" => "danger", "data" => "Question must have text"]);
             return;
         }
-        $question->answer1 = utf8_encode($_POST["answer1"]);
+        $question->answer1 = $_POST["answer1"];
         if ($question->answer1 == "") {
             echo json_encode(["status" => "danger", "data" => "Question must have answer 1"]);
             return;
@@ -87,9 +87,9 @@ if (isset($_POST["action"])) {
 
         $data .= "</select>";
 
-        echo json_encode(["question" => html_entity_decode($question->question), "answer1" => $question->answer1,
-            "answer2" => $question->answer2, "answer2" => $question->answer2, "answer3" => $question->answer3,
-            "answer4" => $question->answer4, "answer5" => $question->answer5, "correct" => $question->correctAnswer, "group" => $data]);
+        echo json_encode(["question" => html_entity_decode($question->question), "answer1" => utf8_encode($question->answer1),
+            "answer2" => utf8_encode($question->answer2), "answer2" => utf8_encode($question->answer2), "answer3" => utf8_encode($question->answer3),
+            "answer4" => utf8_encode($question->answer4), "answer5" => utf8_encode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]);
     } elseif ($_POST["action"] == "getgroup") {
         $group = new Group();
         $group->getByID($_POST["id"]);

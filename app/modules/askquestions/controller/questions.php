@@ -54,7 +54,7 @@ if (isset($_POST["action"])) {
             $question = $questions[$_POST["question"]];
             $data .= "<div class=\"form-group\">";
             $data .= "<strong>Question " . $questionno . " of " . count($questions) . "</strong>";
-            $data .= "<div class=\"well\">" . utf8_encode(html_entity_decode($question->question)) . "</div>";
+            $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
             $data .= "<div class=\"form-group\">";
             $data .= "<select class=\"form-control\" id=\"answer\">";
             $data .= "<option value='0'>Not Answered</option>";
@@ -83,7 +83,7 @@ if (isset($_POST["action"])) {
             $done = true;
         }
 
-        echo json_encode(["time" => $time, "html" => $data, "done" => $done, "questionid" => $question->id], JSON_HEX_QUOT | JSON_HEX_TAG);
+        echo json_encode(["time" => $time, "html" => utf8_encode($data), "done" => $done, "questionid" => $question->id], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "getresults") {
         $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"]);
         if (count($results) == 0) {
