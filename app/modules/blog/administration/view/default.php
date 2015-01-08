@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Cancel</a>
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
                 <a class="btn btn-primary">Save</a>
             </div>
         </div>
@@ -68,7 +68,7 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "getpost"},
+            data: {action: "getpost", id: id},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#postModal").modal('show');

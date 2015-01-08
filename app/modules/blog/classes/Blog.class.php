@@ -22,7 +22,7 @@ class Blog extends DataProvider {
         $this->categoryid = 0;
         $this->seourl = "";
         $this->table = ARCDBPREFIX . "blog";
-        $this->columns = ["id", "date", "title", "content", "image", "tags", "posterid", "categoryid", "seourl"];
+        $this->columns = ["id", "date", "title", "content", "image", "tags", "poster", "categoryid", "seourl"];
     }
 
     public static function getAllByCategory($catid) {
