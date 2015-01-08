@@ -2,8 +2,8 @@
 
 if (isset($_POST["action"])) {
     if ($_POST["action"] == "saveresult") {
-        $questionno = $_POST["question"] + 1;
-        $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $questionno);
+        $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $_POST["qid"]);
+        $no = $_POST["question"] + 1;
         if (count($result) == 0) {
             if ($_POST["answer"] == "0") {
                 echo json_encode(["status" => "warning", "data" => "Question skipped"]);
@@ -11,10 +11,11 @@ if (isset($_POST["action"])) {
                 $result = new Result();
                 $result->groupid = $_POST["grpid"];
                 $result->userid = $_POST["id"];
-                $result->questionid = $questionno;
+                $result->questionid = $_POST["qid"];
                 $time = $_POST["time"];
                 $result->timetaken = time() - $time;
                 $result->resultno = $_POST["answer"];
+                $result->questionno = $no;
                 $result->update();
                 echo json_encode(["status" => "success", "data" => "Answer saved"]);
             }
@@ -53,25 +54,25 @@ if (isset($_POST["action"])) {
             $question = $questions[$_POST["question"]];
             $data .= "<div class=\"form-group\">";
             $data .= "<strong>Question " . $questionno . " of " . count($questions) . "</strong>";
-            $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
+            $data .= "<div class=\"well\">" . utf8_encode(html_entity_decode($question->question)) . "</div>";
             $data .= "<div class=\"form-group\">";
             $data .= "<select class=\"form-control\" id=\"answer\">";
             $data .= "<option value='0'>Not Answered</option>";
 
             if (!empty($question->answer1)) {
-                $data .= "<option value='1'>" . utf8_encode($question->answer1) . "</option>";
+                $data .= "<option value='1'>" . $question->answer1 . "</option>";
             }
             if (!empty($question->answer2)) {
-                $data .= "<option value='2'>" . utf8_encode($question->answer2) . "</option>";
+                $data .= "<option value='2'>" . $question->answer2 . "</option>";
             }
             if (!empty($question->answer3)) {
-                $data .= "<option value='3'>" . utf8_encode($question->answer3) . "</option>";
+                $data .= "<option value='3'>" . $question->answer3 . "</option>";
             }
             if (!empty($question->answer4)) {
-                $data .= "<option value='4'>" . utf8_encode($question->answer4) . "</option>";
+                $data .= "<option value='4'>" . $question->answer4 . "</option>";
             }
             if (!empty($question->answer5)) {
-                $data .= "<option value='5'>" . utf8_encode($question->answer5) . "</option>";
+                $data .= "<option value='5'>" . $question->answer5 . "</option>";
             }
 
             $data .= "</select>";
@@ -82,7 +83,7 @@ if (isset($_POST["action"])) {
             $done = true;
         }
 
-        echo json_encode(["time" => $time, "html" => $data, "done" => $done], JSON_HEX_QUOT | JSON_HEX_TAG);
+        echo json_encode(["time" => $time, "html" => $data, "done" => $done, "questionid" => $question->id], JSON_HEX_QUOT | JSON_HEX_TAG);
     } elseif ($_POST["action"] == "getresults") {
         $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"]);
         if (count($results) == 0) {
@@ -90,62 +91,62 @@ if (isset($_POST["action"])) {
             return;
         }
         $questions = Group::getQuestions($results[0]->groupid);
-        $count = 0;
         $totalTime = 0;
         $correct = 0;
         $table = "<table class=\"table table-striped\">";
         $table .= "<tr><th></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
-            if (isset($results[$count])) {
-                $no = $count + 1;
-                $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
-                switch ($question->correctAnswer) {
-                    case 1:
-                        $table .= utf8_encode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= utf8_encode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= utf8_encode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= utf8_encode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= utf8_encode($question->answer5);
-                        break;
+            foreach ($results as $result) {
+                if ($result->questionid == $question->id) {
+                    $table .= "<tr><td>" . $result->questionno . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    switch ($question->correctAnswer) {
+                        case 1:
+                            $table .= utf8_encode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= utf8_encode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= utf8_encode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= utf8_encode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= utf8_encode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    switch ($result->resultno) {
+                        case 1:
+                            $table .= utf8_encode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= utf8_encode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= utf8_encode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= utf8_encode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= utf8_encode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    if ($result->resultno == $question->correctAnswer) {
+                        $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
+                        $correct++;
+                    } else {
+                        $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
+                    }
+                    $table .= "</td><td>" . $result->timetaken . "</td></tr>";
+                    $totalTime += $result->timetaken;
                 }
-                $table .= "</td><td>";
-                switch ($results[$count]->resultno) {
-                    case 1:
-                        $table .= utf8_encode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= utf8_encode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= utf8_encode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= utf8_encode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= utf8_encode($question->answer5);
-                        break;
-                }
-                $table .= "</td><td>";
-                if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
-                    $correct++;
-                } else {
-                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
-                }
-                $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
-                $totalTime += $results[$count]->timetaken;
             }
-            $count++;
         }
+
         $table .= "</table>";
         $table .= "<div class=\"well\">";
         $table .= "Total time taken: ";

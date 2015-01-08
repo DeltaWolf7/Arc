@@ -31,6 +31,7 @@ class Result extends DataProvider {
     public $resultno;
     public $userid;
     public $timetaken;
+    public $questionno;
 
     public function __construct() {
         parent::__construct();
@@ -40,7 +41,7 @@ class Result extends DataProvider {
         $this->questionid = 0;
         $this->timetaken = 0;
         $this->table = ARCDBPREFIX . "askquestion_results";
-        $this->columns = ["id", "groupid", "questionid", "resultno", "userid", "timetaken"];
+        $this->columns = ["id", "groupid", "questionid", "resultno", "userid", "timetaken", "questionno"];
     }
 
     public static function getByGroupAndUserID($groupid, $userid) {

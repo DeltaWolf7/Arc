@@ -55,6 +55,7 @@
     var time;
     var question = 0;
     var groupid;
+    var qid;
 
     function getResult(id) {
         $.ajax({
@@ -97,9 +98,9 @@
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $('#questionData').html(jdata.html);
                 time = jdata.time;
+                qid = jdata.questionid;
                 $("#nextBtn").prop("disabled", false);
                 if (jdata.done == true) {
-
                     $("#nextBtn").prop("disabled", true);
                 }
             },
@@ -117,7 +118,7 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "saveresult", grpid: groupid,
                 question: question, id: <?php echo system\Helper::arcGetUser()->id; ?>,
-                time: time, answer: $("#answer").val()},
+                time: time, answer: $("#answer").val(), qid: qid},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus(jdata.status, jdata.data);
