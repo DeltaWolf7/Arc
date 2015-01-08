@@ -156,14 +156,16 @@
 
 <div class="modal fade" id="resultsModal" tabindex="-1" role="dialog" aria-labelledby="resultsModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 900px;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>
+
             <div class="modal-body" id="resultsData">
 
             </div>
+
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
             </div>
@@ -200,7 +202,7 @@
         $("#deleteModal").modal("show");
     }
 
-    $("#doDeleteGroupBtn").click(function() {
+    $("#doDeleteGroupBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
