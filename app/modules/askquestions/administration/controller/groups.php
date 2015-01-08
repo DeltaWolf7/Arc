@@ -12,15 +12,15 @@ if (isset($_POST["action"])) {
             echo json_encode(["status" => "danger", "data" => "Question must have text"]);
             return;
         }
-        $question->answer1 = $_POST["answer1"];
+        $question->answer1 = htmlentities($_POST["answer1"]);
         if ($question->answer1 == "") {
             echo json_encode(["status" => "danger", "data" => "Question must have answer 1"]);
             return;
         }
-        $question->answer2 = $_POST["answer2"];
-        $question->answer3 = $_POST["answer3"];
-        $question->answer4 = $_POST["answer4"];
-        $question->answer5 = $_POST["answer5"];
+        $question->answer2 = htmlentities($_POST["answer2"]);
+        $question->answer3 = htmlentities($_POST["answer3"]);
+        $question->answer4 = htmlentities($_POST["answer4"]);
+        $question->answer5 = htmlentities($_POST["answer5"]);
         $question->correctAnswer = $_POST["correct"];
         $question->update();
 
@@ -53,19 +53,19 @@ if (isset($_POST["action"])) {
             $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions(" . $group->id . ");\">" . $group->name . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $group->id . ");\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup(" . $group->id . ");\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup(" . $group->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</table>";
-        echo json_encode(["html" => utf8_encode($data)]);
+        echo utf8_encode(json_encode(["html" => $data]));
     } elseif ($_POST["action"] == "getquestions") {
         $groups = new Group();
         $questions = $groups->getQuestions($_POST["id"]);
         $count = 1;
         $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th></th><th>Question</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr>";
+        $data .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr>";
         foreach ($questions as $question) {
             $data .= "<tr><td>" . $count . "</td><td><a href=\"#\" onclick=\"getQuestion(" . $question->id . ")\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             $count++;
         }
         $data .= "</table>";
-        echo json_encode(["html" => utf8_encode($data)]);
+        echo utf8_encode(json_encode(["html" => $data]));
     } elseif ($_POST["action"] == "getquestion") {
         $question = new Question();
         $question->getByID($_POST["id"]);
@@ -87,9 +87,9 @@ if (isset($_POST["action"])) {
 
         $data .= "</select>";
 
-        echo json_encode(["question" => html_entity_decode($question->question), "answer1" => utf8_encode($question->answer1),
-            "answer2" => utf8_encode($question->answer2), "answer2" => utf8_encode($question->answer2), "answer3" => utf8_encode($question->answer3),
-            "answer4" => utf8_encode($question->answer4), "answer5" => utf8_encode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]);
+        echo utf8_encode(json_encode(["question" => html_entity_decode($question->question), "answer1" => html_entity_decode($question->answer1),
+            "answer2" => html_entity_decode($question->answer2), "answer2" => html_entity_decode($question->answer2), "answer3" => html_entity_decode($question->answer3),
+            "answer4" => html_entity_decode($question->answer4), "answer5" => html_entity_decode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]));
     } elseif ($_POST["action"] == "getgroup") {
         $group = new Group();
         $group->getByID($_POST["id"]);
@@ -129,7 +129,7 @@ if (isset($_POST["action"])) {
             }
         }
         $data .= "</table>";
-        echo json_encode(["data" => utf8_encode($data)]);
+        echo utf8_encode(json_encode(["data" => $data]));
     } elseif ($_POST["action"] == "getresult") {
         $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"]);
         if (count($results) == 0) {
@@ -145,44 +145,44 @@ if (isset($_POST["action"])) {
         $table = "Student: " . $user->getFullname();
         $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><i class=\"fa fa-backward\"></i> Back</a><p>";
         $table .= "<table class=\"table table-striped\">";
-        $table .= "<tr><th></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        $table .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
                 $no = $count + 1;
                 $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
-                        $table .= utf8_encode($question->answer1);
+                        $table .= html_entity_decode($question->answer1);
                         break;
                     case 2:
-                        $table .= utf8_encode($question->answer2);
+                        $table .= html_entity_decode($question->answer2);
                         break;
                     case 3:
-                        $table .= utf8_encode($question->answer3);
+                        $table .= html_entity_decode($question->answer3);
                         break;
                     case 4:
-                        $table .= utf8_encode($question->answer4);
+                        $table .= html_entity_decode($question->answer4);
                         break;
                     case 5:
-                        $table .= utf8_encode($question->answer5);
+                        $table .= html_entity_decode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
                 switch ($results[$count]->resultno) {
                     case 1:
-                        $table .= utf8_encode($question->answer1);
+                        $table .= html_entity_decode($question->answer1);
                         break;
                     case 2:
-                        $table .= utf8_encode($question->answer2);
+                        $table .= html_entity_decode($question->answer2);
                         break;
                     case 3:
-                        $table .= utf8_encode($question->answer3);
+                        $table .= html_entity_decode($question->answer3);
                         break;
                     case 4:
-                        $table .= utf8_encode($question->answer4);
+                        $table .= html_entity_decode($question->answer4);
                         break;
                     case 5:
-                        $table .= utf8_encode($question->answer5);
+                        $table .= html_entity_decode($question->answer5);
                         break;
                 }
                 $table .= "</td><td>";
@@ -211,7 +211,7 @@ if (isset($_POST["action"])) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo json_encode(["data" => $table]);
+        echo utf8_encode(json_encode(["data" => $table]));
     } elseif ($_POST["action"] == "copyquestion") {
         $question = new Question();
 
