@@ -1,9 +1,8 @@
 <?php
 
-$setting = SystemSetting::keyExists("ARC_PAGE_VIEW");
-if (empty($setting->key)) {
-    $setting = new SystemSetting();
-    $setting->key = "ARC_PAGE_VIEW";
+$setting = SystemSetting::getByKey("ARC_PAGE_MENU_NAME");
+if (!SystemSetting::keyExists("ARC_PAGE_MENU_NAME")) {
+    $setting->value = "Pages";
     $setting->update();
 }
 

@@ -60,11 +60,19 @@ class SystemSetting extends DataProvider {
         }
         return $setting;
     }
-    
+
+    /**
+     * 
+     * @param string $key string value as key
+     * @return \SystemSetting
+     */
     public static function keyExists($key) {
         $setting = new SystemSetting();
         $setting->get(["key" => $key]);
-        return $setting;
+        if (empty($setting->key)) {
+            return false;
+        }
+        return true;
     }
 
     /**

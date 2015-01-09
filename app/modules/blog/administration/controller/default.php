@@ -26,7 +26,7 @@ if (isset($_POST["action"])) {
         $data .= "<tr><th>Name</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> New Category</a></th></tr>";
         $cats = BlogCategory::getAllCategories();
         foreach ($cats as $cat) {
-            $data .= "<tr><td>" . $cat->name . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\"><i class=\"fa fa-plus\"></i> Edit</a> <a class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\">" . $cat->name . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
 
         $data .= "</table>";
@@ -35,6 +35,6 @@ if (isset($_POST["action"])) {
         $blog = new Blog();
         $blog->getByID($_POST["id"]);
         $content = html_entity_decode($blog->content);
-        echo json_encode(["title" => $blog->title, "content" => utf8_encode($content), "tags" => $blog->tags, "seourl" => $blog->seourl, "poster" => $blog->poster, "date" => $blog->date]);
+        echo utf8_encode(json_encode(["title" => $blog->title, "content" => $content, "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date]));
     }
 }

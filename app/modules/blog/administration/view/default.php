@@ -31,6 +31,19 @@
                     <input type="text" class="form-control" id="title" />
                 </div>
                 <div class="form-group">
+                    <label>SEO Url</label>
+                    <input type="text" class="form-control" id="seourl" />
+                </div>
+                <div class="form-group">
+                    <label>Date</label>
+                    <div class='input-group date' id='date'>
+                        <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="summernote"></div>
                 </div>
                 <div class="form-group">
@@ -71,6 +84,11 @@
             data: {action: "getpost", id: id},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#title").val(jdata.title);
+                $("#tags").val(jdata.tags);
+                $("#seourl").val(jdata.seourl);
+                $('.summernote').code(jdata.content);
+                $('#date').val(jdata.date);
                 $("#postModal").modal('show');
             }
         });
@@ -108,5 +126,10 @@
     $(document).ready(function () {
         get("posts");
         $('.summernote').summernote({height: 250});
+
+        var date = new Date();
+        $('#date').datetimepicker({
+            pickTime: false
+        });
     });
 </script>

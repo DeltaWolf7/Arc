@@ -72,10 +72,8 @@ spl_autoload_register(function($class) {
     }
 });
 
-$mail = SystemSetting::keyExists("ARC_SMTP");
-if (empty($mail->key)) {
-    $mail = new SystemSetting();
-    $mail->key = "ARC_SMTP";
+$mail = SystemSetting::getByKey("ARC_SMTP");
+if (!SystemSetting::keyExists("ARC_SMTP")) {
     $mail->value = "localhost,25,user@server.com,password,noreply@server.com,noreply";
     $mail->update();
 }
