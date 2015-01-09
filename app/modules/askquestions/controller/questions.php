@@ -59,19 +59,19 @@ if (isset($_POST["action"])) {
             $data .= "<select class=\"form-control\" id=\"answer\">";
             $data .= "<option value='0'>Not Answered</option>";
 
-            if (!empty($question->answer1)) {
+            if ($question->answer1 != "") {
                 $data .= "<option value='1'>" . html_entity_decode($question->answer1) . "</option>";
             }
-            if (!empty($question->answer2)) {
+            if ($question->answer2 != "") {
                 $data .= "<option value='2'>" . html_entity_decode($question->answer2) . "</option>";
             }
-            if (!empty($question->answer3)) {
+            if ($question->answer3 != "") {
                 $data .= "<option value='3'>" . html_entity_decode($question->answer3) . "</option>";
             }
-            if (!empty($question->answer4)) {
+            if ($question->answer4 != "") {
                 $data .= "<option value='4'>" . html_entity_decode($question->answer4) . "</option>";
             }
-            if (!empty($question->answer5)) {
+            if ($question->answer5 != "") {
                 $data .= "<option value='5'>" . html_entity_decode($question->answer5) . "</option>";
             }
 
