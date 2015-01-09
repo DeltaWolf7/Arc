@@ -5,9 +5,9 @@ if (isset($_POST["action"])) {
         $page = new Page();
         $page->getByID($_POST["id"]);
 
-        echo json_encode(["title" => $page->title, "seourl" => $page->seourl,
+        echo utf8_encode(json_encode(["title" => $page->title, "seourl" => $page->seourl,
             "metadescription" => $page->metadescription, "metakeywords" => $page->metakeywords,
-            "seourl" => $page->seourl, "html" => html_entity_decode($page->content)]);
+            "seourl" => $page->seourl, "html" => html_entity_decode($page->content)]));
     } elseif ($_POST["action"] == "remove") {
         $page = new Page();
         $page->delete($_POST["id"]);
@@ -40,6 +40,6 @@ if (isset($_POST["action"])) {
                     . "&nbsp;<a onclick=\"removePage(" . $page->id . ");\" class=\"btn btn-default btn-sm\"><i class='fa fa-remove'></i>&nbsp;Remove</button></td>"
                     . "</tr>";
         }
-        echo json_encode(["html" => $table]);
+        echo utf8_encode(json_encode(["html" => $table]));
     }
 }
