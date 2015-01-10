@@ -9,10 +9,10 @@ if (isset($_POST["action"])) {
                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editSetting('" . $setting->key . "');\"><i class=\"fa fa-edit\"></i> Edit</a>"
                    . " <a class=\"btn btn-default btn-sm\" onclick=\"deleteSetting('" . $setting->key . "');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
-        echo json_encode(["html" => $table]);
+        echo utf8_encode(json_encode(["html" => $table]));
     } elseif ($_POST["action"] == "editsetting") {
         $setting = SystemSetting::getByKey($_POST["key"]);
-        echo json_encode(["skey" => $setting->key, "svalue" => $setting->value]);
+        echo utf8_encode(json_encode(["skey" => $setting->key, "svalue" => $setting->value]));
     } elseif ($_POST["action"] == "savesetting") {
         if (empty($_POST["key"])) {
             echo json_encode(["status" => "danger", "data" => "Key must be provided"]);

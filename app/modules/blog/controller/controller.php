@@ -1,6 +1,9 @@
 <?php
 if (system\Helper::arcGetURLData("action") == null) {
     system\Helper::arcOverrideView("default");
+    $title = SystemSetting::getByKey("ARC_BLOG_TITLE");
+    system\Helper::arcAddHeader("title", $title->value);
+    
 } elseif (system\Helper::arcGetURLData("action") == "post") {
     if (!empty(system\Helper::arcGetURLData("data1"))) {
         $blog = Blog::getBySEOUrl(system\Helper::arcGetURLData("data1"));

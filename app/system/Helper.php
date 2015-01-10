@@ -346,7 +346,7 @@ class Helper {
      * Output a standard status div.
      */
     public static function arcGetStatus() {
-        echo "<br /><div id=\"status\" style=\"display:none;\" role=\"alert\"></div>";
+        echo PHP_EOL . "<p><div id=\"status\" style=\"display:none;\" role=\"alert\"></div></p>" . PHP_EOL;
     }
 
     /**
@@ -622,14 +622,6 @@ class Helper {
 
     /**
      * 
-     * @return string Arc version information
-     */
-    public static function arcPoweredBy() {
-        return "<a href=\"http://www.github.com/deltawolf7/arc\" target=\"_new\">Powered by Arc, Version: " . ARCVERSION . "</a>";
-    }
-
-    /**
-     * 
      * @param array $to Array containing Name and Email address of the recipients.
      * @param string $subject Subject of the email
      * @param string $message Content of the email
@@ -711,6 +703,45 @@ class Helper {
     public static function arcPagination($objects, $page, $amount) {
         $pagecount = $amount * $page;
         return array_slice($objects, $pagecount, $amount);
+    }
+
+    public static function arcGetPaginationView($objects, $page, $amount, $simple = false, $baseurl = "") {
+        $noperpage = count($objects) / $amount;
+        $link1 = "";
+        $link2 = "";
+        if (!empty($page) && $page > 1) {
+            $prev = $page - 1;
+            $link1 = $baseurl . "/" . $prev;
+        }
+
+        if ($page < $noperpage - 1) {
+            $next = $page + 1;
+            $link2 = $baseurl . "/" . $next;
+        }
+
+        if (!$simple) {
+            $html = "<nav><ul class=\"pagination\"><li><a href=\"" . $link1;
+            $html .= "\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+
+            for ($i = 0; $i <= $noperpage; $i++) {
+                $count = $i + 1;
+                $html .= "<li><a href=\"" . $baseurl . "/";
+                if (!empty($i)) {
+                    $html .= $i;
+                }
+                $html .= "\">" . $count . "</a></li>";
+            }
+
+            $html .= "<li><a href=\"" . $link2;
+            $html .= "\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>"
+                    . "</ul></nav>";
+        } else {
+            $html = "<nav><ul class=\"pager\">";
+            $html .= "<li class=\"previous\"><a href=\"" . $link1 . "\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
+            $html .= "<li class=\"next\"><a href=\"" . $link2 . "\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
+            $html .= "</ul></nav>";
+        }
+        echo $html;
     }
 
 }

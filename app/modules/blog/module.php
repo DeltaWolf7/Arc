@@ -24,4 +24,16 @@ if (!SystemSetting::keyExists("ARC_BLOG_THUMB_WIDTH")) {
     $thumbWidth->update();
 }
 
+$latest = SystemSetting::getByKey("ARC_BLOG_NOLATEST");
+if (!SystemSetting::keyExists("ARC_BLOG_NOLATEST")) {
+    $latest->value = "10";
+    $latest->update();
+}
+
+$entries = SystemSetting::getByKey("ARC_BLOG_ENTRIES_PER_PAGE");
+if (!SystemSetting::keyExists("ARC_BLOG_ENTRIES_PER_PAGE")) {
+    $entries->value = "10";
+    $entries->update();
+}
+
 system\Helper::arcAddMenuItem($menutitle->value, "fa-newspaper-o", false, null, null);

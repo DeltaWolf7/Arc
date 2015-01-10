@@ -27,12 +27,12 @@ class Blog extends DataProvider {
 
     public static function getAllByCategory($catid) {
         $blogs = new Blog();
-        return $blogs->getCollection(["categoryid" => $catid, "ORDER" => "date ASC"]);
+        return $blogs->getCollection(["categoryid" => $catid, "ORDER" => "date DESC"]);
     }
 
     public static function getLatest($count = 10) {
         $blogs = new Blog();
-        return $blogs->getCollection(["ORDER" => "date ASC", "LIMIT" => $count]);
+        return $blogs->getCollection(["ORDER" => "date DESC", "LIMIT" => $count]);
     }
 
     public static function getBySEOUrl($url) {

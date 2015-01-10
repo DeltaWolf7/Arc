@@ -1,5 +1,7 @@
 <?php
 
+system\Helper::arcAddHeader("title", "Forgot Password");
+
 if (count($_POST) > 0) {
     if (empty($_POST["email"])) {
         echo json_encode(["status" => "danger", "data" => "Email address must be provided"]);

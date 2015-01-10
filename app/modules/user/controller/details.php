@@ -1,5 +1,7 @@
 <?php
 
+system\Helper::arcAddHeader("title", "Account Details");
+
 if (isset($_POST["id"])) { 
     $user = new User();
     $user->getByID($_POST["id"]);

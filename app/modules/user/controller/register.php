@@ -1,5 +1,7 @@
 <?php
 
+system\Helper::arcAddHeader("title", "Register Account");
+
 if (isset($_POST["email"])) {
 
     if (empty($_POST["firstname"])) {

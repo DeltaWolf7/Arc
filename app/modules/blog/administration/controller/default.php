@@ -11,12 +11,12 @@ if (isset($_POST["action"])) {
         echo json_encode(["status" => "success", "data" => "Cache has been cleaned."]);
     } elseif ($_POST["action"] == "posts") {
         $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th>Title</th><th>Category</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"editPost(0);\"><i class=\"fa fa-plus\"></i> New Post</a></th></tr>";
+        $data .= "<tr><th>Title</th><th>Category</th><th>Date</th><th class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"editPost(0);\"><i class=\"fa fa-plus\"></i> New Post</a></th></tr>";
         $cats = BlogCategory::getAllCategories();
         foreach ($cats as $cat) {
             $posts = Blog::getAllByCategory($cat->id);
             foreach ($posts as $post) {
-                $data .= "<tr><td><a href=\"#\" onclick=\"editPost(" . $post->id . ");\">" . $post->title . "</a></td><td><i class=\"label label-default\">" . $cat->name . "</i></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+                $data .= "<tr><td><a href=\"#\" onclick=\"editPost(" . $post->id . ");\">" . $post->title . "</a></td><td><i class=\"label label-default\">" . $cat->name . "</i></td><td>" . $post->date . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             }
         }
         $data .= "</table>";
