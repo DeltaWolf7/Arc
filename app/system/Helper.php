@@ -737,8 +737,8 @@ class Helper {
                     . "</ul></nav>";
         } else {
             $html = "<nav><ul class=\"pager\">";
-            $html .= "<li class=\"previous\"><a href=\"" . $link1 . "\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
-            $html .= "<li class=\"next\"><a href=\"" . $link2 . "\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
+            $html .= "<li class=\"previous\"><a href=\"" . $link2 . "\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
+            $html .= "<li class=\"next\"><a href=\"" . $link1 . "\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
             $html .= "</ul></nav>";
         }
         echo $html;
