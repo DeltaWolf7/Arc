@@ -29,8 +29,16 @@ require_once "medoo.min.php";
 
 class Helper {
 
+    /**
+     * 
+     * Array containing all Arc data
+     */
     private static $arc = Array();
 
+    /**
+     * 
+     * Initialise the Helper class
+     */
     public static function init() {
         // Start session
         session_start();
@@ -54,6 +62,7 @@ class Helper {
             }
         }
 
+        // Default view data, if  nothing is set.
         if (empty(self::$arc["urldata"])) {
             self::$arc["urldata"]["module"] = ARCDEFAULTMODULE;
             self::$arc["urldata"]["action"] = ARCDEFAULTACTION;
@@ -99,6 +108,11 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
     }
 
+    /**
+     * 
+     * Returns the database class and connection
+     * @return Medoo database class
+     */
     public static function arcGetDatabase() {
         return self::$arc["database"];
     }
@@ -223,6 +237,11 @@ class Helper {
         return self::$arc["urldata"];
     }
 
+    /**
+     * 
+     * @param bool $filesystem Get filesystem path if true
+     * @return string Path to content
+     */
     public static function arcGetTemplatePath($filesystem = false) {
         if ($filesystem) {
             return self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/";
@@ -230,6 +249,9 @@ class Helper {
         return self::arcGetPath() . "app/templates/" . ARCTEMPLATE . "/";
     }
 
+    /**
+     * Get the view based on the request
+     */
     public static function arcGetView() {
         // expired session
         $timeout = ARCSESSIONTIMEOUT * 60;
@@ -315,6 +337,14 @@ class Helper {
         }
     }
 
+    /**
+     * 
+     * Force view and override the current request
+     * @param string $module Module name
+     * @param string $action Action name (view)
+     * @param bool $administration is the request from an administrator
+     * @param arry $data array containing data
+     */
     private static function arcForceView($module, $action, $administration = false, $data = Array()) {
         unset(self::$arc["urldata"]);
         self::$arc["urldata"]["module"] = $module;
@@ -329,6 +359,13 @@ class Helper {
         }
     }
 
+    /**
+     * 
+     * Override view
+     * @param string $action action name (view)
+     * @param bool $administration request from administrator
+     * @param array $data array of data
+     */
     public static function arcOverrideView($action, $administration = false, $data = Array()) {
         $module = self::$arc["urldata"]["module"];
         unset(self::$arc["urldata"]);
@@ -368,6 +405,10 @@ class Helper {
         $_SESSION["arc_user"] = serialize($user);
     }
 
+    /**
+     * Check if user is logged in
+     * @return boolean true if they are
+     */
     public static function arcIsUserLoggedIn() {
         if (self::arcGetUser() != null) {
             return true;
@@ -375,6 +416,12 @@ class Helper {
         return false;
     }
 
+    /**
+     * 
+     * Check if logged in user is in a group
+     * @param string $groups Group name
+     * @return boolean true if they are
+     */
     public static function arcIsUserInGroup($groups = Array()) {
         if (self::arcIsUserLoggedIn() == true) {
             if (is_array($groups)) {
@@ -391,6 +438,11 @@ class Helper {
         return false;
     }
 
+    /**
+     * 
+     * Is the logged in user an admin
+     * @return boolean true if they are
+     */
     public static function arcIsUserAdmin() {
         if (self::arcGetUser() == null) {
             return false;
@@ -554,6 +606,12 @@ class Helper {
         }
     }
 
+    /**
+     * 
+     * Get the path of the current module
+     * @param boolean $filesystem Get filesystem path
+     * @return string path
+     */
     public static function arcGetModulePath($filesystem = false) {
         if ($filesystem) {
             if (self::arcGetURLData("administration") == null) {
@@ -595,6 +653,13 @@ class Helper {
         return $module_list;
     }
 
+    /**
+     * 
+     * Get module details
+     * @param string $file Path
+     * @param string $module Name
+     * @return array Module details
+     */
     private static function arcGetModuleDetails($file, $module) {
         $json = file_get_contents($file);
         $data = json_decode($json);
@@ -705,6 +770,15 @@ class Helper {
         return array_slice($objects, $pagecount, $amount);
     }
 
+    /**
+     * 
+     * Pagination view
+     * @param array $objects collection of objects
+     * @param int $page page number
+     * @param int $amount amount per page
+     * @param boolean $simple simple view or complex
+     * @param string $baseurl of next page
+     */
     public static function arcGetPaginationView($objects, $page, $amount, $simple = false, $baseurl = "") {
         $noperpage = count($objects) / $amount;
         $link1 = "";
