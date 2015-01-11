@@ -91,7 +91,7 @@ class User extends DataProvider {
      */
     public function getGroups() {
         $groups = [];
-        if (strlen($this->groups) > 0) {
+        if (is_array($this->groups)) {
             foreach (json_decode($this->groups) as $group) {
                 $grp = UserGroup::getByName($group);
                 if ($grp->id != 0) {
