@@ -6,8 +6,8 @@ if (isset($_POST["action"])) {
         $settings = SystemSetting::getAll();
         foreach ($settings as $setting) {
             $table .= "<tr><td>" . $setting->key . "</td><td>" . $setting->value . "</td>"
-                   . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editSetting('" . $setting->key . "');\"><i class=\"fa fa-edit\"></i> Edit</a>"
-                   . " <a class=\"btn btn-default btn-sm\" onclick=\"deleteSetting('" . $setting->key . "');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editSetting('" . $setting->key . "');\"><i class=\"fa fa-edit\"></i> Edit</a>"
+                    . " <a class=\"btn btn-default btn-sm\" onclick=\"deleteSetting('" . $setting->key . "');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         echo utf8_encode(json_encode(["html" => $table]));
     } elseif ($_POST["action"] == "editsetting") {
@@ -18,7 +18,7 @@ if (isset($_POST["action"])) {
             echo json_encode(["status" => "danger", "data" => "Key must be provided"]);
             return;
         }
-        
+
         if (strpos($_POST["key"], " ") == true) {
             echo json_encode(["status" => "danger", "data" => "Key cannot contain spaces."]);
             return;

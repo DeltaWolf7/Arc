@@ -75,6 +75,9 @@
             return $groups->getCollection(["ORDER" => "name ASC"]);
         }
         
+        /*
+         * Get all users
+         */
         public function getUsers() {
             $users = User::getAllUsers();
             $grpUsers = Array();
@@ -86,12 +89,18 @@
             return $grpUsers;
         }
         
+        /*
+         * Update group and save it to the database
+         */
         public function update() {
             if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
                 parent::update();
             }
         }
         
+        /*
+         * Deleet group from database
+         */
         public function delete($id) {
             $group = new UserGroup();
             $group->getByID($id);

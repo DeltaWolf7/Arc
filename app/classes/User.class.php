@@ -44,8 +44,8 @@ class User extends DataProvider {
      */
     public function __construct() {
         parent::__construct();
-        $this->firstname;
-        $this->lastname;
+        $this->firstname = "";
+        $this->lastname = "";
         $this->email = "";
         $this->enabled = true;
         $this->passwordhash = "";
@@ -102,6 +102,9 @@ class User extends DataProvider {
         return $groups;
     }
 
+    /*
+     * Add user to group
+     */
     public function addToGroup($name) {
         $groups = json_decode($this->groups);
         foreach ($groups as $group) {
@@ -115,6 +118,9 @@ class User extends DataProvider {
         echo $this->groups;
     }
 
+    /*
+     * Remove user from group
+     */
     public function removeFromGroup($name) {
         $groups = json_decode($this->groups);
         $newGroups = [];
@@ -163,6 +169,9 @@ class User extends DataProvider {
         return UserSetting::getByUserID($this->id, $key);
     }
 
+    /*
+     * Get users full name
+     */
     public function getFullname() {
         return $this->firstname . " " . $this->lastname;
     }

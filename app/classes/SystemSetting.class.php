@@ -93,10 +93,16 @@ class SystemSetting extends DataProvider {
         return $settings->getCollection(["ORDER" => "key ASC"]);
     }
 
+    /*
+     * Delete setting with key
+     */
     public function delete($key) {
         system\Helper::arcGetDatabase()->delete($this->table, ["key" => $key]);
     }
 
+    /*
+     * Update the setting and save it to the database
+     */
     public function update() {
         $columns = array_slice($this->columns, 1);
         $dataColumns = array();

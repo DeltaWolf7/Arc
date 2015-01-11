@@ -33,7 +33,7 @@ class Group extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->name = "";
-        $this->text = "";
+        $this->txt = "";
         $this->visible = false;
         $this->table = ARCDBPREFIX . "askquestion_groups";
         $this->columns = ["id", "name", "txt", "visible"];
