@@ -5,8 +5,7 @@ function buildBlog($blogs, $limit = 0) {
         $content = html_entity_decode($blog->content);
         $ending = ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/" . $blog->seourl . "\">[Continue reading]</a>";
         $content = truncate($content, $limit, $ending);
-        $category = new BlogCategory();
-        $category->getByID($blog->categoryid);
+        $categories = $blog->getCategories();
         ?>
 
         <div class="media">
@@ -30,7 +29,18 @@ function buildBlog($blogs, $limit = 0) {
                 <?php if (isset($tags)) { ?> 
                     <i class="fa fa-tags"></i> <?php echo $tags; ?>
                 <?php } ?>
-                <i class="fa fa-folder"></i> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/" . $category->seourl; ?>"><?php echo $category->name ?></a> on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
+                <i class="fa fa-folder"></i> Posted in 
+                <?php 
+                $count = count($categories);
+                    for ($i = 0; $i < $count; $i++) {
+                        if ($i != $count - 1) {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>, ";
+                        } else {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>";
+                        }
+                    }
+                ?>
+                 on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
                  by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
             </div>
         </div>

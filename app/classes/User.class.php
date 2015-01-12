@@ -74,7 +74,7 @@ class User extends DataProvider {
         $user = new User();
         return $user->getCollection(["ORDER" => "firstname ASC"]);
     }
-    
+
     public function inGroup($name) {
         $groups = $this->getGroups();
         foreach ($groups as $group) {
@@ -91,12 +91,10 @@ class User extends DataProvider {
      */
     public function getGroups() {
         $groups = [];
-        if (is_array($this->groups)) {
-            foreach (json_decode($this->groups) as $group) {
-                $grp = UserGroup::getByName($group);
-                if ($grp->id != 0) {
-                    $groups[] = $grp;
-                }
+        foreach (json_decode($this->groups) as $group) {
+            $grp = UserGroup::getByName($group);
+            if ($grp->id != 0) {
+                $groups[] = $grp;
             }
         }
         return $groups;
@@ -105,6 +103,7 @@ class User extends DataProvider {
     /*
      * Add user to group
      */
+
     public function addToGroup($name) {
         $groups = json_decode($this->groups);
         foreach ($groups as $group) {
@@ -121,6 +120,7 @@ class User extends DataProvider {
     /*
      * Remove user from group
      */
+
     public function removeFromGroup($name) {
         $groups = json_decode($this->groups);
         $newGroups = [];
@@ -172,6 +172,7 @@ class User extends DataProvider {
     /*
      * Get users full name
      */
+
     public function getFullname() {
         return $this->firstname . " " . $this->lastname;
     }

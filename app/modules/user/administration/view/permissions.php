@@ -17,7 +17,7 @@
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a id="editButton" class="btn btn-primary" id="savePermissionsBtn">Save</a>
+                <a class="btn btn-primary" id="savePermissionsBtn">Save</a>
             </div>
         </div>
     </div>

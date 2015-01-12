@@ -6,8 +6,7 @@ function buildBlog($blog, $limit = 0) {
         $content = substr($blog->content, 0, $limit - 1) . ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/" . $blog->seourl . "\">Continue reading</a>";
     }
 
-    $category = new BlogCategory();
-    $category->getByID($blog->categoryid);
+    $categories = $blog->getCategories();
     ?>
 
     <div class="media">
@@ -28,7 +27,18 @@ function buildBlog($blog, $limit = 0) {
             <?php if (isset($tags)) { ?> 
                 <i class="fa fa-tags"></i> <?php echo $tags; ?>
             <?php } ?>
-            <i class="fa fa-folder"></i> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/" . $category->seourl ?>"><?php echo $category->name ?></a> on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
+            <i class="fa fa-folder"></i> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/" . $category->seourl ?>">
+                <?php 
+                $count = count($categories);
+                    for ($i = 0; $i < $count; $i++) {
+                        if ($i != $count - 1) {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>, ";
+                        } else {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>";
+                        }
+                    }
+                ?>
+            </a> on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
         </div>
     </div>
 

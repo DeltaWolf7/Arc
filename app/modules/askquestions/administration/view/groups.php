@@ -17,7 +17,7 @@
 
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" id="group" />
+                    <input type="text" class="form-control" id="group" maxlength="255" />
                 </div>
                 <div class="form-group">
                     <label>Text</label>

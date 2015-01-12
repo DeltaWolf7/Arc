@@ -13,12 +13,11 @@
     <div class="col-md-9">
         <?php
         $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
-        $category = BlogCategory::getBySEOUrl(system\Helper::arcGetURLData("data1"));
         $page = 0;
         if (!empty(system\Helper::arcGetURLData("data2"))) {
             $page = system\Helper::arcGetURLData("data2");
         }
-        $blogs = Blog::getAllByCategory($category->id);
+        $blogs = Blog::getAllByCategory($category->name);
         $entries = SystemSetting::getByKey("ARC_BLOG_ENTRIES_PER_PAGE");
         $selection = system\Helper::arcPagination($blogs, $page, $entries->value);
         buildBlog($selection, $charCount->value);

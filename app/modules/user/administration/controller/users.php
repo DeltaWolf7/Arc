@@ -34,7 +34,6 @@ if (isset($_POST["action"])) {
     } elseif ($_POST["action"] == "saveuser") {
         $user = new User();
         $user->getByID($_POST["id"]);
-
         // password settings
         if (!empty($_POST["password"])) {
             if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
@@ -44,12 +43,10 @@ if (isset($_POST["action"])) {
                 return;
             }
         }
-
         $user->firstname = ucwords($_POST["firstname"]);
         $user->lastname = ucwords($_POST["lastname"]);
         $user->email = strtolower($_POST["email"]);
         $user->update();
-
         echo json_encode(["status" => "success", "data" => "Changes saved"]);
     } elseif ($_POST["action"] == "removegroup") {
         $group = new UserGroup();
