@@ -33,7 +33,7 @@ if (isset($_POST["action"])) {
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
                 $table .= "<td><a href=\"#\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
-                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult(" . $group->id . ");\"><i class=\"fa fa-area-chart\"></i> View My Results</button></td>";
+                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult({$group->id});\"><i class=\"fa fa-area-chart\"></i> View My Results</button></td>";
                 $table .= "</tr>";
             }
         }
@@ -48,12 +48,12 @@ if (isset($_POST["action"])) {
         $questionno = $_POST["question"] + 1;
         if (count($questions) >= $questionno) {
             if (!empty($group->txt)) {
-                $data .= "<strong>Group Text</strong><div class=\"well\">" . $group->txt . "</div>";
+                $data .= "<strong>Group Text</strong><div class=\"well\">{$group->txt}</div>";
             }
 
             $question = $questions[$_POST["question"]];
             $data .= "<div class=\"form-group\">";
-            $data .= "<strong>Question " . $questionno . " of " . count($questions) . "</strong>";
+            $data .= "<strong>Question {$questionno} of " . count($questions) . "</strong>";
             $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
             $data .= "<div class=\"form-group\">";
             $data .= "<select class=\"form-control\" id=\"answer\">";
@@ -98,7 +98,7 @@ if (isset($_POST["action"])) {
         foreach ($questions as $question) {
             foreach ($results as $result) {
                 if ($result->questionid == $question->id) {
-                    $table .= "<tr><td>" . $result->questionno . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    $table .= "<tr><td>{$result->questionno}</td><td>" . html_entity_decode($question->question) . "</td><td>";
                     switch ($question->correctAnswer) {
                         case 1:
                             $table .= html_entity_decode($question->answer1);
@@ -141,7 +141,7 @@ if (isset($_POST["action"])) {
                     } else {
                         $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
                     }
-                    $table .= "</td><td>" . $result->timetaken . "</td></tr>";
+                    $table .= "</td><td>{$result->timetaken}</td></tr>";
                     $totalTime += $result->timetaken;
                 }
             }

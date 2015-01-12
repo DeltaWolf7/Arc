@@ -23,7 +23,6 @@ if (isset($_POST["action"])) {
         $question->answer5 = htmlentities($_POST["answer5"]);
         $question->correctAnswer = $_POST["correct"];
         $question->update();
-
         echo json_encode(["status" => "success", "data" => "Question saved"]);
     } else if ($_POST["action"] == "savegroup") {
         $group = new Group();
@@ -50,7 +49,7 @@ if (isset($_POST["action"])) {
         $data = "<table class=\"table table-striped\">";
         $data .= "<tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr>";
         foreach ($groups as $group) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions(" . $group->id . ");\">" . $group->name . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $group->id . ");\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup(" . $group->id . ");\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup(" . $group->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -61,7 +60,7 @@ if (isset($_POST["action"])) {
         $data = "<table class=\"table table-striped\">";
         $data .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr>";
         foreach ($questions as $question) {
-            $data .= "<tr><td>" . $count . "</td><td><a href=\"#\" onclick=\"getQuestion(" . $question->id . ")\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion(" . $question->id . ");\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion(" . $question->id . ");\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td>{$count}</td><td><a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             $count++;
         }
         $data .= "</table>";
@@ -72,21 +71,17 @@ if (isset($_POST["action"])) {
         if ($question->groupid == 0) {
             $question->groupid = $_POST["group"];
         }
-
         $data = "<label for=\"group\">Group</label>";
         $data .= "<select class=\"form-control\" id=\"groupS\">";
-
         $groups = Group::getGroups();
         foreach ($groups as $group) {
-            $data .= "<option value=\"" . $group->id . "\"";
+            $data .= "<option value=\"{$group->id}\"";
             if ($question->groupid == $group->id) {
                 $data .= " selected";
             }
-            $data .= ">" . $group->name . "</option>";
+            $data .= ">{$group->name}</option>";
         }
-
         $data .= "</select>";
-
         echo utf8_encode(json_encode(["question" => html_entity_decode($question->question), "answer1" => html_entity_decode($question->answer1),
             "answer2" => html_entity_decode($question->answer2), "answer2" => html_entity_decode($question->answer2), "answer3" => html_entity_decode($question->answer3),
             "answer4" => html_entity_decode($question->answer4), "answer5" => html_entity_decode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]));
@@ -125,7 +120,7 @@ if (isset($_POST["action"])) {
                 } else {
                     $t = number_format($time, 2) . " seconds";
                 }
-                $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult(" . $user->id . "," . $_POST["id"] . ")\">" . $user->getFullname() . "</a></td><td>" . $correct . "/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
+                $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
             }
         }
         $data .= "</table>";
@@ -143,13 +138,13 @@ if (isset($_POST["action"])) {
         $user = new User();
         $user->getByID($_POST["id"]);
         $table = "Student: " . $user->getFullname();
-        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults(" . $_POST["group"] . ");\"><i class=\"fa fa-backward\"></i> Back</a><p>";
+        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$_POST["group"]});\"><i class=\"fa fa-backward\"></i> Back</a><p>";
         $table .= "<table class=\"table table-striped\">";
         $table .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
                 $no = $count + 1;
-                $table .= "<tr><td>" . $no . "</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                $table .= "<tr><td>{$no}</td><td>" . html_entity_decode($question->question) . "</td><td>";
                 switch ($question->correctAnswer) {
                     case 1:
                         $table .= html_entity_decode($question->answer1);
@@ -192,7 +187,7 @@ if (isset($_POST["action"])) {
                 } else {
                     $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
                 }
-                $table .= "</td><td>" . $results[$count]->timetaken . "</td></tr>";
+                $table .= "</td><td>{$results[$count]->timetaken}</td></tr>";
                 $totalTime += $results[$count]->timetaken;
             }
             $count++;
@@ -207,7 +202,7 @@ if (isset($_POST["action"])) {
             $min = $totalTime / 60;
             $table .= number_format($min, 2) . " minutes";
         }
-        $table .= "<br />Score: " . $correct . "/" . count($questions);
+        $table .= "<br />Score: {$correct}/" . count($questions);
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
@@ -226,7 +221,7 @@ if (isset($_POST["action"])) {
         $question->correctAnswer = $oquestion->correctAnswer;
         $question->groupid = $oquestion->groupid;
         $txt = html_entity_decode($oquestion->question);
-        $question->question = htmlentities("Copy of: " . $txt);
+        $question->question = htmlentities("Copy of: {$txt}");
         $question->update();
         echo json_encode(["status" => "success", "data" => "Question duplicated"]);
     }

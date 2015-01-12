@@ -27,7 +27,7 @@ if (isset($_POST["action"])) {
         $user->getByID($_POST["id"]);
         $data = "<label for=\"groups2\">In Groups</label><select id=\"groups2\" class=\"form-control\" size=\"10\">";
         foreach ($user->getGroups() as $group) {
-            $data .= "<option value=\"" . $group->name . "\">" . $group->name . "</option>";
+            $data .= "<option value=\"{$group->name}\">{$group->name}</option>";
         }
         $data .= "</select>";
         echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data]);

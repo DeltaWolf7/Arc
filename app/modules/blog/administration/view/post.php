@@ -59,7 +59,7 @@ if (system\Helper::arcGetURLData("data4") != "0") {
                     if (empty($page->image)) {
                         echo "src=\"" . system\Helper::arcGetPath() . "modules/blog/images/placeholder.png\"";
                     } else {
-                        echo "src=\"" . system\Helper::arcGetPath() . "images/blog/" . $page->image . "\"";
+                        echo "src=\"" . system\Helper::arcGetPath() . "images/blog/{$page->image}\"";
                     }
                     echo " alt=\"Post Image\" class=\"img-rounded\" />";
                     ?>

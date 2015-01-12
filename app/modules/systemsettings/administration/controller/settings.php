@@ -5,9 +5,9 @@ if (isset($_POST["action"])) {
         $table = "<tr><th>Key</th><th>Value</th><th>&nbsp;</th></tr>";
         $settings = SystemSetting::getAll();
         foreach ($settings as $setting) {
-            $table .= "<tr><td>" . $setting->key . "</td><td>" . $setting->value . "</td>"
-                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editSetting('" . $setting->key . "');\"><i class=\"fa fa-edit\"></i> Edit</a>"
-                    . " <a class=\"btn btn-default btn-sm\" onclick=\"deleteSetting('" . $setting->key . "');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $table .= "<tr><td>{$setting->key}</td><td>{$setting->value}</td>"
+                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editSetting('{$setting->key}');\"><i class=\"fa fa-edit\"></i> Edit</a>"
+        . " <a class=\"btn btn-default btn-sm\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         echo utf8_encode(json_encode(["html" => $table]));
     } elseif ($_POST["action"] == "editsetting") {

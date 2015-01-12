@@ -517,20 +517,20 @@ class Helper {
                 }
 
                 // module menu
-                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/module.php")) {
+                if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
                     if (\UserPermission::hasPermission($groups, $module)) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/module.php";
+                        require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
                     }
                 }
                 // module administration menu
                 if (self::arcIsUserInGroup(["Administrators"]) == true) {
-                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/module.php")) {
+                    if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/administration/module.php")) {
                         self::$arc["menumodule"] = $module;
                         self::$arc["menuadmin"] = true;
                         self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/" . $module . "/administration/module.php";
+                        require_once self::arcGetPath(true) . "app/modules/{$module}/administration/module.php";
                         unset(self::$arc["menuadmin"]);
                     }
                 }
@@ -584,7 +584,7 @@ class Helper {
         foreach ($menus as $menu => $value) {
             if ($menu != "" && !is_numeric($menu)) {
                 echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
-                . "<i class='fa fa-list'></i> " . $menu . " <i class=\"caret\"></i></a>" . PHP_EOL
+                . "<i class='fa fa-list'></i> {$menu} <i class=\"caret\"></i></a>" . PHP_EOL
                 . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
                 self::arcProcessMenuItems($value);
                 echo "</ul>" . PHP_EOL
@@ -599,7 +599,7 @@ class Helper {
                 } else {
                     echo self::arcGetPath() . $value["module"];
                 }
-                echo "\"><i class='fa " . $value["icon"] . "'></i> " . $value['name'] . "</a></li>";
+                echo "\"><i class='fa {$value["icon"]}'></i> {$value['name']}</a></li>";
             } else {
                 self::arcProcessMenuItems($value);
             }
@@ -643,10 +643,10 @@ class Helper {
             $module_info["email"] = 'Unknown';
             $module_info["www"] = 'Unknown';
             if ($module != ".." && $module != ".") {
-                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/info.json")) {
-                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/" . $module . "/info.json", $module);
-                } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.json")) {
-                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/" . $module . "/administration/info.json", $module);
+                if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/info.json")) {
+                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/{$module}/info.json", $module);
+                } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$module}/administration/info.json")) {
+                    $module_list[] = self::arcGetModuleDetails(self::arcGetPath(true) . "app/modules/{$module}/administration/info.json", $module);
                 }
             }
         }
@@ -785,34 +785,33 @@ class Helper {
         $link2 = "";
         if (!empty($page) && $page > 1) {
             $prev = $page - 1;
-            $link1 = $baseurl . "/" . $prev;
+            $link1 = "{$baseurl}/{$prev}";
         }
 
         if ($page < $noperpage - 1) {
             $next = $page + 1;
-            $link2 = $baseurl . "/" . $next;
+            $link2 = "{$baseurl}/{$next}";
         }
 
         if (!$simple) {
-            $html = "<nav><ul class=\"pagination\"><li><a href=\"" . $link1;
-            $html .= "\" aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+            $html = "<nav><ul class=\"pagination\"><li><a href=\"{$link1}\""
+                . " aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
 
             for ($i = 0; $i <= $noperpage; $i++) {
                 $count = $i + 1;
-                $html .= "<li><a href=\"" . $baseurl . "/";
+                $html .= "<li><a href=\"{$baseurl}/";
                 if (!empty($i)) {
                     $html .= $i;
                 }
-                $html .= "\">" . $count . "</a></li>";
+                $html .= "\">{$count}</a></li>";
             }
 
-            $html .= "<li><a href=\"" . $link2;
-            $html .= "\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>"
+            $html .= "<li><a href=\"{$link2}\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>"
                     . "</ul></nav>";
         } else {
             $html = "<nav><ul class=\"pager\">";
-            $html .= "<li class=\"previous\"><a href=\"" . $link2 . "\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
-            $html .= "<li class=\"next\"><a href=\"" . $link1 . "\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
+            $html .= "<li class=\"previous\"><a href=\"{$link2}\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
+        $html .= "<li class=\"next\"><a href=\"{$link1}\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
             $html .= "</ul></nav>";
         }
         echo $html;

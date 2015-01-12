@@ -15,12 +15,12 @@ if (system\Helper::arcGetURLData("action") == null) {
             $content = substr($blog->content, 0, $charCount - 1);
         }
         system\Helper::arcAddHeader("description", $content);
-        system\Helper::arcAddHeader("", "<meta property=\"og:title\" content=\"" . $blog->title . "\" />" . PHP_EOL);
+        system\Helper::arcAddHeader("", "<meta property=\"og:title\" content=\"{$blog->title}\" />" . PHP_EOL);
         system\Helper::arcAddHeader("", "<meta property=\"og:type\" content=\"Article\" />" . PHP_EOL);
-        system\Helper::arcAddHeader("", "<meta property=\"og:description\" content=\"" . $content . "\" />" . PHP_EOL);
+        system\Helper::arcAddHeader("", "<meta property=\"og:description\" content=\"{$content}\" />" . PHP_EOL);
         system\Helper::arcAddHeader("", "<meta property=\"og:url\" content=\"" . system\Helper::arcGetModulePath() . system\Helper::arcGetURLData("action") . "/" . system\Helper::arcGetURLData("data1") . "/\" />" . PHP_EOL);
         if (!empty($blog->image)) {
-            system\Helper::arcAddHeader("", "<meta property=\"og:image\" content=\"" . system\Helper::arcGetModulePath() . system\Helper::arcGetURLData("data1") . "/images/" . $blog->image . "\"/>" . PHP_EOL);
+            system\Helper::arcAddHeader("", "<meta property=\"og:image\" content=\"" . system\Helper::arcGetModulePath() . system\Helper::arcGetURLData("data1") . "/images/{$blog->image}\"/>" . PHP_EOL);
         }
         system\Helper::arcAddHeader("", "<meta property=\"og:site_name\" content=\"" . ARCTITLE . "\" />" . PHP_EOL);
     }

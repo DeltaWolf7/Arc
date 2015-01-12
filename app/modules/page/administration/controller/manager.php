@@ -34,10 +34,10 @@ if (isset($_POST["action"])) {
         $pages = Page::getAllPages();
         foreach ($pages as $page) {
             $table .= "<tr>"
-                    . "<td>" . $page->seourl . "</td>"
-                    . "<td>" . $page->title . "</td>"
-                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPage(" . $page->id . ");\"><i class='fa fa-edit'></i>&nbsp;Edit</a>"
-                    . "&nbsp;<a onclick=\"removePage(" . $page->id . ");\" class=\"btn btn-default btn-sm\"><i class='fa fa-remove'></i>&nbsp;Remove</button></td>"
+                    . "<td>{$page->seourl}</td>"
+                    . "<td>{$page->title}</td>"
+                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"editPage({$page->id});\"><i class='fa fa-edit'></i>&nbsp;Edit</a>"
+                    . "&nbsp;<a onclick=\"removePage({$page->id});\" class=\"btn btn-default btn-sm\"><i class='fa fa-remove'></i>&nbsp;Remove</button></td>"
                     . "</tr>";
         }
         echo utf8_encode(json_encode(["html" => $table]));

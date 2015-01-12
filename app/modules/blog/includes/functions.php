@@ -3,7 +3,7 @@
 function buildBlog($blogs, $limit = 0) {
     foreach ($blogs as $blog) {
         $content = html_entity_decode($blog->content);
-        $ending = ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/" . $blog->seourl . "\">[Continue reading]</a>";
+        $ending = ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/{$blog->seourl}\">[Continue reading]</a>";
         $content = truncate($content, $limit, $ending);
         $categories = $blog->getCategories();
         ?>
@@ -12,14 +12,14 @@ function buildBlog($blogs, $limit = 0) {
             <?php
             if (!empty($blog->image)) {
                 ?>
-                <a class="media-left" href="<?php echo system\Helper::arcGetModulePath() . "post/" . $blog->seourl ?>">
+                <a class="media-left" href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
                     <img class="img-rounded" src="<?php echo $blog->getThumbImage(); ?>" alt="<?php echo $blog->title; ?>">
                 </a>
                 <?php
             }
             ?>
             <div class="media-body">
-                <a href="<?php echo system\Helper::arcGetModulePath() . "post/" . $blog->seourl ?>">
+                <a href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
                     <h4 class="media-heading"><?php echo $blog->title ?></h4>
                 </a>
                 <?php echo $content; ?>
@@ -30,18 +30,18 @@ function buildBlog($blogs, $limit = 0) {
                     <i class="fa fa-tags"></i> <?php echo $tags; ?>
                 <?php } ?>
                 <i class="fa fa-folder"></i> Posted in 
-                <?php 
+                <?php
                 $count = count($categories);
-                    for ($i = 0; $i < $count; $i++) {
-                        if ($i != $count - 1) {
-                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>, ";
-                        } else {
-                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/" . $categories[$i]->seourl . "\">" . $categories[$i]->name . "</a>";
-                        }
+                for ($i = 0; $i < $count; $i++) {
+                    if ($i != $count - 1) {
+                        echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>, ";
+                    } else {
+                        echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>";
                     }
+                }
                 ?>
-                 on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
-                 by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
+                on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
+                by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
             </div>
         </div>
 
@@ -144,6 +144,5 @@ function truncate($text, $length = 100, $ending = '...', $exact = true, $conside
             $truncate .= '';
         }
     }
-
     return $truncate;
 }
