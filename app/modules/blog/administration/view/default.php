@@ -159,7 +159,19 @@
 
     $(document).ready(function () {
         get("posts");
-        $('.summernote').summernote({height: 250});
+        $('.summernote').summernote({height: 250,
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['font', ['strikethrough']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['table', ['table']],
+                ['link', ['link', 'picture', 'hr']],
+                ['source', ['codeview']]
+            ]
+        });
         $('#date').datetimepicker({
             pickTime: false
         });
