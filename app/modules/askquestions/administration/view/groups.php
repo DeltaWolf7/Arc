@@ -106,45 +106,52 @@
                 <h4 class="modal-title" id="myModalLabel">Question Editor</h4>
             </div>
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="question">Question</label>
-                        <div class="summernote"></div>
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active"><a href="#question" aria-controls="Question" role="tab" data-toggle="tab">Question</a></li>
+                    <li role="presentation"><a href="#answers" aria-controls="answers" role="tab" data-toggle="tab">Answers</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="question">
+                        <div class="form-group">
+                            <label for="question">Question</label>
+                            <div class="summernote"></div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="answer1">Answer 1</label>
-                        <input type="text" class="form-control" id="answer1" />
+                    <div role="tabpanel" class="tab-pane" id="answers">
+                        <div class="form-group">
+                            <label for="answer1">Answer 1</label>
+                            <input type="text" class="form-control" id="answer1" />
+                        </div>
+                        <div class="form-group">
+                            <label for="answer2">Answer 2</label>
+                            <input type="text" class="form-control" id="answer2" />
+                        </div>
+                        <div class="form-group">
+                            <label for="answer3">Answer 3</label>
+                            <input type="text" class="form-control" id="answer3" />
+                        </div>
+                        <div class="form-group">
+                            <label for="answer4">Answer 4</label>
+                            <input type="text" class="form-control" id="answer4" />
+                        </div>
+                        <div class="form-group">
+                            <label for="answer5">Answer 5</label>
+                            <input type="text" class="form-control" id="answer5" />
+                        </div>
+                        <div class="form-group">
+                            <label for="correct">Correct Answer</label>
+                            <select id="correct" class="form-control">
+                                <option value="1">Answer 1</option>
+                                <option value="2">Answer 2</option>
+                                <option value="3">Answer 3</option>
+                                <option value="4">Answer 4</option>
+                                <option value="5">Answer 5</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="groupSelect">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="answer2">Answer 2</label>
-                        <input type="text" class="form-control" id="answer2" />
-                    </div>
-                    <div class="form-group">
-                        <label for="answer3">Answer 3</label>
-                        <input type="text" class="form-control" id="answer3" />
-                    </div>
-                    <div class="form-group">
-                        <label for="answer4">Answer 4</label>
-                        <input type="text" class="form-control" id="answer4" />
-                    </div>
-                    <div class="form-group">
-                        <label for="answer5">Answer 5</label>
-                        <input type="text" class="form-control" id="answer5" />
-                    </div>
-                    <div class="form-group">
-                        <label for="correct">Correct Answer</label>
-                        <select id="correct" class="form-control">
-                            <option value="1">Answer 1</option>
-                            <option value="2">Answer 2</option>
-                            <option value="3">Answer 3</option>
-                            <option value="4">Answer 4</option>
-                            <option value="5">Answer 5</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="groupSelect">
-
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
