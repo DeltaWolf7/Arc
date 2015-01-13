@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["action"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "savequestion") {
         $question = new Question();
         if (!empty($_POST["id"])) {

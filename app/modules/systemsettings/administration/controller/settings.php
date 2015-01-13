@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["action"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "settings") {
         $table = "<tr><th>Key</th><th>Value</th><th>&nbsp;</th></tr>";
         $settings = SystemSetting::getAll();

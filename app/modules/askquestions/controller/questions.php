@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["action"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "saveresult") {
         $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $_POST["qid"]);
         $no = $_POST["question"] + 1;

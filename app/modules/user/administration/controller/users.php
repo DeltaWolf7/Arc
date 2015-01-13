@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["action"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "users") {
         $table = "<table class=\"table table-striped\">"
                 . "<tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>&nbsp;</th></tr>";

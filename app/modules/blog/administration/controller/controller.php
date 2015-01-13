@@ -4,7 +4,7 @@ if (system\Helper::arcGetURLData("action") == null) {
     system\Helper::arcOverrideView("default", true);
 }
 
-if (isset($_POST["action"])) {  
+if (system\Helper::arcIsAjaxRequest() == true) {  
     if ($_POST["action"] == "setimage") {
         $post = new Blog();
         $post->getByID($_POST["id"]);

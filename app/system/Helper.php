@@ -264,7 +264,7 @@ class Helper {
         // update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
 
-        if (count($_POST) == 0) {
+        if (self::arcIsAjaxRequest() == false) {
             // Check the template in config exists.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
                 die("Unable to find template '" . ARCTEMPLATE . "' specified in Config.php.");
@@ -296,7 +296,7 @@ class Helper {
             self::arcForceView("error", "error", false, ["403"]);
         }
 
-        if (count($_POST) == 0) {
+        if (self::arcIsAjaxRequest() == false) {
             // Check if the template has a header and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
                 die("Unable to find template header.php.");
@@ -315,7 +315,7 @@ class Helper {
             self::arcForceView("error", "error", false, ["403"]);
         }
 
-        if (count($_POST) == 0) {
+        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
             // Get module view      
             if (self::arcGetURLData("administration") == null) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
@@ -795,7 +795,7 @@ class Helper {
 
         if (!$simple) {
             $html = "<nav><ul class=\"pagination\"><li><a href=\"{$link1}\""
-                . " aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
+                    . " aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
 
             for ($i = 0; $i <= $noperpage; $i++) {
                 $count = $i + 1;
@@ -811,10 +811,16 @@ class Helper {
         } else {
             $html = "<nav><ul class=\"pager\">";
             $html .= "<li class=\"previous\"><a href=\"{$link2}\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
-        $html .= "<li class=\"next\"><a href=\"{$link1}\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
+            $html .= "<li class=\"next\"><a href=\"{$link1}\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
             $html .= "</ul></nav>";
         }
         echo $html;
     }
 
+    public static function arcIsAjaxRequest() {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            return true;
+        }
+        return false;
+    }
 }

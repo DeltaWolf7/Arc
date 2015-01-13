@@ -170,7 +170,11 @@
                 ['table', ['table']],
                 ['link', ['link', 'picture', 'hr']],
                 ['source', ['codeview']]
-            ]
+            ],
+            onChange: function (contents, $editable) {
+                $("body").removeClass();
+                $("body").addClass("modal-open");
+            }
         });
         $('#date').datetimepicker({
             pickTime: false

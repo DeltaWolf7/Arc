@@ -89,7 +89,6 @@
 
 <script>
     var page;
-
     function editPage(pageid) {
         page = pageid;
         $.ajax({
@@ -130,10 +129,8 @@
                         $("#myModal").modal('show');
                     }, 2000);
                 }
-            }
-        });
+            }});
     });
-
     function removePage(pageid) {
         page = pageid;
         $("#deletePage").modal("show");
@@ -156,7 +153,6 @@
             }
         });
     });
-
     function getPages() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -183,8 +179,36 @@
                 ['table', ['table']],
                 ['link', ['link', 'picture', 'hr']],
                 ['source', ['codeview']]
-            ]
+            ],
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
         });
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                url: "<?php echo system\Helper::arcGetPath() . "app/modules/page/administration/controller/upload.php"; ?>",
+                cache: false,
+                type: "post",
+                contentType: "multipart/form-data",
+                processData: false,
+                success: function (data) {
+                    alert("here");
+                    var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    alert(jdata.data);
+                    if (jdata.status == "success") {
+                        editor.insertImage(welEditable, jdata.data);
+                    }
+                    updateStatus(jdata.status, jdata.data);
+                    $("body").removeClass();
+                    $("body").addClass("modal-open");
+                }
+            });
+        }
         getPages();
     });
+
+
 </script>

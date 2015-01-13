@@ -2,7 +2,7 @@
 
 system\Helper::arcAddHeader("title", "Reset Password");
 
-if (count($_POST) > 0) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if (empty($_POST["password"])) {
         echo json_encode(["status" => "danger", "data" => "A new password must be provided"]);
         return;

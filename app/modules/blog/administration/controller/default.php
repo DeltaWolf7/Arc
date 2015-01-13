@@ -1,6 +1,6 @@
 <?php
 
-if (isset($_POST["action"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "clearcache") {
         $thumbs = scandir(system\Helper::arcGetPath(true) . "app/modules/blog/images/thumbs/");
         foreach ($thumbs as $thumb) {
@@ -18,7 +18,7 @@ if (isset($_POST["action"])) {
             $categories = $blog->getCategories();
             foreach ($categories as $category) {
                 $data .= "<i class=\"label label-default\">{$category->name}</i> ";
-            } 
+            }
             $data .= "</td><td>{$blog->date}</td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" href=\"#\" onclick=\"editPost({$blog->id});\"><i class=\"fa fa-pencil\"></i> Edit</a> <a class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</table>";

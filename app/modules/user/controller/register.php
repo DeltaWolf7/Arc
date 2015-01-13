@@ -2,7 +2,7 @@
 
 system\Helper::arcAddHeader("title", "Register Account");
 
-if (isset($_POST["email"])) {
+if (system\Helper::arcIsAjaxRequest() == true) {
 
     if (empty($_POST["firstname"])) {
         echo json_encode(["status" => "danger", "data" => "Firstname must be provided"]);
@@ -18,7 +18,7 @@ if (isset($_POST["email"])) {
         echo json_encode(["status" => "danger", "data" => "Email address must be provided"]);
         return;
     }
-    
+
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
         echo json_encode(["status" => "danger", "data" => "Invalid email address format"]);
         return;
