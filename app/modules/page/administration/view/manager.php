@@ -193,14 +193,9 @@
                 ['table', ['table']],
                 ['link', ['link', 'picture', 'hr']],
                 ['source', ['codeview']]
-            ]//,
-            //onImageUpload: function (files, editor, welEditable) {
-            //    sendFile(files[0], editor, welEditable);
-            //}
-            ,
-            onChange: function (contents, $editable) {
-                $("body").removeClass();
-                $("body").addClass("modal-open");
+            ],
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
             }
         });
         function sendFile(file, editor, welEditable) {
@@ -208,15 +203,14 @@
             data.append("file", file);
             $.ajax({
                 data: data,
-                url: "<?php echo system\Helper::arcGetPath() . "app/modules/page/administration/controller/upload.php"; ?>",
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
                 cache: false,
                 type: "post",
-                contentType: "multipart/form-data",
+                contentType: false,
                 processData: false,
+                dataType: "json",
                 success: function (data) {
-                    alert("here");
                     var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    alert(jdata.data);
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     }

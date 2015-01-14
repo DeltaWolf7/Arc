@@ -37,7 +37,7 @@
                 var dropdown = '<ul class="dropdown-menu">' + list + '</ul>';
 
                 return tmpl.iconButton('fa fa-header', {
-                    title: 'hello',
+                    title: 'Special Characters',
                     hide: true,
                     dropdown: dropdown
                 });

@@ -172,11 +172,32 @@
                 ['link', ['link', 'picture', 'hr']],
                 ['source', ['codeview']]
             ],
-            onChange: function (contents, $editable) {
-                $("body").removeClass();
-                $("body").addClass("modal-open");
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
             }
         });
+        function sendFile(file, editor, welEditable) {
+            data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data: data,
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
+                cache: false,
+                type: "post",
+                contentType: false,
+                processData: false,
+                dataType: "json",
+                success: function (data) {
+                    var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    if (jdata.status == "success") {
+                        editor.insertImage(welEditable, jdata.data);
+                    }
+                    updateStatus(jdata.status, jdata.data);
+                    $("body").removeClass();
+                    $("body").addClass("modal-open");
+                }
+            });
+        }
         $('#date').datetimepicker({
             pickTime: false
         });
