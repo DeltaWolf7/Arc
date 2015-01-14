@@ -98,6 +98,7 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-filestyle.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
+        self::arcAddHeader("js", self::arcGetPath() . "js/summernote-plugins.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
         // CSS, add required css files to header

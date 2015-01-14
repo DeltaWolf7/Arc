@@ -13,53 +13,66 @@
                 <h4 class="modal-title" id="myModalLabel">Edit Page</h4>
             </div>
             <div class="modal-body">
+                <div role="tabpanel">
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Page Details</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
-                                </div>
-                                <div class="form-group">
-                                    <label for="seourl">SEO Url</label>
-                                    <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
-                                </div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
+                        <li role="presentation"><a href="#content" aria-controls="content" role="tab" data-toggle="tab">Content</a></li>
+                    </ul>
 
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="details">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Page Details</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label for="title">Title</label>
+                                                <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="seourl">SEO Url</label>
+                                                <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">META Details</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <label for="metadescription">META Description</label>
+                                                <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="metakeywords">META Keywords</label>
+                                                <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
+                                            </div> 
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">META Details</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="metadescription">META Description</label>
-                                    <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
+                        <div role="tabpanel" class="tab-pane" id="content">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="summernote"></div>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="metakeywords">META Keywords</label>
-                                    <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
-                                </div> 
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <div class="summernote"></div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
@@ -171,6 +184,7 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['insert', ['sub', 'super']],
                 ['font', ['strikethrough']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
@@ -179,9 +193,14 @@
                 ['table', ['table']],
                 ['link', ['link', 'picture', 'hr']],
                 ['source', ['codeview']]
-            ],
-            onImageUpload: function (files, editor, welEditable) {
-                sendFile(files[0], editor, welEditable);
+            ]//,
+            //onImageUpload: function (files, editor, welEditable) {
+            //    sendFile(files[0], editor, welEditable);
+            //}
+            ,
+            onChange: function (contents, $editable) {
+                $("body").removeClass();
+                $("body").addClass("modal-open");
             }
         });
         function sendFile(file, editor, welEditable) {
