@@ -1,7 +1,7 @@
 <?php
-$currencyDisplay = SystemSetting::keyExists("ARC_STORE_CURRENCYDISPLAY");
-$currencySymbol = SystemSetting::keyExists("ARC_STORE_CURRENCYSYMBOL");
-$storeVat = SystemSetting::keyExists("ARC_STORE_VAT");
+$currencyDisplay = SystemSetting::getByKey("ARC_STORE_CURRENCYDISPLAY");
+$currencySymbol = SystemSetting::getByKey("ARC_STORE_CURRENCYSYMBOL");
+$storeVat = SystemSetting::getByKey("ARC_STORE_VAT");
 $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
 ?>
 
