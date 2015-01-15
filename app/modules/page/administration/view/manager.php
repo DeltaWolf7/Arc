@@ -213,8 +213,9 @@
                     var jdata = jQuery.parseJSON(JSON.stringify(data));
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
+                    } else {
+                        updateStatus(jdata.status, jdata.data);
                     }
-                    updateStatus(jdata.status, jdata.data);
                     $("body").removeClass();
                     $("body").addClass("modal-open");
                 }
@@ -222,6 +223,4 @@
         }
         getPages();
     });
-
-
 </script>

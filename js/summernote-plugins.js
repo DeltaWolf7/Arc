@@ -30,10 +30,12 @@
                 });
             },
             charsDropdown: function () {
-                var list = '<li><a data-event="charsDropdown" href="#" data-value="sqr">&radic;</a></li>';
-                list += '<li><a data-event="charsDropdown" href="#" data-value="deg">&deg;</a></li>';
-                list += '<li><a data-event="charsDropdown" href="#" data-value="plusmin">&plusmn;</a></li>';
-                list += '<li><a data-event="charsDropdown" href="#" data-value="div">&divide;</a></li>';
+                var list = '<li><a data-event="charsDropdown" href="#" data-value="sqr">&radic; Square Root</a></li>';
+                list += '<li><a data-event="charsDropdown" href="#" data-value="deg">&deg; Degree</a></li>';
+                list += '<li><a data-event="charsDropdown" href="#" data-value="plusmin">&plusmn; Plus/Minus</a></li>';
+                list += '<li><a data-event="charsDropdown" href="#" data-value="div">&divide; Divide</a></li>';
+                list += '<li><a data-event="charsDropdown" href="#" data-value="pi">&pi; Pi</a></li>';
+                list += '<li><a data-event="charsDropdown" href="#" data-value="sig">&sigma; Sigma</a></li>';
                 var dropdown = '<ul class="dropdown-menu">' + list + '</ul>';
 
                 return tmpl.iconButton('fa fa-header', {
@@ -74,6 +76,12 @@
                         break;
                     case "div":
                         html = '÷';
+                        break;
+                    case "pi":
+                        html = 'Π';
+                        break;
+                    case "sig":
+                        html = 'Σ';
                         break;
                 }
                 editor.insertText($editable, html);

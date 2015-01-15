@@ -162,7 +162,7 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super']],
+                ['insert', ['sub', 'super', 'charsDropdown']],
                 ['font', ['strikethrough']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
@@ -191,8 +191,9 @@
                     var jdata = jQuery.parseJSON(JSON.stringify(data));
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
+                    } else {
+                        updateStatus(jdata.status, jdata.data);
                     }
-                    updateStatus(jdata.status, jdata.data);
                     $("body").removeClass();
                     $("body").addClass("modal-open");
                 }

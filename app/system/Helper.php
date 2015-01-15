@@ -96,7 +96,6 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-filestyle.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote-plugins.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
@@ -254,6 +253,28 @@ class Helper {
      * Get the view based on the request
      */
     public static function arcGetView() {
+        if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
+            if (isset($_FILES['file']['name'])) {
+                if (!$_FILES['file']['error']) {
+                    $name = md5(rand(100, 200));
+                    $ext = explode('.', $_FILES['file']['name']);
+                    $filename = $name . '.' . $ext[1];
+                    $destination = self::arcGetPath(true) . "images/" . $filename;
+                    $location = $_FILES["file"]["tmp_name"];
+                    $size = getimagesize($location);
+                    if ($size == 0) {
+                        echo json_encode(["data" => "Invalid image uploaded", "status" => "danger"]);
+                        return;
+                    }
+                    move_uploaded_file($location, $destination);
+                    echo json_encode(["data" => self::arcGetPath() . "images/" . $filename, "status" => "success"]);
+                } else {
+                    echo json_encode(["status" => "danger", "data" => "Error occured while uploading image."]);
+                }
+            }
+            return;
+        }
+
         // expired session
         $timeout = ARCSESSIONTIMEOUT * 60;
         if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
@@ -316,7 +337,7 @@ class Helper {
             self::arcForceView("error", "error", false, ["403"]);
         }
 
-        if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) != 'xmlhttprequest') {
+        if (self::arcIsAjaxRequest() == false) {
             // Get module view      
             if (self::arcGetURLData("administration") == null) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
@@ -824,4 +845,5 @@ class Helper {
         }
         return false;
     }
+
 }
