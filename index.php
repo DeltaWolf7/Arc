@@ -65,6 +65,15 @@ switch (ARCDEBUG) {
 require_once "app/system/Helper.php";
 system\Helper::init();
 
+if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
+    echo "<div class=\"alert alert-warning\">Images directory not found. Arc will try to create it.</div>";
+    try {
+        mkdir(system\Helper::arcGetPath(true) . "images");
+        echo "<div class=\"alert alert-success\">Images directory created.</div>";
+    } catch (Exception $ex) {
+        echo "<div class=\"alert alert-danger\">Unable to create images directory. Error: " . $e->getMessage() . "</div>";
+    }
+}
 
 // Setup autoloader.
 spl_autoload_register(function($class) {

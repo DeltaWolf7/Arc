@@ -230,10 +230,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $name = md5(rand(100, 200));
                 $ext = explode('.', $_FILES['file']['name']);
                 $filename = $name . '.' . $ext[1];
-                $destination = system\Helper::arcGetPath(true) . "app/modules/askquestions/images/" . $filename; //change this directory
+                $destination = system\Helper::arcGetPath(true) . "images/" . $filename; //change this directory
                 $location = $_FILES["file"]["tmp_name"];
                 move_uploaded_file($location, $destination);
-                echo json_encode(["data" => system\Helper::arcGetPath() . "app/modules/askquestions/images/" . $filename, "status" => "success"]);
+                echo json_encode(["data" => system\Helper::arcGetPath() . "images/" . $filename, "status" => "success"]);
             } else {
                 echo json_encode(["status" => "danger", "data" => "Error occured while uploading image."]);
             }
