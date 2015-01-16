@@ -62,48 +62,6 @@ class Blog extends DataProvider {
         return $blog;
     }
 
-    public function getThumbImage($width = null) {
-        if (!empty($this->image)) {
-            $thumbWidth = SystemSetting::getByKey("ARC_BLOG_THUMB_WIDTH");
-            if ($width == null) {
-                $width = $thumbWidth->value;
-            }
-            if (!file_exists(system\Helper::arcGetModulePath(true) . "images/thumbs/{$this->image}")) {
-                $size = getimagesize(system\Helper::arcGetModulePath(true) . "images/{$this->image}");
-                $ratio = $size[0] / $size[1]; // width/height
-                if ($ratio > 1) {
-                    $width = $width;
-                    $height = $width / $ratio;
-                } else {
-                    $width = $width * $ratio;
-                    $height = $width;
-                }
-                $src = imagecreatefromstring(file_get_contents(system\Helper::arcGetModulePath(true) . "images/{$this->image}"));
-                $dst = imagecreatetruecolor($width, $height);
-                imagecopyresampled($dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
-                imagedestroy($src);
-
-                $extension = strtolower(strrchr(system\Helper::arcGetModulePath(true) . "images/{$this->image}", '.'));
-                switch ($extension) {
-                    case '.jpg':
-                    case '.jpeg':
-                        imagejpeg($dst, system\Helper::arcGetModulePath(true) . "images/thumbs/{$this->image}");
-                        break;
-                    case '.gif':
-                        imagegif($dst, system\Helper::arcGetModulePath(true) . "images/thumbs/{$this->image}");
-                        break;
-                    case '.png':
-                        imagepng($dst, system\Helper::arcGetModulePath(true) . "images/thumbs/{$this->image}");
-
-                        break;
-                }
-                imagedestroy($dst);
-            }
-            return system\Helper::arcGetPath() . "app/modules/blog/images/thumbs/{$this->image}";
-        }
-        return null;
-    }
-
     /**
      * 
      * @return \Blog Gets the group of the user

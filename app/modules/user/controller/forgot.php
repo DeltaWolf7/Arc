@@ -1,7 +1,5 @@
 <?php
 
-system\Helper::arcAddHeader("title", "Forgot Password");
-
 if (system\Helper::arcIsAjaxRequest() == true) {
     if (empty($_POST["email"])) {
         echo json_encode(["status" => "danger", "data" => "Email address must be provided"]);

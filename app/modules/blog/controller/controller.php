@@ -1,4 +1,7 @@
 <?php
+
+system\Helper::arcAddHeader("css", system\Helper::arcGetPath() . "app/modules/blog/css/styles.css");
+
 if (system\Helper::arcGetURLData("action") == null) {
     system\Helper::arcOverrideView("default");
     $title = SystemSetting::getByKey("ARC_BLOG_TITLE");
@@ -20,7 +23,7 @@ if (system\Helper::arcGetURLData("action") == null) {
         system\Helper::arcAddHeader("", "<meta property=\"og:description\" content=\"{$content}\" />" . PHP_EOL);
         system\Helper::arcAddHeader("", "<meta property=\"og:url\" content=\"" . system\Helper::arcGetModulePath() . system\Helper::arcGetURLData("action") . "/" . system\Helper::arcGetURLData("data1") . "/\" />" . PHP_EOL);
         if (!empty($blog->image)) {
-            system\Helper::arcAddHeader("", "<meta property=\"og:image\" content=\"" . system\Helper::arcGetModulePath() . system\Helper::arcGetURLData("data1") . "/images/{$blog->image}\"/>" . PHP_EOL);
+            system\Helper::arcAddHeader("", "<meta property=\"og:image\" content=\"" . system\Helper::arcGetPath() . "images/{$blog->image}\"/>" . PHP_EOL);
         }
         system\Helper::arcAddHeader("", "<meta property=\"og:site_name\" content=\"" . ARCTITLE . "\" />" . PHP_EOL);
     }

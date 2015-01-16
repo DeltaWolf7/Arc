@@ -1,2 +1,0 @@
-Internal Server Error 500 When Uploading Large Images/Files See (FcgidMaxRequestLen):
-http://binaryone.com.au/how-to-fix-mod_fcgid-http-request-length-131619-so-far-exceeds-maxrequestlen-131072-error-on-ubuntu-12-04-lts-precise-pangolin-linux/

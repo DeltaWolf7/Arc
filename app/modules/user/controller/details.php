@@ -1,6 +1,5 @@
 <?php
 
-system\Helper::arcAddHeader("title", "Account Details");
 if (system\Helper::arcIsAjaxRequest() == true) {
     if (isset($_POST["id"])) {
         $user = new User();

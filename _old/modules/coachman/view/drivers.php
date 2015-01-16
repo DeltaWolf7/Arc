@@ -11,7 +11,7 @@
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-body">
-                <table class="table table-striped">
+                <table class="table table-hover table-condensed">
                     <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th>Cost P/H</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "drivers/0" ?>'"><i class="fa fa-plus"></i> Create</button></th></tr>
                     <?php
                     $drivers = Driver::getAll();

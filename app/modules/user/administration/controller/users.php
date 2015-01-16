@@ -2,22 +2,29 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "users") {
-        $table = "<table class=\"table table-striped\">"
-                . "<tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>&nbsp;</th></tr>";
+        $table = "<table class=\"table table-hover table-condensed\">"
+                . "<thead><tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Status</th><th class=\"text-right\"><a onclick=\"editUser(0);\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-plus\"></i>&nbsp;New User</a></th></tr></thead>"
+                . "<tbody>";
         $users = User::getAllUsers();
         foreach ($users as $user) {
-            $table .= "<tr><td>{$user->firstname}</td><td>{$user->lastname}</td><td>{$user->email}</td><td class=\"text-right\"><a onclick=\"editUser({$user->id});\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-edit\"></i>&nbsp;Edit</a>&nbsp;<a onclick=\"removeUser({$user->id});\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i>&nbsp;Remove</a></td></tr>";
+            $table .= "<tr><td>{$user->firstname}</td><td>{$user->lastname}</td><td>{$user->email}</td><td>";
+            if ($user->enabled) {
+                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
+                } else {
+                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
+                }
+            $table .= "</td><td class=\"text-right\"><a onclick=\"editUser({$user->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-edit\"></i>&nbsp;Edit</a>&nbsp;<a onclick=\"removeUser({$user->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i>&nbsp;Remove</a></td></tr>";
         }
-        $table .= "</table>";
+        $table .= "</tbody></table>";
         echo json_encode(["html" => $table]);
     } elseif ($_POST["action"] == "groups") {
-        $table = "<table class=\"table table-striped\">"
-                . "<tr><th>Name</th><th>Description</th><th>&nbsp;</th></tr>";
+        $table = "<table class=\"table table-hover table-condensed\">"
+                . "<thead><tr><th>Name</th><th>Description</th><th class=\"text-right\"><a onclick=\"editGroup(0);\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-plus\"></i>&nbsp;New Group</a></th></tr></thead><tbody>";
         $groups = UserGroup::getAllGroups();
         foreach ($groups as $group) {
-            $table .= "<tr><td>{$group->name}</td><td>{$group->description}</td><td class=\"text-right\"><a onclick=\"editGroup({$group->id});\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-edit\"></i>&nbsp;Edit</a>&nbsp;<a onclick=\"removeGroup({$group->id});\" class=\"btn btn-default btn-sm\"><i class=\"fa fa-remove\"></i>&nbsp;Remove</a></td></tr>";
+            $table .= "<tr><td>{$group->name}</td><td>{$group->description}</td><td class=\"text-right\"><a onclick=\"editGroup({$group->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-edit\"></i>&nbsp;Edit</a>&nbsp;<a onclick=\"removeGroup({$group->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i>&nbsp;Remove</a></td></tr>";
         }
-        $table .= "</table>";
+        $table .= "</tbody></table>";
         echo json_encode(["html" => $table]);
     } elseif ($_POST["action"] == "remove") {
         $user = new User();
@@ -25,12 +32,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "user") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        $data = "<label for=\"groups2\">In Groups</label><select id=\"groups2\" class=\"form-control\" size=\"10\">";
+        $data = "<label for=\"groups2\">In Groups</label><select id=\"groups2\" class=\"form-control\" size=\"16\">";
         foreach ($user->getGroups() as $group) {
             $data .= "<option value=\"{$group->name}\">{$group->name}</option>";
         }
         $data .= "</select>";
-        echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data]);
+        echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled)]);
     } elseif ($_POST["action"] == "saveuser") {
         $user = new User();
         $user->getByID($_POST["id"]);
@@ -44,7 +51,34 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
         }
         $user->firstname = ucwords($_POST["firstname"]);
+        if (empty($_POST["firstname"])) {
+            echo json_encode(["status" => "danger", "data" => "Firstname cannot be empty"]);
+            return;
+        }
+        
         $user->lastname = ucwords($_POST["lastname"]);
+        if (empty($_POST["lastname"])) {
+            echo json_encode(["status" => "danger", "data" => "Lastname cannot be empty"]);
+            return;
+        }
+        
+        $test = User::getByEmail($_POST["email"]);
+        if ($user->id == 0 && $test->id != 0) {
+            echo json_encode(["status" => "danger", "data" => "User already exists with this email address"]);
+            return;
+        }
+        
+        if ($user->id == 0 && empty($_POST["password"])) {
+            echo json_encode(["status" => "danger", "data" => "New users must have a password"]);
+            return;
+        }
+        
+        if ($_POST["enabled"] == "true") {
+            $user->enabled = 1;
+        } else {
+            $user->enabled = 0;
+        }
+     
         $user->email = strtolower($_POST["email"]);
         $user->update();
         echo json_encode(["status" => "success", "data" => "Changes saved"]);
@@ -61,6 +95,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
         $group->name = ucwords($_POST["name"]);
+        if (empty($_POST["name"])) {
+            echo json_encode(["status" => "danger", "data" => "Group name cannot be empty"]);
+            return;
+        }
         $group->description = $_POST["description"];
         $group->update();
         echo json_encode(["status" => "success", "data" => "Group saved"]);

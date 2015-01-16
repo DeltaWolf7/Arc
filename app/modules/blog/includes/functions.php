@@ -13,7 +13,7 @@ function buildBlog($blogs, $limit = 0) {
             if (!empty($blog->image)) {
                 ?>
                 <a class="media-left" href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
-                    <img class="img-rounded" src="<?php echo $blog->getThumbImage(); ?>" alt="<?php echo $blog->title; ?>">
+                    <img class="img-rounded" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
                 </a>
                 <?php
             }

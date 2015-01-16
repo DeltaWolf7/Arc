@@ -10,7 +10,7 @@ $ordernumber = SystemSetting::getByKey("ARC_STORE_ORDERNUMBER");
 </div>
 
 <form>
-    <table class="table table-striped">
+    <table class="table table-hover table-condensed">
         <tr><th>Setting</th><th>Value</th></tr>
         <tr><td>Currency Symbol</td><td><input type="text" class="form-control" id="currencySymbol" value="<?php echo $currencySymbol->value; ?>"></td></tr>
         <tr><td>Currency Display Location</td><td><select class="form-control" id="currencyDisplay">

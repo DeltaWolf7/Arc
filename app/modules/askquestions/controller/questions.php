@@ -23,7 +23,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             echo json_encode(["status" => "warning", "data" => "Question already answered."]);
         }
     } elseif ($_POST["action"] == "getQuestions") {
-        $table = "<tr><th>Complete</th><th>Question Group</th><th>&nbsp;</th></tr>";
+        $table = "<thead><tr><th>Complete</th><th>Question Group</th><th>&nbsp;</th></tr></thead><tbody>";
         $groups = Group::getGroups();
         foreach ($groups as $group) {
             if ($group->visible == 1) {
@@ -37,6 +37,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $table .= "</tr>";
             }
         }
+        $table .= "</tbody>";
         echo utf8_encode(json_encode(["html" => $table]));
     } elseif ($_POST["action"] == "getGroup") {
         $done = false;
@@ -93,8 +94,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $questions = Group::getQuestions($results[0]->groupid);
         $totalTime = 0;
         $correct = 0;
-        $table = "<table class=\"table table-striped\">";
-        $table .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        $table = "<table class=\"table table-hover table-condensed\">";
+        $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
             foreach ($results as $result) {
                 if ($result->questionid == $question->id) {
@@ -147,7 +148,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
         }
 
-        $table .= "</table>";
+        $table .= "</tbody></table>";
         $table .= "<div class=\"well\">";
         $table .= "Total time taken: ";
         if ($totalTime < 60) {

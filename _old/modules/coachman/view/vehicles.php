@@ -10,7 +10,7 @@
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-body">
-                <table class="table table-striped">
+                <table class="table table-hover table-condensed">
                     <tr>
                         <th>Reg No</th><th>Seats</th><th>Type</th><th>Cost p/m</th><th class="text-right"><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "vehicles/new" ?>'"><i class="fa fa-plus"></i> Create</button></th>
                     </tr>

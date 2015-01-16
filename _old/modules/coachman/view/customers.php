@@ -10,7 +10,7 @@
     <div class="col-sm-8">
         <div class="panel panel-default">
             <div class="panel-body">
-        <table class="table table-striped">
+        <table class="table table-hover table-condensed">
             <tr><th>Firstname</th><th>Lastname</th><th>Email</th><th>Phone</th><th>Mobile</th><th><button type="button" class="btn btn-primary btn-sm" onclick="window.location = '<?php echo arcGetModulePath() . "customers/0" ?>'"><i class="fa fa-plus"></i> Create</button></th></tr>
             <?php
             $customers = Customer::getAll();

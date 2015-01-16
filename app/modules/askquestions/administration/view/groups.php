@@ -2,8 +2,7 @@
     <h1>Question Editor</h1>
 </div>
 
-<div id="data">
-
+<div id="data" class="table-responsive">
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -168,11 +167,8 @@
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>
-
-            <div class="modal-body" id="resultsData">
-
+            <div class="modal-body table-responsive" id="resultsData">
             </div>
-
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
             </div>

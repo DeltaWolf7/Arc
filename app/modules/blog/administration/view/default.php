@@ -2,7 +2,7 @@
     <h1>Blog Manager</h1>
 </div>
 
-<p class="text-right"><a class="btn btn-default btn-sm" id="clearCache"><i class="fa fa-trash-o"></i> Clear Cache</a></p>
+<p class="text-right"><a class="btn btn-default btn-xs" id="clearCache"><i class="fa fa-trash-o"></i> Clear Cache</a></p>
 <div role="tabpanel">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -11,7 +11,7 @@
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active" id="data">
+        <div role="tabpanel" class="tab-pane active table-responsive" id="data">
         </div>
     </div>
 </div>
@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label>SEO Url</label>
                             <input type="text" class="form-control" id="seourl" maxlength="100" />
-                        </div>
+                        </div>class="
                         <div class="form-group">
                             <label>Tags</label>
                             <input type="text" class="form-control" id="tags" />
@@ -162,7 +162,7 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
+                ['insert', ['sub', 'super']],
                 ['font', ['strikethrough']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],

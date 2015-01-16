@@ -8,11 +8,7 @@ $user = system\Helper::arcGetUser();
 
 
 <div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">Personal</h3>
-    </div>
     <div class="panel-body">
-
         <div class="form-group">
             <label for="firstname">Firstname</label>
             <input type="firstname" class="form-control" id="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">

@@ -1,7 +1,5 @@
 <?php
 
-system\Helper::arcAddHeader("title", "Register Account");
-
 if (system\Helper::arcIsAjaxRequest() == true) {
 
     if (empty($_POST["firstname"])) {

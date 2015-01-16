@@ -2,8 +2,10 @@
     <h1>Page Management</h1>
 </div>
 
-<table class="table table-striped" id="pages">
-</table>
+<div class="table-responsive">
+    <table class="table table-hover table-condensed" id="pages">
+    </table>
+</div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -13,62 +15,52 @@
                 <h4 class="modal-title" id="myModalLabel">Edit Page</h4>
             </div>
             <div class="modal-body">
-                <div role="tabpanel">
-
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#details" aria-controls="details" role="tab" data-toggle="tab">Details</a></li>
-                        <li role="presentation"><a href="#content" aria-controls="content" role="tab" data-toggle="tab">Content</a></li>
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="details">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Page Details</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label for="title">Title</label>
-                                                <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="seourl">SEO Url</label>
-                                                <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50">
-                                            </div>
-
-                                        </div>
-                                    </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Page Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" id="title" placeholder="Title"
+                                           maxlength="200" data-toggle="tooltip" data-placement="top" title="Page Title (200 characters max)">
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">META Details</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <label for="metadescription">META Description</label>
-                                                <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="metakeywords">META Keywords</label>
-                                                <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords">
-                                            </div> 
-                                        </div>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="seourl">SEO Url</label>
+                                    <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50"
+                                           data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
                                 </div>
+
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="content">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <div class="summernote"></div>
-                                    </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">META Details</h3>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="metadescription">META Description</label>
+                                    <textarea class="form-control" id="metadescription" maxlength="160" placeholder="META Description" 
+                                              data-toggle="tooltip" data-placement="top" title="META Description (160 characters max)"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="metakeywords">META Keywords</label>
+                                    <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" 
+                                           data-toggle="tooltip" data-placement="top" title="Meta Keywords (69 characters max)">
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <div class="summernote"></div>
                             </div>
                         </div>
                     </div>
@@ -101,6 +93,10 @@
 </div>
 
 <script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
     var page;
     function editPage(pageid) {
         page = pageid;
@@ -184,7 +180,7 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
+                ['insert', ['sub', 'super']],
                 ['font', ['strikethrough']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],

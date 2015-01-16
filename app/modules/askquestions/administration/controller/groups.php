@@ -46,24 +46,24 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         echo json_encode(["status" => "success", "data" => "Group deleted"]);
     } elseif ($_POST["action"] == "getgroups") {
         $groups = Group::getGroups();
-        $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr>";
+        $data = "<table class=\"table table-hover table-condensed\">";
+        $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
         foreach ($groups as $group) {
             $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
-        $data .= "</table>";
+        $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
     } elseif ($_POST["action"] == "getquestions") {
         $groups = new Group();
         $questions = $groups->getQuestions($_POST["id"]);
         $count = 1;
-        $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr>";
+        $data = "<table class=\"table table-hover table-condensed\">";
+        $data .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr></thead><tbody>";
         foreach ($questions as $question) {
             $data .= "<tr><td>{$count}</td><td><a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             $count++;
         }
-        $data .= "</table>";
+        $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
     } elseif ($_POST["action"] == "getquestion") {
         $question = new Question();
@@ -96,7 +96,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getresults") {
         $group = UserGroup::getByName("Students");
         $users = $group->getUsers();
-        $data = "<table class=\"table table-striped\"><tr><td>Student</td><td>Score</td></tr>";
+        $data = "<table class=\"table table-hover table-condensed\"><thead><tr><th>Student</th><th>Score</th></tr></thead><tbody>";
         $groupCount = Group::getQuestions($_POST["id"]);
         $count = 0;
         foreach ($users as $user) {
@@ -123,7 +123,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
             }
         }
-        $data .= "</table>";
+        $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["data" => $data]));
     } elseif ($_POST["action"] == "getresult") {
         $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"]);
@@ -139,8 +139,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $user->getByID($_POST["id"]);
         $table = "Student: " . $user->getFullname();
         $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$_POST["group"]});\"><i class=\"fa fa-backward\"></i> Back</a><p>";
-        $table .= "<table class=\"table table-striped\">";
-        $table .= "<tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr>";
+        $table .= "<table class=\"table table-hover table-condensed\">";
+        $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
             if (isset($results[$count])) {
                 $no = $count + 1;
@@ -193,7 +193,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $count++;
         }
 
-        $table .= "</table>";
+        $table .= "</tbody></table>";
         $table .= "<div class=\"well\">";
         $table .= "Total time taken: ";
         if ($totalTime < 60) {

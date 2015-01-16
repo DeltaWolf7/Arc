@@ -2,8 +2,10 @@
     <h1>System Settings</h1>
 </div>
 
-<table class="table table-striped" id="data">
-</table>
+<div class="table-responsive">
+    <table class="table table-hover table-condensed" id="data">
+    </table>
+</div>
 
 <div class="modal fade" id="editSetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -13,18 +15,18 @@
                 <h4 class="modal-title" id="myModalLabel">Edit Setting</h4>
             </div>
             <div class="modal-body">
-              
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="sKey">Key</label>
-                            <input type="text" class="form-control" id="sKey" maxlength="160" placeholder="Setting Key">
-                        </div>
-                        <div class="form-group">
-                            <label for="sValue">Value</label>
-                            <input type="text" class="form-control" id="sValue" maxlength="69" placeholder="Setting Value">
-                        </div> 
+
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="sKey">Key</label>
+                        <input type="text" class="form-control" id="sKey" maxlength="160" placeholder="Setting Key">
                     </div>
-            
+                    <div class="form-group">
+                        <label for="sValue">Value</label>
+                        <input type="text" class="form-control" id="sValue" maxlength="69" placeholder="Setting Value">
+                    </div> 
+                </div>
+
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>

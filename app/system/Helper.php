@@ -106,6 +106,13 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
+
+        // Canonical path
+        $path = self::arcGetModulePath();
+        if (self::arcGetURLData("action") != null) {
+            $path .= self::arcGetURLData("action") . "/";
+        }
+        self::arcAddHeader("canonical", $path);
     }
 
     /**
@@ -405,7 +412,7 @@ class Helper {
      * Output a standard status div.
      */
     public static function arcGetStatus() {
-        echo PHP_EOL . "<p><div id=\"status\" style=\"display:none;\" role=\"alert\"></div></p>" . PHP_EOL;
+        echo PHP_EOL . "<div id=\"status\" style=\"display:none;\" role=\"alert\"></div>" . PHP_EOL;
     }
 
     /**
@@ -844,6 +851,51 @@ class Helper {
             return true;
         }
         return false;
+    }
+
+    public static function arcGetThumbImage($image, $width = null) {
+        if (!empty($image)) {
+            $thumbWidth = \SystemSetting::getByKey("ARC_BLOG_THUMB_WIDTH");
+            if ($width == null) {
+                $width = $thumbWidth->value;
+            }
+            if (!file_exists(self::arcGetPath(true) . "images/thumbs")) {
+                mkdir(self::arcGetPath(true) . "images/thumbs");
+            }
+            if (!file_exists(self::arcGetPath(true) . "images/thumbs/{$image}")) {
+                $size = getimagesize(self::arcGetPath(true) . "images/{$image}");
+                $ratio = $size[0] / $size[1]; // width/height
+                if ($ratio > 1) {
+                    $width = $width;
+                    $height = $width / $ratio;
+                } else {
+                    $width = $width * $ratio;
+                    $height = $width;
+                }
+                $src = imagecreatefromstring(file_get_contents(self::arcGetPath(true) . "images/{$image}"));
+                $dst = imagecreatetruecolor($width, $height);
+                imagecopyresampled($dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
+                imagedestroy($src);
+
+                $extension = strtolower(strrchr(self::arcGetPath(true) . "images/{$image}", '.'));
+                switch ($extension) {
+                    case '.jpg':
+                    case '.jpeg':
+                        imagejpeg($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
+                        break;
+                    case '.gif':
+                        imagegif($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
+                        break;
+                    case '.png':
+                        imagepng($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
+
+                        break;
+                }
+                imagedestroy($dst);
+            }
+            return self::arcGetPath() . "images/thumbs/{$image}";
+        }
+        return null;
     }
 
 }

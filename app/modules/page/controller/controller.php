@@ -9,4 +9,3 @@ if ($page->id == 0) {
 }
 system\Helper::arcAddHeader("description", $page->metadescription);
 system\Helper::arcAddHeader("keywords", $page->metakeywords);
-system\Helper::arcAddHeader("canonical", system\Helper::arcGetPath() . $page->seourl);
