@@ -18,8 +18,8 @@
                             <i class="icon-bar"></i>
                         </button>
                         <a href="<?php echo system\Helper::arcGetPath(); ?>">
-                                    <img height="50px" src="<?php echo system\Helper::arcGetTemplatePath(); ?>images/logo.png" alt="<?php echo ARCTITLE; ?>" title="<?php echo ARCTITLE; ?>">
-                                </a>
+                            <img height="50px" src="<?php echo system\Helper::arcGetTemplatePath(); ?>images/logo.png" alt="<?php echo ARCTITLE; ?>" title="<?php echo ARCTITLE; ?>">
+                        </a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">
@@ -28,13 +28,13 @@
                     </div>
                 </div>
             </nav>
-         
-               <?php
-        $rnd = rand(1, 2);
-        ?>
-        <div class="page-top" id="templatemo" style="background-image: url('<?php echo system\Helper::arcGetTemplatePath() . "images/banner" . $rnd . ".jpg" ?>')">
-        </div> <!-- /.page-header -->
-        
-             
 
-                
+            <?php
+            $rnd = rand(1, 2);
+            ?>
+            <div class="headImage"> 
+                <img class="img-responsive" src='<?php echo system\Helper::arcGetTemplatePath() . "images/banner" . $rnd . ".jpg" ?>' alt="" />
+            </div> <!-- /.page-header -->
+
+
+

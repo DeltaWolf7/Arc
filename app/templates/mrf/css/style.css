@@ -927,3 +927,9 @@ div.contact-form input.mainBtn {
 p {
     margin-bottom: 10px;
 }
+
+.headImage { height: 300px; overflow: hidden;}
+@media screen and (max-width: 768px) {
+    .headImage { height: 150px; }
+}
+.headImage > img { width: 100%; display: block;}
