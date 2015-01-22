@@ -43,6 +43,14 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $group .= "<option value=\"{$cat->name}\">{$cat->name}</option>";
         }
         $group .= "</select>";
-        echo utf8_encode(json_encode(["title" => $blog->title, "content" => $content, "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date, "sel" => $group]));
+        $img = "<img src=\"";
+        if (empty($blog->image)) {
+            $img .= system\Helper::arcGetThumbImage(system\Helper::arcGetPath() . "images/" . $blog->image, 150);
+        } else {
+            $img .= system\Helper::arcGetPath() . "app/modules/blog/images/placeholder.png";
+        }
+        $img .= "\" id=\"setImage\" />";
+        
+        echo utf8_encode(json_encode(["title" => $blog->title, "content" => $content, "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date, "sel" => $group, "img" => $img]));
     }
 }

@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label>SEO Url</label>
                             <input type="text" class="form-control" id="seourl" maxlength="100" />
-                        </div>class="
+                        </div>
                         <div class="form-group">
                             <label>Tags</label>
                             <input type="text" class="form-control" id="tags" />
@@ -45,13 +45,12 @@
                             <div class='input-group date' id='date'>
                                 <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
                                 <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    <span class="fa fa-calendar"></span>
                                 </span>
                             </div>
                         </div>
                         <div class="form-group" id="image">
-                            <label>Image</label>
-                            <img class="img-rounded" src="<?php echo system\Helper::arcGetPath() . "app/modules/blog/images/placeholder.png"; ?>" />
+
                         </div>
                     </div>
                 </div>
@@ -123,6 +122,7 @@
                 $('.summernote').code(jdata.content);
                 $('#date').val(jdata.date);
                 $('#selected').html(jdata.sel);
+                $('#image').html(jdata.img);
                 $("#postModal").modal('show');
             }
         });
@@ -200,6 +200,8 @@
             });
         }
         $('#date').datetimepicker({
+            defaultDate: <?php $jdate = new DateTime($booking->journeydate);
+                                echo "\"" . $jdate->format("d/m/Y") . "\""; ?>,
             pickTime: false
         });
     });
