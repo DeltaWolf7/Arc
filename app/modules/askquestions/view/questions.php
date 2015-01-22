@@ -37,7 +37,7 @@
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>   
-                <div class="modal-body" id="resultsData table-responsive">
+                <div class="modal-body" id="resultsData">
                 </div>      
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
