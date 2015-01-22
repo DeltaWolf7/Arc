@@ -113,7 +113,7 @@ class SystemSetting extends DataProvider {
             }
         }
         $setting = SystemSetting::keyExists($this->key);
-        if (empty($setting->key)) {
+        if ($setting == false) {
             $dataColumns["key"] = $this->key;
             system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
         } else {
