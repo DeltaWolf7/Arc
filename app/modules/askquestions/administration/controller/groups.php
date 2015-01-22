@@ -47,9 +47,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getgroups") {
         $groups = Group::getGroups();
         $data = "<table class=\"table table-hover table-condensed\">";
-        $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
+        $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
         foreach ($groups as $group) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-sm\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -58,9 +58,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $questions = $groups->getQuestions($_POST["id"]);
         $count = 1;
         $data = "<table class=\"table table-hover table-condensed\">";
-        $data .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-sm\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-sm\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr></thead><tbody>";
+        $data .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-xs\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr></thead><tbody>";
         foreach ($questions as $question) {
-            $data .= "<tr><td>{$count}</td><td><a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-sm\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td>{$count}</td><td><a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
             $count++;
         }
         $data .= "</tbody></table>";

@@ -17,7 +17,7 @@
                             <i class="icon-bar"></i>
                             <i class="icon-bar"></i>
                         </button>
-                        <a class="navbar-brand" href="<?php echo system\Helper::arcGetPath(); ?>"><?php echo ARCTITLE; ?></a>
+                        <div class="logo"><a href="<?php echo system\helper::arcGetPath(); ?>"><img src="<?php echo system\helper::arcGetTemplatePath() . "images/logo.png" ?>" alt="<?php echo ARCTITLE; ?>" /></a></div>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav navbar-right">

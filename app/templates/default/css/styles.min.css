@@ -1,0 +1,33 @@
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-size: 14px;
+}
+.footer {
+    border-top: 1px solid;
+    border-color: #eeeeee;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #ffffff;
+}
+.nav {
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.dropdown-menu > li {
+    font-size: 16px;
+}
+
+.logo {
+    padding: 10px 0 0 0;
+}

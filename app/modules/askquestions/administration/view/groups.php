@@ -112,7 +112,6 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="question">
                         <div class="form-group">
-                            <label for="question">Question</label>
                             <div class="summernote"></div>
                         </div>
                     </div>

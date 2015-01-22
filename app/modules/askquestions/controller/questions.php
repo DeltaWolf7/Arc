@@ -23,7 +23,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             echo json_encode(["status" => "warning", "data" => "Question already answered."]);
         }
     } elseif ($_POST["action"] == "getQuestions") {
-        $table = "<thead><tr><th>Complete</th><th>Question Group</th><th>&nbsp;</th></tr></thead><tbody>";
+        $table = "<thead><tr><th style=\"width: 100px;\">Complete</th><th>Question Group</th><th>&nbsp;</th></tr></thead><tbody>";
         $groups = Group::getGroups();
         foreach ($groups as $group) {
             if ($group->visible == 1) {
@@ -33,7 +33,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
                 $table .= "<td><a href=\"#\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
-                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult({$group->id});\"><i class=\"fa fa-area-chart\"></i> View My Results</button></td>";
+                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</button></td>";
                 $table .= "</tr>";
             }
         }
