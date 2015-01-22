@@ -933,3 +933,7 @@ p {
     .headImage { height: 150px; }
 }
 .headImage > img { width: 100%; display: block;}
+
+.navbar {
+    margin-top: 2px;
+}
