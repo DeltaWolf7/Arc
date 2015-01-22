@@ -46,6 +46,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user->firstname = ucfirst($_POST["firstname"]);
     $user->lastname = ucfirst($_POST["lastname"]);
     $user->email = strtolower($_POST["email"]);
+    if (empty($user->email)) {
+        echo json_encode(["status" => "danger", "data" => "Please specifiy an email address"]);
+        return;
+    }
     $user->setPassword($_POST["password"]);
     $user->update();
 

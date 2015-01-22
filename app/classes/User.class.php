@@ -152,16 +152,6 @@ class User extends DataProvider {
 
     /**
      * 
-     * @return \LastAccess Gets last access entry for this user
-     */
-    public function getLastAccess() {
-        $lastaccess = new LastAccess();
-        $lastaccess->getByUserID($this->id);
-        return $lastaccess;
-    }
-
-    /**
-     * 
      * @param string $key Key of the setting
      * @return \UserSetting Users setting for the specified key
      */
