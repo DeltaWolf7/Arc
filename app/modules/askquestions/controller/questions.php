@@ -99,7 +99,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         foreach ($questions as $question) {
             foreach ($results as $result) {
                 if ($result->questionid == $question->id) {
-                    $table .= "<tr><td>{$result->questionid}</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    $table .= "<tr><td>{$result->questionno}</td><td>" . html_entity_decode($question->question) . "</td><td>";
                     switch ($question->correctAnswer) {
                         case 1:
                             $table .= html_entity_decode($question->answer1);
