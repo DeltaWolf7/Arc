@@ -19,11 +19,11 @@
                 <div class="panel-body">
                     <div class="form-group">
                         <label for="sKey">Key</label>
-                        <input type="text" class="form-control" id="sKey" maxlength="160" placeholder="Setting Key">
+                        <input type="text" class="form-control" id="sKey" maxlength="100" placeholder="Setting Key">
                     </div>
                     <div class="form-group">
                         <label for="sValue">Value</label>
-                        <input type="text" class="form-control" id="sValue" maxlength="69" placeholder="Setting Value">
+                        <input type="text" class="form-control" id="sValue" maxlength="255" placeholder="Setting Value">
                     </div> 
                 </div>
 
