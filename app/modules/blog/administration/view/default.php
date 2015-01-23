@@ -200,8 +200,8 @@
             });
         }
         $('#date').datetimepicker({
-            defaultDate: <?php $jdate = new DateTime($booking->journeydate);
-                                echo "\"" . $jdate->format("d/m/Y") . "\""; ?>,
+            /*defaultDate: <?php $jdate = new DateTime($booking->journeydate);
+                                echo "\"" . $jdate->format("d/m/Y") . "\""; ?>,*/
             pickTime: false
         });
     });

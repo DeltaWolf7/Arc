@@ -18,11 +18,11 @@
                 break;
             case "419":
                 ?>
-                Your authentication has expired. Please login.<br />
-
+                Your authentication has expired. Please <a href="<?php echo system\Helper::arcGetPath() . "user/login"; ?>">login</a>.<br />
                 <?php
                 break;
             default:
+                echo "Unhandled error occured: " . system\Helper::arcGetURLData("data1"); 
                 break;
         }
         ?>
