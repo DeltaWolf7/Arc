@@ -50,7 +50,6 @@
                             </div>
                         </div>
                         <div class="form-group" id="image">
-
                         </div>
                     </div>
                 </div>
