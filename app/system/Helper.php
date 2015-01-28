@@ -902,5 +902,4 @@ class Helper {
         }
         return null;
     }
-
 }
