@@ -49,7 +49,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $data = "<table class=\"table table-hover table-condensed\">";
         $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
         foreach ($groups as $group) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a>";
+            $data .= "<a class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear Results</a></td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -224,5 +225,11 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $question->question = htmlentities("Copy of: {$txt}");
         $question->update();
         echo json_encode(["status" => "success", "data" => "Question duplicated"]);
+    } elseif ($_POST["action"] == "deletegroupresults") {
+        $results = Result::getByGroup($_POST["id"]);
+        foreach ($results as $result) {
+            $result->delete($result->id);
+        }
+        echo json_encode(["status" => "success", "data" => "Results have been deleted"]);
     }
 }

@@ -263,15 +263,10 @@ class Helper {
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             if (isset($_FILES['file']['name'])) {
                 if (!$_FILES['file']['error']) {
-                    $name = md5(rand(100, 200));
+                    $name = md5(uniqid(rand(), true));
                     $ext = explode('.', $_FILES['file']['name']);
                     $filename = $name . '.' . $ext[1];
                     $destination = self::arcGetPath(true) . "images/" . $filename;
-                    while (file_exists($destination)) {
-                        $name = md5(rand(100, 200));
-                        $filename = $name . '.' . $ext[1];
-                        $destination = self::arcGetPath(true) . "images/" . $filename;
-                    }
                     $location = $_FILES["file"]["tmp_name"];
                     $size = getimagesize($location);
                     if ($size == 0) {

@@ -219,6 +219,21 @@
             }
         });
     });
+    
+    function deleteGroupResults(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "deletegroupresults", id: id},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                updateStatus(jdata.status, jdata.data);
+                getData();
+            }
+        });
+    }
 
     $("#saveGroupBtn").click(function () {
         $.ajax({
