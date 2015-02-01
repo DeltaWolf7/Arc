@@ -7,7 +7,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         foreach ($posts as $post) {     
             $html .= "<div class=\"panel panel-default\"><div class=\"panel-heading\">";
             $html .= $post->user . " said on " . $post->posted . "</div><div class=\"panel-body\">";
-            $html .= $post->content . "</div></div>";       
+            $html .= html_entity_decode($post->content) . "</div></div>";       
         }
         echo utf8_encode(json_encode(["html" => $html]));
     } elseif ($_POST["action"] == "send") {
