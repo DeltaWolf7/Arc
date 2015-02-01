@@ -209,21 +209,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "</div>";
         echo utf8_encode(json_encode(["data" => $table]));
     } elseif ($_POST["action"] == "copyquestion") {
-        $question = new Question();
-
         $oquestion = new Question();
         $oquestion->getByID($_POST["id"]);
-
-        $question->answer1 = $oquestion->answer1;
-        $question->answer2 = $oquestion->answer2;
-        $question->answer3 = $oquestion->answer3;
-        $question->answer4 = $oquestion->answer4;
-        $question->answer5 = $oquestion->answer5;
-        $question->correctAnswer = $oquestion->correctAnswer;
-        $question->groupid = $oquestion->groupid;
-        $txt = html_entity_decode($oquestion->question);
-        $question->question = htmlentities("Copy of: {$txt}");
-        $question->update();
+        $oquestion->id = 0;
+        $oquestion->update();
         echo json_encode(["status" => "success", "data" => "Question duplicated"]);
     } elseif ($_POST["action"] == "deletegroupresults") {
         $results = Result::getByGroup($_POST["id"]);

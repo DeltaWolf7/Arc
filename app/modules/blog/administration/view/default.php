@@ -162,13 +162,11 @@
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
                 ['insert', ['sub', 'super']],
-                ['font', ['strikethrough']],
-                ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
+                ['para', ['ul', 'ol']],
                 ['height', ['height']],
                 ['table', ['table']],
-                ['link', ['link', 'picture', 'hr']],
+                ['link', ['link', 'picture']],
                 ['source', ['codeview']]
             ],
             onImageUpload: function (files, editor, welEditable) {

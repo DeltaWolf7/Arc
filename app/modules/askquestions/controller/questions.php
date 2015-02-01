@@ -152,10 +152,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "<div class=\"well\">";
         $table .= "Total time taken: ";
         if ($totalTime < 60) {
-            $table .= $totalTime . " seconds";
+            $table .= number_format($totalTime, 2) . " seconds";
         } else {
             $min = $totalTime / 60;
-            $table .= $min . " minutes";
+            $table .= number_format($min, 2) . " minutes";
         }
         $table .= "<br />Score: " . $correct . "/" . count($questions);
         $percent = (100 / count($questions)) * $correct;
