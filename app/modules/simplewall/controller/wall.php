@@ -17,6 +17,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $post->user = $user->getFullname();
         $post->userid = $user->id;
         $post->content = htmlentities($_POST["content"]);
+        if (empty($post->content)) {
+            echo utf8_encode(json_encode(["status" => "danger", "data" => "Unable to post without content"]));
+            return;
+        }
         $post->update();
         echo utf8_encode(json_encode(["status" => "success", "data" => "Posted"]));
     }
