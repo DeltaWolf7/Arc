@@ -70,6 +70,9 @@ class Helper {
 
         // Initilise menu
         self::$arc["menus"] = Array();
+        
+        // Initilise status
+        self::$arc["status"] = Array();
 
         // Create database connection
         try {
@@ -263,6 +266,16 @@ class Helper {
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             if (isset($_FILES['file']['name'])) {
                 if (!$_FILES['file']['error']) {
+                    $filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
+                    if ($_FILES['file']['size'] > $filesize->value) {
+                        self::$arc["status"][] = ["data" => "Image file size exceeds limit", "status" => "danger"];
+                        return;
+                    }       
+                    $file_type = $_FILES['uploaded_file']['type'];
+                    if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
+                        self::$arc["status"][] = ["data" => "Invalid image type, requires JPEG, JPG, GIF or PNG", "status" => "danger"];
+                        return;
+                    }
                     $name = md5(uniqid(rand(), true));
                     $ext = explode('.', $_FILES['file']['name']);
                     $filename = $name . '.' . $ext[1];
@@ -270,13 +283,13 @@ class Helper {
                     $location = $_FILES["file"]["tmp_name"];
                     $size = getimagesize($location);
                     if ($size == 0) {
-                        echo json_encode(["data" => "Invalid image uploaded", "status" => "danger"]);
+                        self::$arc["status"][] = ["data" => "Invalid image uploaded", "status" => "danger"];
                         return;
                     }
                     move_uploaded_file($location, $destination);
                     echo json_encode(["data" => self::arcGetPath() . "images/" . $filename, "status" => "success"]);
                 } else {
-                    echo json_encode(["status" => "danger", "data" => "Error occured while uploading image."]);
+                    self::$arc["status"][] = ["status" => "danger", "data" => "Error occured while uploading image"];
                 }
             }
             return;

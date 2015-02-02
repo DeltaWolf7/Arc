@@ -87,5 +87,11 @@ if (!SystemSetting::keyExists("ARC_SMTP")) {
     $mail->update();
 }
 
+$filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
+if (!SystemSetting::keyExists("ARC_FILE_UPLOAD_SIZE_BYTES")) {
+    $filesize->value = "2000000";
+    $filesize->update();
+}
+
 // Get content.
 system\Helper::arcGetView();
