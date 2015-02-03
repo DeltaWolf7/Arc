@@ -101,7 +101,7 @@
             data: {action: "clearcache"},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
             }
         });
     });
@@ -189,7 +189,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus(jdata.status, jdata.data);
+                        updateStatus("#status");
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

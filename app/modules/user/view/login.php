@@ -25,12 +25,8 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {email: $("#email").val(), password: $("#password").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
-                if (jdata.status == "success") {
-                    window.location = "<?php echo system\Helper::arcGetPath(); ?>";
-                }
+            success: function () {
+                updateStatus("status");
             }
         });
     });

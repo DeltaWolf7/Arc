@@ -38,7 +38,7 @@
                 password: $("#password").val(), password2: $("#password2").val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 if (jdata.status == "success") {
                     window.location = "<?php echo system\Helper::arcGetPath(); ?>";
                 }

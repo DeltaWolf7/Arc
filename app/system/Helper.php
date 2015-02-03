@@ -293,6 +293,11 @@ class Helper {
                 }
             }
             return;
+        } elseif (self::arcIsAjaxRequest() == true) {
+            if ($_POST["action"] == "getarcsystemmessages") {
+                self::arcGetStatus();
+                return;
+            }
         }
 
         // expired session
@@ -421,11 +426,22 @@ class Helper {
         }
     }
 
+    public static function arcAddMessage($status, $data) {
+        self::$arc["status"][] = ["data" => $data, "status" => $status];
+    }
+    
     /**
      * Output a standard status div.
      */
     public static function arcGetStatus() {
-        echo PHP_EOL . "<div id=\"status\" style=\"display:none;\" role=\"alert\"></div>" . PHP_EOL;
+        $data = "";
+        foreach (self::$arc["status"] as $message) {
+            $data .= "<div class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
+                    . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>"
+                    . $message["data"] . "</div>" . PHP_EOL;
+        }
+        //echo utf8_encode(json_encode(["data" => $data]));
+        echo utf8_encode(json_encode(["data" => "TEST"]));
     }
 
     /**

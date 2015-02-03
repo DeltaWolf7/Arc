@@ -25,7 +25,7 @@
             data: {email: $("#email").val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
             }
         })
     });

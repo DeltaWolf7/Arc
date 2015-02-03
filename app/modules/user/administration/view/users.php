@@ -197,7 +197,7 @@
                 data: {action: "addgroup", id: userid, group: $('#groups').val()},
                 success: function (data) {
                     var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    updateStatus(jdata.status, jdata.data);
+                    updateStatus("#status");
                 },
                 complete: function () {
                     editUser(userid);
@@ -216,7 +216,7 @@
                 data: {action: "removefromgroup", id: userid, group: $('#groups2').val()},
                 success: function (data) {
                     var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    updateStatus(jdata.status, jdata.data);
+                    updateStatus("#status");
                 },
                 complete: function () {
                     editUser(userid);
@@ -285,7 +285,7 @@
                 password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked")},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 if (jdata.status == "success") {
                     $("#editUserModal").modal("hide");
                 }
@@ -329,7 +329,7 @@
             data: {id: groupid, action: "removegroup"},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
             },
             complete: function () {
                 get("groups");
@@ -348,7 +348,7 @@
                 description: $('#groupdescription').val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 if (jdata.status == "success") {
                     $("#editGroupModal").modal("hide");
                 }

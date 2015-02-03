@@ -33,7 +33,7 @@ if (!is_numeric($data[0])) {
             data: {password: $("#password").val(), password2: $("#password2").val(), id: <?php echo $data[0]; ?>},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 if (jdata.status == "success") {
                     $("#btnReset").prop("disabled", true);
                     $("#password").prop("disabled", true);

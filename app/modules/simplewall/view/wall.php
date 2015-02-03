@@ -28,7 +28,7 @@
             data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 getData();
             }
         });
@@ -75,7 +75,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus(jdata.status, jdata.data);
+                        updateStatus("#status");
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

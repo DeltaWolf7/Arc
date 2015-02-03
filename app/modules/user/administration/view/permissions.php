@@ -36,7 +36,7 @@
             data: {action: "savepermission", id: pid, group: groupid, module: $("#module").val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus(jdata.status, jdata.data);
+                updateStatus("#status");
                 if (jdata.status == "success") {
                     $("#editModal").modal("hide");
                     getData();
@@ -72,7 +72,7 @@
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 if (jdata.status == "success") {
-                    updateStatus(jdata.status, jdata.data);
+                    updateStatus("#status");
                     getData();
                 }
             }
