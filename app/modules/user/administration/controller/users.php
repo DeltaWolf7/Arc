@@ -46,30 +46,30 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
                 $user->setPassword($_POST["password"]);
             } else {
-                echo json_encode(["status" => "danger", "data" => "Password and retyped password do not match"]);
+                system\Helper::arcAddMessage("danger", "Password and retyped password do not match");
                 return;
             }
         }
         $user->firstname = ucwords($_POST["firstname"]);
         if (empty($_POST["firstname"])) {
-            echo json_encode(["status" => "danger", "data" => "Firstname cannot be empty"]);
+            system\Helper::arcAddMessage("danger", "Firstname cannot be empty");
             return;
         }
         
         $user->lastname = ucwords($_POST["lastname"]);
         if (empty($_POST["lastname"])) {
-            echo json_encode(["status" => "danger", "data" => "Lastname cannot be empty"]);
+            system\Helper::arcAddMessage("danger", "Lastname cannot be empty");
             return;
         }
         
         $test = User::getByEmail($_POST["email"]);
         if ($user->id == 0 && $test->id != 0) {
-            echo json_encode(["status" => "danger", "data" => "User already exists with this email address"]);
+            system\Helper::arcAddMessage("danger", "User already exists with this email address");
             return;
         }
         
         if ($user->id == 0 && empty($_POST["password"])) {
-            echo json_encode(["status" => "danger", "data" => "New users must have a password"]);
+            system\Helper::arcAddMessage("danger", "New users must have a password");
             return;
         }
         
@@ -81,27 +81,27 @@ if (system\Helper::arcIsAjaxRequest() == true) {
      
         $user->email = strtolower($_POST["email"]);
         $user->update();
-        echo json_encode(["status" => "success", "data" => "Changes saved"]);
+        system\Helper::arcAddMessage("success", "Changes saved");
     } elseif ($_POST["action"] == "removegroup") {
         $group = new UserGroup();
         $group->delete($_POST["id"]);
         $group->getByID($_POST["id"]);
         if ($group->id != 0) {
-            echo json_encode(["status" => "danger", "data" => "System groups cannot be removed"]);
+            system\Helper::arcAddMessage("danger", "System groups cannot be removed");
             return;
         }
-        echo json_encode(["status" => "success", "data" => "Group removed"]);
+        system\Helper::arcAddMessage("success", "Group removed");
     } elseif ($_POST["action"] == "savegroup") {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
         $group->name = ucwords($_POST["name"]);
         if (empty($_POST["name"])) {
-            echo json_encode(["status" => "danger", "data" => "Group name cannot be empty"]);
+            system\Helper::arcAddMessage("danger", "Group name cannot be empty");
             return;
         }
         $group->description = $_POST["description"];
         $group->update();
-        echo json_encode(["status" => "success", "data" => "Group saved"]);
+        system\Helper::arcAddMessage("success", "Group saved");
     } elseif ($_POST["action"] == "group") {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
@@ -109,12 +109,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "addgroup") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        $user->addToGroup($_POST["group"]);        
-        echo json_encode(["status" => "success", "data" => "User added to group"]);
+        $user->addToGroup($_POST["group"]);  
+        system\Helper::arcAddMessage("success", "User added to group");
     } elseif ($_POST["action"] == "removefromgroup") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        $user->removeFromGroup($_POST["group"]);        
-        echo json_encode(["status" => "success", "data" => "User removed from group"]);
+        $user->removeFromGroup($_POST["group"]);  
+        system\Helper::arcAddMessage("success", "User removed from group");
     }
 }

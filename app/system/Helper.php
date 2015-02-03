@@ -70,9 +70,11 @@ class Helper {
 
         // Initilise menu
         self::$arc["menus"] = Array();
-        
+
         // Initilise status
-        self::$arc["status"] = Array();
+        if (!isset($_SESSION["status"])) {
+            $_SESSION["status"] = Array();
+        }
 
         // Create database connection
         try {
@@ -268,12 +270,12 @@ class Helper {
                 if (!$_FILES['file']['error']) {
                     $filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
                     if ($_FILES['file']['size'] > $filesize->value) {
-                        self::$arc["status"][] = ["data" => "Image file size exceeds limit", "status" => "danger"];
+                        self::arcAddMessage("danger", "Image file size exceeds limit");
                         return;
-                    }       
+                    }
                     $file_type = $_FILES['uploaded_file']['type'];
                     if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
-                        self::$arc["status"][] = ["data" => "Invalid image type, requires JPEG, JPG, GIF or PNG", "status" => "danger"];
+                        self::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
                         return;
                     }
                     $name = md5(uniqid(rand(), true));
@@ -283,22 +285,23 @@ class Helper {
                     $location = $_FILES["file"]["tmp_name"];
                     $size = getimagesize($location);
                     if ($size == 0) {
-                        self::$arc["status"][] = ["data" => "Invalid image uploaded", "status" => "danger"];
+                        self::arcAddMessage("danger", "Invalid image uploaded");
                         return;
                     }
                     move_uploaded_file($location, $destination);
                     echo json_encode(["data" => self::arcGetPath() . "images/" . $filename, "status" => "success"]);
                 } else {
-                    self::$arc["status"][] = ["status" => "danger", "data" => "Error occured while uploading image"];
+                    self::arcAddMessage("danger", "Error occured while uploading image");
                 }
             }
             return;
-        } elseif (self::arcIsAjaxRequest() == true) {
-            if ($_POST["action"] == "getarcsystemmessages") {
-                self::arcGetStatus();
-                return;
-            }
         }
+        // get system messages
+        if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
+            self::arcGetStatus();
+            return;
+        }
+
 
         // expired session
         $timeout = ARCSESSIONTIMEOUT * 60;
@@ -427,21 +430,32 @@ class Helper {
     }
 
     public static function arcAddMessage($status, $data) {
-        self::$arc["status"][] = ["data" => $data, "status" => $status];
+        $_SESSION["status"][] = ["data" => $data, "status" => $status];
     }
-    
+
     /**
      * Output a standard status div.
      */
     public static function arcGetStatus() {
         $data = "";
-        foreach (self::$arc["status"] as $message) {
+        $warning = 0;
+        $danger = 0;
+        foreach ($_SESSION["status"] as $message) {
             $data .= "<div class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
                     . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>"
                     . $message["data"] . "</div>" . PHP_EOL;
+            switch ($message["status"]) {
+                case "danger":
+                    $danger++;
+                    break;
+                case "warning":
+                    $warning++;
+                    break;
+            }
         }
-        //echo utf8_encode(json_encode(["data" => $data]));
-        echo utf8_encode(json_encode(["data" => "TEST"]));
+        
+        echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
+        $_SESSION["status"] = array();
     }
 
     /**
@@ -926,4 +940,5 @@ class Helper {
         }
         return null;
     }
+
 }

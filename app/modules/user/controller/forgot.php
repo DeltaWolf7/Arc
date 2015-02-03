@@ -2,14 +2,14 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if (empty($_POST["email"])) {
-        echo json_encode(["status" => "danger", "data" => "Email address must be provided"]);
+        system\Helper::arcAddMessage("danger", "Email address must be provided");
         return;
     }
 
     $user = \User::getByEmail($_POST["email"]);
 
     if ($user->id == 0) {
-        echo json_encode(["status" => "danger", "data" => "No user found matching that email address"]);
+        system\Helper::arcAddMessage("danger", "No user found matching that email address");
         return;
     }
        
@@ -25,8 +25,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $mail = system\Helper::arcSendMail($to, "Password Reset Request", $message);
     
     if (empty($mail)) {
-        echo json_encode(["status" => "success", "data" => "Password reset request sent"]);
+        system\Helper::arcAddMessage("success", "Password reset request sent");
     } else {
-        echo json_encode(["status" => "danger", "data" => $mail]);
+        system\Helper::arcAddMessage("danger", $mail);
     }
 }

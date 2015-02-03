@@ -2,17 +2,17 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if (empty($_POST["password"])) {
-        echo json_encode(["status" => "danger", "data" => "A new password must be provided"]);
+        system\Helper::arcAddMessage("danger", "A new password must be provided");
         return;
     }
 
     if (empty($_POST["password2"])) {
-        echo json_encode(["status" => "danger", "data" => "Password must be provided twice"]);
+        system\Helper::arcAddMessage("danger", "Password must be provided twice");
         return;
     }
 
     if ($_POST["password"] != $_POST["password2"]) {
-        echo json_encode(["status" => "danger", "data" => "Passwords do not match"]);
+        system\Helper::arcAddMessage("danger", "Passwords do not match");
         return;
     }
 
@@ -20,6 +20,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user->getByID($_POST["id"]);
     $user->setPassword($_POST["password"]);
     $user->update();
-
-    echo json_encode(["status" => "success", "data" => "Your password has been reset"]);
+    system\Helper::arcAddMessage("success", "Your password has been reset");
 }

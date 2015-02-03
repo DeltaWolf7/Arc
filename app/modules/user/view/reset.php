@@ -31,10 +31,9 @@ if (!is_numeric($data[0])) {
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {password: $("#password").val(), password2: $("#password2").val(), id: <?php echo $data[0]; ?>},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
-                if (jdata.status == "success") {
+            success: function () {
+                var jdata = updateStatus("#status");
+                if (jdata.danger == 0) {
                     $("#btnReset").prop("disabled", true);
                     $("#password").prop("disabled", true);
                     $("#password2").prop("disabled", true);

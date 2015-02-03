@@ -25,7 +25,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "deletepermission") {
         $permission = new UserPermission();
         $permission->delete($_POST["id"]);
-        echo json_encode(["status" => "success", "data" => "Permission deleted"]);
+        system\Helper::arcAddMessage("success", "Permission deleted");
     } elseif ($_POST["action"] == "editpermission") {
         $permission = new UserPermission();
         $permission->getByID($_POST["id"]);
@@ -52,12 +52,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $permissions = $group->getPermissions();
         foreach ($permissions as $perm) {
             if ($perm->permission == $permission->permission && $perm->id != $permission->id) {
-                echo json_encode(["status" => "danger", "data" => "Permission for this module already exists in this group"]);
+                system\Helper::arcAddMessage("danger", "Permission for this module already exists in this group");
                 return;
             }
         }
 
         $permission->update();
-        echo json_encode(["status" => "success", "data" => "Permission saved"]);
+        system\Helper::arcAddMessage("success", "Permission saved");
     }
 }

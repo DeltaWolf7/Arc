@@ -24,10 +24,8 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val(), password: $("#password").val()},
-            success: function () {
-                updateStatus("status");
-            }
+            data: {email: $("#email").val(), password: $("#password").val()}
         });
+        updateStatus("status");
     });
 </script>
