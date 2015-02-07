@@ -35,14 +35,11 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),
-                password: $("#password").val(), password2: $("#password2").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
-                if (jdata.status == "success") {
-                    window.location = "<?php echo system\Helper::arcGetPath(); ?>";
-                }
-            }
+                password: $("#password").val(), password2: $("#password2").val()}
         });
+        var jdata = updateStatus("status");
+        if (jdata.status == "success") {
+            window.location = "<?php echo system\Helper::arcGetPath(); ?>";
+        }
     });
 </script>

@@ -22,11 +22,8 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
-            }
-        })
+            data: {email: $("#email").val()} 
+        });
+        updateStatus("status");
     });
 </script>

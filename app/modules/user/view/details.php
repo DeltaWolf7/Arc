@@ -45,11 +45,8 @@ $user = system\Helper::arcGetUser();
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {id: '<?php echo $user->id; ?>', firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-                password: $("#password").val(), password2: $("#password2").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
-            }
+                password: $("#password").val(), password2: $("#password2").val()}
         });
+        updateStatus("status");
     });
 </script>

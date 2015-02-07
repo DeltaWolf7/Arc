@@ -130,7 +130,7 @@
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#myModal").modal('hide');
-                updateStatus("#status");
+                updateStatus("status");
                 if (jdata.status == "success") {
                     getPages();
                 } else {
@@ -154,7 +154,7 @@
             data: {id: page, action: "remove"},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
             },
             complete: function () {
                 getPages();
@@ -210,7 +210,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus("#status");
+                        updateStatus("status");
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

@@ -213,7 +213,7 @@
             data: {action: "deletegroup", id: group},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 $("#deleteModal").modal("hide");
                 getData();
             }
@@ -229,7 +229,7 @@
             data: {action: "deletegroupresults", id: id},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 getData();
             }
         });
@@ -244,7 +244,7 @@
             data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 if (jdata.status == "success") {
                     $("#myModal").modal("hide");
                     getData();
@@ -267,7 +267,7 @@
             data: {action: "deletequestion", id: question},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 $("#deleteQuestionModal").modal("hide");
                 getQuestions(questions);
             }
@@ -337,7 +337,7 @@
                 answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 if (jdata.status == "success") {
                     $("#questionModal").modal("hide");
                     getQuestions(questions);
@@ -386,7 +386,7 @@
             data: {action: "copyquestion", id: id},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
                 getQuestions(questions);
             }
         });
@@ -423,7 +423,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus("#status");
+                        updateStatus("status");
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

@@ -453,7 +453,7 @@ class Helper {
                     break;
             }
         }
-        
+
         echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
         $_SESSION["status"] = array();
     }
@@ -767,55 +767,70 @@ class Helper {
      */
     public static function arcSendMail($to, $subject, $message, $attachments = null) {
         ob_start();
-        $mailSettings = \SystemSetting::getByKey("ARCSMTP");
-        require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
+        $mailSettings = \SystemSetting::getByKey("ARC_SMTP");
+        $mailSettingsUse = \SystemSetting::getByKey("ARC_USE_SMTP");
 
-        $mail = new \PHPMailer();
-        $mail->isSMTP();
-        if (ARCDEBUG == true) {
-            $mail->SMTPDebug = 2;
-        } else {
-            $mail->SMTPDebug = 0;
-        }
-        $mail->Debugoutput = "html";
-
-        if (empty($mailSettings->value)) {
-            return "Unable to get mail settings";
-        }
-
-        $settings = $mailSettings->getArray(",");
-        $mail->Host = $settings[0];
-        $mail->Port = $settings[1];
-        $mail->SMTPAuth = true;
-        $mail->Username = $settings[2];
-        $mail->Password = $settings[3];
-        $mail->setFrom($settings[4], $settings[5]);
-
-        if (is_array($to)) {
-            foreach ($to as $name => $email) {
-                $mail->addAddress($email, $name);
+        // FIXME::: doesnt support attachments and doesnt work with name properly
+        if (boolval($mailSettingsUse->value) == true) {
+            if (is_array($to)) {
+                foreach ($to as $name => $email) {
+                    mail($email, $subject, $message);
+                }
+            } else {
+                mail($to, $subject, $message);
             }
+            
+            
         } else {
-            $mail->addAddress($to);
-        }
+            require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
 
-        $mail->Subject = $subject;
-        $mail->msgHTML($message);
-
-        if (isset($attachments)) {
-            foreach ($attachments as $attachment) {
-                $mail->addAttachment($attachment);
+            $mail = new \PHPMailer();
+            $mail->isSMTP();
+            if (ARCDEBUG == true) {
+                $mail->SMTPDebug = 2;
+            } else {
+                $mail->SMTPDebug = 0;
             }
-        }
+            $mail->Debugoutput = "html";
+
+            if (empty($mailSettings->value)) {
+                return "Unable to get mail settings";
+            }
+
+            $settings = $mailSettings->getArray(",");
+            $mail->Host = $settings[0];
+            $mail->Port = $settings[1];
+            $mail->SMTPAuth = true;
+            $mail->Username = $settings[2];
+            $mail->Password = $settings[3];
+            $mail->setFrom($settings[4], $settings[5]);
+
+            if (is_array($to)) {
+                foreach ($to as $name => $email) {
+                    $mail->addAddress($email, $name);
+                }
+            } else {
+                $mail->addAddress($to);
+            }
+
+            $mail->Subject = $subject;
+            $mail->msgHTML($message);
+
+            if (isset($attachments)) {
+                foreach ($attachments as $attachment) {
+                    $mail->addAttachment($attachment);
+                }
+            }
 
 
-        $mail->send();
-        $error = ob_get_contents();
-        ob_end_clean();
-        if (!empty($error)) {
-            return $error;
+            $mail->send();
+            $error = ob_get_contents();
+            ob_end_clean();
+            if (!empty($error)) {
+                return $error;
+            }
+            return null;
         }
-        return null;
     }
 
     /**

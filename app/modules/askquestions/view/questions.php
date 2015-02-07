@@ -116,7 +116,7 @@
                 time: time, answer: $("#answer").val(), qid: qid},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
             },
             complete: function () {
                 question = question + 1;

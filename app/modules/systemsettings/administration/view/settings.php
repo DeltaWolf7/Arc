@@ -104,7 +104,7 @@
             data: {action: "deletesetting", key: kstring},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
             },
             complete: function () {
                 $("#deleteSetting").modal("hide");
@@ -122,7 +122,7 @@
             data: {action: "savesetting", key: kstring, value: $('#sValue').val()},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("#status");
+                updateStatus("status");
             },
             complete: function () {
                 $("#editSetting").modal("hide");
