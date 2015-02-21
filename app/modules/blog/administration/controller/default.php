@@ -8,7 +8,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 unlink(system\Helper::arcGetPath(true) . "images/thumbs/{$thumb}");
             }
         }
-        echo json_encode(["status" => "success", "data" => "Cache has been cleaned."]);
+        system\Helper::arcAddMessage("success", "Cache has been cleaned");
     } elseif ($_POST["action"] == "posts") {
         $data = "<table class=\"table table-hover table-condensed\">";
         $data .= "<thead><tr><th>Title</th><th>Category</th><th>Date</th><th class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPost(0);\"><i class=\"fa fa-plus\"></i> New Post</a></th></tr></thead>";

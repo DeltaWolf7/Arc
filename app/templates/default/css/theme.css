@@ -183,7 +183,7 @@ h4{
 	font-size:13px;
 }
 
-.form-control:focus { outline: none; box-shadow:none; border:none; }
+.form-control:focus { box-shadow:none; }
 .form-control::-webkit-input-placeholder { color: #AAAAAA; }
 
 .form-group{
@@ -287,4 +287,14 @@ body { margin-bottom: 100px; font-size: 14px; }
 }
 .logo {
     padding: 20px 0 0 0;
+}
+
+/* Modal */
+.modal-title {
+    font-weight: bold;
+}
+
+/* Tabs */
+.nav-tabs {
+    margin-top: 0px;
 }

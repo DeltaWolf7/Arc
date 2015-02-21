@@ -6,7 +6,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $no = $_POST["question"] + 1;
         if (count($result) == 0) {
             if ($_POST["answer"] == "0") {
-                echo json_encode(["status" => "warning", "data" => "Question skipped"]);
+                system\Helper::arcAddMessage("warning", "Question " . $no . " skipped");
             } else {
                 $result = new Result();
                 $result->groupid = $_POST["grpid"];
@@ -17,10 +17,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $result->resultno = $_POST["answer"];
                 $result->questionno = $no;
                 $result->update();
-                echo json_encode(["status" => "success", "data" => "Answer saved"]);
+                system\Helper::arcAddMessage("success", "Question " . $no . " answer saved");
             }
         } else {
-            echo json_encode(["status" => "warning", "data" => "Question already answered."]);
+            system\Helper::arcAddMessage("warning", "Question " . $no . " has already been answered");
         }
     } elseif ($_POST["action"] == "getQuestions") {
         $table = "<thead><tr><th style=\"width: 100px;\">Complete</th><th>Question Group</th><th>&nbsp;</th></tr></thead><tbody>";
@@ -57,7 +57,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "<strong>Question {$questionno} of " . count($questions) . "</strong>";
             $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
             $data .= "<div class=\"form-group\">";
-            $data .= "<select class=\"form-control\" id=\"answer\">";
+            $data .= "<select class=\"form-control\" id=\"answer\" onchange=\"self.focus();\">";
             $data .= "<option value='0'>Not Answered</option>";
 
             if ($question->answer1 != "") {

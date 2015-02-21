@@ -442,16 +442,21 @@ class Helper {
         $danger = 0;
         foreach ($_SESSION["status"] as $message) {
             $data .= "<div class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
-                    . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>"
-                    . $message["data"] . "</div>" . PHP_EOL;
+                    . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
             switch ($message["status"]) {
                 case "danger":
                     $danger++;
+                    $data .= "<i class=\"fa fa-close\"></i> ";
                     break;
                 case "warning":
                     $warning++;
+                    $data .= "<i class=\"fa fa-warning\"></i> ";
+                    break;
+                default:
+                    $data .= "<i class=\"fa fa-check\"></i> ";
                     break;
             }
+            $data .= $message["data"] . "</div>" . PHP_EOL;   
         }
 
         echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
@@ -771,7 +776,7 @@ class Helper {
         $mailSettingsUse = \SystemSetting::getByKey("ARC_USE_SMTP");
 
         // FIXME::: doesnt support attachments and doesnt work with name properly
-        if (boolval($mailSettingsUse->value) == true) {
+        if (empty($mailSettingsUse->value)) {
             if (is_array($to)) {
                 foreach ($to as $name => $email) {
                     mail($email, $subject, $message);
@@ -779,8 +784,8 @@ class Helper {
             } else {
                 mail($to, $subject, $message);
             }
-            
-            
+            // everything went fine
+            return null;
         } else {
             require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
 
@@ -821,7 +826,6 @@ class Helper {
                     $mail->addAttachment($attachment);
                 }
             }
-
 
             $mail->send();
             $error = ob_get_contents();

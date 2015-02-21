@@ -18,7 +18,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $post->userid = $user->id;
         $post->content = htmlentities($_POST["content"]);
         $post->update();
-        echo utf8_encode(json_encode(["status" => "success", "data" => "Posted"]));
+        system\Helper::arcAddMessage("success", "Posted");
     }
 }
 

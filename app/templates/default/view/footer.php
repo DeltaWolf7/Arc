@@ -1,11 +1,10 @@
-            
-<div id="status"></div>
-    </div>
+      <div id="status"></div>
+</div>
 <div class="footer">
-        <div class="container">
-            <p class="text-muted">Arc Project Version <?php echo ARCVERSION; ?>, Written by Craig Longford</p>
-        </div>
+    <div class="container">
+        <p class="text-muted">Arc Project Version <?php echo ARCVERSION; ?>, Written by Craig Longford</p>
     </div>
-    <?php system\Helper::arcGetFooter(); ?>
+</div>
+<?php system\Helper::arcGetFooter(); ?>
 </body>
 </html>

@@ -7,7 +7,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         foreach ($settings as $setting) {
             $table .= "<tr><td>{$setting->key}</td><td>{$setting->value}</td>"
                     . "<td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"editSetting('{$setting->key}');\"><i class=\"fa fa-edit\"></i> Edit</a>"
-        . " <a class=\"btn btn-default btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+                    . " <a class=\"btn btn-default btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $table .= "</tbody>";
         echo utf8_encode(json_encode(["html" => $table]));
@@ -16,12 +16,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         echo utf8_encode(json_encode(["skey" => $setting->key, "svalue" => $setting->value]));
     } elseif ($_POST["action"] == "savesetting") {
         if (empty($_POST["key"])) {
-            echo json_encode(["status" => "danger", "data" => "Key must be provided"]);
+            system\Helper::arcAddMessage("danger", "Key must be provided");
             return;
         }
 
         if (strpos($_POST["key"], " ") == true) {
-            echo json_encode(["status" => "danger", "data" => "Key cannot contain spaces."]);
+            system\Helper::arcAddMessage("danger", "Key cannot contain spaces");
             return;
         }
 
@@ -31,12 +31,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $setting->value = $_POST["value"];
         $setting->update();
-
-        echo json_encode(["status" => "success", "data" => "Setting saved"]);
+        system\Helper::arcAddMessage("success", "Setting saved");
     } elseif ($_POST["action"] == "deletesetting") {
         $setting = new SystemSetting();
         $setting->delete($_POST["key"]);
-
-        echo json_encode(["status" => "success", "data" => "Setting deleted"]);
+        system\Helper::arcAddMessage("success", "Setting deleted");
     }
 }

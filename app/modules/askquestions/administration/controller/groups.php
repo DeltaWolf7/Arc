@@ -9,12 +9,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $question->groupid = $_POST["group"];
         $question->question = htmlentities($_POST["question"]);
         if (empty($question->question)) {
-            echo json_encode(["status" => "danger", "data" => "Question must have text"]);
+            system\Helper::arcAddMessage("danger", "Question must have text");
             return;
         }
         $question->answer1 = htmlentities($_POST["answer1"]);
         if ($question->answer1 == "") {
-            echo json_encode(["status" => "danger", "data" => "Question must have answer 1"]);
+            system\Helper::arcAddMessage("danger", "Question must have answer 1");
             return;
         }
         $question->answer2 = htmlentities($_POST["answer2"]);
@@ -23,7 +23,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $question->answer5 = htmlentities($_POST["answer5"]);
         $question->correctAnswer = $_POST["correct"];
         $question->update();
-        echo json_encode(["status" => "success", "data" => "Question saved"]);
+        system\Helper::arcAddMessage("success", "Question saved");
     } else if ($_POST["action"] == "savegroup") {
         $group = new Group();
         $group->getByID($_POST["id"]);
@@ -34,23 +34,30 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $group->visible = 0;
         }
         if (empty($group->name)) {
-            echo json_encode(["status" => "danger", "data" => "Group must have a name"]);
+            system\Helper::arcAddMessage("danger", "Group must have a name");
             return;
         }
         $group->txt = $_POST["text"];
         $group->update();
-        echo json_encode(["status" => "success", "data" => "Group saved"]);
+        system\Helper::arcAddMessage("success", "Group saved");
     } elseif ($_POST["action"] == "deletegroup") {
         $group = new Group();
         $group->delete($_POST["id"]);
-        echo json_encode(["status" => "success", "data" => "Group deleted"]);
+        system\Helper::arcAddMessage("success", "Group deleted");
     } elseif ($_POST["action"] == "getgroups") {
         $groups = Group::getGroups();
         $data = "<table class=\"table table-hover table-condensed\">";
-        $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\"><button class=\"btn btn-primary btn-xs\" data-toggle=\"modal\" onclick=\"editGroup(0);\"><i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
+        $data .= "<thead><tr><th>Question Group</th><th class=\"text-right\">"
+                . "<button class=\"btn btn-default btn-xs\" data-toggle=\"modal\" onclick=\"editGroup(0);\">"
+                . "<i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
         foreach ($groups as $group) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</a> <a class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</a>";
-            $data .= "<a class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear Results</a></td></tr>";
+            $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\">"
+                . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
+                . "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear Results</button>"
+                . "</div></td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -59,9 +66,19 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $questions = $groups->getQuestions($_POST["id"]);
         $count = 1;
         $data = "<table class=\"table table-hover table-condensed\">";
-        $data .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th style=\"width: 150px;\" class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</a> <a class=\"btn btn-default btn-xs\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</a></th></tr></thead><tbody>";
+        $data .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th class=\"text-right\">"
+                . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"getData();\"><i class=\"fa fa-backward\"></i> Back to Groups</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"getQuestion(0);\"><i class=\"fa fa-plus\"></i> New Question</button>"
+                . "</div></th></tr></thead><tbody>";
         foreach ($questions as $question) {
-            $data .= "<tr><td>{$count}</td><td><a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</a><br /><a class=\"btn btn-default btn-xs\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td>{$count}</td><td>"
+                . "<a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a>"
+                . "</td><td class=\"text-right\">"
+                . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
+                . "</div></td></tr>";
             $count++;
         }
         $data .= "</tbody></table>";
@@ -93,7 +110,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "deletequestion") {
         $question = new Question();
         $question->delete($_POST["id"]);
-        echo json_encode(["status" => "success", "data" => "Question deleted"]);
+        system\Helper::arcAddMessage("success", "Question deleted");
     } elseif ($_POST["action"] == "getresults") {
         $group = UserGroup::getByName("Students");
         $users = $group->getUsers();
@@ -213,12 +230,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $oquestion->getByID($_POST["id"]);
         $oquestion->id = 0;
         $oquestion->update();
-        echo json_encode(["status" => "success", "data" => "Question duplicated"]);
+        system\Helper::arcAddMessage("success", "Question duplicated");
     } elseif ($_POST["action"] == "deletegroupresults") {
         $results = Result::getByGroup($_POST["id"]);
         foreach ($results as $result) {
             $result->delete($result->id);
         }
-        echo json_encode(["status" => "success", "data" => "Results have been deleted"]);
+        system\Helper::arcAddMessage("success", "Results have been deleted");
     }
 }

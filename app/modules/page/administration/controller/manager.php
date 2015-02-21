@@ -11,7 +11,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         } elseif ($_POST["action"] == "remove") {
             $page = new Page();
             $page->delete($_POST["id"]);
-            echo json_encode(["status" => "success", "data" => "Page deleted"]);
+            system\Helper::arcAddMessage("success", "Page deleted");
         } elseif ($_POST["action"] == "save") {
             $page = new Page();
             $page->getByID($_POST["id"]);
@@ -22,7 +22,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $page->title = $_POST["title"];
             $seo = Page::getBySEOURL($_POST["seourl"]);
             if ($seo->id != 0 && $seo->id != $page->id) {
-                echo json_encode(["status" => "danger", "data" => "Duplicate SEO Url found, please choose another"]);
+                system\Helper::arcAddMessage("danger", "Duplicate SEO Url found, please choose another");
                 return;
             }
             $page->update();
