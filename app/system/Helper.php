@@ -456,7 +456,7 @@ class Helper {
                     $data .= "<i class=\"fa fa-check\"></i> ";
                     break;
             }
-            $data .= $message["data"] . "</div>" . PHP_EOL;   
+            $data .= $message["data"] . "</div>" . PHP_EOL;
         }
 
         echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
@@ -784,8 +784,6 @@ class Helper {
             } else {
                 mail($to, $subject, $message);
             }
-            // everything went fine
-            return null;
         } else {
             require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
 
@@ -799,16 +797,22 @@ class Helper {
             $mail->Debugoutput = "html";
 
             if (empty($mailSettings->value)) {
-                return "Unable to get mail settings";
+                self::arcAddMessage("danger", "Unabled to get SMTP settings");
+                return false;
             }
 
-            $settings = $mailSettings->getArray(",");
-            $mail->Host = $settings[0];
-            $mail->Port = $settings[1];
-            $mail->SMTPAuth = true;
-            $mail->Username = $settings[2];
-            $mail->Password = $settings[3];
-            $mail->setFrom($settings[4], $settings[5]);
+            try {
+                $settings = $mailSettings->getArray(",");
+                $mail->Host = $settings[0];
+                $mail->Port = $settings[1];
+                $mail->SMTPAuth = true;
+                $mail->Username = $settings[2];
+                $mail->Password = $settings[3];
+                $mail->setFrom($settings[4], $settings[5]);
+            } catch (Exception $e) {
+                self::arcAddMessage("danger", "Unabled to parse SMTP setings");
+                return false;
+            }
 
             if (is_array($to)) {
                 foreach ($to as $name => $email) {
@@ -831,10 +835,11 @@ class Helper {
             $error = ob_get_contents();
             ob_end_clean();
             if (!empty($error)) {
-                return $error;
+                self::arcAddMessage("danger", $error);
+                return false;
             }
-            return null;
         }
+        return true;
     }
 
     /**

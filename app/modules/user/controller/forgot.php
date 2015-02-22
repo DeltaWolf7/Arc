@@ -24,9 +24,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     
     $mail = system\Helper::arcSendMail($to, "Password Reset Request", $message);
     
-    if (empty($mail)) {
-        system\Helper::arcAddMessage("success", "Password reset request sent");
+    if ($mail) {
+        system\Helper::arcAddMessage("success", "Password reset request has been emailed");
     } else {
-        system\Helper::arcAddMessage("danger", $mail);
+        system\Helper::arcAddMessage("danger", "Failed to send email");
     }
 }

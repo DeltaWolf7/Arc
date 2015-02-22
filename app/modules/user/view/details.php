@@ -6,7 +6,6 @@
 $user = system\Helper::arcGetUser();
 ?>
 
-
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="form-group">
@@ -35,7 +34,6 @@ $user = system\Helper::arcGetUser();
 <div class="text-right">
     <a id="saveBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
 </div>
-
 
 <script>
     $("#saveBtn").click(function () {
