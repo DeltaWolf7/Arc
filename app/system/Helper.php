@@ -40,10 +40,10 @@ class Helper {
      * Initialise the Helper class
      */
     public static function init() {
-        // Start session
+// Start session
         session_start();
 
-        // Get the current URI and break up the path into parts.
+// Get the current URI and break up the path into parts.
         if ($_SERVER["REQUEST_URI"] != "/") {
             $uri = parse_url($_SERVER["REQUEST_URI"]);
             $routes = explode("/", trim($uri["path"], "/"));
@@ -62,21 +62,21 @@ class Helper {
             }
         }
 
-        // Default view data, if  nothing is set.
+// Default view data, if  nothing is set.
         if (empty(self::$arc["urldata"])) {
             self::$arc["urldata"]["module"] = ARCDEFAULTMODULE;
             self::$arc["urldata"]["action"] = ARCDEFAULTACTION;
         }
 
-        // Initilise menu
+// Initilise menu
         self::$arc["menus"] = Array();
 
-        // Initilise status
+// Initilise status
         if (!isset($_SESSION["status"])) {
             $_SESSION["status"] = Array();
         }
 
-        // Create database connection
+// Create database connection
         try {
             if (ARCDBTYPE != "sqlite") {
                 self::$arc["database"] = new \medoo([
@@ -96,7 +96,7 @@ class Helper {
             die("Unable to connect to database. Please check 'Config.php'.<br />Exception: " . $e->getMessage());
         }
 
-        // Javascript, add required javascript files to header
+// Javascript, add required javascript files to header
         self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
@@ -105,14 +105,14 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote-plugins.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
-        // CSS, add required css files to header
+// CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
 
-        // Canonical path
+// Canonical path
         $path = self::arcGetModulePath();
         if (self::arcGetURLData("action") != null) {
             $path .= self::arcGetURLData("action") . "/";
@@ -211,7 +211,7 @@ class Helper {
      * Adds header information to a page from header array
      */
     public static function arcGetHeader() {
-        // output header
+// output header
         if (!empty(self::$arc["headerdata"])) {
             foreach (self::$arc["headerdata"] as $line) {
                 echo $line;
@@ -225,7 +225,7 @@ class Helper {
      * Adds footer information to a page from header array
      */
     public static function arcGetFooter() {
-        // output header
+// output header
         if (!empty(self::$arc["footerdata"])) {
             foreach (self::$arc["footerdata"] as $line) {
                 echo $line;
@@ -296,14 +296,14 @@ class Helper {
             }
             return;
         }
-        // get system messages
+// get system messages
         if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
             self::arcGetStatus();
             return;
         }
 
 
-        // expired session
+// expired session
         $timeout = ARCSESSIONTIMEOUT * 60;
         if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
             session_unset();
@@ -311,16 +311,16 @@ class Helper {
             self::arcForceView("error", "error", false, ["419"]);
         }
 
-        // update last activity time stamp
+// update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
 
         if (self::arcIsAjaxRequest() == false) {
-            // Check the template in config exists.
+// Check the template in config exists.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
                 die("Unable to find template '" . ARCTEMPLATE . "' specified in Config.php.");
             }
 
-            // Check if the template has a controller and include it if it does.
+// Check if the template has a controller and include it if it does.
             if (file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php")) {
                 require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php";
             }
@@ -336,7 +336,7 @@ class Helper {
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-            // Get module controller
+// Get module controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
@@ -347,7 +347,7 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == false) {
-            // Check if the template has a header and include if it does.
+// Check if the template has a header and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
                 die("Unable to find template header.php.");
             }
@@ -355,7 +355,7 @@ class Helper {
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-            // Get module view controller
+// Get module view controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
@@ -366,7 +366,7 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == false) {
-            // Get module view      
+// Get module view      
             if (self::arcGetURLData("administration") == null) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
@@ -379,7 +379,7 @@ class Helper {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
 
-            // Check if the template has a footer and include if it does.
+// Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
                 die("Unable to find template footer.php.");
             }
@@ -593,7 +593,7 @@ class Helper {
                     }
                 }
 
-                // module menu
+// module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
                     if (\UserPermission::hasPermission($groups, $module)) {
                         self::$arc["menumodule"] = $module;
@@ -601,7 +601,7 @@ class Helper {
                         require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
                     }
                 }
-                // module administration menu
+// module administration menu
                 if (self::arcIsUserInGroup(["Administrators"]) == true) {
                     if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/administration/module.php")) {
                         self::$arc["menumodule"] = $module;
@@ -627,11 +627,11 @@ class Helper {
      * @param string $group Group to palce the item
      */
     public static function arcAddMenuItem($name, $icon, $divider, $url, $group) {
-        // setup menu storage if not already in existance
+// setup menu storage if not already in existance
         if (!isset(self::$arc["menus"])) {
             self::$arc["menus"] = array();
         }
-        // build menu item
+// build menu item
         $item = array();
         $item["name"] = $name;
         $item["icon"] = $icon;
@@ -771,20 +771,13 @@ class Helper {
      * @return string Null is returned on OK and the error on failure.
      */
     public static function arcSendMail($to, $subject, $message, $attachments = null) {
-        ob_start();
-        $mailSettings = \SystemSetting::getByKey("ARC_SMTP");
-        $mailSettingsUse = \SystemSetting::getByKey("ARC_USE_SMTP");
-
-        // FIXME::: doesnt support attachments and doesnt work with name properly
-        if (empty($mailSettingsUse->value)) {
-            if (is_array($to)) {
-                foreach ($to as $name => $email) {
-                    mail($email, $subject, $message);
-                }
-            } else {
-                mail($to, $subject, $message);
-            }
-        } else {
+        try {
+            $mailHost = \SystemSetting::getByKey("ARC_SMTP_HOST");
+            $mailPort = \SystemSetting::getByKey("ARC_SMTP_PORT");
+            $mailUsername = \SystemSetting::getByKey("ARC_SMTP_USERNAME");
+            $mailPassword = \SystemSetting::getByKey("ARC_SMTP_PASSWORD");
+            $mailEmail = \SystemSetting::getByKey("ARC_SMTP_EMAIL");
+            $mailName = \SystemSetting::getByKey("ARC_SMTP_NAME");
             require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
 
             $mail = new \PHPMailer();
@@ -794,25 +787,12 @@ class Helper {
             } else {
                 $mail->SMTPDebug = 0;
             }
-            $mail->Debugoutput = "html";
-
-            if (empty($mailSettings->value)) {
-                self::arcAddMessage("danger", "Unabled to get SMTP settings");
-                return false;
-            }
-
-            try {
-                $settings = $mailSettings->getArray(",");
-                $mail->Host = $settings[0];
-                $mail->Port = $settings[1];
-                $mail->SMTPAuth = true;
-                $mail->Username = $settings[2];
-                $mail->Password = $settings[3];
-                $mail->setFrom($settings[4], $settings[5]);
-            } catch (Exception $e) {
-                self::arcAddMessage("danger", "Unabled to parse SMTP setings");
-                return false;
-            }
+            $mail->Host = $mailHost->value;
+            $mail->Port = $mailPort->value;
+            $mail->SMTPAuth = true;
+            $mail->Username = $mailUsername->value;
+            $mail->Password = $mailPassword->value;
+            $mail->setFrom($mailEmail->value, $mailName->value);
 
             if (is_array($to)) {
                 foreach ($to as $name => $email) {
@@ -832,14 +812,16 @@ class Helper {
             }
 
             $mail->send();
-            $error = ob_get_contents();
-            ob_end_clean();
-            if (!empty($error)) {
-                self::arcAddMessage("danger", $error);
-                return false;
-            }
+            return true;
+        } catch (phpmailerException $e) {
+            \Log::createLog($e->errorMessage());
+            self::arcAddMessage("danger", "Unable to send email, see log for details");
+            return false;
+        } catch (Exception $exception) {
+            \Log::createLog($exception->getMessage());
+            self::arcAddMessage("danger", "Unable to send email, see log for details");
+            return false;
         }
-        return true;
     }
 
     /**

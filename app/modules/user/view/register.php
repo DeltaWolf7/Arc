@@ -38,7 +38,7 @@
                 password: $("#password").val(), password2: $("#password2").val()}
         });
         var jdata = updateStatus("status");
-        if (jdata.status == "success") {
+        if (jdata.danger == 0) {
             window.location = "<?php echo system\Helper::arcGetPath(); ?>";
         }
     });

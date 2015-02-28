@@ -32,7 +32,7 @@ if (!is_numeric($data[0])) {
             contentType: "application/x-www-form-urlencoded",
             data: {password: $("#password").val(), password2: $("#password2").val(), id: <?php echo $data[0]; ?>}
         });
-        var jdata = updateStatus("status");
+        var jdata = updateStatus("status"); 
         if (jdata.danger == 0) {
             $("#btnReset").prop("disabled", true);
             $("#password").prop("disabled", true);

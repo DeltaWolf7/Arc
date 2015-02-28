@@ -20,8 +20,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             return;
         } else {
             system\Helper::arcAddMessage("danger", "Account disabled");
+            Log::createLog("Attempt to access disabled account: " . $_POST["email"]);
             return;
         }
     }
     system\Helper::arcAddMessage("danger", "Invalid username and/or password");
+    Log::createLog("Incorrect password: " . $_POST["email"]);
 }
