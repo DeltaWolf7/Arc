@@ -1,11 +1,6 @@
 <div class="page-header">
-    <h1>My Details</h1>
+    <h1><i class="fa fa-user"></i> My Details</h1>
 </div>
-
-<?php
-$user = system\Helper::arcGetUser();
-?>
-
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="form-group">
@@ -28,12 +23,16 @@ $user = system\Helper::arcGetUser();
             <label for="retype">Retype</label>
             <input type="password" class="form-control" id="password2" maxlength="100" placeholder="Retype" autocomplete="off">
         </div>
+        <div id="status"></div>
+    </div>
+    <div class="panel-footer text-right">
+        <a id="saveBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
     </div>
 </div>
 
-<div class="text-right">
-    <a id="saveBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
-</div>
+<?php
+    $user = system\Helper::arcGetUser();
+?>
 
 <script>
     $("#saveBtn").click(function () {

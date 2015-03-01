@@ -1,7 +1,6 @@
 <div class="page-header">
     <h1>Register</h1>
 </div>
-
 <div class="panel panel-default">
     <div class="panel-body">
         <div class="form-group">
@@ -24,8 +23,12 @@
             <label for="password2">Retype Password</label>
             <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password" autocomplete="off">
         </div>
-    </div></div>
-<a id="registerBtn" class="btn btn-primary">Register</a>
+        <div id="status"></div>
+    </div>
+    <div class="panel-footer text-right">
+        <a id="registerBtn" class="btn btn-primary">Register</a>
+    </div>
+</div>
 
 <script>
     $("#registerBtn").click(function () {
@@ -37,9 +40,12 @@
             data: {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),
                 password: $("#password").val(), password2: $("#password2").val()}
         });
-        var jdata = updateStatus("status");
-        if (jdata.danger == 0) {
+        updateStatus("status");
+    });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
             window.location = "<?php echo system\Helper::arcGetPath(); ?>";
         }
-    });
+    }
 </script>

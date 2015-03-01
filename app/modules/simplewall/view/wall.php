@@ -17,21 +17,17 @@
 <div id="data">
 </div>
 
-
 <script>
-    $("#sendbtn").click(function() {
+    $("#sendbtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                getData();
-            }
+            data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>}
         });
+        updateStatus("status");
+        getData();
     });
 
     function getData() {

@@ -30,13 +30,17 @@ if (!is_numeric($data[0])) {
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {password: $("#password").val(), password2: $("#password2").val(), id: <?php echo $data[0]; ?>}
+            data: {password: $("#password").val(), password2: $("#password2").val(),
+                id: <?php echo $data[0]; ?>}
         });
-        var jdata = updateStatus("status"); 
-        if (jdata.danger == 0) {
+        updateStatus("status");
+    });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
             $("#btnReset").prop("disabled", true);
             $("#password").prop("disabled", true);
             $("#password2").prop("disabled", true);
         }
-    });
+    }
 </script>

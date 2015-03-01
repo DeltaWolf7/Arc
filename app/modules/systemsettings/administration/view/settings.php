@@ -119,16 +119,13 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savesetting", key: kstring, value: $('#sValue').val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-            },
+            data: {action: "savesetting", key: kstring, value: $('#sValue').val()}
             complete: function () {
                 $("#editSetting").modal("hide");
                 getSettings();
             }
         });
+        updateStatus("status");
     });
 
     $(document).ready(function () {

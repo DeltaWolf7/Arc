@@ -1,4 +1,3 @@
-      <div id="status"></div>
 </div>
 <div class="footer">
     <div class="container">
