@@ -1,11 +1,11 @@
-Bootstrap                   3.3.1               http://getbootstrap.com/
-Boostrap Datetimepicker     3.1.3               http://eonasdan.github.io/bootstrap-datetimepicker/
+Bootstrap                   3.3.2               http://getbootstrap.com/
+Boostrap Datetimepicker     4.0.0               http://eonasdan.github.io/bootstrap-datetimepicker/
 JQuery                      2.1.3               http://jquery.com/download/
-Font Awesome                4.2.0               http://fortawesome.github.io/Font-Awesome/
-Summernote                  0.6                 http://summernote.org/
+Font Awesome                4.3.0               http://fortawesome.github.io/Font-Awesome/
+Summernote                  0.6.1               http://summernote.org/
 Bootstrap Filestyle         1.1.2               http://markusslima.github.io/bootstrap-filestyle/
-Medoo                       0.9.7               http://medoo.in/
-Moment.js                   2.8.4               http://momentjs.com/
+Medoo                       0.9.8               http://medoo.in/
+Moment.js                   2.9.0               http://momentjs.com/
 PHPMailer                   5.2.8               https://github.com/Synchro/PHPMailer
 
 
