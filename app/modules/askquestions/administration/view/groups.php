@@ -210,29 +210,23 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletegroup", id: group},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                $("#deleteModal").modal("hide");
-                getData();
-            }
+            data: {action: "deletegroup", id: group}
         });
+        updateStatus("status");
+        $("#deleteModal").modal("hide");
+        getData();
     });
-    
+
     function deleteGroupResults(id) {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletegroupresults", id: id},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                getData();
-            }
+            data: {action: "deletegroupresults", id: id}
         });
+        updateStatus("status");
+        getData();
     }
 
     $("#saveGroupBtn").click(function () {
@@ -241,16 +235,13 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    $("#myModal").modal("hide");
-                    getData();
-                }
-            }
+            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")}
         });
+        var jdata = updateStatus("status");
+        if (jdata.danger == 0) {
+            $("#myModal").modal("hide");
+            getData();
+        }
     });
 
     function deleteQuestion(id) {
@@ -264,14 +255,11 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletequestion", id: question},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                $("#deleteQuestionModal").modal("hide");
-                getQuestions(questions);
-            }
+            data: {action: "deletequestion", id: question}
         });
+        updateStatus("status");
+        $("#deleteQuestionModal").modal("hide");
+        getQuestions(questions);
     });
 
     function getData() {
@@ -334,16 +322,13 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "savequestion", id: question, question: $('.summernote').code(),
                 answer1: $("#answer1").val(), answer2: $("#answer2").val(), answer3: $("#answer3").val(),
-                answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    $("#questionModal").modal("hide");
-                    getQuestions(questions);
-                }
-            }
+                answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()}
         });
+        var jdata = updateStatus("status");
+        if (jdata.danger == 0) {
+            $("#questionModal").modal("hide");
+            getQuestions(questions);
+        }
     });
 
     function viewResults(id) {
@@ -383,13 +368,10 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "copyquestion", id: id},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                getQuestions(questions);
-            }
+            data: {action: "copyquestion", id: id}
         });
+        updateStatus("status");
+        getQuestions(questions);
     }
 
     $(document).ready(function () {
@@ -417,18 +399,14 @@
                 type: "post",
                 contentType: false,
                 processData: false,
-                dataType: "json",
-                success: function (data) {
-                    var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    if (jdata.status == "success") {
-                        editor.insertImage(welEditable, jdata.data);
-                    } else {
-                        updateStatus("status");
-                    }
-                    $("body").removeClass();
-                    $("body").addClass("modal-open");
-                }
+                dataType: "json"
             });
+            var jdata = updateStatus("status");
+            if (jdata.danger == 0) {
+                editor.insertImage(welEditable, jdata.data);
+            }
+            $("body").removeClass();
+            $("body").addClass("modal-open");
         }
         getData();
     });
