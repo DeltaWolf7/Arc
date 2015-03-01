@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>User Management</h1>
+    <h1><i class="fa fa-users"></i> User Management</h1>
 </div>
 
 <div role="tabpanel">
@@ -12,6 +12,8 @@
         </div>
     </div>
 </div>
+
+<div id="status"></div>
 
 <div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -140,7 +142,6 @@
                 <h4 class="modal-title" id="myModalLabel">Edit Group</h4>
             </div>
             <div class="modal-body">
-                <form role="form">
                     <div class="form-group">
                         <label for="groupname">Group Name</label>
                         <input maxlength="100" type="text" class="form-control" id="groupname" placeholder="Group name">
@@ -151,7 +152,6 @@
                             <input maxlength="100" type="text" class="form-control" id="groupdescription" placeholder="Group description">
                         </div>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
@@ -195,14 +195,11 @@
                 type: "post",
                 contentType: "application/x-www-form-urlencoded",
                 data: {action: "addgroup", id: userid, group: $('#groups').val()},
-                success: function (data) {
-                    var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    updateStatus("status");
-                },
                 complete: function () {
                     editUser(userid);
                 }
             });
+            updateStatus("status", null);
         }
     });
 
@@ -214,14 +211,11 @@
                 type: "post",
                 contentType: "application/x-www-form-urlencoded",
                 data: {action: "removefromgroup", id: userid, group: $('#groups2').val()},
-                success: function (data) {
-                    var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    updateStatus("status");
-                },
                 complete: function () {
                     editUser(userid);
                 }
             });
+            updateStatus("status", null);
         }
     });
 
@@ -283,18 +277,18 @@
             data: {action: "saveuser", id: userid, firstname: $('#firstname').val(),
                 lastname: $('#lastname').val(), email: $('#email').val(),
                 password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked")},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    $("#editUserModal").modal("hide");
-                }
-            },
             complete: function () {
                 get("users");
             }
         });
+        updateStatus("status", updateStatusCallback);
     });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
+            $("#editUserModal").modal("hide");
+        }
+    }
 
     function editGroup(id) {
         groupid = id;
@@ -327,15 +321,12 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {id: groupid, action: "removegroup"},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-            },
             complete: function () {
                 get("groups");
                 $("#removeGroupModal").modal("hide");
             }
         });
+        updateStatus("status", null);
     });
 
     $("#saveGroupBtn").click(function () {
@@ -346,18 +337,18 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "savegroup", id: groupid, name: $('#groupname').val(),
                 description: $('#groupdescription').val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    $("#editGroupModal").modal("hide");
-                }
-            },
             complete: function () {
                 get("groups");
             }
         });
+        updateStatus("status", updateStatusCallback2);
     });
+
+    function updateStatusCallback2(data) {
+        if (data.status == "success") {
+            $("#editGroupModal").modal("hide");
+        }
+    }
 
     $(document).ready(function () {
         get("users");

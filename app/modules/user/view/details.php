@@ -1,3 +1,7 @@
+<?php
+    $user = system\Helper::arcGetUser();
+?>
+
 <div class="page-header">
     <h1><i class="fa fa-user"></i> My Details</h1>
 </div>
@@ -30,10 +34,6 @@
     </div>
 </div>
 
-<?php
-    $user = system\Helper::arcGetUser();
-?>
-
 <script>
     $("#saveBtn").click(function () {
         $.ajax({
@@ -44,6 +44,6 @@
             data: {id: '<?php echo $user->id; ?>', firstname: $("#firstname").val(), lastname: $("#lastname").val(),
                 password: $("#password").val(), password2: $("#password2").val()}
         });
-        updateStatus("status");
+        updateStatus("status", null);
     });
 </script>

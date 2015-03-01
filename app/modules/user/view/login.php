@@ -28,10 +28,10 @@
             contentType: "application/x-www-form-urlencoded",
             data: {email: $("#email").val(), password: $("#password").val()}
         });
-        updateStatus("status");
+        updateStatus("status", updateStatusCallback);
     });
     
-    function updateStatusCallBack(data) {
+    function updateStatusCallback(data) {
         if (data.danger == 0) {
             window.location = "<?php echo system\Helper::arcGetPath(); ?>";
         }

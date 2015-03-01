@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Login :: Forgot Password</h1>
+    <h1><i class="fa fa-cog"></i> Reset Password</h1>
 </div>
 
 <?php
@@ -19,9 +19,13 @@ if (!is_numeric($data[0])) {
             <label for="password2">Retype Password</label>
             <input maxlength="100" type="password" class="form-control" id="password2" placeholder="Retype password" autocomplete="off">
         </div>
+        <div id="status"></div>
+    </div>
+    <div class="panel-footer text-right">
+        <a id="btnReset" class="btn btn-primary">Reset</a>
     </div>
 </div>
-<a id="btnReset" class="btn btn-primary">Reset</a>
+
 
 <script>
     $("#btnReset").click(function () {
@@ -33,7 +37,7 @@ if (!is_numeric($data[0])) {
             data: {password: $("#password").val(), password2: $("#password2").val(),
                 id: <?php echo $data[0]; ?>}
         });
-        updateStatus("status");
+        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {

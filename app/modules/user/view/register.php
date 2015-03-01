@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Register</h1>
+    <h1><i class="fa fa-user-plus"></i> Register</h1>
 </div>
 <div class="panel panel-default">
     <div class="panel-body">
@@ -40,7 +40,7 @@
             data: {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),
                 password: $("#password").val(), password2: $("#password2").val()}
         });
-        updateStatus("status");
+        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {
