@@ -4,6 +4,7 @@
 
 <div id="data" class="table-responsive">
 </div>
+<div id="status"></div>
 
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -33,17 +34,17 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savepermission", id: pid, group: groupid, module: $("#module").val()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    $("#editModal").modal("hide");
-                    getData();
-                }
-            }
+            data: {action: "savepermission", id: pid, group: groupid, module: $("#module").val()}
         });
+        updateStatus("status", updateStatusCallback);
     });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
+            $("#editModal").modal("hide");
+            getData();
+        }
+    }
 
     function editPermission(group, id) {
         groupid = group;
@@ -68,15 +69,10 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletepermission", id: id},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                if (jdata.status == "success") {
-                    updateStatus("status");
-                    getData();
-                }
-            }
+            data: {action: "deletepermission", id: id}
         });
+        updateStatus("status", null);
+        getData();
     }
 
     function getData() {
