@@ -56,7 +56,6 @@
 
 <script>
     var kstring;
-
     function getSettings() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -103,7 +102,6 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "deletesetting", key: kstring},
             success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
                 updateStatus("status");
             },
             complete: function () {
@@ -112,14 +110,13 @@
             }
         });
     });
-
     $("#saveSettingBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savesetting", key: kstring, value: $('#sValue').val()}
+            data: {action: "savesetting", key: kstring, value: $('#sValue').val()},
             complete: function () {
                 $("#editSetting").modal("hide");
                 getSettings();
