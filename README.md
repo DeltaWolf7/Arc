@@ -6,6 +6,11 @@ Arc Web Application Framework
  - Email: deltawolf7@gmail.com
  - WWW: www.deltasblog.co.uk
 
+Default Login
+=============
+email: admin@server.local
+password: password
+
 
 What is Arc
 ===========
