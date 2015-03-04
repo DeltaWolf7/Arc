@@ -9,6 +9,7 @@ Arc Web Application Framework
 Default Login
 =============
 email: admin@server.local
+
 password: password
 
 
