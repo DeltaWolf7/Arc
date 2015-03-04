@@ -20,8 +20,7 @@
             </div>
             <div id="statusX">
             </div>
-            <div class="modal-footer">
-                
+            <div class="modal-footer">             
                 <p><i class="fa fa-exclamation-circle"></i> You can take a break at any time by clicking the close button. Your progress will be saved.</p> 
                 <button id="prevBtn" type="button" class="btn btn-default" onclick="previousQuestion();"><i class="fa fa-backward"></i> Previous</button>
                 <button id="nextBtn" type="button" class="btn btn-primary" onclick="nextQuestion();"><i class="fa fa-forward"></i> Next</button>
@@ -121,7 +120,7 @@
                 getGroup(groupid);
             } 
         });
-        updateStatus("statusX");
+        updateStatus("statusX", null);
     }
 
     function previousQuestion() {

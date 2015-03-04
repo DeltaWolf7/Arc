@@ -6,6 +6,7 @@
     <table class="table table-hover table-condensed" id="pages">
     </table>
 </div>
+<div id="status"></div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -65,6 +66,7 @@
                         </div>
                     </div>
                 </div>
+                <div id="status1"></div>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
@@ -126,20 +128,22 @@
             contentType: "application/x-www-form-urlencoded",
             data: {id: page, action: "save", title: $("#title").val(), seourl: $("#seourl").val(),
                 metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-                html: $('.summernote').code()},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                $("#myModal").modal('hide');
-                updateStatus("status");
-                if (jdata.status == "success") {
-                    getPages();
-                } else {
-                    setTimeout(function () {
-                        $("#myModal").modal('show');
-                    }, 2000);
-                }
-            }});
+                html: $('.summernote').code()}
+        });
+        updateStatus("status1", updateStatusCallback);
     });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
+            $("#myModal").modal('hide');
+            getPages();
+        } else {
+            setTimeout(function () {
+                $("#myModal").modal('show');
+            }, 2000);
+        }
+    }
+
     function removePage(pageid) {
         page = pageid;
         $("#deletePage").modal("show");
@@ -152,16 +156,14 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {id: page, action: "remove"},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-            },
             complete: function () {
                 getPages();
                 $("#deletePage").modal("hide");
             }
         });
+        updateStatus("status", null);
     });
+
     function getPages() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -194,6 +196,7 @@
                 sendFile(files[0], editor, welEditable);
             }
         });
+
         function sendFile(file, editor, welEditable) {
             data = new FormData();
             data.append("file", file);
@@ -210,7 +213,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus("status");
+                        updateStatus("status1", null);
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

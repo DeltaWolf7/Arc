@@ -16,6 +16,8 @@
     </div>
 </div>
 
+<div id="status"></div>
+
 <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -98,12 +100,9 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "clearcache"},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                updateStatus("status");
-            }
+            data: {action: "clearcache"}
         });
+        updateStatus("status");
     });
 
     function editPost(id) {

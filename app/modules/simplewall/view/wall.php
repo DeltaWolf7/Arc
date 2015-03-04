@@ -14,6 +14,8 @@
     </div>
 </div>
 
+<div id="status"></div>
+
 <div id="data">
 </div>
 
@@ -26,9 +28,13 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>}
         });
-        updateStatus("status");
+        updateStatus("status", updateStatusXCallback);
         getData();
     });
+    
+    function updateStatusXCallback(data) {
+        $('.summernote').code("");
+    }
 
     function getData() {
         $.ajax({
@@ -55,6 +61,7 @@
                 sendFile(files[0], editor, welEditable);
             }
         });
+        
         function sendFile(file, editor, welEditable) {
             data = new FormData();
             data.append("file", file);
@@ -71,7 +78,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus("status");
+                        updateStatus("status", null);
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

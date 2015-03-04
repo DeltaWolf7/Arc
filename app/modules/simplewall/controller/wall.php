@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "getdata") {
-        $posts = Post::getLatest(30);
+        $posts = Post::getLatest(50);
         $html = "";
         foreach ($posts as $post) {     
             $html .= "<div class=\"panel panel-default\"><div class=\"panel-heading\">";

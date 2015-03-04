@@ -7,6 +7,8 @@
     </table>
 </div>
 
+<div id="status"></div>
+
 <div class="modal fade" id="editSetting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -26,7 +28,6 @@
                         <input type="text" class="form-control" id="sValue" maxlength="255" placeholder="Setting Value">
                     </div> 
                 </div>
-
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
@@ -101,15 +102,14 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {action: "deletesetting", key: kstring},
-            success: function (data) {
-                updateStatus("status");
-            },
             complete: function () {
                 $("#deleteSetting").modal("hide");
                 getSettings();
             }
         });
+        updateStatus("status", null);
     });
+    
     $("#saveSettingBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -122,7 +122,7 @@
                 getSettings();
             }
         });
-        updateStatus("status");
+        updateStatus("status", null);
     });
 
     $(document).ready(function () {

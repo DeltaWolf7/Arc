@@ -5,6 +5,8 @@
 <div id="data" class="table-responsive">
 </div>
 
+<div id="status"></div>
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -212,7 +214,7 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "deletegroup", id: group}
         });
-        updateStatus("status");
+        updateStatus("status", null);
         $("#deleteModal").modal("hide");
         getData();
     });
@@ -237,12 +239,15 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")}
         });
-        var jdata = updateStatus("status");
-        if (jdata.danger == 0) {
+        updateStatus("status", updateStatusYCallback);
+    });
+    
+    function updateStatusYCallback(data) {
+        if (data.danger == 0) {
             $("#myModal").modal("hide");
             getData();
         }
-    });
+    }
 
     function deleteQuestion(id) {
         question = id;
@@ -257,7 +262,7 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "deletequestion", id: question}
         });
-        updateStatus("status");
+        updateStatus("status", null);
         $("#deleteQuestionModal").modal("hide");
         getQuestions(questions);
     });
@@ -324,12 +329,15 @@
                 answer1: $("#answer1").val(), answer2: $("#answer2").val(), answer3: $("#answer3").val(),
                 answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()}
         });
-        var jdata = updateStatus("status");
-        if (jdata.danger == 0) {
+        updateStatus("status", updateStatusCallback);
+    });
+
+    function updateStatusCallback(data) {
+        if (data.danger == 0) {
             $("#questionModal").modal("hide");
             getQuestions(questions);
         }
-    });
+    }
 
     function viewResults(id) {
         groups = id;
@@ -370,7 +378,7 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "copyquestion", id: id}
         });
-        updateStatus("status");
+        updateStatus("status", null);
         getQuestions(questions);
     }
 
@@ -401,13 +409,16 @@
                 processData: false,
                 dataType: "json"
             });
-            var jdata = updateStatus("status");
-            if (jdata.danger == 0) {
-                editor.insertImage(welEditable, jdata.data);
-            }
+            updateStatus("status", updateStatus2Callback);
             $("body").removeClass();
             $("body").addClass("modal-open");
         }
         getData();
     });
+
+    function updateStatus2Callback(data) {
+        if (data.danger == 0) {
+            editor.insertImage(welEditable, jdata.data);
+        }
+    }
 </script>
