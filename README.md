@@ -10,6 +10,7 @@ Default Login
 =============
 
 Email: admin@server.local
+
 Password: password
 
 
