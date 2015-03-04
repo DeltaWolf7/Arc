@@ -73,7 +73,7 @@ class Helper {
 
 // Initilise status
         if (!isset($_SESSION["status"])) {
-            $_SESSION["status"] = Array();
+            self::arcClearStatus();
         }
 
 // Create database connection
@@ -431,6 +431,10 @@ class Helper {
 
     public static function arcAddMessage($status, $data) {
         $_SESSION["status"][] = ["data" => $data, "status" => $status];
+    }
+
+    public static function arcClearStatus() {
+        $_SESSION["status"] = Array();
     }
 
     /**
