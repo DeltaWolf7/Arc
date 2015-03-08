@@ -45,13 +45,10 @@ Modules must contain several important files to allow the module to function.
 - view (Folder, contains the visual files for the module, can have matching controller)
 - controller (Folder, contains the module logic files, can have matching view)
 - controller >  controller.php (PHP file, master logic file always called with module)
-
 - administration (Folder, optional if the module has administrator tool, folder construction
     is the same as a module without the info.json only called by administrators)
-
 - css (Folder, optional if module has custom CSS)
 - js (Folder, optional if module has custom JavaScript)
-
 - classes (Folder, optional but required if the module has custom class that require autoloading)
 
 *Other folders and files can be kept with module for better organisation.
