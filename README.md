@@ -60,7 +60,7 @@ Modules must contain several important files to allow the module to function.
 Arc System Methods
 ==================
 
-Internal Methods (Not mornally called outside of Arc)
+Internal Methods (Not normally called outside of Arc)
 -----------------------------------------------------
 - arcGetDatabase() returns the database connector object
 - arcGetView() builds the view based on data and selected options 
