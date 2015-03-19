@@ -160,55 +160,55 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "<table class=\"table table-hover table-condensed\">";
         $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
-            if (isset($results[$count])) {
-                $no = $count + 1;
-                $table .= "<tr><td>{$no}</td><td>" . html_entity_decode($question->question) . "</td><td>";
-                switch ($question->correctAnswer) {
-                    case 1:
-                        $table .= html_entity_decode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= html_entity_decode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= html_entity_decode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= html_entity_decode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= html_entity_decode($question->answer5);
-                        break;
+             foreach ($results as $result) {
+                if ($result->questionid == $question->id) {
+                    $table .= "<tr><td>{$result->questionno}</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    switch ($question->correctAnswer) {
+                        case 1:
+                            $table .= html_entity_decode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= html_entity_decode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= html_entity_decode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= html_entity_decode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= html_entity_decode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    switch ($result->resultno) {
+                        case 1:
+                            $table .= html_entity_decode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= html_entity_decode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= html_entity_decode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= html_entity_decode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= html_entity_decode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    if ($result->resultno == $question->correctAnswer) {
+                        $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
+                        $correct++;
+                    } else {
+                        $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
+                    }
+                    $table .= "</td><td>{$result->timetaken}</td></tr>";
+                    $totalTime += $result->timetaken;
                 }
-                $table .= "</td><td>";
-                switch ($results[$count]->resultno) {
-                    case 1:
-                        $table .= html_entity_decode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= html_entity_decode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= html_entity_decode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= html_entity_decode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= html_entity_decode($question->answer5);
-                        break;
-                }
-                $table .= "</td><td>";
-                if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
-                    $correct++;
-                } else {
-                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
-                }
-                $table .= "</td><td>{$results[$count]->timetaken}</td></tr>";
-                $totalTime += $results[$count]->timetaken;
             }
-            $count++;
         }
 
         $table .= "</tbody></table>";
