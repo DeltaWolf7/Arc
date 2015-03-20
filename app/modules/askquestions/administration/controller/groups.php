@@ -114,8 +114,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getresults") {
         $group = UserGroup::getByName("Students");
         $users = $group->getUsers();
-        $data = "<table class=\"table table-hover table-condensed\"><thead><tr><th>Student</th><th>Score</th></tr></thead><tbody>";
-        $groupCount = Group::getQuestions($_POST["id"]);
+        $data = "<table class=\"table table-striped table-condensed\"><thead><tr><th>Student</th><th>Score</th><th>Answers</th><th>Status</th></tr></thead><tbody>";
+        $questions = Group::getQuestions($_POST["id"]);
         $count = 0;
         foreach ($users as $user) {
             $score = 0;
@@ -123,23 +123,31 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $time = 0;
             $count = 0;
             $results = Result::getByGroupAndUserID($_POST["id"], $user->id);
-            if (count($results) > 0) {
+            foreach ($questions as $question) {            
                 foreach ($results as $result) {
-                    if ($result->resultno == $groupCount[$count]->correctAnswer) {
-                        $correct++;
+                    if ($result->questionid == $question->id) {
+                        if ($question->correctAnswer == $result->resultno) {
+                            $correct++;
+                        }
+                        $time += $result->timetaken;
+                        $count++;
                     }
-                    $time += $result->timetaken;
-                    $count++;
                 }
-                $score = (100 / count($groupCount)) * $correct;
-                if ($time >= 60) {
-                    $t2 = $time / 60;
-                    $t = number_format($t2, 2) . " minutes";
-                } else {
-                    $t = number_format($time, 2) . " seconds";
-                }
-                $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
             }
+            $score = (100 / count($questions)) * $correct;
+            if ($time >= 60) {
+                $t2 = $time / 60;
+                $t = number_format($t2, 2) . " minutes";
+            } else {
+                $t = number_format($time, 2) . " seconds";
+            }
+            $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($questions) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td><td>" . $correct . "/" . count($results) . "</td><td>";
+            if ($time == 0) {
+                $data .= "<i class=\"label label-danger\">Not Attempted</i>";
+            } else {
+                $data .= "<i class=\"label label-success\">Attempted</i>";
+            }
+            $data .= "</td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["data" => $data]));
@@ -160,9 +168,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "<table class=\"table table-hover table-condensed\">";
         $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
-             foreach ($results as $result) {
+            $count++;
+            foreach ($results as $result) {
                 if ($result->questionid == $question->id) {
-                    $table .= "<tr><td>{$result->questionno}</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    $table .= "<tr><td>{$count}</td><td>" . html_entity_decode($question->question) . "</td><td>";
                     switch ($question->correctAnswer) {
                         case 1:
                             $table .= html_entity_decode($question->answer1);
