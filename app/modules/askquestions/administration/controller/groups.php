@@ -114,8 +114,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getresults") {
         $group = UserGroup::getByName("Students");
         $users = $group->getUsers();
-        $data = "<table class=\"table table-hover table-condensed\"><thead><tr><th>Student</th><th>Score</th></tr></thead><tbody>";
-        $groupCount = Group::getQuestions($_POST["id"]);
+        $data = "<table class=\"table table-striped table-condensed\"><thead><tr><th>Student</th><th>Score</th><th>Answers</th><th>Status</th></tr></thead><tbody>";
+        $questions = Group::getQuestions($_POST["id"]);
         $count = 0;
         foreach ($users as $user) {
             $score = 0;
@@ -123,23 +123,31 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $time = 0;
             $count = 0;
             $results = Result::getByGroupAndUserID($_POST["id"], $user->id);
-            if (count($results) > 0) {
+            foreach ($questions as $question) {            
                 foreach ($results as $result) {
-                    if ($result->resultno == $groupCount[$count]->correctAnswer) {
-                        $correct++;
+                    if ($result->questionid == $question->id) {
+                        if ($question->correctAnswer == $result->resultno) {
+                            $correct++;
+                        }
+                        $time += $result->timetaken;
+                        $count++;
                     }
-                    $time += $result->timetaken;
-                    $count++;
                 }
-                $score = (100 / count($groupCount)) * $correct;
-                if ($time >= 60) {
-                    $t2 = $time / 60;
-                    $t = number_format($t2, 2) . " minutes";
-                } else {
-                    $t = number_format($time, 2) . " seconds";
-                }
-                $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($groupCount) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td></tr>";
             }
+            $score = (100 / count($questions)) * $correct;
+            if ($time >= 60) {
+                $t2 = $time / 60;
+                $t = number_format($t2, 2) . " minutes";
+            } else {
+                $t = number_format($time, 2) . " seconds";
+            }
+            $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]})\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($questions) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td><td>" . $correct . "/" . count($results) . "</td><td>";
+            if ($time == 0) {
+                $data .= "<i class=\"label label-danger\">Not Attempted</i>";
+            } else {
+                $data .= "<i class=\"label label-success\">Attempted</i>";
+            }
+            $data .= "</td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["data" => $data]));
@@ -160,55 +168,56 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "<table class=\"table table-hover table-condensed\">";
         $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
-            if (isset($results[$count])) {
-                $no = $count + 1;
-                $table .= "<tr><td>{$no}</td><td>" . html_entity_decode($question->question) . "</td><td>";
-                switch ($question->correctAnswer) {
-                    case 1:
-                        $table .= html_entity_decode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= html_entity_decode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= html_entity_decode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= html_entity_decode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= html_entity_decode($question->answer5);
-                        break;
-                }
-                $table .= "</td><td>";
-                switch ($results[$count]->resultno) {
-                    case 1:
-                        $table .= html_entity_decode($question->answer1);
-                        break;
-                    case 2:
-                        $table .= html_entity_decode($question->answer2);
-                        break;
-                    case 3:
-                        $table .= html_entity_decode($question->answer3);
-                        break;
-                    case 4:
-                        $table .= html_entity_decode($question->answer4);
-                        break;
-                    case 5:
-                        $table .= html_entity_decode($question->answer5);
-                        break;
-                }
-                $table .= "</td><td>";
-                if ($results[$count]->resultno == $question->correctAnswer) {
-                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
-                    $correct++;
-                } else {
-                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
-                }
-                $table .= "</td><td>{$results[$count]->timetaken}</td></tr>";
-                $totalTime += $results[$count]->timetaken;
-            }
             $count++;
+            foreach ($results as $result) {
+                if ($result->questionid == $question->id) {
+                    $table .= "<tr><td>{$count}</td><td>" . html_entity_decode($question->question) . "</td><td>";
+                    switch ($question->correctAnswer) {
+                        case 1:
+                            $table .= html_entity_decode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= html_entity_decode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= html_entity_decode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= html_entity_decode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= html_entity_decode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    switch ($result->resultno) {
+                        case 1:
+                            $table .= html_entity_decode($question->answer1);
+                            break;
+                        case 2:
+                            $table .= html_entity_decode($question->answer2);
+                            break;
+                        case 3:
+                            $table .= html_entity_decode($question->answer3);
+                            break;
+                        case 4:
+                            $table .= html_entity_decode($question->answer4);
+                            break;
+                        case 5:
+                            $table .= html_entity_decode($question->answer5);
+                            break;
+                    }
+                    $table .= "</td><td>";
+                    if ($result->resultno == $question->correctAnswer) {
+                        $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
+                        $correct++;
+                    } else {
+                        $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
+                    }
+                    $table .= "</td><td>{$result->timetaken}</td></tr>";
+                    $totalTime += $result->timetaken;
+                }
+            }
         }
 
         $table .= "</tbody></table>";
