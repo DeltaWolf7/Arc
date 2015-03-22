@@ -1,5 +1,5 @@
 <div class="page-header">
-    <h1>Erudio</h1>
+    <h1>Erudio Administration</h1>
 </div>
 
 <div class="row">
@@ -8,7 +8,7 @@
             <div class="panel-body">
                 <h3>Numerical Reasoning</h3>
                 <ul class="list-unstyled">
-                    <li class="list-group-item"><a href="<?php echo system\Helper::arcGetModulePath() . "multistage" ?>"><span class="fa fa-book"></span> Multistage</a></li>
+                    <li class="list-group-item"><a href="<?php echo system\Helper::arcGetModulePath() . "multistage" ?>"><span class="fa fa-book"></span> Multistage Manager</a></li>
                     <!--<li class="list-group-item"><a href="<?php echo system\Helper::arcGetModulePath() . "quickfire" ?>"><span class="fa fa-book"></span> Quickfire</a></li>
                 </ul>
                 <h3>Cloze Test</h3>

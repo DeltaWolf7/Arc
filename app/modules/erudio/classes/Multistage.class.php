@@ -3,7 +3,6 @@
     class Multistage extends DataProvider {
 
         public $masterquestion;
-        public $image;
         public $question1;
         public $question2;
         public $question3;
@@ -18,7 +17,6 @@
         public function __construct() {
             parent::__construct();
             $this->masterquestion = "";
-            $this->image = "";
             $this->question1 = "";
             $this->question2 = "";
             $this->question3 = "";
@@ -30,7 +28,7 @@
             $this->answer4 = "";
             $this->answer5 = "";
             $this->table = "erudio_multistage";
-            $this->columns = ["id", "masterquestion", "image",
+            $this->columns = ["id", "masterquestion",
                 "question1", "question2", "question3", "question4", "question5",
                 "answer1", "answer2", "answer3", "answer4", "answer5"];
         }

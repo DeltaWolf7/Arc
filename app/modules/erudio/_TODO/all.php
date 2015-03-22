@@ -257,28 +257,3 @@ if (isset($_POST["action"])) {
         }
     }
 }
-
-function cleanInput($data) {
-    $data = str_replace(' ', '', $data);
-    $data = str_replace('£', '', $data);
-    $data = str_replace('cm', '', $data);
-    $data = str_replace('"', '', $data);
-    $data = str_replace('mm', '', $data);
-    $data = str_replace('tonnes', '', $data);
-    $data = str_replace('ml', '', $data);
-    $data = str_replace('cl', '', $data);
-    $data = str_replace('g', '', $data);
-    $data = str_replace('grams', '', $data);
-    $data = str_replace('km', '', $data);
-    $data = str_replace('m', '', $data);
-    $data = str_replace('tonne', '', $data);
-    $data = str_replace('kg', '', $data);
-    $data = str_replace('mg', '', $data);
-    $data = str_replace('l', '', $data);
-    $data = str_replace('litre', '', $data);
-    $data = str_replace('litres', '', $data);
-    $data = str_replace('km/h', '', $data);
-    $data = str_replace('m/h', '', $data);
-    $data = str_replace('mph', '', $data);
-    return $data;
-}

@@ -1,147 +1,51 @@
 <div class="page-header">
-    <h1>
-        Multistage
-    </h1>
+    <h1>Multistage</h1>
 </div>
-
 <?php
 $multistage = Multistage::getRandomMultistage();
 ?>
-
 <div class="row">
     <div class="col-sm-5">
         <div class="panel panel-default">
             <div class="panel-body">
-                <p>
-                    <?php
-                    if ((string) $multistage->image <> "") {
-                        echo "<div class=\"text-center\"><img class=\"img-rounded\" src=\"" . system\Helper::arcGetPath() . "app/modules/erudio/images/" . $multistage->image . "\" /></div>";
-                    }
-                    ?>
-                </p>
-                <?php
-                $parser = new QuestionParser();
-                $string = $parser->Parse($multistage->masterquestion);
-                echo nl2br($string);
-
-                $question = $string;
-
-                $question1 = nl2br($parser->Parse($multistage->question1));
-                $question2 = nl2br($parser->Parse($multistage->question2));
-                $question3 = nl2br($parser->Parse($multistage->question3));
-                $question4 = nl2br($parser->Parse($multistage->question4));
-                $question5 = nl2br($parser->Parse($multistage->question5));
-
-                $answer1 = $parser->ParseSolution($multistage->answer1);
-                $answer2 = $parser->ParseSolution($multistage->answer2);
-                $answer3 = $parser->ParseSolution($multistage->answer3);
-                $answer4 = $parser->ParseSolution($multistage->answer4);
-                $answer5 = $parser->ParseSolution($multistage->answer5);
-
-                $result1 = '';
-                if (strpos($answer1, '#') != false) {
-                    $result1 = str_replace('#', '', $answer1);
-                    $question .= '|' . $question1 . '|' . $result1;
-                } else {
-                    $eq = new eqEOS();
-                    $result1 = $eq->solveIF($answer1);
-                    $question .= '|' . $question1 . '|' . number_format((float) $result1, 2, '.', '');
-                }
-
-                $result2 = '';
-                if (strpos($answer2, '#') != false) {
-                    $result2 = str_replace('#', '', $answer2);
-                    $question .= '|' . $question2 . '|' . $result2;
-                } else {
-                    $eq = new eqEOS();
-                    $result2 = $eq->solveIF($answer2);
-                    $question .= '|' . $question2 . '|' . number_format((float) $result2, 2, '.', '');
-                }
-
-                $result3 = '';
-                if (strpos($answer3, '#') != false) {
-                    $result3 = str_replace('#', '', $answer3);
-                    $question .= '|' . $question3 . '|' . $result3;
-                } else {
-                    $eq = new eqEOS();
-                    $result3 = $eq->solveIF($answer3);
-                    $question .= '|' . $question3 . '|' . number_format((float) $result3, 2, '.', '');
-                }
-
-                $result4 = '';
-                if (strpos($answer4, '#') != false) {
-                    $result4 = str_replace('#', '', $answer4);
-                    $question .= '|' . $question4 . '|' . $result4;
-                } else {
-                    $eq = new eqEOS();
-                    $result4 = $eq->solveIF($answer4);
-                    $question .= '|' . $question4 . '|' . number_format((float) $result4, 2, '.', '');
-                }
-
-                $result5 = '';
-                if (strpos($answer5, '#') != false) {
-                    $result5 = str_replace('#', '', $answer5);
-                    $question .= '|' . $question5 . '|' . $result5;
-                } else {
-                    $eq = new eqEOS();
-                    $result5 = $eq->solveIF($answer5);
-                    $question .= '|' . $question5 . '|' . number_format((float) $result5, 2, '.', '');
-                }
-
-                $time = time();
-
-                $data = explode("|", $question);
-                $resultx = new Result();
-                $user = system\Helper::arcGetUser();
-                $resultx->userid = $user->id;
-                $resultx->type = "Multi Stage";
-                $xml = '<result>'
-                        . '<masterquestion><![CDATA[' . $data[0] . ']]></masterquestion>'
-                        . '<question answer=\'' . $data[2] . '\' entered=\'\'>' . $data[1] . '</question>'
-                        . '<question answer=\'' . $data[4] . '\' entered=\'\'>' . $data[3] . '</question>'
-                        . '<question answer=\'' . $data[6] . '\' entered=\'\'>' . $data[5] . '</question>'
-                        . '<question answer=\'' . $data[8] . '\' entered=\'\'>' . $data[7] . '</question>'
-                        . '<question answer=\'' . $data[10] . '\' entered=\'\'>' . $data[9] . '</question>'
-                        . '</result>';
-                $resultx->data = $xml;
-                $resultx->update();
-                ?>
+                <?php echo html_entity_decode($multistage->masterquestion); ?>
             </div>
         </div>
     </div>
     <div class="col-sm-7">
         <div class="panel panel-default">
-            <div class="panel-body"><strong>Q1:</strong><br/><?php echo html_entity_decode($question1); ?></div>
+            <div class="panel-body"><strong>Q1:</strong><br/><?php echo html_entity_decode($multistage->question1); ?></div>
             <div class="panel-footer">
-                <input type="text" class="form-control" id="answer1" placeholder="What's the answer?" maxlength="50">
+                <input type="text" class="form-control" id="answer1" placeholder="What's the answer?" maxlength="50" />
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-body"><strong>Q2:</strong><br/><?php echo html_entity_decode($question2); ?></div>
+            <div class="panel-body"><strong>Q2:</strong><br/><?php echo html_entity_decode($multistage->question2); ?></div>
             <div class="panel-footer">
-                <input type="text" class="form-control" id="answer2" placeholder="What's the answer?" maxlength="50">
+                <input type="text" class="form-control" id="answer2" placeholder="What's the answer?" maxlength="50" />
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-body"><strong>Q3:</strong><br/><?php echo html_entity_decode($question3); ?></div>
+            <div class="panel-body"><strong>Q3:</strong><br/><?php echo html_entity_decode($multistage->question3); ?></div>
             <div class="panel-footer">
-                <input type="text" class="form-control" id="answer3" placeholder="What's the answer?" maxlength="50">
+                <input type="text" class="form-control" id="answer3" placeholder="What's the answer?" maxlength="50" />
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-body"><strong>Q4:</strong><br/><?php echo html_entity_decode($question4); ?></div>
+            <div class="panel-body"><strong>Q4:</strong><br/><?php echo html_entity_decode($multistage->question4); ?></div>
             <div class="panel-footer">
-                <input type="text" class="form-control" id="answer4" placeholder="What's the answer?" maxlength="50">
+                <input type="text" class="form-control" id="answer4" placeholder="What's the answer?" maxlength="50" />
             </div>
         </div>
         <div class="panel panel-default">
-            <div class="panel-body"><strong>Q5:</strong><br/><?php echo html_entity_decode($question5); ?></div>
+            <div class="panel-body"><strong>Q5:</strong><br/><?php echo html_entity_decode($multistage->question5); ?></div>
             <div class="panel-footer">
-                <input type="text" class="form-control" id="answer5" placeholder="What's the answer?" maxlength="50">
+                <input type="text" class="form-control" id="answer5" placeholder="What's the answer?" maxlength="50" />
             </div>
         </div>
         <div class="form-group text-right">
-            <button id="submit" class="btn btn-default" >Submit</button>
+            <button id="submit" class="btn btn-default" >Submit</button>&nbsp;
+            <button id="newquestion" class="btn btn-default" >New Question</button>
         </div>
     </div>
 </div>
@@ -149,17 +53,26 @@ $multistage = Multistage::getRandomMultistage();
 
 <script>
     $("#submit").click(function () {
+        $("#answer1").prop("disabled", true);
+        $("#answer2").prop("disabled", true);
+        $("#answer3").prop("disabled", true);
+        $("#answer4").prop("disabled", true);
+        $("#answer5").prop("disabled", true);
+        $("#submit").prop("disabled", true);
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {question: $("#question").val(),
-                answer1: $("#answer1").val(), answer2: $("#answer2").val(),
+            data: {answer1: $("#answer1").val(), answer2: $("#answer2").val(),
                 answer3: $("#answer3").val(), answer4: $("#answer4").val(),
-                answer5: $("#answer5").val(), time: $("#time").val(),
-                result: $("#result").val()}
-        });
-        updateStatus("Status");
-    }
+                answer5: $("#answer5").val(), start: <?php echo time(); ?>,
+                userid: <?php echo system\Helper::arcGetUser()->id; ?>, questionid: <?php echo $multistage->id; ?>}
+        })
+        updateStatus("status");
+    });
+
+    $("#newquestion").click(function () {
+        location.reload();
+    });
 </script>
