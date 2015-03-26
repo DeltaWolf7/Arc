@@ -43,21 +43,19 @@ class Log extends DataProvider {
         $this->table = ARCDBPREFIX . "logs";
         $this->columns = ["id", "type", "module", "when", "message"];
     }
-    
+
     public static function getLogs() {
-         $logs = new Log();
+        $logs = new Log();
         return $logs->getCollection(["ORDER" => "when DESC"]);
     }
 
     public static function createLog($type, $module, $message) {
-        //if (ARCDEBUG) {
-            $log = new Log();
-            $log->type = $type;
-            $log->module = $module;
-            $log->message = $message;
-            $log->update();
-            //system\Helper::arcGetDatabase()->query("DELETE FROM " . ARCDBPREFIX . "logs WHERE when < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY))");
-        //}
+        $log = new Log();
+        $log->type = $type;
+        $log->module = $module;
+        $log->message = $message;
+        $log->update();
+        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.when) > 30");
     }
 
 }

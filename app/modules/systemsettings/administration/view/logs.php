@@ -10,14 +10,17 @@
         foreach ($logs as $log) {
             echo "<tr><td>";
             switch ($log->type) {
+                case "success":
+                    echo "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Info<span>";
+                    break;
                 case "info":
-                    echo "<i class=\"fa fa-info\"></i>";
+                    echo "<span class=\"label label-info\"><i class=\"fa fa-info-circle\"></i> Info<span>";
                     break;
                 case "danger":
-                    echo "<i class=\"fa fa-danger\"></i>";
+                    echo "<span class=\"label label-danger\"><i class=\"fa fa-exclamation-circle\"></i> Error<span>";
                     break;
                 case "warning":
-                    echo "<i class=\"fa fa-warning\"></i>";
+                    echo "<span class=\"label label-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
                     break;
             }
             echo "</td><td>{$log->module}</td><td>{$log->when}</td><td>{$log->message}</td></tr>";
