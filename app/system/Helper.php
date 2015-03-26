@@ -266,55 +266,55 @@ class Helper {
      */
     public static function arcGetView() {
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
-            \Log::createLog("IMAGEUPLOAD: Detected upload request.");
+            \Log::createLog("success", "arc", "Detected upload request.");
             if (isset($_FILES['file']['name'])) {                
                 if (!$_FILES['file']['error']) {                  
-                    \Log::createLog("IMAGEUPLOAD: Starting image upload.");
+                    \Log::createLog("success", "arc", "Starting image upload.");
                     
                     $filesize = \SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
-                    \Log::createLog("IMAGEUPLOAD: Upload size limit: " . $filesize->value);
+                    \Log::createLog("info", "arc", "Upload size limit: " . $filesize->value);
                     
                     if ($_FILES['file']['size'] > $filesize->value) {
                         self::arcAddMessage("danger", "Image file size exceeds limit");
-                        \Log::createLog("IMAGEUPLOAD: Image exceeds size limit.");
+                        \Log::createLog("danger", "arc", "Image exceeds size limit.");
                         return;
                     }
                     $file_type = $_FILES['file']['type'];
-                    \Log::createLog("IMAGEUPLOAD: Type: " . $_FILES['file']['type']);
+                    \Log::createLog("info", "arc", "Type: " . $_FILES['file']['type']);
                     if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
                         self::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
-                        \Log::createLog("IMAGEUPLOAD: Invalid image type.");
+                        \Log::createLog("danger", "arc", "Invalid image type.");
                         return;
                     }
                     
-                    \Log::createLog("IMAGEUPLOAD: Valid image type detected.");
+                    \Log::createLog("info", "arc", "Valid image type detected.");
                     
                     $name = md5(uniqid(rand(), true));
                     $ext = explode('.', $_FILES['file']['name']);
                     $filename = $name . '.' . $ext[1];
                     $destination = self::arcGetPath(true) . "images/" . $filename;
                     
-                    \Log::createLog("IMAGEUPLOAD: Destination: '" . $destination . "'");
+                    \Log::createLog("info", "arc", "Destination: '" . $destination . "'");
                     
                     $location = $_FILES["file"]["tmp_name"];
                     
-                    \Log::createLog("IMAGEUPLOAD: Location: '" . $location . "'");
+                    \Log::createLog("info", "arc", "Location: '" . $location . "'");
                     
                     $size = getimagesize($location);
                     
-                    \Log::createLog("IMAGEUPLOAD: Size: " . $size);
+                    \Log::createLog("info", "arc", "Size: " . $size);
                                         
                     if ($size == 0) {
                         self::arcAddMessage("danger", "Invalid image uploaded");
-                        \Log::createLog("IMAGEUPLOAD: Invalid image size.");
+                        \Log::createLog("danger", "arc", "Invalid image size.");
                         return;
                     }
                     move_uploaded_file($location, $destination);
-                    \Log::createLog("IMAGEUPLOAD: Image moved to image folder.");
+                    \Log::createLog("info", "arc", "Image moved to image folder.");
                     echo json_encode(["data" => self::arcGetPath() . "images/" . $filename, "status" => "success"]);
-                    \Log::createLog("IMAGEUPLOAD: Upload complete.");
+                    \Log::createLog("success", "arc", "Upload complete.");
                 } else {
-                    \Log::createLog("IMAGEUPLOAD: Upload error " . $_FILES['file']['error']);
+                    \Log::createLog("danger", "arc", "Upload error " . $_FILES['file']['error']);
                     self::arcAddMessage("danger", "Error occured while uploading image");
                 }
             }
@@ -842,11 +842,11 @@ class Helper {
             $mail->send();
             return true;
         } catch (phpmailerException $e) {
-            \Log::createLog($e->errorMessage());
+            \Log::createLog("danger", "phpmailer", $e->errorMessage());
             self::arcAddMessage("danger", "Unable to send email, see log for details");
             return false;
         } catch (Exception $exception) {
-            \Log::createLog($exception->getMessage());
+            \Log::createLog("danger", "phpmailer", $exception->getMessage());
             self::arcAddMessage("danger", "Unable to send email, see log for details");
             return false;
         }

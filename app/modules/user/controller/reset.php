@@ -21,5 +21,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user->setPassword($_POST["password"]);
     $user->update();
     system\Helper::arcAddMessage("success", "Your password has been reset");
-    Log::createLog("Password reset: " . $user->email);
+    Log::createLog("warning", "user", "Password reset: " . $user->email);
 }

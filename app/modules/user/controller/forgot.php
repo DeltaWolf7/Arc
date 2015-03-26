@@ -10,7 +10,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
 
     if ($user->id == 0) {
         system\Helper::arcAddMessage("danger", "No user found matching that email address");
-        Log::createLog("Password reset, user not found: " . $_POST["email"]);
+        Log::createLog("warning", "user", "Password reset, user not found: " . $_POST["email"]);
         return;
     }
        
@@ -27,6 +27,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     
     if ($mail) {
         system\Helper::arcAddMessage("success", "Password reset link has been sent to your Email");
-        Log::createLog("Password reset sent: " . $_POST["email"]);
+        Log::createLog("warning", "user", "Password reset sent: " . $_POST["email"]);
     }
 }

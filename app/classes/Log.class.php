@@ -29,23 +29,35 @@
  *
  * @author Craig Longford
  */
-
 class Log extends DataProvider {
-    
+
     public $message;
     public $when;
-    
+    public $type;
+    public $module;
+
     public function __construct() {
         parent::__construct();
         $this->when = date("y-m-d h:i:s");
         $this->message = "";
         $this->table = ARCDBPREFIX . "logs";
-        $this->columns = ["id", "when", "message"];
+        $this->columns = ["id", "type", "module", "when", "message"];
     }
     
-    public static function createLog($message) {
-        $log = new Log();
-        $log->message = $message;
-        $log->update();
+    public static function getLogs() {
+         $logs = new Log();
+        return $logs->getCollection(["ORDER" => "when DESC"]);
     }
+
+    public static function createLog($type, $module, $message) {
+        //if (ARCDEBUG) {
+            $log = new Log();
+            $log->type = $type;
+            $log->module = $module;
+            $log->message = $message;
+            $log->update();
+            //system\Helper::arcGetDatabase()->query("DELETE FROM " . ARCDBPREFIX . "logs WHERE when < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY))");
+        //}
+    }
+
 }
