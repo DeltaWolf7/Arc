@@ -298,11 +298,11 @@ class Helper {
                     
                     $location = $_FILES["file"]["tmp_name"];
                     
-                    \Log::createLog("info", "arc", "Location: '" . $location . "'");
+                    \Log::createLog("info", "arc", "Source: '" . $location . "'");
                     
                     $size = getimagesize($location);
                     
-                    \Log::createLog("info", "arc", "Size: " . $size);
+                    \Log::createLog("info", "arc", "Size: " . $size[0]);
                                         
                     if ($size == 0) {
                         self::arcAddMessage("danger", "Invalid image uploaded");

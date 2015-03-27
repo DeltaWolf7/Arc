@@ -66,7 +66,6 @@
                         </div>
                     </div>
                 </div>
-                <div id="status1"></div>
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
@@ -130,7 +129,7 @@
                 metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
                 html: $('.summernote').code()}
         });
-        updateStatus("status1", updateStatusCallback);
+        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {
@@ -213,7 +212,7 @@
                     if (jdata.status == "success") {
                         editor.insertImage(welEditable, jdata.data);
                     } else {
-                        updateStatus("status1", null);
+                        updateStatus("status", null);
                     }
                     $("body").removeClass();
                     $("body").addClass("modal-open");

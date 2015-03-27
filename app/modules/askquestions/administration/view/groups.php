@@ -397,7 +397,10 @@
                 sendFile(files[0], editor, welEditable);
             }
         });
-        function sendFile(file, editor, welEditable) {
+        getData();
+    });
+    
+    function sendFile(file, editor, welEditable) {
             data = new FormData();
             data.append("file", file);
             $.ajax({
@@ -407,18 +410,17 @@
                 type: "post",
                 contentType: false,
                 processData: false,
-                dataType: "json"
+                dataType: "json",
+                success: function (data) {
+                    var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    if (jdata.status == "success") {
+                        editor.insertImage(welEditable, jdata.data);
+                    } else {
+                        updateStatus("status", null);
+                    }
+                    $("body").removeClass();
+                    $("body").addClass("modal-open");
+                }
             });
-            updateStatus("status", updateStatus2Callback);
-            $("body").removeClass();
-            $("body").addClass("modal-open");
         }
-        getData();
-    });
-
-    function updateStatus2Callback(data) {
-        if (data.danger == 0) {
-            editor.insertImage(welEditable, jdata.data);
-        }
-    }
 </script>
