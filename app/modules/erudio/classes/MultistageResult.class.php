@@ -26,4 +26,9 @@ class MultistageResult extends DataProvider {
         $this->table = "erudio_multistageresults";
         $this->columns = ["id", "questionid", "userid", "start", "answer1", "answer2", "answer3", "answer4", "answer5", "taken"];
     }
+    
+    public static function getByQuestionID($id) {
+        $multi = new MultistageResult();
+        return $multi->getCollection(["questionid" => $id]);
+    }
 }

@@ -5,7 +5,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $result->answer1 = $_POST["answer1"];
     $result->answer2 = $_POST["answer2"];
     $result->answer3 = $_POST["answer3"];
-    $result->answer4 = $_POST["answer5"];
+    $result->answer4 = $_POST["answer4"];
+    $result->answer5 = $_POST["answer5"];
     $result->questionid = $_POST["questionid"];
     $result->taken = time() - $_POST["start"];
     $result->userid = $_POST["userid"];

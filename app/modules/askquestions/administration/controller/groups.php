@@ -154,7 +154,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getresult") {
         $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"]);
         if (count($results) == 0) {
-            echo json_encode(["html" => "No results for this question group recorded."]);
+            echo json_encode(["data" => "No results for this question group recorded."]);
             return;
         }
         $questions = Group::getQuestions($results[0]->groupid);
