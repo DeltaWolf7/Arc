@@ -90,7 +90,7 @@
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="saveGroupBtn">Save</a>
+                <a class="btn btn-primary" id="saveBtn">Save</a>
             </div>
         </div>
     </div>
@@ -98,152 +98,163 @@
 
 <script>
     var Xeditor;
-    var XwelEditable;
-    
-    $(document).ready(function () {
-        $('.masterQuestion').summernote({height: 250,
+            var XwelEditable;
+            $(document).ready(function () {
+    $('.masterQuestion').summernote({height: 250,
             toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['link', ['picture']],
-                ['source', ['codeview']]
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['link', ['picture']],
+                    ['source', ['codeview']]
             ],
             onImageUpload: function (files, editor, welEditable) {
-                sendFile(files[0], editor, welEditable);
+            sendFile(files[0], editor, welEditable);
             }
-        });
-        function sendFile(file, editor, welEditable) {
-            Xeditor = editor;
-            XwelEditable = welEditable;
-            
-            data = new FormData();
-            data.append("file", file);
-            $.ajax({
-                data: data,
-                url: "<?php system\Helper::arcGetDispatch(); ?>",
-                cache: false,
-                type: "post",
-                contentType: false,
-                processData: false,
-                dataType: "json"
-            });
-            updateStatus("status", updateStatus2Callback);
-            $("body").removeClass();
-            $("body").addClass("modal-open");
-        }
-
-        $('.question1').summernote({height: 250,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['source', ['codeview']]
-            ]
-        });
-        $('.question2').summernote({height: 250,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['source', ['codeview']]
-            ]
-        });
-        $('.question3').summernote({height: 250,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['source', ['codeview']]
-            ]
-        });
-        $('.question4').summernote({height: 250,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['source', ['codeview']]
-            ]
-        });
-        $('.question5').summernote({height: 250,
-            toolbar: [
-                ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['source', ['codeview']]
-            ]
-        });
-        getData();
     });
+            function sendFile(file, editor, welEditable) {
+            Xeditor = editor;
+                    XwelEditable = welEditable;
+                    data = new FormData();
+                    data.append("file", file);
+                    $.ajax({
+                    data: data,
+                            url: "<?php system\Helper::arcGetDispatch(); ?>",
+                            cache: false,
+                            type: "post",
+                            contentType: false,
+                            processData: false,
+                            dataType: "json"
+                    });
+                    updateStatus("status", updateStatus2Callback);
+                    $("body").removeClass();
+                    $("body").addClass("modal-open");
+            }
 
-    function updateStatus2Callback(data) {
-        if (data.danger == 0) {
+    $('.question1').summernote({height: 250,
+            toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['source', ['codeview']]
+            ]
+    });
+            $('.question2').summernote({height: 250,
+            toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['source', ['codeview']]
+            ]
+    });
+            $('.question3').summernote({height: 250,
+            toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['source', ['codeview']]
+            ]
+    });
+            $('.question4').summernote({height: 250,
+            toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['source', ['codeview']]
+            ]
+    });
+            $('.question5').summernote({height: 250,
+            toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['insert', ['sub', 'super', 'charsDropdown']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['source', ['codeview']]
+            ]
+    });
+            getData();
+    });
+            function updateStatus2Callback(data) {
+            if (data.danger == 0) {
             Xeditor.insertImage(XwelEditable, jdata.data);
-        }
-    }
+            }
+            }
 
     function getData() {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
+    $.ajax({
+    url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {action: "getQuestions"},
             success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                $("#data").html(jdata.html);
+            var jdata = jQuery.parseJSON(JSON.stringify(data));
+                    $("#data").html(jdata.html);
             }
-        })
+    })
     }
 
     function deleteQuestion(id) {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
+    $.ajax({
+    url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {action: "deleteQuestion", id: id}
-        })
-        getData();
-        updateStatus("status");
+    })
+            getData();
+            updateStatus("status");
     }
 
     var selectedid;
-    function editQuestion(id) {
-        selectedid = id;
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            function editQuestion(id) {
+            selectedid = id;
+                    $.ajax({
+                    url: "<?php system\Helper::arcGetDispatch(); ?>",
+                            dataType: "json",
+                            type: "post",
+                            contentType: "application/x-www-form-urlencoded",
+                            data: {action: "editQuestion", id: id},
+                            success: function (data) {
+                            var jdata = jQuery.parseJSON(JSON.stringify(data));
+                                    $("#masterQuestion").code(jdata.masterQuestion);
+                                    $("#question1").code(jdata.question1);
+                                    $("#question2").code(jdata.question2);
+                                    $("#question3").code(jdata.question3);
+                                    $("#question4").code(jdata.question4);
+                                    $("#question5").code(jdata.question5);
+                                    $("#answer1").val(jdata.answer1);
+                                    $("#answer2").val(jdata.answer2);
+                                    $("#answer3").val(jdata.answer3);
+                                    $("#answer4").val(jdata.answer4);
+                                    $("#answer5").val(jdata.answer5);
+                                    $("#editModal").modal("show");
+                            }
+                    })
+            }
+
+    $("#sendbtn").click(function () {
+    $.ajax({
+    url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "editQuestion", id: id},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                $("#masterQuestion").code(jdata.masterQuestion);
-                $("#question1").code(jdata.question1);
-                $("#question2").code(jdata.question2);
-                $("#question3").code(jdata.question3);
-                $("#question4").code(jdata.question4);
-                $("#question5").code(jdata.question5);
-                $("#answer1").val(jdata.answer1);
-                $("#answer2").val(jdata.answer2);
-                $("#answer3").val(jdata.answer3);
-                $("#answer4").val(jdata.answer4);
-                $("#answer5").val(jdata.answer5);
-                $("#editModal").modal("show");
-            }
-        })
-    }
+            data: {action: "saveQuestion", masterQuestion: $('.masterQuestion').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>,
+                    question1: $('.question1').code(}, question2: $('.question2').code(}, question3: $('.question3').code(}, question4: $('.question4').code(},
+                    question5: $('.question5').code(}, answer1: $("#answer1"), answer2: $("#answer2"), answer3: $("#answer3"), answer4: $("#answer4"), answer5: $("#answer5")
+            });
+                    updateStatus("status", null);
+                    getData();
+            });
 </script>
