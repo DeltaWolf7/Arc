@@ -38,8 +38,8 @@
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Results</h4>
             </div>   
-                <div class="modal-body" id="resultsData">
-                </div>      
+            <div class="modal-body" id="resultsData">
+            </div>      
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
@@ -106,6 +106,11 @@
         });
     }
 
+    var rdo = 0;
+    function setRdo(id) {
+        rdo = id;
+    }
+
     function nextQuestion() {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -114,11 +119,12 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "saveresult", grpid: groupid,
                 question: question, id: <?php echo system\Helper::arcGetUser()->id; ?>,
-                time: time, answer: $("#answer").val(), qid: qid},
+                time: time, answer: rdo, qid: qid},
             complete: function () {
                 question = question + 1;
                 getGroup(groupid);
-            } 
+                rdo = 0;
+            }
         });
         updateStatus("statusX", null);
     }

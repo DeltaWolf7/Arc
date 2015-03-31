@@ -56,27 +56,27 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "<div class=\"form-group\">";
             $data .= "<strong>Question {$questionno} of " . count($questions) . "</strong>";
             $data .= "<div class=\"well\">" . html_entity_decode($question->question) . "</div>";
-            $data .= "<div class=\"form-group\">";
-            $data .= "<select class=\"form-control\" id=\"answer\" onchange=\"self.focus();\">";
-            $data .= "<option value='0'>Not Answered</option>";
-
+            $data .= "<div class=\"form-group\">";         
+            $data .= "<div class=\"input-group\">";
+            $data .= "<input type=\"radio\" name=\"answer\" value=\"0\" onclick=\"setRdo(0);\" aria-label=\"...\" checked> Not Answered<br />";
+    
             if ($question->answer1 != "") {
-                $data .= "<option value='1'>" . html_entity_decode($question->answer1) . "</option>";
+                $data .= "<input type=\"radio\" name=\"answer\" value=\"1\" onclick=\"setRdo(1);\" aria-label=\"...\"> " . html_entity_decode($question->answer1) . "<br />";
             }
             if ($question->answer2 != "") {
-                $data .= "<option value='2'>" . html_entity_decode($question->answer2) . "</option>";
+                $data .= "<input type=\"radio\" name=\"answer\" value=\"2\" onclick=\"setRdo(2);\" aria-label=\"...\"> " . html_entity_decode($question->answer2) . "<br />";
             }
             if ($question->answer3 != "") {
-                $data .= "<option value='3'>" . html_entity_decode($question->answer3) . "</option>";
+                $data .= "<input type=\"radio\" name=\"answer\" value=\"3\" onclick=\"setRdo(3);\" aria-label=\"...\"> " . html_entity_decode($question->answer3) . "<br />";
             }
             if ($question->answer4 != "") {
-                $data .= "<option value='4'>" . html_entity_decode($question->answer4) . "</option>";
+                $data .= "<input type=\"radio\" name=\"answer\" value=\"4\" onclick=\"setRdo(4);\" aria-label=\"...\"> " . html_entity_decode($question->answer4) . "<br />";
             }
             if ($question->answer5 != "") {
-                $data .= "<option value='5'>" . html_entity_decode($question->answer5) . "</option>";
+                $data .= "<input type=\"radio\" name=\"answer\" value=\"5\" onclick=\"setRdo(5);\" aria-label=\"...\"> " . html_entity_decode($question->answer5);
             }
 
-            $data .= "</select>";
+            $data .= "</div>";
             $data .= "</div>";
             $data .= "</div>";
         } else {
