@@ -4,7 +4,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "getQuestions") {
         $multistages = Multistage::getMultistages();
         $data = "<table class=\"table table-striped\">";
-        $data .= "<tr><th>ID</th><th>Question</th><th class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"genQuestions()\"><i class=\"fa fa-cog\"></i> Question Builder</button> <button class=\"btn btn-default btn-xs\" onclick=\"editQuestion(0)\"><i class=\"fa fa-plus\"></i> New Question</button></th></tr>";
+        $data .= "<tr><th>ID</th><th>Question</th><th class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"editQuestion(0)\"><i class=\"fa fa-plus\"></i> New Question</button></th></tr>";
         foreach ($multistages as $multistage) {
             $data .= "<tr><td>" . $multistage->id . "</td><td>" . $multistage->masterquestion . "</td><td class=\"text-right\">"
                     . "<div class=\"btn-group\" role=\"group\">"
