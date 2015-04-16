@@ -24,20 +24,39 @@
  * THE SOFTWARE.
  */
 
-class Archive extends DataProvider {
+class Result extends DataProvider {
 
-    public $questiongroup;
-    public $studentname;
-    public $html;
-    public $when;
+    public $groupid;
+    public $questionid;
+    public $resultno;
+    public $userid;
+    public $timetaken;
+    public $questionno;
 
     public function __construct() {
         parent::__construct();
-        $this->questiongroup = "";
-        $this->studentname = "";
-        $this->html = "";
-        $this->when = date("y-m-d h:i:s");
-        $this->table = ARCDBPREFIX . "askquestion_archives";
-        $this->columns = ["id", "questiongroup", "studentname", "html", "when"];
+        $this->groupid = 0;
+        $this->resultno = 0;
+        $this->userid = 0;
+        $this->questionid = 0;
+        $this->timetaken = 0;
+        $this->table = ARCDBPREFIX . "askquestion_results";
+        $this->columns = ["id", "groupid", "questionid", "resultno", "userid", "timetaken", "questionno"];
     }
+
+    public static function getByGroupAndUserID($groupid, $userid) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid]]);
+    }
+
+    public static function getByGroupAndUserIDAndQuestionID($groupid, $userid, $questionid) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid, "questionid" => $questionid]]);
+    }
+
+    public static function getByGroup($groupid) {
+        $results = new Result();
+        return $results->getCollection(["groupid" => $groupid]);
+    }
+
 }

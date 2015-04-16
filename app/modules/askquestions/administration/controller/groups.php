@@ -56,7 +56,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 . "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</button>"
                 . "<button class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</button>"
                 . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear Results</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear</button>"
+                . "<button class=\"btn btn-default btn-xs\" onclick=\"archiveResults({$group->id});\"><i class=\"fa fa-archive\"></i> Archive</button>"
                 . "</div></td></tr>";
         }
         $data .= "</tbody></table>";
@@ -246,5 +247,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $result->delete($result->id);
         }
         system\Helper::arcAddMessage("success", "Results have been deleted");
+    } elseif ($_POST["action"] == "archiveresults") {
+        // todo
     }
 }

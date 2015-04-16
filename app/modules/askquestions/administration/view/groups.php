@@ -230,6 +230,18 @@
         updateStatus("status");
         getData();
     }
+    
+    function archiveResults(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "archiveresults", id: id}
+        });
+        updateStatus("status");
+        getData();
+    }
 
     $("#saveGroupBtn").click(function () {
         $.ajax({
