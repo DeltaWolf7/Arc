@@ -52,13 +52,13 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 . "<i class=\"fa fa-plus\"></i> New Question Group</button></th></tr></thead><tbody>";
         foreach ($groups as $group) {
             $data .= "<tr><td><a href=\"#\" onclick=\"getQuestions({$group->id});\">{$group->name}</a></td><td class=\"text-right\">"
-                . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
-                . "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id}, '0000-00-00');\"><i class=\"fa fa-area-chart\"></i> Results</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"viewArchive({$group->id});\"><i class=\"fa fa-archive\"></i> Archive</button>"
-                . "</div></td></tr>";
+                    . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
+                    . "<button type=\"button\" class=\"btn btn-default btn-xs\" onclick=\"viewResults({$group->id}, '0000-00-00');\"><i class=\"fa fa-area-chart\"></i> Results</button>"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"editGroup({$group->id});\"><i class=\"fa fa-pencil\"></i> Edit</button>"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroup({$group->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteGroupResults({$group->id});\"><i class=\"fa fa-recycle\"></i> Clear</button>"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"viewArchive({$group->id});\"><i class=\"fa fa-archive\"></i> Archive</button>"
+                    . "</div></td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -74,12 +74,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 . "</div></th></tr></thead><tbody>";
         foreach ($questions as $question) {
             $data .= "<tr><td>{$count}</td><td>"
-                . "<a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a>"
-                . "</td><td class=\"text-right\">"
-                . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</button>"
-                . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
-                . "</div></td></tr>";
+                    . "<a href=\"#\" onclick=\"getQuestion({$question->id})\">" . html_entity_decode($question->question) . "</a>"
+                    . "</td><td class=\"text-right\">"
+                    . "<div class=\"btn-group\" role=\"group\" aria-label=\"...\">"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"copyQuestion({$question->id});\"><i class=\"fa fa-copy\"></i> Duplicate</button>"
+                    . "<button class=\"btn btn-default btn-xs\" onclick=\"deleteQuestion({$question->id});\"><i class=\"fa fa-remove\"></i> Delete</button>"
+                    . "</div></td></tr>";
             $count++;
         }
         $data .= "</tbody></table>";
@@ -115,7 +115,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "getresults") {
         $group = UserGroup::getByName("Students");
         $users = $group->getUsers();
-        $data = "<p class=\"text-right\"><a class=\"btn btn-default\" onclick=\"archive({$_POST["id"]});\"><i class=\"fa fa-archive\"></i> Send To Archive</a></p>";
+        $data = "<p class=\"text-right\">";
+        if ($_POST["pack"] == "0000-00-00") {
+            $data .= "<a class=\"btn btn-default\" onclick=\"archive({$_POST["id"]});\"><i class=\"fa fa-archive\"></i> Send To Archive</a></p>";
+        }
         $data .= "<table class=\"table table-striped table-condensed\"><thead><tr><th>Student</th><th>Score</th><th>Answers</th><th>Status</th></tr></thead><tbody>";
         $questions = Group::getQuestions($_POST["id"]);
         $count = 0;
@@ -125,7 +128,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $time = 0;
             $count = 0;
             $results = Result::getByGroupAndUserID($_POST["id"], $user->id, $_POST["pack"]);
-            foreach ($questions as $question) {            
+            foreach ($questions as $question) {
                 foreach ($results as $result) {
                     if ($result->questionid == $question->id) {
                         if ($question->correctAnswer == $result->resultno) {
@@ -143,7 +146,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             } else {
                 $t = number_format($time, 2) . " seconds";
             }
-            $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]},'0000-00-00')\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($questions) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td><td>" . $correct . "/" . count($results) . "</td><td>";
+            $data .= "<tr><td><a class=\"btn btn-default\" onclick=\"viewResult({$user->id},{$_POST["id"]},'{$_POST["pack"]}')\">" . $user->getFullname() . "</a></td><td>{$correct}/" . count($questions) . " (" . number_format($score, 2) . "%)<br />Time: " . $t . "</td><td>" . $correct . "/" . count($results) . "</td><td>";
             if ($time == 0) {
                 $data .= "<i class=\"label label-danger\">Not Attempted</i>";
             } else {
@@ -166,7 +169,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $user = new User();
         $user->getByID($_POST["id"]);
         $table = "Student: " . $user->getFullname();
-        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$_POST["group"]}, '0000-00-00');\"><i class=\"fa fa-backward\"></i> Back</a><p>";
+        $table .= "<p class=\"text-right\"><a class=\"btn btn-default btn-sm\" onclick=\"viewResults({$_POST["group"]}, '{$_POST["pack"]}');\"><i class=\"fa fa-backward\"></i> Back</a><p>";
         $table .= "<table class=\"table table-hover table-condensed\">";
         $table .= "<thead><tr><th style=\"width: 50px;\"></th><th>Question</th><th>Answer</th><th>Your Answer</th><th>Correct</th><th>Time (sec)</th></tr></thead><tbody>";
         foreach ($questions as $question) {
@@ -266,7 +269,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 . "<thead><th>Date Archived</th></thead><tbody>";
         foreach ($archives as $archive) {
             $data .= "<tr><td><a onclick=\"viewResults({$_POST["group"]}, '{$archive}')\">{$archive}</a></td></tr>";
-        }        
+        }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["data" => $data]));
     }

@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "saveresult") {
-        $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $_POST["qid"]);
+        $result = Result::getByGroupAndUserIDAndQuestionID($_POST["grpid"], $_POST["id"], $_POST["qid"], "0000-00-00");
         $no = $_POST["question"] + 1;
         if (count($result) == 0) {
             if ($_POST["answer"] == "0") {
@@ -27,13 +27,14 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $groups = Group::getGroups();
         foreach ($groups as $group) {
             if ($group->visible == 1) {
-                $result = Result::getByGroupAndUserID($group->id, system\Helper::arcGetUser()->id);
+                $result = Result::getByGroupAndUserID($group->id, system\Helper::arcGetUser()->id, "0000-00-00");
                 $questions = Group::getQuestions($group->id);
                 $table .= "<tr><td>";
                 $table .= count($result) . "/" . count($questions);
                 $table .= "</td>";
                 $table .= "<td><a href=\"#\" onclick=\"getGroup({$group->id});\">{$group->name}</a></td>";
-                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</button></td>";
+                $table .= "<td class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"getResult({$group->id});\"><i class=\"fa fa-area-chart\"></i> Results</button> ";
+                $table .= "<button class=\"btn btn-default btn-xs\" onclick=\"archive({$group->id});\"><i class=\"fa fa-archive\"></i> Archive</button></td>";
                 $table .= "</tr>";
             }
         }
@@ -86,7 +87,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
 
         echo utf8_encode(json_encode(["time" => $time, "html" => $data, "done" => $done, "questionid" => $question->id]));
     } elseif ($_POST["action"] == "getresults") {
-        $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"]);
+        $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"], $_POST["pack"]);
         if (count($results) == 0) {
             echo json_encode(["html" => "No results for this question group recorded."]);
             return;
@@ -162,5 +163,14 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
         echo utf8_encode(json_encode(["html" => $table]));
+    } elseif  ($_POST["action"] == "getarchive") {
+        $archives = Result::getArchive($_POST["grpid"]);
+        $data = "<table class=\"table table-hover table-condensed\">"
+                . "<thead><th>Date Archived</th></thead><tbody>";
+        foreach ($archives as $archive) {
+            $data .= "<tr><td><a onclick=\"getResult2({$_POST["grpid"]}, '{$archive}')\">{$archive}</a></td></tr>";
+        }        
+        $data .= "</tbody></table>";
+        echo utf8_encode(json_encode(["data" => $data]));
     }
 }

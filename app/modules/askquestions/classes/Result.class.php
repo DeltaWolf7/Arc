@@ -67,9 +67,12 @@ class Result extends DataProvider {
         $newResults = Array();
         foreach ($packs as $result) {
             if (in_array($result->pack, $newResults) == false) {
-                $newResults[] = $result->pack;
+                if ($result->pack != "0000-00-00") {
+                    $newResults[] = $result->pack;
+                }
             }
         }
         return $newResults;
     }
+
 }

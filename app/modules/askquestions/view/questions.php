@@ -59,10 +59,40 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "getresults", grpid: id, id: <?php echo system\Helper::arcGetUser()->id; ?>},
+            data: {action: "getresults", grpid: id, id: <?php echo system\Helper::arcGetUser()->id; ?>, pack: '0000-00-00'},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $('#resultsData').html(jdata.html);
+                $('#resultsModal').modal("show");
+            }
+        });
+    }
+    
+    function getResult2(id, pack) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getresults", grpid: id, id: <?php echo system\Helper::arcGetUser()->id; ?>, pack: pack},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $('#resultsData').html(jdata.html);
+                $('#resultsModal').modal("show");
+            }
+        });
+    }
+    
+    function archive(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getarchive", grpid: id, id: <?php echo system\Helper::arcGetUser()->id; ?>},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $('#resultsData').html(jdata.data);
                 $('#resultsModal').modal("show");
             }
         });
