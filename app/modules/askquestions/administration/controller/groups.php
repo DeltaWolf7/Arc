@@ -249,6 +249,11 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         system\Helper::arcAddMessage("success", "Results have been deleted");
     } elseif ($_POST["action"] == "archive") {
+        $testResults = Result::getByGroup($_POST["group"], date("y-m-d"));
+        if (count($testResults) > 0) {
+            system\Helper::arcAddMessage("danger", "Results cannot be archive more than once a day.");
+            return;
+        }
         $results = Result::getByGroup($_POST["group"]);
         foreach ($results as $result) {
             $result->pack = date("y-m-d");
