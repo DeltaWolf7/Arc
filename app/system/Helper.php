@@ -799,7 +799,10 @@ class Helper {
      * @return string Null is returned on OK and the error on failure.
      */
     public static function arcSendMail($to, $subject, $message, $attachments = null) {
+        \Log::createLog("info", "phpmailer", "Send email request");
         try {
+            \Log::createLog("info", "phpmailer", "Subject: " . $subject);
+            
             $mailHost = \SystemSetting::getByKey("ARC_SMTP_HOST");
             $mailPort = \SystemSetting::getByKey("ARC_SMTP_PORT");
             $mailUsername = \SystemSetting::getByKey("ARC_SMTP_USERNAME");
@@ -825,9 +828,11 @@ class Helper {
             if (is_array($to)) {
                 foreach ($to as $name => $email) {
                     $mail->addAddress($email, $name);
+                    \Log::createLog("info", "phpmailer", "Recipient: " . $email);
                 }
             } else {
                 $mail->addAddress($to);
+                \Log::createLog("info", "phpmailer", "Recipient: " . $to);
             }
 
             $mail->Subject = $subject;
@@ -840,6 +845,7 @@ class Helper {
             }
 
             $mail->send();
+            \Log::createLog("success", "phpmailer", "Email sent");
             return true;
         } catch (phpmailerException $e) {
             \Log::createLog("danger", "phpmailer", $e->errorMessage());

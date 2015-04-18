@@ -31,10 +31,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $setting->value = $_POST["value"];
         $setting->update();
+        Log::createLog("info", "settings", "Setting saved: " . $_POST["key"]);
         system\Helper::arcAddMessage("success", "Setting saved");
     } elseif ($_POST["action"] == "deletesetting") {
         $setting = new SystemSetting();
         $setting->delete($_POST["key"]);
+        Log::createLog("info", "settings", "Setting deleted: " . $_POST["key"]);
         system\Helper::arcAddMessage("success", "Setting deleted");
     }
 }
