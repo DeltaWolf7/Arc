@@ -230,18 +230,6 @@
         updateStatus("status");
         getData();
     }
-    
-    function archiveResults(id) {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {action: "archiveresults", id: id}
-        });
-        updateStatus("status");
-        getData();
-    }
 
     $("#saveGroupBtn").click(function () {
         $.ajax({
@@ -253,7 +241,7 @@
         });
         updateStatus("status", updateStatusYCallback);
     });
-    
+
     function updateStatusYCallback(data) {
         if (data.danger == 0) {
             $("#myModal").modal("hide");
@@ -351,7 +339,7 @@
         }
     }
 
-    function viewResults(id) {
+    function viewResults(id, pack) {
         groups = id;
         $("#resultsModal").modal("show");
         $.ajax({
@@ -359,7 +347,7 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "getresults", id: groups},
+            data: {action: "getresults", id: groups, pack: pack},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#resultsData").html(jdata.data);
@@ -367,14 +355,41 @@
         });
     }
 
-    function viewResult(userid, groupid) {
+    function archive(groupid) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "archive", group: groupid}
+        });
+        $("#resultsModal").modal("hide");
+        updateStatus("status", null);
+    }
+
+    function viewArchive(groupid) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "viewArchive", group: groupid},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#resultsData").html(jdata.data);
+                $("#resultsModal").modal("show");
+            }
+        });
+    }
+
+    function viewResult(userid, groupid, pack) {
         $("#resultsModal").modal("show");
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "getresult", id: userid, group: groupid},
+            data: {action: "getresult", id: userid, group: groupid, pack: pack},
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 $("#resultsData").html(jdata.data);
@@ -411,28 +426,28 @@
         });
         getData();
     });
-    
+
     function sendFile(file, editor, welEditable) {
-            data = new FormData();
-            data.append("file", file);
-            $.ajax({
-                data: data,
-                url: "<?php system\Helper::arcGetDispatch(); ?>",
-                cache: false,
-                type: "post",
-                contentType: false,
-                processData: false,
-                dataType: "json",
-                success: function (data) {
-                    var jdata = jQuery.parseJSON(JSON.stringify(data));
-                    if (jdata.status == "success") {
-                        editor.insertImage(welEditable, jdata.data);
-                    } else {
-                        updateStatus("status", null);
-                    }
-                    $("body").removeClass();
-                    $("body").addClass("modal-open");
+        data = new FormData();
+        data.append("file", file);
+        $.ajax({
+            data: data,
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            cache: false,
+            type: "post",
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                if (jdata.status == "success") {
+                    editor.insertImage(welEditable, jdata.data);
+                } else {
+                    updateStatus("status", null);
                 }
-            });
-        }
+                $("body").removeClass();
+                $("body").addClass("modal-open");
+            }
+        });
+    }
 </script>

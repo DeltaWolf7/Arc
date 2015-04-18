@@ -24,20 +24,52 @@
  * THE SOFTWARE.
  */
 
-class Archive extends DataProvider {
+class Result extends DataProvider {
 
-    public $questiongroup;
-    public $studentname;
-    public $html;
-    public $when;
+    public $groupid;
+    public $questionid;
+    public $resultno;
+    public $userid;
+    public $timetaken;
+    public $questionno;
+    public $pack;
 
     public function __construct() {
         parent::__construct();
-        $this->questiongroup = "";
-        $this->studentname = "";
-        $this->html = "";
-        $this->when = date("y-m-d h:i:s");
-        $this->table = ARCDBPREFIX . "askquestion_archives";
-        $this->columns = ["id", "questiongroup", "studentname", "html", "when"];
+        $this->groupid = 0;
+        $this->resultno = 0;
+        $this->userid = 0;
+        $this->questionid = 0;
+        $this->timetaken = 0;
+        $this->pack = "0000-00-00";
+        $this->table = ARCDBPREFIX . "askquestion_results";
+        $this->columns = ["id", "groupid", "questionid", "resultno", "userid", "timetaken", "questionno", "pack"];
+    }
+
+    public static function getByGroupAndUserID($groupid, $userid, $pack) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid, "pack" => $pack]]);
+    }
+
+    public static function getByGroupAndUserIDAndQuestionID($groupid, $userid, $questionid, $pack) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "userid" => $userid, "questionid" => $questionid, "pack" => $pack]]);
+    }
+
+    public static function getByGroup($groupid, $pack) {
+        $results = new Result();
+        return $results->getCollection(["AND" => ["groupid" => $groupid, "pack" => $pack]]);
+    }
+
+    public static function getArchive($groupid) {
+        $results = new Result();
+        $packs = $results->getCollection(["groupid" => $groupid]);
+        $newResults = Array();
+        foreach ($packs as $result) {
+            if (in_array($result->pack, $newResults) == false) {
+                $newResults[] = $result->pack;
+            }
+        }
+        return $newResults;
     }
 }
