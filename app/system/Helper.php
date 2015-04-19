@@ -800,7 +800,7 @@ class Helper {
      */
     public static function arcSendMail($to, $subject, $message) {
         try {
-            \Log::createLog("info", "mail", "Send email request");
+            \Log::createLog("info", "arcmail", "Send email request");
 
             $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
             $headers = "From: {$mailfrom}";
@@ -808,11 +808,11 @@ class Helper {
             if (is_array($to)) {
                 foreach ($to as $email) {
                     mail($email, $subject, $message, $headers);
-                    \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $email);
+                    \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $email);
                 }
             } else {
                 mail($to, $subject, $message, $headers);
-                \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $to);
+                \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to);
             }
             return true;
         } catch (Exception $e) {

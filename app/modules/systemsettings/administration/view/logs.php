@@ -11,7 +11,7 @@
             echo "<tr><td>";
             switch ($log->type) {
                 case "success":
-                    echo "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Info<span>";
+                    echo "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Success<span>";
                     break;
                 case "info":
                     echo "<span class=\"label label-info\"><i class=\"fa fa-info-circle\"></i> Info<span>";
