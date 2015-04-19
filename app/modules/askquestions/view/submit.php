@@ -125,7 +125,7 @@ Answer 4:
 Correct Answer: 1/2/3/4
         </textarea>
     </div>
-    <button type="submit" class="btn btn-default" onclick="send()">Submit</button>
+    <button type="button" class="btn btn-default" onclick="send()">Submit</button>
 </form>
 
 <div id="status"></div>
@@ -137,8 +137,8 @@ Correct Answer: 1/2/3/4
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "send", id: <?php echo system\Helper::arcGetUser()->id; ?>, data: $("game").val()}
+            data: {action: "send", id: <?php echo system\Helper::arcGetUser()->id; ?>, data: $("#game").val()}
         });
-        updateStatue("status", null);
+        updateStatus("status", null);
     }
 </script>

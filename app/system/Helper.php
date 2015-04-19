@@ -800,6 +800,12 @@ class Helper {
      */
     public static function arcSendMail($to, $subject, $message, $attachments = null) {
         \Log::createLog("info", "phpmailer", "Send email request");
+        mail($to, $subject, $message);
+        \Log::createLog("info", "phpmailer", "Subject: " . $subject);
+        
+        // don't use phpmailer, needs fixing.
+        return;
+        
         try {
             \Log::createLog("info", "phpmailer", "Subject: " . $subject);
             
