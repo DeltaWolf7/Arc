@@ -402,12 +402,12 @@ class Helper {
                 }
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
-
-// Check if the template has a footer and include if it does.
+            
+            // Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
                 die("Unable to find template footer.php.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
+            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";          
         }
     }
 
