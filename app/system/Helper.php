@@ -267,13 +267,13 @@ class Helper {
     public static function arcGetView() {
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             \Log::createLog("success", "arc", "Detected upload request.");
-            if (isset($_FILES['file']['name'])) {                
-                if (!$_FILES['file']['error']) {                  
+            if (isset($_FILES['file']['name'])) {
+                if (!$_FILES['file']['error']) {
                     \Log::createLog("success", "arc", "Starting image upload.");
-                    
+
                     $filesize = \SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
                     \Log::createLog("info", "arc", "Upload size limit: " . $filesize->value);
-                    
+
                     if ($_FILES['file']['size'] > $filesize->value) {
                         self::arcAddMessage("danger", "Image file size exceeds limit");
                         \Log::createLog("danger", "arc", "Image exceeds size limit.");
@@ -286,24 +286,24 @@ class Helper {
                         \Log::createLog("danger", "arc", "Invalid image type.");
                         return;
                     }
-                    
+
                     \Log::createLog("info", "arc", "Valid image type detected.");
-                    
+
                     $name = md5(uniqid(rand(), true));
                     $ext = explode('.', $_FILES['file']['name']);
                     $filename = $name . '.' . $ext[1];
                     $destination = self::arcGetPath(true) . "images/" . $filename;
-                    
+
                     \Log::createLog("info", "arc", "Destination: '" . $destination . "'");
-                    
+
                     $location = $_FILES["file"]["tmp_name"];
-                    
+
                     \Log::createLog("info", "arc", "Source: '" . $location . "'");
-                    
+
                     $size = getimagesize($location);
-                    
+
                     \Log::createLog("info", "arc", "Size: " . $size[0]);
-                                        
+
                     if ($size == 0) {
                         self::arcAddMessage("danger", "Invalid image uploaded");
                         \Log::createLog("danger", "arc", "Invalid image size.");
@@ -798,68 +798,25 @@ class Helper {
      * @param array $attachments Array of paths to attach
      * @return string Null is returned on OK and the error on failure.
      */
-    public static function arcSendMail($to, $subject, $message, $attachments = null) {
-        \Log::createLog("info", "phpmailer", "Send email request");
-        mail($to, $subject, $message);
-        \Log::createLog("info", "phpmailer", "Subject: " . $subject);
-        
-        // don't use phpmailer, needs fixing.
-        return;
-        
+    public static function arcSendMail($to, $subject, $message) {
         try {
-            \Log::createLog("info", "phpmailer", "Subject: " . $subject);
-            
-            $mailHost = \SystemSetting::getByKey("ARC_SMTP_HOST");
-            $mailPort = \SystemSetting::getByKey("ARC_SMTP_PORT");
-            $mailUsername = \SystemSetting::getByKey("ARC_SMTP_USERNAME");
-            $mailPassword = \SystemSetting::getByKey("ARC_SMTP_PASSWORD");
-            $mailEmail = \SystemSetting::getByKey("ARC_SMTP_EMAIL");
-            $mailName = \SystemSetting::getByKey("ARC_SMTP_NAME");
-            require_once self::arcGetPath(true) . "app/system/PHPMailer/PHPMailerAutoload.php";
+            \Log::createLog("info", "mail", "Send email request");
 
-            $mail = new \PHPMailer();
-            $mail->isSMTP();
-            if (ARCDEBUG == true) {
-                $mail->SMTPDebug = 2;
-            } else {
-                $mail->SMTPDebug = 0;
-            }
-            $mail->Host = $mailHost->value;
-            $mail->Port = $mailPort->value;
-            $mail->SMTPAuth = true;
-            $mail->Username = $mailUsername->value;
-            $mail->Password = $mailPassword->value;
-            $mail->setFrom($mailEmail->value, $mailName->value);
+            $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
+            $headers = "From: {$mailfrom}";
 
             if (is_array($to)) {
-                foreach ($to as $name => $email) {
-                    $mail->addAddress($email, $name);
-                    \Log::createLog("info", "phpmailer", "Recipient: " . $email);
+                foreach ($to as $email) {
+                    mail($email, $subject, $message, $headers);
+                    \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $email);
                 }
             } else {
-                $mail->addAddress($to);
-                \Log::createLog("info", "phpmailer", "Recipient: " . $to);
+                mail($to, $subject, $message, $headers);
+                \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $to);
             }
-
-            $mail->Subject = $subject;
-            $mail->msgHTML($message);
-
-            if (isset($attachments)) {
-                foreach ($attachments as $attachment) {
-                    $mail->addAttachment($attachment);
-                }
-            }
-
-            $mail->send();
-            \Log::createLog("success", "phpmailer", "Email sent");
             return true;
-        } catch (phpmailerException $e) {
-            \Log::createLog("danger", "phpmailer", $e->errorMessage());
-            self::arcAddMessage("danger", "Unable to send email, see log for details");
-            return false;
-        } catch (Exception $exception) {
-            \Log::createLog("danger", "phpmailer", $exception->getMessage());
-            self::arcAddMessage("danger", "Unable to send email, see log for details");
+        } catch (Exception $e) {
+            \Log::createLog("info", "mail", "Error: " . $e->getMessage());
             return false;
         }
     }

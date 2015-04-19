@@ -81,40 +81,10 @@ spl_autoload_register(function($class) {
     }
 });
 
-$mailHost = SystemSetting::getByKey("ARC_SMTP_HOST");
-if (!SystemSetting::keyExists("ARC_SMTP_HOST")) {
-    $mailHost->value = "localhost";
-    $mailHost->update();
-}
-
-$mailPort = SystemSetting::getByKey("ARC_SMTP_PORT");
-if (!SystemSetting::keyExists("ARC_SMTP_PORT")) {
-    $mailPort->value = "25";
-    $mailPort->update();
-}
-
-$mailUsername = SystemSetting::getByKey("ARC_SMTP_USERNAME");
-if (!SystemSetting::keyExists("ARC_SMTP_USERNAME")) {
-    $mailUsername->value = "user@server.com";
-    $mailUsername->update();
-}
-
-$mailPassword = SystemSetting::getByKey("ARC_SMTP_PASSWORD");
-if (!SystemSetting::keyExists("ARC_SMTP_PASSWORD")) {
-    $mailPassword->value = "password";
-    $mailPassword->update();
-}
-
-$mailEmail = SystemSetting::getByKey("ARC_SMTP_EMAIL");
-if (!SystemSetting::keyExists("ARC_SMTP_EMAIL")) {
-    $mailEmail->value = "noreply@server.com";
-    $mailEmail->update();
-}
-
-$mailSender = SystemSetting::getByKey("ARC_SMTP_NAME");
-if (!SystemSetting::keyExists("ARC_SMTP_NAME")) {
-    $mailSender->value = "noreply";
-    $mailSender->update();
+$mailfrom = SystemSetting::getByKey("ARC_MAIL_FROM");
+if (!SystemSetting::keyExists("ARC_MAIL_FROM")) {
+    $mailfrom->value = "admin@server.local";
+    $mailfrom->update();
 }
 
 $filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
