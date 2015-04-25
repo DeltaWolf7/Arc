@@ -402,12 +402,12 @@ class Helper {
                 }
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
-
-// Check if the template has a footer and include if it does.
+            
+            // Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
                 die("Unable to find template footer.php.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
+            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";          
         }
     }
 
@@ -800,7 +800,7 @@ class Helper {
      */
     public static function arcSendMail($to, $subject, $message) {
         try {
-            \Log::createLog("info", "mail", "Send email request");
+            \Log::createLog("info", "arcmail", "Send email request");
 
             $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
             $headers = "From: " . $mailfrom->value . "\r\n";
