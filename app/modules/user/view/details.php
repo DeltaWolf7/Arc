@@ -1,5 +1,5 @@
 <?php
-    $user = system\Helper::arcGetUser();
+$user = system\Helper::arcGetUser();
 ?>
 
 <div class="page-header">
@@ -42,8 +42,10 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {id: '<?php echo $user->id; ?>', firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-                password: $("#password").val(), password2: $("#password2").val()}
+                password: $("#password").val(), password2: $("#password2").val()},
+            complete: function (data) {
+                updateStatus("status", null);
+            }
         });
-        updateStatus("status", null);
     });
 </script>

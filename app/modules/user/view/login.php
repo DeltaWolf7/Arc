@@ -26,9 +26,11 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val(), password: $("#password").val()}
-        });
-        updateStatus("status", updateStatusCallback);
+            data: {email: $("#email").val(), password: $("#password").val()},
+            complete: function (data) {
+               updateStatus("status", updateStatusCallback); 
+            }
+        });    
     });
     
     function updateStatusCallback(data) {

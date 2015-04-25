@@ -6,7 +6,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $data = "<table class=\"table table-striped\">";
         $data .= "<tr><th>ID</th><th>Question</th><th class=\"text-right\"><button class=\"btn btn-default btn-xs\" onclick=\"editQuestion(0)\"><i class=\"fa fa-plus\"></i> New Question</button></th></tr>";
         foreach ($multistages as $multistage) {
-            $data .= "<tr><td>" . $multistage->id . "</td><td>" . $multistage->masterquestion . "</td><td class=\"text-right\">"
+            $data .= "<tr><td>" . $multistage->id . "</td><td>" . $multistage->masterquestion . "</td><td style=\"width: 200px;\" class=\"text-right\">"
                     . "<div class=\"btn-group\" role=\"group\">"
                     . "<button class=\"btn btn-default btn-xs\" onclick=\"results(" . $multistage->id . ");\"><i class=\"fa fa-area-chart\"></i> Results</button>"
                     . "<button class=\"btn btn-default btn-xs\" onclick=\"editQuestion(" . $multistage->id . ");\"><i class=\"fa fa-pencil\"></i> Edit</button>"

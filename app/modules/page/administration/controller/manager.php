@@ -26,7 +26,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 return;
             }
             $page->update();
-            echo json_encode(["status" => "success", "data" => "Page saved"]);
+            system\Helper::arcAddMessage("success", "Page saved");
         } elseif ($_POST["action"] == "getpages") {
             $table = "<thead><tr><th>SEO Url</th><th>Title</th><th class=\"text-right\"><a onclick=\"editPage(0);\" class=\"btn btn-primary btn-xs\"><i class=\"fa fa-plus\"></i> New Page</a></th></tr></thead>";
             $table .= "<tbody>";

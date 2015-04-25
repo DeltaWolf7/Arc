@@ -469,7 +469,7 @@ class Helper {
         $warning = 0;
         $danger = 0;
         foreach ($_SESSION["status"] as $message) {
-            $data .= "<div class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
+            $data .= "<div id=\"" . uniqid() . "\" class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
                     . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
             switch ($message["status"]) {
                 case "danger":
@@ -487,8 +487,8 @@ class Helper {
             $data .= $message["data"] . "</div>" . PHP_EOL;
         }
 
+        $_SESSION["status"] = Array();
         echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
-        $_SESSION["status"] = array();
     }
 
     /**
@@ -803,17 +803,14 @@ class Helper {
             \Log::createLog("info", "mail", "Send email request");
 
             $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
-            $headers = "From: {$mailfrom}";
+            $headers = "From: " . $mailfrom->value . "\r\n";
+            $headers .= "MIME-Version: 1.0\r\n";
+            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+            \Log::createLog("info", "mail", "Mail headers built");
 
-            if (is_array($to)) {
-                foreach ($to as $email) {
-                    mail($email, $subject, $message, $headers);
-                    \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $email);
-                }
-            } else {
-                mail($to, $subject, $message, $headers);
-                \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $to);
-            }
+            mail($to, $subject, $message, $headers);
+            \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $to);
+
             return true;
         } catch (Exception $e) {
             \Log::createLog("info", "mail", "Error: " . $e->getMessage());

@@ -212,11 +212,14 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletegroup", id: group}
+            data: {action: "deletegroup", id: group},
+            complete: function (data) {
+                updateStatus("status", null);
+                $("#deleteModal").modal("hide");
+                getData();
+            }
         });
-        updateStatus("status", null);
-        $("#deleteModal").modal("hide");
-        getData();
+
     });
 
     function deleteGroupResults(id) {
@@ -225,10 +228,12 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletegroupresults", id: id}
+            data: {action: "deletegroupresults", id: id},
+            complete: function (data) {
+                updateStatus("status");
+                getData();
+            }
         });
-        updateStatus("status");
-        getData();
     }
 
     $("#saveGroupBtn").click(function () {
@@ -237,9 +242,11 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")}
+            data: {action: "savegroup", group: $("#group").val(), text: $("#text").val(), id: group, visible: $("#visible").prop("checked")},
+            complete: function (data) {
+                updateStatus("status", updateStatusYCallback);
+            }
         });
-        updateStatus("status", updateStatusYCallback);
     });
 
     function updateStatusYCallback(data) {
@@ -260,11 +267,13 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deletequestion", id: question}
+            data: {action: "deletequestion", id: question},
+            complete: function (data) {
+                updateStatus("status", null);
+                $("#deleteQuestionModal").modal("hide");
+                getQuestions(questions);
+            }
         });
-        updateStatus("status", null);
-        $("#deleteQuestionModal").modal("hide");
-        getQuestions(questions);
     });
 
     function getData() {
@@ -327,9 +336,11 @@
             contentType: "application/x-www-form-urlencoded",
             data: {action: "savequestion", id: question, question: $('.summernote').code(),
                 answer1: $("#answer1").val(), answer2: $("#answer2").val(), answer3: $("#answer3").val(),
-                answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()}
+                answer4: $("#answer4").val(), answer5: $("#answer5").val(), group: $("#groupS").val(), correct: $("#correct").val()},
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
+            }
         });
-        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {
@@ -361,10 +372,12 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "archive", group: groupid}
+            data: {action: "archive", group: groupid},
+            complete: function (data) {
+                $("#resultsModal").modal("hide");
+                updateStatus("status", null);
+            }
         });
-        $("#resultsModal").modal("hide");
-        updateStatus("status", null);
     }
 
     function viewArchive(groupid) {
@@ -403,10 +416,12 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "copyquestion", id: id}
+            data: {action: "copyquestion", id: id},
+            complete: function (data) {
+                updateStatus("status", null);
+                getQuestions(questions);
+            }
         });
-        updateStatus("status", null);
-        getQuestions(questions);
     }
 
     $(document).ready(function () {

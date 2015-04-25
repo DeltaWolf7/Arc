@@ -13,20 +13,19 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         Log::createLog("warning", "user", "Password reset, user not found: " . $_POST["email"]);
         return;
     }
-       
-    $to[$user->firstname . " " . $user->lastname] = $user->email;
 
-    $message = "Hello " . $user->firstname . ", <br /><br />";
+    $to = $user->email;
+
+    $message = "<html><body>Hello " . $user->firstname . ", <br /><br />";
     $message .= "You or someone else has requested a password reset.";
     $message .= " If you have not requested a reset you can ignore this email";
     $message .= " or click the link below to reset your password.<br /><br />";
 
-    $message .= "<a href=\"" . system\Helper::arcGetModulePath() . "reset/" . base64_encode($user->id . "|" . $user->email) . "\">Reset Password</a>";
-    
+    $message .= "<a href=\"" . system\Helper::arcGetModulePath() . "reset/" . base64_encode($user->id . "|" . $user->email)
+            . "\">Reset Password</a></body></html>";
+
     $mail = system\Helper::arcSendMail($to, "Password Reset Request", $message);
-    
-    if ($mail) {
-        system\Helper::arcAddMessage("success", "Password reset link has been sent to your Email");
-        Log::createLog("warning", "user", "Password reset sent: " . $_POST["email"]);
-    }
+
+    system\Helper::arcAddMessage("success", "Password reset link has been sent to your Email");
+    Log::createLog("warning", "user", "Password reset sent: " . $_POST["email"]);
 }

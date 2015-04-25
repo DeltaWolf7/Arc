@@ -22,7 +22,7 @@ if (!is_numeric($data[0])) {
         <div id="status"></div>
     </div>
     <div class="panel-footer text-right">
-        <a id="btnReset" class="btn btn-primary">Reset</a>
+        <button id="btnReset" class="btn btn-primary">Reset</button>
     </div>
 </div>
 
@@ -35,9 +35,11 @@ if (!is_numeric($data[0])) {
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {password: $("#password").val(), password2: $("#password2").val(),
-                id: <?php echo $data[0]; ?>}
-        });
-        updateStatus("status", updateStatusCallback);
+                id: <?php echo $data[0]; ?>},
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
+            }
+        }); 
     });
 
     function updateStatusCallback(data) {

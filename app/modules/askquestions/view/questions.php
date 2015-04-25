@@ -154,9 +154,9 @@
                 question = question + 1;
                 getGroup(groupid);
                 rdo = 0;
+                updateStatus("statusX", null);
             }
         });
-        updateStatus("statusX", null);
     }
 
     function previousQuestion() {

@@ -137,8 +137,10 @@ Correct Answer: 1/2/3/4
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "send", id: <?php echo system\Helper::arcGetUser()->id; ?>, data: $("#game").val()}
+            data: {action: "send", id: <?php echo system\Helper::arcGetUser()->id; ?>, data: $("#game").val()},
+            complete: function (data) {
+                updateStatus("status", null);
+            }
         });
-        updateStatus("status", null);
     }
 </script>

@@ -100,9 +100,11 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "clearcache"}
+            data: {action: "clearcache"},
+            complete: function (data) {
+                updateStatus("status");
+            }
         });
-        updateStatus("status");
     });
 
     function editPost(id) {

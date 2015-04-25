@@ -127,9 +127,12 @@
             contentType: "application/x-www-form-urlencoded",
             data: {id: page, action: "save", title: $("#title").val(), seourl: $("#seourl").val(),
                 metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-                html: $('.summernote').code()}
+                html: $('.summernote').code()},
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
+            }
         });
-        updateStatus("status", updateStatusCallback);
+
     });
 
     function updateStatusCallback(data) {
@@ -158,9 +161,9 @@
             complete: function () {
                 getPages();
                 $("#deletePage").modal("hide");
+                updateStatus("status", null);
             }
         });
-        updateStatus("status", null);
     });
 
     function getPages() {

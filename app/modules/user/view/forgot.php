@@ -12,7 +12,7 @@
         <div id="status"></div>
     </div>
     <div class="panel-footer text-right">
-        <a id="forgotBtn" class="btn btn-primary">Request Reset</a>
+        <button id="forgotBtn" class="btn btn-primary">Request Reset</button>
         <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath(); ?>">Cancel</a>
     </div>
 </div>
@@ -24,14 +24,17 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val()}
+            data: {email: $("#email").val()},
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
+            }
         });
-        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {
         if (data.danger == 0) {
             $("#email").prop("disabled", true);
+            $("#forgotBtn").prop("disabled", true);
         }
     }
 </script>

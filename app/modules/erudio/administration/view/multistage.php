@@ -228,10 +228,13 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "deleteQuestion", id: id}
+            data: {action: "deleteQuestion", id: id},
+            complete: function (data) {
+                getData();
+                updateStatus("status");
+            }
         })
-        getData();
-        updateStatus("status");
+
     }
 
     var selectedid;
@@ -274,10 +277,12 @@
             data: {action: "saveQuestion", masterquestion: $('.masterQuestion').code(), id: selectedid,
                 question1: $('.question1').code(), question2: $('.question2').code(), question3: $('.question3').code(),
                 question4: $('.question4').code(), question5: $('.question5').code(), answer1: $("#answer1").val(),
-                answer2: $("#answer2").val(), answer3: $("#answer3").val(), answer4: $("#answer4").val(), answer5: $("#answer5").val()}
+                answer2: $("#answer2").val(), answer3: $("#answer3").val(), answer4: $("#answer4").val(), answer5: $("#answer5").val()},
+            complete: function (data) {
+                updateStatus("status2", null);
+                getData();
+            }
         })
-        updateStatus("status2", null);
-        getData();
     });
 
     var qid;

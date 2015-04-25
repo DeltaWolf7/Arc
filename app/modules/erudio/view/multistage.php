@@ -67,9 +67,11 @@ $multistage = Multistage::getRandomMultistage();
             data: {answer1: $("#answer1").val(), answer2: $("#answer2").val(),
                 answer3: $("#answer3").val(), answer4: $("#answer4").val(),
                 answer5: $("#answer5").val(), start: <?php echo time(); ?>,
-                userid: <?php echo system\Helper::arcGetUser()->id; ?>, questionid: <?php echo $multistage->id; ?>}
+                userid: <?php echo system\Helper::arcGetUser()->id; ?>, questionid: <?php echo $multistage->id; ?>},
+            complete: function (data) {
+                updateStatus("status");
+            }
         })
-        updateStatus("status");
     });
 
     $("#newquestion").click(function () {

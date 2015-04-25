@@ -105,9 +105,9 @@
             complete: function () {
                 $("#deleteSetting").modal("hide");
                 getSettings();
+                updateStatus("status", null);
             }
         });
-        updateStatus("status", null);
     });
     
     $("#saveSettingBtn").click(function () {
@@ -120,9 +120,10 @@
             complete: function () {
                 $("#editSetting").modal("hide");
                 getSettings();
+                updateStatus("status", null);
             }
         });
-        updateStatus("status", null);
+        
     });
 
     $(document).ready(function () {

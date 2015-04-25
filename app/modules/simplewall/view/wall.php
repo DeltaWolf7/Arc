@@ -26,12 +26,14 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>}
+            data: {action: "send", content: $('.summernote').code(), id: <?php echo system\Helper::arcGetUser()->id; ?>},
+            complete: function (data) {
+                updateStatus("status", updateStatusXCallback);
+                getData();
+            }
         });
-        updateStatus("status", updateStatusXCallback);
-        getData();
     });
-    
+
     function updateStatusXCallback(data) {
         $('.summernote').code("");
     }
@@ -61,7 +63,7 @@
                 sendFile(files[0], editor, welEditable);
             }
         });
-        
+
         function sendFile(file, editor, welEditable) {
             data = new FormData();
             data.append("file", file);
@@ -85,6 +87,7 @@
                 }
             });
         }
+        
         getData();
     });
 </script>

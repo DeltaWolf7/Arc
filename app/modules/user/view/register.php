@@ -38,9 +38,11 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),
-                password: $("#password").val(), password2: $("#password2").val()}
+                password: $("#password").val(), password2: $("#password2").val()},
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
+            }
         });
-        updateStatus("status", updateStatusCallback);
     });
 
     function updateStatusCallback(data) {
