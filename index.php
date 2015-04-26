@@ -24,6 +24,13 @@
  * THE SOFTWARE.
  */
 
+// Hide PHP version
+if (function_exists('header_remove')) {
+    header_remove('X-Powered-By'); // PHP 5.3+
+} else {
+    @ini_set('expose_php', 'off');
+}
+
 // Check for old versons of Internet Explorer
 if (preg_match('/(?i)msie [1-8]/', $_SERVER['HTTP_USER_AGENT'])) {
 // if IE<=8
