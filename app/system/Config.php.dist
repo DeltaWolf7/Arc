@@ -41,7 +41,7 @@ class Config {
         define('ARCDBUSER', 'username');
         // Database password
         define('ARCDBPASSWORD', 'password');
-        // Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle)
+        // Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle, Sqlite)
         define('ARCDBTYPE', 'mysql');
         // Database prefix
         define('ARCDBPREFIX', 'arc_');
