@@ -40,10 +40,10 @@ class Helper {
      * Initialise the Helper class
      */
     public static function init() {
-// Start session
+        // Start session
         session_start();
 
-// Get the current URI and break up the path into parts.
+        // Get the current URI and break up the path into parts.
         if ($_SERVER["REQUEST_URI"] != "/") {
             $uri = parse_url($_SERVER["REQUEST_URI"]);
             $routes = explode("/", trim($uri["path"], "/"));
@@ -62,21 +62,21 @@ class Helper {
             }
         }
 
-// Default view data, if  nothing is set.
+        // Default view data, if  nothing is set.
         if (empty(self::$arc["urldata"])) {
             self::$arc["urldata"]["module"] = ARCDEFAULTMODULE;
             self::$arc["urldata"]["action"] = ARCDEFAULTACTION;
         }
 
-// Initilise menu
+        // Initilise menu
         self::$arc["menus"] = Array();
 
-// Initilise status
+        // Initilise status
         if (!isset($_SESSION["status"])) {
             self::arcClearStatus();
         }
 
-// Create database connection
+        // Create database connection
         try {
             if (ARCDBTYPE != "sqlite") {
                 self::$arc["database"] = new \medoo([
@@ -96,7 +96,7 @@ class Helper {
             die("Unable to connect to database. Please check 'Config.php'.<br />Exception: " . $e->getMessage());
         }
 
-// Javascript, add required javascript files to header
+        // Javascript, add required javascript files to header
         self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
@@ -105,14 +105,14 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote-plugins.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
-// CSS, add required css files to header
+        // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
 
-// Canonical path
+        // Canonical path
         $path = self::arcGetModulePath();
         if (self::arcGetURLData("action") != null) {
             $path .= self::arcGetURLData("action") . "/";
@@ -898,7 +898,7 @@ class Helper {
 
     public static function arcGetThumbImage($image, $width = null) {
         if (!empty($image)) {
-            $thumbWidth = \SystemSetting::getByKey("ARC_BLOG_THUMB_WIDTH");
+            $thumbWidth = \SystemSetting::getByKey("ARC_THUMB_WIDTH");
             if ($width == null) {
                 $width = $thumbWidth->value;
             }
@@ -941,4 +941,12 @@ class Helper {
         return null;
     }
 
+    public static function arcCheckSettingExists($name, $value) {
+        $setting = \SystemSetting::getByKey($name);
+        if (!\SystemSetting::keyExists($name)) {
+            $setting->value = $value;
+            $setting->update();
+            \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "'");
+        }
+    }
 }

@@ -9,6 +9,7 @@
             case "404":
                 ?>
                 The resource you're looking for cannot be found.<br />
+                <br />Request URL: <?php echo $_SERVER['REQUEST_URI']; ?>
                 <?php
                 break;
             case "403":

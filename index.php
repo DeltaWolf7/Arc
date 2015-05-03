@@ -88,17 +88,9 @@ spl_autoload_register(function($class) {
     }
 });
 
-$mailfrom = SystemSetting::getByKey("ARC_MAIL_FROM");
-if (!SystemSetting::keyExists("ARC_MAIL_FROM")) {
-    $mailfrom->value = "admin@server.local";
-    $mailfrom->update();
-}
-
-$filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
-if (!SystemSetting::keyExists("ARC_FILE_UPLOAD_SIZE_BYTES")) {
-    $filesize->value = "2000000";
-    $filesize->update();
-}
+system\Helper::arcCheckSettingExists("ARC_MAIL_FROM", "admin@server.local");
+system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
+system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
 
 // Get content.
 system\Helper::arcGetView();
