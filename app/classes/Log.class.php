@@ -55,7 +55,10 @@ class Log extends DataProvider {
         $log->module = $module;
         $log->message = $message;
         $log->update();
-        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.when) > 30");
+        
+        // get days
+        $days = SystemSetting::getByKey("ARC_KEEP_LOGS");    
+        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.when) > " . $days->value);
     }
 
 }

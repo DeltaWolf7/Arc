@@ -27,7 +27,7 @@
                         <select class="form-control" id="dbtype">
                             <option value="MySQL" selected>MySQL</option>
                             <option value="MariaDB">MariaDB</option>
-                            <option value="MSSQL">MSSQL</option>
+                            <option value="MSSQL">MsSql</option>
                             <option value="Sybase">Sybase</option>
                             <option value="PostgreSQL">PostgreSQL</option>
                             <option value="Oracle">Oracle</option>

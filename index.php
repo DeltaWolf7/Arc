@@ -91,6 +91,7 @@ spl_autoload_register(function($class) {
 system\Helper::arcCheckSettingExists("ARC_MAIL_FROM", "admin@server.local");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
+system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30");
 
 // Get content.
 system\Helper::arcGetView();

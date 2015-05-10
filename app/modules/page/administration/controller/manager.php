@@ -16,7 +16,14 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $page = new Page();
             $page->getByID($_POST["id"]);
             $page->content = htmlentities($_POST["html"]);
-            $page->seourl = strtolower($_POST["seourl"]);
+
+            if (preg_match('`^[a-zA-Z0-9_]{1,}$`', $_POST["seourl"])) {
+                $page->seourl = strtolower($_POST["seourl"]);
+            } else {
+                system\Helper::arcAddMessage("danger", "Invalid SEO Url");
+                return;
+            }
+
             $page->metadescription = $_POST["metadescription"];
             $page->metakeywords = $_POST["metakeywords"];
             $page->title = $_POST["title"];

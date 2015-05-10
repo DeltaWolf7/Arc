@@ -93,7 +93,84 @@
     </div>
 </div>
 
+<div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" class="form-control" id="cattitle" maxlength="100" />
+                        </div>
+                        <div class="form-group">
+                            <label>SEO Url</label>
+                            <input type="text" class="form-control" id="catseourl" maxlength="100" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-default" data-dismiss="modal">Close</a>
+                <a class="btn btn-primary" id="catSave">Save</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    var catID;
+    
+    function catBtn(id) {
+        catID = id;
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "getcategory", id: id},
+            success: function (data) {
+                var jdata = jQuery.parseJSON(JSON.stringify(data));
+                $("#cattitle").val(jdata.name);
+                $("#catseourl").val(jdata.seourl);
+                $("#categoryModal").modal('show');
+            }
+        });
+    }
+    
+    function catDelete(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "deletecategory", id: id},
+            complete: function (data) {
+                get("categories");
+                updateStatus("status");
+            }
+        });
+    }
+    
+    $("#catSave").click(function() {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "saveCategory", id: catID, name: $("#cattitle").val(), seourl: $("#catseourl").val()},
+            complete: function (data) {
+                $("#categoryModal").modal('hide');
+                get("categories");
+                updateStatus("status");
+            }
+        });
+    });
+    
     $("#clearCache").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
