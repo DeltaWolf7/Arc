@@ -29,7 +29,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $data .= "<thead><tr><th>Name</th><th class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"catBtn(0)\"><i class=\"fa fa-plus\"></i> New Category</a></th></tr></thead><tbody>";
         $cats = BlogCategory::getAllCategories();
         foreach ($cats as $cat) {
-            $data .= "<tr><td><a href=\"#\" onclick=\"catBtn({$cat->id})\">{$cat->name}</a></td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"catDelete({$cat->id})\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+            $data .= "<tr><td>{$cat->name}</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"catBtn({$cat->id})\"><i class=\"fa fa-edit\"></i> Edit</a> <a class=\"btn btn-default btn-xs\" onclick=\"catDelete({$cat->id})\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</tbody></table>";
         echo utf8_encode(json_encode(["html" => $data]));
@@ -44,7 +44,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $group .= "</select>";
         $img = "<img src=\"";
-        if (empty($blog->image)) {
+        if (!empty($blog->image)) {
             $img .= system\Helper::arcGetThumbImage(system\Helper::arcGetPath() . "images/" . $blog->image, 150);
         } else {
             $img .= system\Helper::arcGetPath() . "app/modules/blog/images/placeholder.png";
