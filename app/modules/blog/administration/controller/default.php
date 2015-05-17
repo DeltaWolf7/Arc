@@ -43,9 +43,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $group .= "<option value=\"{$cat->name}\">{$cat->name}</option>";
         }
         $group .= "</select>";
-        $img = "<img src=\"";
+        $img = "<img class=\"img-rounded\" src=\"";
         if (!empty($blog->image)) {
-            $img .= system\Helper::arcGetThumbImage(system\Helper::arcGetPath() . "images/" . $blog->image, 150);
+            $img .= system\Helper::arcGetThumbImage($blog->image, 195);
         } else {
             $img .= system\Helper::arcGetPath() . "app/modules/blog/images/placeholder.png";
         }

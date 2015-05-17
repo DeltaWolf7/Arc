@@ -897,7 +897,7 @@ class Helper {
     }
 
     public static function arcGetThumbImage($image, $width = null) {
-        if (!empty($image)) {
+        if (!empty($image) && file_exists(self::arcGetPath(true) . "images/{$image}")) {
             $thumbWidth = \SystemSetting::getByKey("ARC_THUMB_WIDTH");
             if ($width == null) {
                 $width = $thumbWidth->value;
@@ -905,7 +905,8 @@ class Helper {
             if (!file_exists(self::arcGetPath(true) . "images/thumbs")) {
                 mkdir(self::arcGetPath(true) . "images/thumbs");
             }
-            if (!file_exists(self::arcGetPath(true) . "images/thumbs/{$image}")) {
+            $filename = $width . "_" . $image;
+            if (!file_exists(self::arcGetPath(true) . "images/thumbs/{$filename}")) {
                 $size = getimagesize(self::arcGetPath(true) . "images/{$image}");
                 $ratio = $size[0] / $size[1]; // width/height
                 if ($ratio > 1) {
@@ -924,19 +925,18 @@ class Helper {
                 switch ($extension) {
                     case '.jpg':
                     case '.jpeg':
-                        imagejpeg($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
+                        imagejpeg($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
                         break;
                     case '.gif':
-                        imagegif($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
+                        imagegif($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
                         break;
                     case '.png':
-                        imagepng($dst, self::arcGetPath(true) . "images/thumbs/{$image}");
-
+                        imagepng($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
                         break;
                 }
                 imagedestroy($dst);
             }
-            return self::arcGetPath() . "images/thumbs/{$image}";
+            return self::arcGetPath() . "images/thumbs/{$filename}";
         }
         return null;
     }

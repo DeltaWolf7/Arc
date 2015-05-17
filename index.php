@@ -69,6 +69,7 @@ switch (ARCDEBUG) {
 require_once "app/system/Helper.php";
 system\Helper::init();
 
+// Check the image directory exists and create it if not.
 if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
     echo "<div class=\"alert alert-warning\">Images directory not found. Arc will try to create it.</div>";
     try {
@@ -88,6 +89,7 @@ spl_autoload_register(function($class) {
     }
 });
 
+// Default system settings
 system\Helper::arcCheckSettingExists("ARC_MAIL_FROM", "admin@server.local");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");

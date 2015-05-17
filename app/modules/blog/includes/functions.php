@@ -1,51 +1,55 @@
 <?php
 
 function buildBlog($blogs, $limit = 0) {
-    foreach ($blogs as $blog) {
-        $content = html_entity_decode($blog->content);
-        $ending = ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/{$blog->seourl}\">[Continue reading]</a>";
-        $content = truncate($content, $limit, $ending);
-        $categories = $blog->getCategories();
-        ?>
-
-        <div class="media">
-            <?php
-            if (!empty($blog->image)) {
-                ?>
-                <a class="media-left" href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
-                    <img class="img-rounded" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
-                </a>
-                <?php
-            }
+    if (count($blogs) == 0) {
+        echo "No posts found in this category.";
+    } else {
+        foreach ($blogs as $blog) {
+            $content = html_entity_decode($blog->content);
+            $ending = ".. <a href=\"" . system\Helper::arcGetModulePath() . "post/{$blog->seourl}\">[Continue reading]</a>";
+            $content = truncate($content, $limit, $ending);
+            $categories = $blog->getCategories();
             ?>
-            <div class="media-body">
-                <a href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
-                    <h4 class="media-heading"><?php echo $blog->title ?></h4>
-                </a>
-                <?php echo $content; ?>
-            </div>
-            <hr />
-            <div class="text-right">
-                <?php if (isset($tags)) { ?> 
-                    <i class="fa fa-tags"></i> <?php echo $tags; ?>
-                <?php } ?>
-                <i class="fa fa-folder"></i> Posted in 
+
+            <div class="media">
                 <?php
-                $count = count($categories);
-                for ($i = 0; $i < $count; $i++) {
-                    if ($i != $count - 1) {
-                        echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>, ";
-                    } else {
-                        echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>";
-                    }
+                if (!empty($blog->image)) {
+                    ?>
+                    <a class="media-left" href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
+                        <img class="img-rounded" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
+                    </a>
+                    <?php
                 }
                 ?>
-                on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
-                by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
+                <div class="media-body">
+                    <a href="<?php echo system\Helper::arcGetModulePath() . "post/{$blog->seourl}"; ?>">
+                        <h4 class="media-heading"><?php echo $blog->title ?></h4>
+                    </a>
+                    <?php echo $content; ?>
+                </div>
+                <hr />
+                <div class="text-right">
+                    <?php if (isset($tags)) { ?> 
+                        <i class="fa fa-tags"></i> <?php echo $tags; ?>
+                    <?php } ?>
+                    <i class="fa fa-folder"></i> Posted in 
+                    <?php
+                    $count = count($categories);
+                    for ($i = 0; $i < $count; $i++) {
+                        if ($i != $count - 1) {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>, ";
+                        } else {
+                            echo "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>";
+                        }
+                    }
+                    ?>
+                    on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
+                    by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
+                </div>
             </div>
-        </div>
 
-        <?php
+            <?php
+        }
     }
 }
 

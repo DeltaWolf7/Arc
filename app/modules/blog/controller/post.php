@@ -28,7 +28,7 @@ function buildBlog($blog, $limit = 0) {
             <?php if (isset($tags)) { ?> 
                 <i class="fa fa-tags"></i> <?php echo $tags; ?>
             <?php } ?>
-            <i class="fa fa-folder"></i> Posted in <a href="<?php echo system\Helper::arcGetModulePath() . "category/{$category->seourl}"; ?>">
+            <i class="fa fa-folder"></i> Posted in 
                 <?php
                 $count = count($categories);
                 for ($i = 0; $i < $count; $i++) {
@@ -39,7 +39,7 @@ function buildBlog($blog, $limit = 0) {
                     }
                 }
                 ?>
-            </a> on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
+             on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
         </div>
     </div>
 
