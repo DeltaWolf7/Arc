@@ -7,7 +7,7 @@
     <div class="form-group">
         <label for="game">Questions</label>
         <textarea id="game" class="form-control" rows="30">
-Question 1: 
+Question 1:
 Answer 1: 
 Answer 2:
 Answer 3:

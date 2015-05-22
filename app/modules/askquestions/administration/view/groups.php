@@ -17,11 +17,11 @@
             <div class="modal-body">
 
                 <div class="form-group">
-                    <label>Name</label>
+                    <label for="group">Name</label>
                     <input type="text" class="form-control" id="group" maxlength="255" />
                 </div>
                 <div class="form-group">
-                    <label>Text</label>
+                    <label for="text">Text</label>
                     <textarea id="text" class="form-control" rows="5"></textarea>
                 </div>
                 <div class="checkbox">

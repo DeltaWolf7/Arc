@@ -798,14 +798,16 @@ class Helper {
      * @param array $attachments Array of paths to attach
      * @return string Null is returned on OK and the error on failure.
      */
-    public static function arcSendMail($to, $subject, $message) {
+    public static function arcSendMail($to, $subject, $message, $html = true) {
         try {
             \Log::createLog("info", "arcmail", "Send email request");
 
             $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
             $headers = "From: " . $mailfrom->value . "\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
+            if ($html) {
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+            }
             \Log::createLog("info", "mail", "Mail headers built");
 
             mail($to, $subject, $message, $headers);
