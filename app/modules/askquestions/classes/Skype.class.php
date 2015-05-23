@@ -37,8 +37,9 @@ class Skype extends DataProvider {
         $this->columns = ["id", "userid", "booked"];
     }
     
-    public static function getByDateTime($date) {
+    public static function getByDate($date) {
         $skype = new Skype();
-        return $skype->get(["booked" => $date]);
+        $skype->get(["booked" => $date]);
+        return $skype;
     }
 }
