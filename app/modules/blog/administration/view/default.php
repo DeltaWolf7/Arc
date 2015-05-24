@@ -213,7 +213,7 @@
             dataType: "json",
             type: "post",
             contentType: "application/x-www-form-urlencoded",
-            data: {action: "savePost", id: postid, title: $("#title").val(), tags: $("#tags"), seourl: $("#seourl"),
+            data: {action: "savePost", id: postid, title: $("#title").val(), tags: $("#tags").val(), seourl: $("#seourl").val(),
                         content: $(".summernote").code(), date: $("#dateDate").val(), posterid: <?php echo system\Helper::arcGetUser()->id; ?>},
             complete: function (data) {
                 $("#categoryModal").modal('hide');
@@ -242,6 +242,7 @@
                 complete: function (data) {
                     editPost(postid);
                     get("posts");
+                    updateStatus("status");
                 }
             });
         }
@@ -258,6 +259,7 @@
                 complete: function (data) {
                     editPost(postid);
                     get("posts");
+                    updateStatus("status");
                 }
             });
         }
