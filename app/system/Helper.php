@@ -402,12 +402,12 @@ class Helper {
                 }
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
-            
+
             // Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
                 die("Unable to find template footer.php.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";          
+            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
         }
     }
 
@@ -806,7 +806,9 @@ class Helper {
             $headers = "From: " . $mailfrom->value . "\r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             if ($html) {
-            $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+                $headers .= "Content-Type: text/html;\r\n";
+            } else {
+                $headers .= "Content-Type: text/plain;\r\n";
             }
             \Log::createLog("info", "mail", "Mail headers built");
 
@@ -951,4 +953,5 @@ class Helper {
             \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "'");
         }
     }
+
 }

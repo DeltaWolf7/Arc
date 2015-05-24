@@ -91,5 +91,29 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $category = new BlogCategory();
         $category->delete($_POST["id"]);
         system\Helper::arcAddMessage("success", "Blog category deleted");
+    } elseif ($_POST["action"] == "addpostcat") {
+        $blog = New Blog();
+        $blog->getByID($_POST["id"]);
+        
+        if ($blog->id != 0) {
+           $blog->addToCategory($_POST["catname"]);
+           $blog->update();
+           system\Helper::arcAddMessage("success", "Blog added to category");
+           return;
+        }
+        
+        system\Helper::arcAddMessage("danger", "New blog entries must be saved before adding categories");
+    } elseif ($_POST["action"] == "rempostcat") {
+        $blog = New Blog();
+        $blog->getByID($_POST["id"]);
+        
+        if ($blog->id != 0) {
+           $blog->removeFromCategory($_POST["catname"]);
+           $blog->update();
+           system\Helper::arcAddMessage("success", "Blog removed from category");
+           return;
+        }
+        
+        system\Helper::arcAddMessage("danger", "New blog entries must be saved before removing categories");
     }
 }

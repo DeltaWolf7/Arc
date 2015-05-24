@@ -16,9 +16,11 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         
         $user = new User();
         $user->getByID($_POST["id"]);
-        system\Helper::arcSendMail("office@mrfelevenplustuition.co.uk", "Skype booking: {$user->getFullname()}", $skype->booked);
+        system\Helper::arcSendMail("office@mrfelevenplustuition.co.uk", "Skype booking: {$user->getFullname()}", 
+                "Hi,\n\nBooking for " . $skype->booked . ".\n\nThanks", false); 
         
-        system\Helper::arcSendMail($user->email, "Skype booking: {$user->getFullname()}", $skype->booked);
+        system\Helper::arcSendMail($user->email, "Skype booking: {$user->getFullname()}", 
+                "Hi,\n\nThe Skype session booked for " . $skype->booked . " has been sent.\n\nThanks", false); 
         
         system\Helper::arcAddMessage("success", "Slot booked, thank you.");
     }

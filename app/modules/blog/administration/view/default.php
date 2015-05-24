@@ -45,7 +45,7 @@
                         <div class="form-group">
                             <label>Date</label>
                             <div class='input-group date' id='date'>
-                                <input type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
+                                <input id='dateData' type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
                                 <span class="input-group-addon">
                                     <span class="fa fa-calendar"></span>
                                 </span>
@@ -66,13 +66,13 @@
                                 <?php
                                 $categories = BlogCategory::getAllCategories();
                                 foreach ($categories as $cat) {
-                                    echo "<option value=\"" . $cat->id . "\">" . $cat->name . "</option>";
+                                    echo "<option value=\"" . $cat->name . "\">" . $cat->name . "</option>";
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-default"><i class="fa fa-edit"></i> Add To Category</a>
+                            <a class="btn btn-default" id="addPostCat"><i class="fa fa-edit"></i> Add To Category</a>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -80,7 +80,7 @@
                             <label>Selected Categories</label>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-default"><i class="fa fa-remove"></i> Remove From Category</a>
+                            <a class="btn btn-default" id="remPostCat"><i class="fa fa-remove"></i> Remove From Category</a>
                         </div>
                     </div>
                 </div>
@@ -124,7 +124,7 @@
 
 <script>
     var catID;
-    
+
     function catBtn(id) {
         catID = id;
         $.ajax({
@@ -141,7 +141,7 @@
             }
         });
     }
-    
+
     function catDelete(id) {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -155,8 +155,8 @@
             }
         });
     }
-    
-    $("#catSave").click(function() {
+
+    $("#catSave").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -170,7 +170,7 @@
             }
         });
     });
-    
+
     $("#clearCache").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -184,7 +184,9 @@
         });
     });
 
+    var postid;
     function editPost(id) {
+        postid = id;
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -197,7 +199,7 @@
                 $("#tags").val(jdata.tags);
                 $("#seourl").val(jdata.seourl);
                 $('.summernote').code(jdata.content);
-                $('#date').val(jdata.date);
+                $('#dateData').val(jdata.date);
                 $('#selected').html(jdata.sel);
                 $('#image').html(jdata.img);
                 $("#postModal").modal('show');
@@ -211,6 +213,38 @@
 
     $("#categories").click(function () {
         get("categories");
+    });
+
+    $("#addPostCat").click(function () {
+        if ($('#cat').val() != null) {
+            $.ajax({
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
+                dataType: "json",
+                type: "post",
+                contentType: "application/x-www-form-urlencoded",
+                data: {action: "addpostcat", id: postid, catname: $('#cat').val()},
+                complete: function (data) {
+                    editPost(postid);
+                    get("posts");
+                }
+            });
+        }
+    });
+
+    $("#remPostCat").click(function () {
+        if ($('#sel').val() != null) {
+            $.ajax({
+                url: "<?php system\Helper::arcGetDispatch(); ?>",
+                dataType: "json",
+                type: "post",
+                contentType: "application/x-www-form-urlencoded",
+                data: {action: "rempostcat", id: postid, catname: $('#sel').val()},
+                complete: function (data) {
+                    editPost(postid);
+                    get("posts");
+                }
+            });
+        }
     });
 
     function get(action) {
@@ -275,9 +309,7 @@
             });
         }
         $('#date').datetimepicker({
-            /*defaultDate: <?php //$jdate = new DateTime($booking->journeydate);
-                                //echo "\"" . $jdate->format("d/m/Y") . "\""; ?>,*/
-            pickTime: false
+            pickTime: true
         });
     });
 </script>
