@@ -207,7 +207,7 @@
         });
     }
     
-    $("#postSaveBn").click(function () {
+    $("#postSaveBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
