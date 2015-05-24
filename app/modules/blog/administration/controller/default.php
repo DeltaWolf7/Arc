@@ -115,5 +115,24 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         
         system\Helper::arcAddMessage("danger", "New blog entries must be saved before removing categories");
+    } elseif ($_POST["action"] == "savePost") {
+        $blog = new Blog();
+        
+        if ($_POST["id"] != 0) {
+            $blog->getByID($_POST["id"]);
+        }
+        
+        $blog->content = $_POST["content"];
+        $blog->date = $_POST["date"];
+        $blog->title = $_POST["title"];
+        $blog->seourl = $_POST["seourl"];
+        $blog->tags = $_POST["tags"];
+        
+        $user = new User();
+        $user->getByID($_POST["poserid"]);
+        $blog->poster = $user->getFullname();
+        
+        $blog->update();
+        system\Helper::arcAddMessage("success", "Blog post saved");
     }
 }

@@ -87,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary">Save</a>
+                <a class="btn btn-primary" id="postSaveBtn">Save</a>
             </div>
         </div>
     </div>
@@ -206,6 +206,22 @@
             }
         });
     }
+    
+    $("#postSaveBn").click(function () {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "savePost", id: postid, title: $("#title").val(), tags: $("#tags"), seourl: $("#seourl"),
+                        content: $(".summernote").code(), date: $("#dateDate").val(), posterid: <?php echo system\Helper::arcGetUser()->id; ?>},
+            complete: function (data) {
+                $("#categoryModal").modal('hide');
+                get("categories");
+                updateStatus("status");
+            }
+        });
+    });
 
     $("#posts").click(function () {
         get("posts");
