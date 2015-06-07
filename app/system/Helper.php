@@ -810,14 +810,14 @@ class Helper {
             } else {
                 $headers .= "Content-Type: text/plain;\r\n";
             }
-            \Log::createLog("info", "mail", "Mail headers built");
+            \Log::createLog("info", "arcmail", "Mail headers built");
 
             mail($to, $subject, $message, $headers);
-            \Log::createLog("info", "mail", "Sent: Subject: " . $subject . ", To: " . $to);
+            \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to);
 
             return true;
         } catch (Exception $e) {
-            \Log::createLog("info", "mail", "Error: " . $e->getMessage());
+            \Log::createLog("info", "arcmail", "Error: " . $e->getMessage());
             return false;
         }
     }
