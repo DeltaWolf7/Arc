@@ -50,13 +50,13 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 return;
             }
         }
-        $user->firstname = ucwords($_POST["firstname"]);
+        $user->firstname = ucwords(strtolower($_POST["firstname"]));
         if (empty($_POST["firstname"])) {
             system\Helper::arcAddMessage("danger", "Firstname cannot be empty");
             return;
         }
         
-        $user->lastname = ucwords($_POST["lastname"]);
+        $user->lastname = ucwords(strtolower($_POST["lastname"]));
         if (empty($_POST["lastname"])) {
             system\Helper::arcAddMessage("danger", "Lastname cannot be empty");
             return;
@@ -94,7 +94,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "savegroup") {
         $group = new UserGroup();
         $group->getByID($_POST["id"]);
-        $group->name = ucwords($_POST["name"]);
+        $group->name = ucwords(strtolower($_POST["name"]));
         if (empty($_POST["name"])) {
             system\Helper::arcAddMessage("danger", "Group name cannot be empty");
             return;
