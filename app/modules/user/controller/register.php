@@ -43,8 +43,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         return;
     }
 
-    $user->firstname = ucfirst($_POST["firstname"]);
-    $user->lastname = ucfirst($_POST["lastname"]);
+    $user->firstname = ucfirst(strtolower($_POST["firstname"]));
+    $user->lastname = ucfirst(strtolower($_POST["lastname"]));
     $user->email = strtolower($_POST["email"]);
     if (empty($user->email)) {
         system\Helper::arcAddMessage("danger", "Please specifiy an email address");

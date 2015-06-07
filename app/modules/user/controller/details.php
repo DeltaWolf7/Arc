@@ -15,8 +15,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
         }
 
-        $user->firstname = ucfirst($_POST["firstname"]);
-        $user->lastname = ucfirst($_POST["lastname"]);
+        $user->firstname = ucfirst(strtolower($_POST["firstname"]));
+        $user->lastname = ucfirst(strtolower($_POST["lastname"]));
         $user->update();
         system\Helper::arcSetUser($user);
         system\Helper::arcAddMessage("success", "Changes saved");
