@@ -3,6 +3,83 @@
 </div>
 
 
+
+<table class="table table-bordered">
+    <thead>
+        <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thur</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
+    </thead>
+    <tbody>
+        <?php
+        $date = date("d-m-Y");
+        while (date("w", strtotime($date)) != 1) {
+            $date = strtotime(date("d-m-Y", strtotime($date)) . " -1 day");
+            $date = date("d-m-Y", $date);
+        }
+
+        $count = 0;
+        $mark = 0;
+        $on = 0;
+        $today = date("d-m-Y");
+        while ($count < 28) {
+            if ($mark == 0) {
+                echo "<tr>";
+            }
+
+            
+            if ($date == $today) {
+                echo "<td class=\"warning\">";
+            } else {
+                if ($on == 0) {
+                    echo "<td>";
+                    $on = 1;
+                } else {
+                    echo "<td class=\"active\">";
+                    $on = 0;
+                }
+            }
+
+
+            echo date_format(date_create($date), "d M");
+            echo "<br />";
+
+            $bookings = Skype::getByDateLike($date);
+            $mark2 = 0;
+            foreach ($bookings as $booking) {
+                if ($booking->confirmed) {
+                    echo "<span style=\"font-size: 10px;\" class=\"label ";
+                    if ($mark2 == 0) {
+                        $mark2 = 1;
+                        echo "label-success";
+                    } else {
+                        $mark2 = 0;
+                        echo "label-info";
+                    }
+                    echo "\">";
+
+                    $user = new User();
+                    $user->getByID($booking->userid);
+                    $data = explode("@", $booking->booked);
+                    echo $user->getFullname() . " @" . $data[1] . "</span><br />";
+                }
+            }
+
+            echo "</td>";
+
+            $date = strtotime(date("d-m-Y", strtotime($date)) . " +1 day");
+            $date = date("d-m-Y", $date);
+            $mark++;
+
+            if ($mark == 7) {
+                echo "</tr>";
+                $mark = 0;
+            }
+            $count++;
+        }
+        ?>
+    </tbody>
+</table>
+
+
 <h3>Unconfirmed</h3>
 <table class="table table-condensed">
     <tr>
@@ -24,15 +101,19 @@
     <tr>
         <th>Who</th><th>When</th><th></th>
     </tr>
-<?php
-$skype = Skype::getBookings(true);
-foreach ($skype as $sky) {
-    $user = new User();
-    $user->getByID($sky->userid);
-    echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"unconfirm(" . $sky->id . ")\"><i class=\"fa fa-close\"></i> Unconfirm</a></td></tr>";
-}
-?>
+    <?php
+    $skype = Skype::getBookings(true);
+    foreach ($skype as $sky) {
+        $user = new User();
+        $user->getByID($sky->userid);
+        echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"unconfirm(" . $sky->id . ")\"><i class=\"fa fa-close\"></i> Unconfirm</a></td></tr>";
+    }
+    ?>
 </table>
+
+
+
+
 
 
 <script>
