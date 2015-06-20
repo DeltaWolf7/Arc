@@ -3,13 +3,13 @@
 </div>
 
 <?php 
-$dead = Skype::getBookings(0);
+$dead = Skype::getBookings(false);
 $today = date("d-m-Y");
 $a = 0;
 foreach ($dead as $d) {
     $d2 = explode("@", $d->booked);
-    $string = str_replace(' ', '', $d2[1]);
-    $item = strtotime(date("d-m-Y", strtotime($string)) . " +1 day");
+    $string = str_replace(' ', '', $d2[0]);
+    $item = strtotime($string);
     $item = date("d-m-Y", $item);
     if ($item < $today) {
         $d->delete($d->id);
@@ -45,6 +45,11 @@ if ($a > 0) {
             
             if ($date == $today) {
                 echo "<td class=\"warning\">";
+                if ($on == 0) {
+                    $on = 1;
+                } else {
+                    $on = 0;
+                }
             } else {
                 if ($on == 0) {
                     echo "<td>";
