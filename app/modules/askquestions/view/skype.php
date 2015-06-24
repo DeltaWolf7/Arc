@@ -112,7 +112,7 @@
         <div id="ds" class="form-control">Not selected</div>
     </div>
     <div class="alert alert-warning">
-        <strong>Warning</strong> Booking multiple sessions within the same week is abuse of the privilege and will result in your sessions being cancelled. You have been warned!
+        <strong>Warning</strong> Booking multiple sessions within the same week is abuse of the privilege and will result in your sessions being cancelled unless permission given in advance. You have been warned!
     </div>
     <button type="button" class="btn btn-default" onclick="send()">Submit</button>
 </form>
