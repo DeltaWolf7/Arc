@@ -5,14 +5,14 @@
 
 
 
-<table class="table table-bordered">
+<table class="table table-bordered" id="printTable">
     <thead>
         <tr><th>Mon</th><th>Tue</th><th>Wed</th><th>Thur</th><th>Fri</th><th>Sat</th><th>Sun</th></tr>
     </thead>
     <tbody>
         <?php
         $today = date("d-m-Y");
-        
+
         $date = date("d-m-Y");
         while (date("w", strtotime($date)) != 1) {
             $date = strtotime(date("d-m-Y", strtotime($date)) . " -1 day");
@@ -27,7 +27,7 @@
                 echo "<tr>";
             }
 
-            
+
             if ($date == $today) {
                 echo "<td class=\"warning\">";
                 if ($on == 0) {
@@ -85,6 +85,8 @@
         ?>
     </tbody>
 </table>
+
+<div class="text-right"><a class="btn btn-default btn-xs" onclick="printData();"><i class="fa fa-print"></i> Print</a></div>
 
 
 <h3>Unconfirmed</h3>
@@ -148,5 +150,14 @@
                 location.reload();
             }
         });
+    }
+
+    function printData()
+    {
+        var divToPrint = document.getElementById("printTable");
+        newWin = window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
     }
 </script>

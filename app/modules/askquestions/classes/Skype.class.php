@@ -47,7 +47,7 @@ class Skype extends DataProvider {
     
     public static function getByDateLike($date) {
         $skype = new Skype();
-        return $skype->getCollection(["booked[~]" => $date . "%"]);
+        return $skype->getCollection(["booked[~]" => $date . "%", "ORDER" => "booked ASC"]);
     }
     
     public static function getBookings($confirmed) {
