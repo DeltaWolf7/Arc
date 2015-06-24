@@ -2,24 +2,7 @@
     <h1>Skype Session Manager</h1>
 </div>
 
-<?php 
-$dead = Skype::getBookings(false);
-$today = date("d-m-Y");
-$a = 0;
-foreach ($dead as $d) {
-    $d2 = explode("@", $d->booked);
-    $string = str_replace(' ', '', $d2[0]);
-    $item = strtotime($string);
-    $item = date("d-m-Y", $item);
-    if ($item < $today) {
-        $d->delete($d->id);
-        $a++;
-    }
-}
-if ($a > 0) {
-    echo "<div class=\"alert alert-info\">Deleted {$a} old entries.</div>";
-}
-?>
+
 
 
 <table class="table table-bordered">
