@@ -11,6 +11,8 @@
     </thead>
     <tbody>
         <?php
+        $today = date("d-m-Y");
+        
         $date = date("d-m-Y");
         while (date("w", strtotime($date)) != 1) {
             $date = strtotime(date("d-m-Y", strtotime($date)) . " -1 day");
