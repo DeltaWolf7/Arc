@@ -1,6 +1,6 @@
 <?php
 
-system\Helper::arcCheckSettingExists("ARC_PAGE_MENU_NAME", "pages");
+system\Helper::arcCheckSettingExists("ARC_PAGE_MENU_NAME", "Pages");
 $setting = SystemSetting::getByKey("ARC_PAGE_MENU_NAME");
 
 $pages = Page::getAllPages();
