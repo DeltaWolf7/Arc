@@ -23,7 +23,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "</td><td>{$blog->date}</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" href=\"#\" onclick=\"editPost({$blog->id});\"><i class=\"fa fa-pencil\"></i> Edit</a> <a class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["html" => $data]));
+        system\Helper::arcReturnJSON(["html" => $data]);
     } elseif ($_POST["action"] == "categories") {
         $data = "<table class=\"table table-hover table-condensed\">";
         $data .= "<thead><tr><th>Name</th><th class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"catBtn(0)\"><i class=\"fa fa-plus\"></i> New Category</a></th></tr></thead><tbody>";
@@ -32,7 +32,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "<tr><td>{$cat->name}</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"catBtn({$cat->id})\"><i class=\"fa fa-edit\"></i> Edit</a> <a class=\"btn btn-default btn-xs\" onclick=\"catDelete({$cat->id})\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["html" => $data]));
+        system\Helper::arcReturnJSON(["html" => $data]);
     } elseif ($_POST["action"] == "getpost") {
         $blog = new Blog();
         $blog->getByID($_POST["id"]);
@@ -51,11 +51,11 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $img .= "\" id=\"setImage\" />";
 
-        echo utf8_encode(json_encode(["title" => $blog->title, "content" => $content, "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date, "sel" => $group, "img" => $img]));
+        system\Helper::arcReturnJSON(["title" => $blog->title, "content" => $content, "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date, "sel" => $group, "img" => $img]);
     } elseif ($_POST["action"] == "getcategory") {
         $category = new BlogCategory();
         $category->getByID($_POST["id"]);
-        echo utf8_encode(json_encode(["name" => $category->name, "seourl" => $category->seourl]));
+        system\Helper::arcReturnJSON(["name" => $category->name, "seourl" => $category->seourl]);
     } elseif ($_POST["action"] == "saveCategory") {
         $category = new BlogCategory();
         $category->getByID($_POST["id"]);

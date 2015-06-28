@@ -5,9 +5,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         if ($_POST["action"] == "edit") {
             $page = new Page();
             $page->getByID($_POST["id"]);
-            echo utf8_encode(json_encode(["title" => $page->title, "seourl" => $page->seourl,
+            system\Helper::arcReturnJSON(["title" => $page->title, "seourl" => $page->seourl,
                 "metadescription" => $page->metadescription, "metakeywords" => $page->metakeywords,
-                "seourl" => $page->seourl, "html" => html_entity_decode($page->content)]));
+                "seourl" => $page->seourl, "html" => html_entity_decode($page->content)]);
         } elseif ($_POST["action"] == "remove") {
             $page = new Page();
             $page->delete($_POST["id"]);
@@ -47,7 +47,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                         . "</tr>";
             }
             $table .= "</tbody>";
-            echo utf8_encode(json_encode(["html" => $table]));
+            system\Helper::arcReturnJSON(["html" => $table]);
         }
     }
 }

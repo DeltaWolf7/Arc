@@ -39,7 +39,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
         }
         $table .= "</tbody>";
-        echo utf8_encode(json_encode(["html" => $table]));
+        system\Helper::arcReturnJSON(["html" => $table]);
     } elseif ($_POST["action"] == "getGroup") {
         $done = false;
         $questions = Group::getQuestions($_POST["id"]);
@@ -85,7 +85,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $done = true;
         }
 
-        echo utf8_encode(json_encode(["time" => $time, "html" => $data, "done" => $done, "questionid" => $question->id]));
+        system\Helper::arcReturnJSON(["time" => $time, "html" => $data, "done" => $done, "questionid" => $question->id]);
     } elseif ($_POST["action"] == "getresults") {
         $results = Result::getByGroupAndUserID($_POST["grpid"], $_POST["id"], $_POST["pack"]);
         if (count($results) == 0) {
@@ -162,7 +162,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo utf8_encode(json_encode(["html" => $table]));
+        system\Helper::arcReturnJSON(["html" => $table]);
     } elseif  ($_POST["action"] == "getarchive") {
         $archives = Result::getArchive($_POST["grpid"]);
         $data = "<table class=\"table table-hover table-condensed\">"
@@ -171,6 +171,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "<tr><td><a onclick=\"getResult2({$_POST["grpid"]}, '{$archive}')\">{$archive}</a></td></tr>";
         }        
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["data" => $data]));
+        system\Helper::arcReturnJSON(["data" => $data]);
     }
 }

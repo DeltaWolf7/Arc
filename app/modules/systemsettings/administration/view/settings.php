@@ -122,8 +122,7 @@
                 getSettings();
                 updateStatus("status", null);
             }
-        });
-        
+        });      
     });
 
     $(document).ready(function () {

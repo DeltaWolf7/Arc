@@ -61,7 +61,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                     . "</div></td></tr>";
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["html" => $data]));
+        system\Helper::arcReturnJSON(["html" => $data]);
     } elseif ($_POST["action"] == "getquestions") {
         $groups = new Group();
         $questions = $groups->getQuestions($_POST["id"]);
@@ -83,7 +83,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $count++;
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["html" => $data]));
+        system\Helper::arcReturnJSON(["html" => $data]);
     } elseif ($_POST["action"] == "getquestion") {
         $question = new Question();
         $question->getByID($_POST["id"]);
@@ -101,9 +101,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= ">{$group->name}</option>";
         }
         $data .= "</select>";
-        echo utf8_encode(json_encode(["question" => html_entity_decode($question->question), "answer1" => html_entity_decode($question->answer1),
+        system\Helper::arcReturnJSON(["question" => html_entity_decode($question->question), "answer1" => html_entity_decode($question->answer1),
             "answer2" => html_entity_decode($question->answer2), "answer2" => html_entity_decode($question->answer2), "answer3" => html_entity_decode($question->answer3),
-            "answer4" => html_entity_decode($question->answer4), "answer5" => html_entity_decode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]));
+            "answer4" => html_entity_decode($question->answer4), "answer5" => html_entity_decode($question->answer5), "correct" => $question->correctAnswer, "group" => $data]);
     } elseif ($_POST["action"] == "getgroup") {
         $group = new Group();
         $group->getByID($_POST["id"]);
@@ -155,7 +155,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "</td></tr>";
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["data" => $data]));
+        system\Helper::arcReturnJSON(["data" => $data]);
     } elseif ($_POST["action"] == "getresult") {
         $results = Result::getByGroupAndUserID($_POST["group"], $_POST["id"], $_POST["pack"]);
         if (count($results) == 0) {
@@ -238,7 +238,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $percent = (100 / count($questions)) * $correct;
         $table .= " (" . number_Format($percent, 2) . "%)";
         $table .= "</div>";
-        echo utf8_encode(json_encode(["data" => $table]));
+        system\Helper::arcReturnJSON(["data" => $table]);
     } elseif ($_POST["action"] == "copyquestion") {
         $oquestion = new Question();
         $oquestion->getByID($_POST["id"]);
@@ -271,6 +271,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "<tr><td><a onclick=\"viewResults({$_POST["group"]}, '{$archive}')\">{$archive}</a></td></tr>";
         }
         $data .= "</tbody></table>";
-        echo utf8_encode(json_encode(["data" => $data]));
+        system\Helper::arcReturnJSON(["data" => $data]);
     }
 }

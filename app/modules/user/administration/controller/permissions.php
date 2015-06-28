@@ -21,7 +21,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
         }
         $table .= "</tbody></table>";
-        echo utf8_encode(json_encode(["data" => $table]));
+        system\Helper::arcReturnJSON(["data" => $table]);
     } elseif ($_POST["action"] == "deletepermission") {
         $permission = new UserPermission();
         $permission->delete($_POST["id"]);

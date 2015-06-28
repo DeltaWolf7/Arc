@@ -22,11 +22,11 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "editQuestion") {
         $multistage = new Multistage();
         $multistage->getByID($_POST["id"]);
-        echo utf8_encode(json_encode(["masterQuestion" => html_entity_decode($multistage->masterquestion), "question1" => html_entity_decode($multistage->question1),
+        system\Helper::arcReturnJSON(["masterQuestion" => html_entity_decode($multistage->masterquestion), "question1" => html_entity_decode($multistage->question1),
             "question2" => html_entity_decode($multistage->question2), "question3" => html_entity_decode($multistage->question3),
             "question4" => html_entity_decode($multistage->question4), "question5" => html_entity_decode($multistage->question5),
             "answer1" => $multistage->answer1, "answer2" => $multistage->answer2, "answer3" => $multistage->answer3,
-            "answer4" => $multistage->answer4, "answer5" => $multistage->answer5]));
+            "answer4" => $multistage->answer4, "answer5" => $multistage->answer5]);
     } elseif ($_POST["action"] == "saveQuestion") {
         $multistage = new Multistage();
         if ($_POST["id"] != 0) {
@@ -174,6 +174,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $data .= "\">{$result->answer5}</label></td></tr>";
         }
         $data .= "</table>";
-        echo utf8_encode(json_encode(["data" => $data]));
+        system\Helper::arcReturnJSON(["data" => $data]);
     }
 }

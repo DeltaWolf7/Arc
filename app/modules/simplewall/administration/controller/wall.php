@@ -9,7 +9,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $html .= $post->user . " said on " . $post->posted . "</div><div class=\"panel-body\">";
             $html .= $post->content . "</div></div>";       
         }
-        echo utf8_encode(json_encode(["html" => $html]));
+        system\Helper::arcReturnJSON(["html" => $html]);
     } elseif ($_POST["action"] == "send") {
         $user = new User();
         $user->getByID($_POST["id"]);

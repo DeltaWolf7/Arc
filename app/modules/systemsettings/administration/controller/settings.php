@@ -10,10 +10,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                     . " <a class=\"btn btn-default btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }
         $table .= "</tbody>";
-        echo utf8_encode(json_encode(["html" => $table]));
+        system\Helper::arcReturnJSON(["html" => $table]);
     } elseif ($_POST["action"] == "editsetting") {
         $setting = SystemSetting::getByKey($_POST["key"]);
-        echo utf8_encode(json_encode(["skey" => $setting->key, "svalue" => $setting->value]));
+        system\Helper::arcReturnJSON(["skey" => $setting->key, "svalue" => $setting->value]);
     } elseif ($_POST["action"] == "savesetting") {
         if (empty($_POST["key"])) {
             system\Helper::arcAddMessage("danger", "Key must be provided");
