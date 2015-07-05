@@ -292,6 +292,8 @@ class Helper {
                     $name = md5(uniqid(rand(), true));
                     $ext = explode('.', $_FILES['file']['name']);
                     $filename = $name . '.' . $ext[1];
+                    // force lowercase names
+                    $filename = strtolower($filename);
                     $destination = self::arcGetPath(true) . "images/" . $filename;
 
                     \Log::createLog("info", "arc", "Destination: '" . $destination . "'");
@@ -488,7 +490,7 @@ class Helper {
         }
 
         $_SESSION["status"] = Array();
-        echo utf8_encode(json_encode(["data" => $data, "warning" => $warning, "danger" => $danger]));
+        self::arcReturnJSON(["data" => $data, "warning" => $warning, "danger" => $danger]);
     }
 
     /**
