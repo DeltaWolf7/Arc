@@ -29,6 +29,8 @@ class Skype extends DataProvider {
     public $userid;
     public $booked;
     public $confirmed;
+    public $status;
+    public $note;
 
     public function __construct() {
         parent::__construct();
@@ -36,7 +38,7 @@ class Skype extends DataProvider {
         $this->booked = "";
         $this->confirmed = 0;
         $this->table = ARCDBPREFIX . "skype";
-        $this->columns = ["id", "userid", "booked", "confirmed"];
+        $this->columns = ["id", "userid", "booked", "confirmed", "status", "note"];
     }
     
     public static function getByDate($date) {
