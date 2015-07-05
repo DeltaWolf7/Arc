@@ -66,7 +66,11 @@
                     $user = new User();
                     $user->getByID($booking->userid);
                     $data = explode("@", $booking->booked);
-                    echo $user->getFullname() . " @" . $data[1] . "</span><br />";
+                    echo $user->getFullname() . " @" . $data[1] . "</span>";
+                    if (!empty($booking->note)) {
+                        echo "<span style=\"font-size: 10px;\" class=\"label label-danger\"><i class=\"fa fa-comment\"></i></span>";
+                    }
+                    echo "<br />";
                 }
             }
 
@@ -86,7 +90,7 @@
     </tbody>
 </table>
 
-<div class="text-right"><a class="btn btn-default btn-xs" onclick="printData();"><i class="fa fa-print"></i> Print</a></div>
+<div class="text-right"><a href="<?php echo system\Helper::arcGetModulePath() . "history"; ?>" class="btn btn-default btn-xs"><i class="fa fa-clock-o"></i> History</a> <a class="btn btn-default btn-xs" onclick="printData();"><i class="fa fa-print"></i> Print</a></div>
 
 
 <h3>Unconfirmed</h3>
