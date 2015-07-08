@@ -103,7 +103,7 @@
     foreach ($skype as $sky) {
         $user = new User();
         $user->getByID($sky->userid);
-        echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"confirm(" . $sky->id . ")\"><i class=\"fa fa-check\"></i> Confirm</a></td></tr>";
+        echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"confirm(" . $sky->id . ")\"><i class=\"fa fa-check\"></i> Confirm</a> <a class=\"btn btn-default btn-xs\" onclick=\"delete(" . $sky->id . ")\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
     }
     ?>
 </table>
@@ -150,6 +150,19 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {action: "unconfirm", id: id},
+            complete: function (data) {
+                location.reload();
+            }
+        });
+    }
+    
+    function delete(id) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "delete", id: id},
             complete: function (data) {
                 location.reload();
             }

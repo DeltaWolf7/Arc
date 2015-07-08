@@ -29,5 +29,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         system\Helper::arcSendMail($user->email, "UNCONFIRMED:: Skype booking: {$user->getFullname()}",  
                 "Hi,\n\nThe Skype session booked for " . $skype->booked . " has been set to UNCONFIRMED.\n\nThanks", false);
         
+    } elseif ($_POST["action"] == "delete") {
+        $skype = new Skype();
+        $skype->delete($_POST["id"]);
     }
 }
