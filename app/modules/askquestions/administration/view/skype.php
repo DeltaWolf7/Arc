@@ -103,7 +103,7 @@
     foreach ($skype as $sky) {
         $user = new User();
         $user->getByID($sky->userid);
-        echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"confirm(" . $sky->id . ")\"><i class=\"fa fa-check\"></i> Confirm</a> <a class=\"btn btn-default btn-xs\" onclick=\"delete(" . $sky->id . ")\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
+        echo "<tr><td>" . $user->getFullname() . "</td><td>" . $sky->booked . "</td><td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"confirm(" . $sky->id . ")\"><i class=\"fa fa-check\"></i> Confirm</a> <a class=\"btn btn-default btn-xs\" onclick=\"deleteX(" . $sky->id . ")\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
     }
     ?>
 </table>
@@ -156,7 +156,7 @@
         });
     }
     
-    function delete(id) {
+    function deleteX(id) {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
