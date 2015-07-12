@@ -2,10 +2,10 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     if ($_POST["action"] == "settings") {
-        $table = "<thead><tr><th>Key</th><th>Value</th><th>&nbsp;</th></tr></tbody><tbody>";
+        $table = "<thead><tr><th>Key</th><th>Value</th><th>Group</th><th>&nbsp;</th></tr></tbody><tbody>";
         $settings = SystemSetting::getAll();
         foreach ($settings as $setting) {
-            $table .= "<tr><td>{$setting->key}</td><td>{$setting->value}</td>"
+            $table .= "<tr><td>{$setting->key}</td><td>{$setting->value}</td><td>{$setting->group}</td>"
                     . "<td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"editSetting('{$setting->key}');\"><i class=\"fa fa-edit\"></i> Edit</a>"
                     . " <a class=\"btn btn-default btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
         }

@@ -291,7 +291,7 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super']],
+                ['insert', ['superscript', 'subscript']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol']],
                 ['height', ['height']],

@@ -101,13 +101,14 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
+        self::arcAddHeader("js", self::arcGetPath() . "js/calendar.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/summernote-plugins.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/calendar.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
@@ -255,10 +256,11 @@ class Helper {
      * @return string Path to content
      */
     public static function arcGetTemplatePath($filesystem = false) {
-        if ($filesystem) {
-            return self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/";
+        $template  = \SystemSetting::getByKey("ARC_TEMPLATE");
+        if ($filesystem) {         
+            return self::arcGetPath(true) . "app/templates/" . $template->value . "/";
         }
-        return self::arcGetPath() . "app/templates/" . ARCTEMPLATE . "/";
+        return self::arcGetPath() . "app/templates/" . $template->value . "/";
     }
 
     /**
@@ -322,14 +324,14 @@ class Helper {
             }
             return;
         }
-// get system messages
+        
+        // get system messages
         if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
             self::arcGetStatus();
             return;
         }
 
-
-// expired session
+        // expired session
         $timeout = ARCSESSIONTIMEOUT * 60;
         if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout)) {
             session_unset();
@@ -337,18 +339,21 @@ class Helper {
             self::arcForceView("error", "error", false, ["419"]);
         }
 
-// update last activity time stamp
+        // update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
+        
+        // get the current template
+        $template = \SystemSetting::getByKey("ARC_TEMPLATE");
 
         if (self::arcIsAjaxRequest() == false) {
-// Check the template in config exists.
-            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE)) {
-                die("Unable to find template '" . ARCTEMPLATE . "' specified in Config.php.");
+            // Check the template in config exists.
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value)) {
+                die("Unable to find template '" . $template->value . "' specified in Config.php.");
             }
 
-// Check if the template has a controller and include it if it does.
-            if (file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php")) {
-                require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/controller/controller.php";
+            // Check if the template has a controller and include it if it does.
+            if (file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/controller/controller.php")) {
+                require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/controller/controller.php";
             }
 
             if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
@@ -362,7 +367,7 @@ class Helper {
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-// Get module controller
+            // Get module controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
@@ -373,15 +378,15 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == false) {
-// Check if the template has a header and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php")) {
+            // Check if the template has a header and include if it does.
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php")) {
                 die("Unable to find template header.php.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/header.php";
+            require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php";
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
-// Get module view controller
+            // Get module view controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
                 require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
@@ -392,7 +397,7 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == false) {
-// Get module view      
+            // Get module view      
             if (self::arcGetURLData("administration") == null) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
@@ -406,10 +411,10 @@ class Helper {
             }
 
             // Check if the template has a footer and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php")) {
+            if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php")) {
                 die("Unable to find template footer.php.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . ARCTEMPLATE . "/view/footer.php";
+            require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php";
         }
     }
 
@@ -947,10 +952,11 @@ class Helper {
         return null;
     }
 
-    public static function arcCheckSettingExists($name, $value) {
+    public static function arcCheckSettingExists($name, $value, $group) {
         $setting = \SystemSetting::getByKey($name);
         if (!\SystemSetting::keyExists($name)) {
             $setting->value = $value;
+            $setting->group = $group;
             $setting->update();
             \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "'");
         }

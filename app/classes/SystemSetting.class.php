@@ -33,6 +33,7 @@ class SystemSetting extends DataProvider {
 
     public $key;
     public $value;
+    public $group;
 
     /**
      * SystemSetting constructor
@@ -41,8 +42,9 @@ class SystemSetting extends DataProvider {
         parent::__construct();
         $this->key = "";
         $this->value = "";
+        $this->group = "Ungrouped";
         $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["key", "value"];
+        $this->columns = ["key", "value", "group"];
     }
 
     /**
@@ -90,7 +92,7 @@ class SystemSetting extends DataProvider {
      */
     public static function getAll() {
         $settings = new SystemSetting();
-        return $settings->getCollection(["ORDER" => "key ASC"]);
+        return $settings->getCollection(["ORDER" => "group ASC"]);
     }
 
     /*

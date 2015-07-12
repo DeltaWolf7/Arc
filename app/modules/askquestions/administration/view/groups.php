@@ -428,21 +428,21 @@
         $('.summernote').summernote({height: 250,
             toolbar: [
                 ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['insert', ['sub', 'super', 'charsDropdown']],
+                ['insert', ['superscript', 'subscript', 'charsDropdown']],
                 ['color', ['color']],
                 ['para', ['ul', 'ol', 'paragraph']],
                 ['table', ['table']],
                 ['link', ['picture']],
                 ['source', ['codeview']]
             ],
-            onImageUpload: function (files, editor, welEditable) {
-                sendFile(files[0], editor, welEditable);
+            onImageUpload: function (files) {
+                sendFile(files[0]);
             }
         });
         getData();
     });
 
-    function sendFile(file, editor, welEditable) {
+    function sendFile(file) {
         data = new FormData();
         data.append("file", file);
         $.ajax({
@@ -456,7 +456,7 @@
             success: function (data) {
                 var jdata = jQuery.parseJSON(JSON.stringify(data));
                 if (jdata.status == "success") {
-                    editor.insertImage(welEditable, jdata.data);
+                    $('.summernote').summernote("insertImage", jdata.data);
                 } else {
                     updateStatus("status", null);
                 }

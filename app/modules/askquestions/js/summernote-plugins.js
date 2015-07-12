@@ -10,7 +10,7 @@
 }(function ($) {
     // template, editor
     var tmpl = $.summernote.renderer.getTemplate();
-    var editor = $.summernote.eventHandler.getEditor();
+
     // add plugin
     $.summernote.addPlugin({
         name: 'special chars', // name of plugin
@@ -32,7 +32,7 @@
             }
         },
         events: {// events
-            charsDropdown: function (layoutInfo, value) {
+            charsDropdown: function (event, editor, layoutInfo, value) {
                 // Get current editable node
                 var $editable = layoutInfo.editable();
                 var html;

@@ -49,19 +49,16 @@ class Config {
         // Project Title
         define('ARCTITLE', 'Arc Project');
         // Project version
-        define('ARCVERSION', '1.0.0.0 RC 1');
+        define('ARCVERSION', '0.1.0.0');
+        
+        // Project Default Module
+        define('ARCDEFAULTMODULE', 'page');
+        
+        // Project Default Action
+        define('ARCDEFAULTACTION', 'welcome');
         
         // Project debug mode
         define('ARCDEBUG', true);
-
-        // Project default module
-        define('ARCDEFAULTMODULE', 'page');
-
-        // Project default action
-        define('ARCDEFAULTACTION', 'welcome');
-              
-        // Project template
-        define('ARCTEMPLATE', 'default');
         
         // Session Timeout (minutes)
         define('ARCSESSIONTIMEOUT', 60);
