@@ -3,7 +3,7 @@
 </div>
 
 <div class="table-responsive">
-    <table class="table table-hover table-condensed" id="pages">
+    <table class="table table-hover table-condensed table-striped" id="pages">
     </table>
 </div>
 <div id="status"></div>
