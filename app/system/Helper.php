@@ -348,7 +348,10 @@ class Helper {
         if (self::arcIsAjaxRequest() == false) {
             // Check the template in config exists.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value)) {
-                die("Unable to find template '" . $template->value . "' specified in Config.php.");
+                $name = $template->value;
+                $template->value = "default";
+                $template->update();
+                die("Unable to find template '" . $name . "'. Selected template reset to 'default'.");
             }
 
             // Check if the template has a controller and include it if it does.
@@ -380,7 +383,7 @@ class Helper {
         if (self::arcIsAjaxRequest() == false) {
             // Check if the template has a header and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php")) {
-                die("Unable to find template header.php.");
+                die("Unable to find header.php for template '" . $template->value . "'.");
             }
             require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php";
         }
@@ -412,7 +415,7 @@ class Helper {
 
             // Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php")) {
-                die("Unable to find template footer.php.");
+                die("Unable to find footer.php for template '" . $template->value . "'.");
             }
             require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php";
         }
