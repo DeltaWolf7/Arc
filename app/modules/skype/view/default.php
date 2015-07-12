@@ -28,7 +28,7 @@
             maxDate: <?php 
                 $ahead = SystemSetting::getByKey("SKYPE_BOOK_AHEAD");
                 $date = new Datetime("NOW");
-                $date->modify("+" . $ahead->value + " day");
+                $date->modify("+" . $ahead->value . " day");
                 echo $date->format("d/m/Y");
                 ?>,
             stepping: <?php echo SystemSetting::getByKey("SKYPE_SESSION_LENGTH")->value; ?>,
