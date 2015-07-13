@@ -101,14 +101,14 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/calendar.min.js");
+        self::arcAddHeader("js", self::arcGetPath() . "js/fullcalendar.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/calendar.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/fullcalendar.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
