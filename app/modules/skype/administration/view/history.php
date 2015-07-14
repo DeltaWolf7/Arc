@@ -1,63 +1,5 @@
 <div class="page-header">
-    <h1>Skype Booking Manager</h1>
-</div>
-
-<?php
-$date = new Datetime("NOW");
-?>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3>Today's Sessions</h3>
-                <table class="table table-striped">
-                    <tbody id="todayData">
-                        <?php
-                        $today = Skype::getByDateAndStatus($date->format("Y/m/d"), 1);
-                        foreach ($today as $session) {
-                            $user = new user();
-                            $user->getById($session->userid);
-                            echo "<tr class=\"";
-                            if ($session->time < $date->format("hh:MM")) {
-                                echo "active";
-                            } else {
-                                echo "success";
-                            }
-                            echo "\"><td>{$session->time}</td><td>{$user->getFullname()}</td><td><a class=\"btn btn-xs\" onclick=\"manage({$session->id})\"><i class=\"fa fa-wrench\"></i></a></td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h3>Tomorrow's Sessions</h3>
-                <table class="table table-striped">
-                    <tbody id="todayData">
-                        <?php
-                        $tomorrowDate = $date->modify("+1 day");
-                        $tomorrow = Skype::getByDateAndStatus($tomorrowDate->format("Y/m/d"), 1);
-                        foreach ($tomorrow as $session) {
-                            $user = new user();
-                            $user->getById($session->userid);
-                            echo "<tr class=\"";
-                            if ($session->time < $date->format("hh:MM")) {
-                                echo "active";
-                            } else {
-                                echo "success";
-                            }
-                            echo "\"><td>{$session->time}</td><td>{$user->getFullname()}</td><td><a class=\"btn btn-xs\" onclick=\"manage({$session->id})\"><i class=\"fa fa-wrench\"></i></a></td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+    <h1>Skype Booking History</h1>
 </div>
 
 <div class="row">
@@ -69,12 +11,12 @@ $date = new Datetime("NOW");
                 <div class="row">
                     <div class="col-md-6">
                 <div>
-                    <a class="btn btn-default btn-xs" href="<?php echo system\Helper::arcGetModulePath() . "history"; ?>">View History</a>
+                    <a class="btn btn-default btn-xs" href="<?php echo system\Helper::arcGetModulePath() . "manage"; ?>">View Current</a>
                 </div>
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
-                    Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a>
+                    Key: <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-warning btn-xs">Cancelled</a>
                 </div>
                     </div>
                 </div>
@@ -113,13 +55,12 @@ $date = new Datetime("NOW");
                         $length = SystemSetting::getByKey("SKYPE_SESSION_LENGTH")->value;
                         echo $length;
                         ?>",
-            defaultView: "agendaWeek",
             events: [
 <?php
 $sessions = Skype::getAllBookings();
 $events = "";
 foreach ($sessions as $session) {
-    if ($session->status != 3 && $session->status != 2) {
+    if ($session->status != 1 && $session->status != 0) {
         $user = new User();
         $user->getByID($session->userid);
         $time = strtotime($session->time);
