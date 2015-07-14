@@ -67,14 +67,14 @@ $date = new Datetime("NOW");
                 <div id="calendar"></div>
                 <br />
                 <div class="text-right">
-                    Key: <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a> <a class="btn btn-warning btn-xs">Other</a>
+                    Key: <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a> <a class="btn btn-warning btn-xs">Cancelled</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<div id="status"></div>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -89,7 +89,7 @@ $date = new Datetime("NOW");
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" id="savebtn">Save</button>
             </div>
         </div>
     </div>
@@ -118,7 +118,7 @@ foreach ($sessions as $session) {
         $events .= "danger";
     } elseif ($session->status == 1) {
         $events .= "success";
-    } elseif ($session->status == 3) {
+    } elseif ($session->status == 2) {
         $events .= "info";
     } else {
         $events .= "warning";
@@ -136,8 +136,9 @@ echo $events;
 
     });
 
-
+    var editid = 0;
     function manage(id) {
+        editid = id;
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -152,4 +153,20 @@ echo $events;
         });
 
     }
+    
+    $("#savebtn").click(function () {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "savesession", statusid: $("#statusid").val(), notes: $("#notes").val(), id: editid},
+            complete: function (data) {
+                updateStatus("status", null);
+                $('#myModal').modal('hide');
+                location.reload();
+            }
+        });
+
+    });
 </script>
