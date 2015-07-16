@@ -30,58 +30,10 @@
 
 <div id="status"></div>
 
-<div class="container">
-    <div class="row">
-        <div class='col-sm-6'>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Confirmed Sessions</h3>
-                    <?php
-                    $confirmed = Skype::getByUserIDAndStatus(system\Helper::arcGetUser()->id, 1);
-                    if (count($confirmed) > 0) {
-                        echo "<table class=\"table table-condensed\">"
-                        . "<thead>"
-                        . "<tr><td>Date</td><td>Time</td></tr>"
-                        . "</thead>"
-                        . "<tbody>";
-                        foreach ($confirmed as $item) {
-                            echo "<tr><td>{$item->date}</td><td>{$item->time}</td></tr>";
-                        }
-                        echo "</tbody>"
-                        . "</table>";
-                    } else {
-                        echo "No confirmed sessions.";
-                    }
-                    ?>
+<div id="calendar"></div>
+<div class="text-right">
+                    Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a> <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-warning btn-xs">Cancelled</a>
                 </div>
-            </div>
-        </div>
-        <div class='col-sm-6'>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h3>Unconfirmed Sessions</h3>
-                    <?php
-                    $unconfirmed = Skype::getByUserIDAndStatus(system\Helper::arcGetUser()->id, 0);
-                    if (count($unconfirmed) > 0) {
-                        echo "<table class=\"table table-condensed\">"
-                        . "<thead>"
-                        . "<tr><td>Date</td><td>Time</td></tr>"
-                        . "</thead>"
-                        . "<tbody>";
-                        foreach ($unconfirmed as $item) {
-                            echo "<tr><td>{$item->date}</td><td>{$item->time}</td></tr>";
-                        }
-                        echo "</tbody>"
-                        . "</table>";
-                    } else {
-                        echo "No unconfirmed sessions.";
-                    }
-                    ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <script type="text/javascript">
     $(function () {
@@ -124,5 +76,41 @@ if (!empty($notice->value)) {
                 updateStatus("status");
             }
         });
+    });
+
+
+    $(document).ready(function () {
+        $('#calendar').fullCalendar({
+            duration: "<?php
+$length = SystemSetting::getByKey("SKYPE_SESSION_LENGTH")->value;
+echo $length;
+?>",
+            events: [
+<?php
+$sessions = Skype::getAllBookings();
+$events = "";
+foreach ($sessions as $session) {
+
+    $user = new User();
+    $user->getByID($session->userid);
+    $time = strtotime($session->time);
+    $end = $session->date . "T" . date("H:i", strtotime('+' . $length . ' minutes', $time));
+    $events .= "{id: '" . $session->id . "', title: '" . $user->getFullname() . "', start: '" . $session->date . "T" . $session->time . "', end: '" . $end . "', className: 'btn btn-";
+    if ($session->status == 0) {
+        $events .= "danger";
+    } elseif ($session->status == 1) {
+        $events .= "success";
+    } elseif ($session->status == 2) {
+        $events .= "info";
+    } else {
+        $events .= "warning";
+    }
+    $events .= "', overlap: false},";
+}
+$events = rtrim($events, ",");
+echo $events;
+?>
+            ]
+        })
     });
 </script>
