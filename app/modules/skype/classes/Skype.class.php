@@ -56,6 +56,11 @@ class Skype extends DataProvider {
         $skype = new Skype();
         return $skype->getCollection(["AND" => ["date" => $date, "time" => $time]]);
     }
+    
+    public static function getByUserIDAndStatus($userid, $status) {
+        $skype = new Skype();
+        return $skype->getCollection(["AND" => ["userid" => $userid, "status" => $status]]);
+    }
        
     public static function getAllBookings() {
         $skype = new Skype();

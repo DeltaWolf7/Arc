@@ -30,6 +30,59 @@
 
 <div id="status"></div>
 
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Confirmed Sessions</h3>
+                    <?php
+                    $confirmed = Skype::getByUserIDAndStatus(system\Helper::arcGetUser()->id, 1);
+                    if (count($confirmed) > 0) {
+                        echo "<table class=\"table table-condensed\">"
+                        . "<thead>"
+                        . "<tr><td>Date</td><td>Time</td></tr>"
+                        . "</thead>"
+                        . "<tbody>";
+                        foreach ($confirmed as $item) {
+                            echo "<tr><td>{$item->date}</td><td>{$item->time}</td></tr>";
+                        }
+                        echo "</tbody>"
+                        . "</table>";
+                    } else {
+                        echo "No confirmed sessions.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Unconfirmed Sessions</h3>
+                    <?php
+                    $unconfirmed = Skype::getByUserIDAndStatus(system\Helper::arcGetUser()->id, 0);
+                    if (count($unconfirmed) > 0) {
+                        echo "<table class=\"table table-condensed\">"
+                        . "<thead>"
+                        . "<tr><td>Date</td><td>Time</td></tr>"
+                        . "</thead>"
+                        . "<tbody>";
+                        foreach ($unconfirmed as $item) {
+                            echo "<tr><td>{$item->date}</td><td>{$item->time}</td></tr>";
+                        }
+                        echo "</tbody>"
+                        . "</table>";
+                    } else {
+                        echo "No unconfirmed sessions.";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(function () {
         $('#datetimepicker').datetimepicker({
@@ -59,7 +112,7 @@ if (!empty($notice->value)) {
             sideBySide: true
         });
     });
-    
+
     $("#submit").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -68,7 +121,7 @@ if (!empty($notice->value)) {
             contentType: "application/x-www-form-urlencoded",
             data: {action: "submit", id: <?php echo system\Helper::arcGetUser()->id; ?>, date: $('#datetimepicker').data("date")},
             complete: function (data) {
-               updateStatus("status");
+                updateStatus("status");
             }
         });
     });
