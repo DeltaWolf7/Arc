@@ -1,5 +1,10 @@
+<div class="page-header">
+    <h1>Shuffled Sentences</h1>
+</div>
+
+
 <?php
-$sentence = new sentence();
+$sentence = new Sentence();
 $sentence->getRandomSentence();
 
 $wrdArray = explode(' ', $sentence->sentence);
@@ -18,8 +23,8 @@ shuffle($wrdArray);
 <form class="form-horizontal" role="form" name="login">
 
     <?php
-    $result = new result();
-    $result->userid = $_SESSION['user'];
+    $result = new Result();
+    $result->userid = system\Helper::arcGetUser()->id;
     $result->type = "Shuffled Sentences";
     $xml = '<result chosen="">';
     foreach ($wrdArray as $word) {
@@ -31,7 +36,7 @@ shuffle($wrdArray);
     }
     $xml = $xml . '</result>';
     $result->data = $xml;
-    $result->updateResult();
+    $result->update();
     
     
     $btnCount = 0;
@@ -45,10 +50,10 @@ shuffle($wrdArray);
         <div class="btn-group">
             <?php
             if ($word == $correctAnswer) {
-                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"1\" onclick=\"processShuffled(" . $btnCount . ", " . $_SESSION['user'] . ", '" . $time . "'," . $result->id . ")\">";
+                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"1\" onclick=\"processShuffled(" . $btnCount . ", " . system\Helper::arcGetUser()->id . ", '" . $time . "'," . $result->id . ")\">";
                 $strWords = $strWords . "1|" . $word . "|";
             } else {
-                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"0\" onclick=\"processShuffled(" . $btnCount . ", " . $_SESSION['user'] . ", '" . $time . "'," . $result->id . ")\">";
+                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"0\" onclick=\"processShuffled(" . $btnCount . ", " . system\Helper::arcGetUser()->id . ", '" . $time . "'," . $result->id . ")\">";
                 $strWords = $strWords . "0|" . $word . "|";
             }
 
