@@ -12,6 +12,12 @@
                     <h3>Step 1. Choose a date and time</h3>
                     <div id='datetimepicker'>
                     </div>
+                    <?php
+                    $sessionLength = SystemSetting::getByKey("SKYPE_SESSION_LENGTH");
+                    $notice = SystemSetting::getByKey("SKYPE_DAYS_NOTICE");
+                    ?>
+
+                    <div class="alert alert-info">You can book a <?php echo $sessionLength->value; ?> minute session with <?php echo $notice->value; ?> days notice.</div>
                 </div>
             </div>
         </div>
@@ -32,8 +38,8 @@
 
 <div id="calendar"></div>
 <div class="text-right">
-                    Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a> <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-warning btn-xs">Cancelled</a>
-                </div>
+    Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a> <a class="btn btn-info btn-xs">Complete</a> <a class="btn btn-warning btn-xs">Cancelled</a>
+</div>
 
 <script type="text/javascript">
     $(function () {
