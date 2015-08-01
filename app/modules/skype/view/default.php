@@ -3,7 +3,10 @@
 </div>
 
 
-
+<?php
+    $allowBooking = SystemSetting::getByKey("SKYPE_ALLOW_BOOOKING");
+    if ($allowBooking->value == "1") {
+?>
 <div class="container">
     <div class="row">
         <div class='col-sm-6'>
@@ -33,6 +36,10 @@
         </div>
     </div>
 </div>
+
+<?php
+    }
+?>
 
 <div id="status"></div>
 

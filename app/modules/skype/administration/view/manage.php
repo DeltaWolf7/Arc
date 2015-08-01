@@ -60,6 +60,12 @@ $date = new Datetime("NOW");
     </div>
 </div>
 
+<div class="panel panel-default">
+    <div class="panel-body text-right">
+        <a class="btn btn-default" id="btnBook"><i class="fa fa-book"></i> Book Session</a>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -68,14 +74,14 @@ $date = new Datetime("NOW");
                 <br />
                 <div class="row">
                     <div class="col-md-6">
-                <div>
-                    <a class="btn btn-default btn-xs" href="<?php echo system\Helper::arcGetModulePath() . "history"; ?>">View History</a>
-                </div>
+                        <div>
+                            <a class="btn btn-default btn-xs" href="<?php echo system\Helper::arcGetModulePath() . "history"; ?>">View History</a>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="text-right">
-                    Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a>
-                </div>
+                            Key: <a class="btn btn-danger btn-xs">Unconfirmed</a> <a class="btn btn-success btn-xs">Confirmed</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,6 +105,42 @@ $date = new Datetime("NOW");
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="savebtn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">New Booking</h4>
+            </div>
+            <div class="modal-body" id="eventData">
+                <div class="form-group">
+                    <label for="who">Who</label>
+                    <select id="who" class="form-control">
+                        <?php
+                        $users = User::getAllUsers();
+                        foreach ($users as $user) {
+                            echo "<option value='" . $user->id . "'>" . $user->getFullname() . "</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="when">When</label>
+                    <div id='datetimepicker'>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="savebtn2">Save</button>
             </div>
         </div>
     </div>
@@ -174,6 +216,37 @@ echo $events;
             complete: function (data) {
                 updateStatus("status", null);
                 $('#myModal').modal('hide');
+                location.reload();
+            }
+        });
+    });
+
+    $("#btnBook").click(function () {
+        $('#myModal2').modal('show');
+    });
+    
+    $(function () {
+        $('#datetimepicker').datetimepicker({
+            useCurrent: true,
+            format: "DD MM YYYY HH mm",
+            minDate: moment().valueOf(),
+            stepping: <?php echo SystemSetting::getByKey("SKYPE_SESSION_LENGTH")->value; ?>,
+            daysOfWeekDisabled: [<?php echo SystemSetting::getByKey("SKYPE_DISABLE_DAYS")->value; ?>],
+            inline: true,
+            sideBySide: true
+        });
+    });
+    
+    $("#savebtn2").click(function () {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {action: "newsession", userid: $("#who").val(), when: $('#datetimepicker').data("date")},
+            complete: function (data) {
+                updateStatus("status", null);
+                $('#myModal2').modal('hide');
                 location.reload();
             }
         });
