@@ -2,74 +2,69 @@
     <h1>Shuffled Sentences</h1>
 </div>
 
-
 <?php
 $sentence = new Sentence();
-$sentence->getRandomSentence();
+$data = $sentence->getRandomSentence();
 
-$wrdArray = explode(' ', $sentence->sentence);
-$correctAnswer = $wrdArray[count($wrdArray) - 1];
+$wrdArray = explode(' ', $data->sentence);
 
 shuffle($wrdArray);
-
 ?>
 
 <p class="lead">Synopsis</p>
 <p>This section will improve your ability to construct meaningful sentences using your understanding of sentence construction.</p>
 <p class="lead">Instructions</p>
 <p>In 'Shuffled Sentences' you have to find the word which doesn't belong in the sentence. This is the 'superfluous' word. This is the word you should click.</p>
-<p>
 
-<form class="form-horizontal" role="form" name="login">
 
-    <?php
-    $result = new Result();
-    $result->userid = system\Helper::arcGetUser()->id;
-    $result->type = "Shuffled Sentences";
-    $xml = '<result chosen="">';
-    foreach ($wrdArray as $word) {
-        if ($word == $correctAnswer) {
-            $xml = $xml . '<word correct="1">' . $word . '</word>';
-        } else {
-            $xml = $xml . '<word correct="0">' . $word. '</word>';
-        }
-    }
-    $xml = $xml . '</result>';
-    $result->data = $xml;
-    $result->update();
-    
-    
-    $btnCount = 0;
-    $strWords = "";
+<div class="panel panel-default">
+    <div class="panel-body text-center">
 
-    $time = time();
 
-    foreach ($wrdArray as $word) {
-        ?>
+        <?php
 
-        <div class="btn-group">
-            <?php
-            if ($word == $correctAnswer) {
-                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"1\" onclick=\"processShuffled(" . $btnCount . ", " . system\Helper::arcGetUser()->id . ", '" . $time . "'," . $result->id . ")\">";
-                $strWords = $strWords . "1|" . $word . "|";
-            } else {
-                echo "<button id=\"btn" . $btnCount . "\" type=\"button\" class=\"btn btn-info btn-lg\" value=\"0\" onclick=\"processShuffled(" . $btnCount . ", " . system\Helper::arcGetUser()->id . ", '" . $time . "'," . $result->id . ")\">";
-                $strWords = $strWords . "0|" . $word . "|";
-            }
+        $btnCount = 0;
+        $strWords = array();
 
-            echo $word;
-            echo "</button>";
+        foreach ($wrdArray as $word) {
             ?>
-        </div>
+
+            <div class="btn-group">
+                <?php
+                echo "<a class=\"btn btn-info btn-lg\" onclick=\"send(" . $btnCount . ")\">" . $word . "</a>";
+                $strWords[] = $word;
+                ?>
+            </div>
 
             <?php
             $btnCount++;
         }
-
-        $strWords = rtrim($strWords, "|");
+       
+        $words = "";
+        foreach ($strWords as $wrd) {
+            $words .= $wrd . " "; 
+        }
+        $words = "'" . rtrim($words, " ") . "'";
+        
         ?>
 
-    <input id="question" type="hidden" value="<?php echo $strWords; ?>">
+    </div>
+</div>
 
-</form>
-</p>
+<div id="status"></div>
+
+<script>
+    function send(btnid) {
+        $.ajax({
+            url: "<?php system\Helper::arcGetDispatch(); ?>",
+            dataType: "json",
+            type: "post",
+            contentType: "application/x-www-form-urlencoded",
+            data: {start: <?php echo time(); ?>, userid: <?php echo system\Helper::arcGetUser()->id; ?>, words: <?php echo $words; ?>, btn: btnid, questionid: <?php echo $data->id; ?>},
+            complete: function (data) {
+                updateStatus("status");
+            }
+        })
+    }
+</script>
+
