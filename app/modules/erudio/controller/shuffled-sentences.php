@@ -8,8 +8,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     
     $words = explode(" ", $_POST["words"]);
     $result->answer = $words[$_POST["btn"]];
-    
-    $result->type = "Shuffled Sentences";
     $result->questionid = $_POST["questionid"];
       
     $result->update();    
@@ -22,6 +20,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     if ($result->answer == $correctAnswer) {
         system\Helper::arcAddMessage("success", "You got it correct.");
     } else {
-        system\Helper::arcAddMessage("danger", "Sorry, that was incorrect.");
+        system\Helper::arcAddMessage("danger", "Sorry, that was incorrect. The superfluous word is '" . $correctAnswer . "'.");
     }
 }

@@ -22,39 +22,44 @@ shuffle($wrdArray);
 
 
         <?php
-
         $btnCount = 0;
         $strWords = array();
 
         foreach ($wrdArray as $word) {
             ?>
 
-            <div class="btn-group">
+            
                 <?php
                 echo "<a class=\"btn btn-info btn-lg\" onclick=\"send(" . $btnCount . ")\">" . $word . "</a>";
                 $strWords[] = $word;
                 ?>
-            </div>
+            
 
             <?php
             $btnCount++;
         }
-       
+
         $words = "";
         foreach ($strWords as $wrd) {
-            $words .= $wrd . " "; 
+            $words .= $wrd . " ";
         }
         $words = "'" . rtrim($words, " ") . "'";
-        
         ?>
 
     </div>
 </div>
 
+<div class="text-right"><button id="newquestion" class="btn btn-default" >New Question</button></div>
+
 <div id="status"></div>
 
 <script>
+    var allowClick = true;
+    
     function send(btnid) {
+        if (allowClick == false) {
+            return;
+        }
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
             dataType: "json",
@@ -62,9 +67,14 @@ shuffle($wrdArray);
             contentType: "application/x-www-form-urlencoded",
             data: {start: <?php echo time(); ?>, userid: <?php echo system\Helper::arcGetUser()->id; ?>, words: <?php echo $words; ?>, btn: btnid, questionid: <?php echo $data->id; ?>},
             complete: function (data) {
+                allowClick = false;
                 updateStatus("status");
             }
         })
     }
+    
+    $("#newquestion").click(function () {
+        location.reload();
+    });
 </script>
 
