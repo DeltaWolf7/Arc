@@ -10,6 +10,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $data = explode("|", $_POST["words"]);
     $answer = $data[count($data) - 1];
     $result->answer = $_POST["btn"];
+    $result->update();
     
     if ($result->answer == $answer) {
         system\Helper::arcAddMessage("success", "You got it correct.");
