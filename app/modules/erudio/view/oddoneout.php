@@ -1,3 +1,8 @@
+<div class="page-header">
+    <h1>Odd One Out</h1>
+</div>
+
+
 <?php
 $wrdGrp1 = WordGroup::getRandomGroup();
 $wrdGrp2 = WordGroup::getRandomGroup();
