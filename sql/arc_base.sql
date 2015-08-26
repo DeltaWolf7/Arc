@@ -63,6 +63,8 @@ CREATE TABLE IF NOT EXISTS `arc_users` (
 --
 -- Dumping data for table `arc_users`
 --
+-- Default password is password.
+-- 
 
 INSERT INTO `arc_users` (`id`, `firstname`, `lastname`, `email`, `passwordhash`, `created`, `enabled`, `groups`) VALUES
 (112, 'Admin', 'Admin', 'admin@server.local', '$2y$10$1FyocTra9kRlftMfhYLCmuWelXppE0iSuVS/KpZM/ElFWy5AF9AK6', '2015-03-15 10:07:37', 1, '["Users","Administrators"]');
