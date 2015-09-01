@@ -333,7 +333,7 @@ class Helper {
 
         // expired session - check for actual user because guests don't need to timeout.
         $timeout = ARCSESSIONTIMEOUT * 60;
-        if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && ($SESSION["arc_user"] != null)) {
+        if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
             session_unset();
             session_destroy();
             self::arcForceView("error", "error", false, ["419"]);
