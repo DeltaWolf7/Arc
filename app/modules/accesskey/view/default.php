@@ -1,3 +1,19 @@
+<?php
+if (isset($_GET["key"])) {
+    $user = AccessKey::getUserByKey(strtoupper($_GET["key"]));
+    if ($user != null) {
+        if ($user->enabled) {
+            system\Helper::arcSetUser($user);
+            if (isset($_GET["location"])) {
+                system\Helper::arcRedirect($_GET["location"]);
+            } else {
+                system\Helper::arcRedirect();
+            }
+        }
+    }
+}
+?>
+
 <div class="page-header">
     <h1><i class="fa fa-lock"></i> Access Key</h1>
 </div>
@@ -22,15 +38,19 @@
             type: "post",
             contentType: "application/x-www-form-urlencoded",
             data: {key: $("#key").val()},
-            complete: function (data) {           
-                updateStatus("status", updateStatusCallback); 
+            complete: function (data) {
+                updateStatus("status", updateStatusCallback);
             }
         });
     });
-    
+
     function updateStatusCallback(data) {
         if (data.danger == 0) {
-            window.location = "<?php if (isset($_GET["location"])) {echo $_GET["location"];} else {echo system\Helper::arcGetPath();} ?>";
+            window.location = "<?php if (isset($_GET["location"])) {
+    echo $_GET["location"];
+} else {
+    echo system\Helper::arcGetPath();
+} ?>";
         }
     }
 </script>

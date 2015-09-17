@@ -1,1 +1,2 @@
-<!-- Left blank as placeholder, required buy module system /-->
+<?php
+// Left blank as placeholder, required by module system.
