@@ -256,8 +256,8 @@ class Helper {
      * @return string Path to content
      */
     public static function arcGetTemplatePath($filesystem = false) {
-        $template  = \SystemSetting::getByKey("ARC_TEMPLATE");
-        if ($filesystem) {         
+        $template = \SystemSetting::getByKey("ARC_TEMPLATE");
+        if ($filesystem) {
             return self::arcGetPath(true) . "app/templates/" . $template->value . "/";
         }
         return self::arcGetPath() . "app/templates/" . $template->value . "/";
@@ -324,7 +324,7 @@ class Helper {
             }
             return;
         }
-        
+
         // get system messages
         if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
             self::arcGetStatus();
@@ -341,7 +341,7 @@ class Helper {
 
         // update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
-        
+
         // get the current template
         $template = \SystemSetting::getByKey("ARC_TEMPLATE");
 
@@ -631,7 +631,7 @@ class Helper {
                     }
                 }
 
-// module menu
+                // module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
                     if (\UserPermission::hasPermission($groups, $module)) {
                         self::$arc["menumodule"] = $module;
@@ -639,7 +639,7 @@ class Helper {
                         require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
                     }
                 }
-// module administration menu
+                // module administration menu
                 if (self::arcIsUserInGroup(["Administrators"]) == true) {
                     if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/administration/module.php")) {
                         self::$arc["menumodule"] = $module;
@@ -665,11 +665,11 @@ class Helper {
      * @param string $group Group to palce the item
      */
     public static function arcAddMenuItem($name, $icon, $divider, $url, $group) {
-// setup menu storage if not already in existance
+        // setup menu storage if not already in existance
         if (!isset(self::$arc["menus"])) {
             self::$arc["menus"] = array();
         }
-// build menu item
+        // build menu item
         $item = array();
         $item["name"] = $name;
         $item["icon"] = $icon;
@@ -964,21 +964,21 @@ class Helper {
             \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "'");
         }
     }
-    
+
     public static function arcGetWidget($name, $parameters = array()) {
         if (!file_exists(self::arcGetPath(true) . "app/widgets/{$name}")) {
             \Log::createLog("warning", "Widget", "Widget by the name of {$name} was not found.");
             return;
         }
-        
+
         if (!is_array($parameters)) {
             \Log::createLog("error", "Widget", "Parameters not an array, called by {$name}.");
             return;
         }
-        
+
         include_once self::arcGetPath(true) . "app/widgets/{$name}/widget.php";
     }
-    
+
     /**
      * 
      * @param type $array Array containing the key value parameters.
@@ -987,7 +987,7 @@ class Helper {
     public static function arcReturnJSON($array) {
         echo utf8_encode(json_encode($array));
     }
-    
+
     public static function arcGetWidgetPath($name) {
         echo self::arcGetPath() . "app/widgets/{$name}/widget.php";
     }
