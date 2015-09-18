@@ -1,9 +1,0 @@
-.headImage { height: 150px; overflow: hidden; offset: -100;}
-@media screen and (max-width: 768px) {
-    .headImage { height: 150px; }
-}
-.headImage > img { width: 100%; display: block;}
-
-.navbar {
-    margin-top: 2px;
-}

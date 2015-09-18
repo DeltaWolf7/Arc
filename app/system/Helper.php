@@ -811,6 +811,14 @@ class Helper {
     public static function arcSendMail($to, $subject, $message, $html = true) {
         try {
             \Log::createLog("info", "arcmail", "Send email request");
+            
+            $headers = "MIME-Version: 1.0\r\n";
+            if ($html) {
+                $headers .= "Content-Type: text/html;\r\n";
+            } else {
+                $headers .= "Content-Type: text/plain;\r\n";
+            }
+            \Log::createLog("info", "arcmail", "Mail headers built");
 
             $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
             $useSMTP = \SystemSetting::getByKey("ARC_MAIL_USE_SMTP");
@@ -822,23 +830,15 @@ class Helper {
                 $SMTPPort = \SystemSetting::getByKey("ARC_MAIL_SMTP_PORT");
                 $SMTPU = \SystemSetting::getByKey("ARC_MAIL_SMTP_USERNAME");
                 $SMTPP = \SystemSetting::getByKey("ARC_MAIL_SMTP_PASSWORD");
-                
+
                 \Log::createLog("info", "arcmail", "SMTP:: Server: " . $SMTP->value . ", PORT: " . $SMTPPort->value);
-                $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value,
-                        $SMTPP->value, $mailfrom->value, $to, $subject, $message);
+                $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value, $mailfrom->value, $to, $subject, $message);
                 $sender->SendMail();
                 \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to . " via SMTP.");
-                
+
                 return true;
             } else {
-                $headers = "From: " . $mailfrom->value . "\r\n";
-                $headers .= "MIME-Version: 1.0\r\n";
-                if ($html) {
-                    $headers .= "Content-Type: text/html;\r\n";
-                } else {
-                    $headers .= "Content-Type: text/plain;\r\n";
-                }
-                \Log::createLog("info", "arcmail", "Mail headers built");
+                $headers .= "From: " . $mailfrom->value . "\r\n";
 
                 mail($to, $subject, $message, $headers);
                 \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to);
