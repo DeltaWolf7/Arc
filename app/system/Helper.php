@@ -600,11 +600,11 @@ class Helper {
         }
         echo $url;
     }
-
+   
     /**
      * Processes modules and building menus from info data
      */
-    public static function arcGetMenu($menuItems = array()) {
+    public static function arcGetMenu($menuItems = array(), $disabledItems = array()) {
         $modules = scandir(self::arcGetPath(true) . "app/modules");
 
         $groups[] = \UserGroup::getByName("Guests");
@@ -634,9 +634,11 @@ class Helper {
                 // module menu
                 if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
                     if (\UserPermission::hasPermission($groups, $module)) {
-                        self::$arc["menumodule"] = $module;
-                        self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
+                        if (!in_array($module, $disabledItems)) {
+                            self::$arc["menumodule"] = $module;
+                            self::$arc["urldata"]["module"] = $module;
+                            require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
+                        }
                     }
                 }
                 // module administration menu
@@ -651,6 +653,7 @@ class Helper {
                 }
             }
         }
+        
         self::$arc["urldata"]["module"] = $lastModule;
         self::$arc["menumodule"] = null;
         self::arcProcessMenuItems(self::$arc["menus"]);
