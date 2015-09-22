@@ -600,7 +600,7 @@ class Helper {
         }
         echo $url;
     }
-   
+
     /**
      * Processes modules and building menus from info data
      */
@@ -653,7 +653,7 @@ class Helper {
                 }
             }
         }
-        
+
         self::$arc["urldata"]["module"] = $lastModule;
         self::$arc["menumodule"] = null;
         self::arcProcessMenuItems(self::$arc["menus"]);
@@ -814,7 +814,7 @@ class Helper {
     public static function arcSendMail($to, $subject, $message, $html = true) {
         try {
             \Log::createLog("info", "arcmail", "Send email request");
-            
+
             $headers = "MIME-Version: 1.0\r\n";
             if ($html) {
                 $headers .= "Content-Type: text/html;\r\n";
@@ -835,14 +835,16 @@ class Helper {
                 $SMTPP = \SystemSetting::getByKey("ARC_MAIL_SMTP_PASSWORD");
 
                 \Log::createLog("info", "arcmail", "SMTP:: Server: " . $SMTP->value . ", PORT: " . $SMTPPort->value);
-                $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value, $mailfrom->value, $to, $subject, $message);
-                $sender->SendMail();
-                \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to . " via SMTP.");
+                $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value);
+                $sender->SendMail($mailfrom->value, $to, $subject, $message);
 
-                return true;
+                if (!$sender) {
+                    \Log::createLog("danger", "arcmail", "Failed: Subject: " . $subject . ", To: " . $to . " via SMTP.");
+                } else {
+                    \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to . " via SMTP.");
+                }
             } else {
                 $headers .= "From: " . $mailfrom->value . "\r\n";
-
                 mail($to, $subject, $message, $headers);
                 \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to);
             }
