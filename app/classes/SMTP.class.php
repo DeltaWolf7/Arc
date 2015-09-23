@@ -38,7 +38,7 @@ class SMTP {
         $this->PortSMTP = $SmtpPort;
     }
 
-    function SendMail($from, $to, $subject, $body) {
+    function SendMail($from, $to, $subject, $body, $headers) {
         if ($SMTPIN = fsockopen($this->SmtpServer, $this->PortSMTP)) {
             fputs($SMTPIN, "EHLO\r\n");
             $output["hello"] = fgets($SMTPIN, 1024);
@@ -54,7 +54,7 @@ class SMTP {
             $output["To"] = fgets($SMTPIN, 1024);
             fputs($SMTPIN, "DATA\r\n");
             $output["data"] = fgets($SMTPIN, 1024);
-            fputs($SMTPIN, "To: <" . $to . ">\r\nFrom: <" . $from . ">\r\nSubject:" . $subject . "\r\n\r\n\r\n" . $body . "\r\n.\r\n");
+            fputs($SMTPIN, "To: <" . $to . ">\r\nFrom: <" . $from . ">\r\nSubject:" . $subject . "\r\n" . $headers . "\r\n\r\n" . $body . "\r\n.\r\n");
             $output["send"] = fgets($SMTPIN, 256);
             fputs($SMTPIN, "QUIT\r\n");
             fclose($SMTPIN);

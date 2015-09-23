@@ -816,7 +816,7 @@ class Helper {
             \Log::createLog("info", "arcmail", "Send email request");
 
             $headers = "MIME-Version: 1.0\r\n";
-            if ($html) {
+            if ($html == true) {
                 $headers .= "Content-Type: text/html;\r\n";
             } else {
                 $headers .= "Content-Type: text/plain;\r\n";
@@ -836,7 +836,7 @@ class Helper {
 
                 \Log::createLog("info", "arcmail", "SMTP:: Server: " . $SMTP->value . ", PORT: " . $SMTPPort->value);
                 $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value);
-                $sender->SendMail($mailfrom->value, $to, $subject, $message);
+                $sender->SendMail($mailfrom->value, $to, $subject, $message, $headers);
 
                 if (!$sender) {
                     \Log::createLog("danger", "arcmail", "Failed: Subject: " . $subject . ", To: " . $to . " via SMTP.");
