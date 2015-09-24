@@ -40,27 +40,29 @@ class SMTP {
 
     function SendMail($from, $to, $subject, $body, $headers) {
         if ($SMTPIN = fsockopen($this->SmtpServer, $this->PortSMTP)) {
+            $output = "";
             fputs($SMTPIN, "EHLO\r\n");
-            $output["hello"] = fgets($SMTPIN, 1024);
+            $output = fgets($SMTPIN, 1024) . "\r\n";
             fputs($SMTPIN, "auth login\r\n");
-            $output["res"] = fgets($SMTPIN, 1024);
+            $output .= fgets($SMTPIN, 1024) . "\r\n";
             fputs($SMTPIN, $this->SmtpUser . "\r\n");
-            $output["user"] = fgets($SMTPIN, 1024);
+            $output .= fgets($SMTPIN, 1024) . "\r\n";
             fputs($SMTPIN, $this->SmtpPass . "\r\n");
-            $output["pass"] = fgets($SMTPIN, 256);
+            $output .= fgets($SMTPIN, 256) . "\r\n";
             fputs($SMTPIN, "MAIL FROM: <" . $from . ">\r\n");
-            $output["From"] = fgets($SMTPIN, 1024);
+            $output .= fgets($SMTPIN, 1024) . "\r\n";
             fputs($SMTPIN, "RCPT TO: <" . $to . ">\r\n");
-            $output["To"] = fgets($SMTPIN, 1024);
+            $output .= fgets($SMTPIN, 1024) . "\r\n";
             fputs($SMTPIN, "DATA\r\n");
-            $output["data"] = fgets($SMTPIN, 1024);
-            fputs($SMTPIN, "To: <" . $to . ">\r\nFrom: <" . $from . ">\r\nSubject:" . $subject . "\r\n" . $headers . "\r\n\r\n" . $body . "\r\n.\r\n");
-            $output["send"] = fgets($SMTPIN, 256);
+            $output .= fgets($SMTPIN, 1024) . "\r\n";
+            fputs($SMTPIN, "To: <" . $to . ">\r\nFrom: <" . $from . ">\r\nSubject:" . $subject 
+                    . "\r\n" . $headers . "\r\n\r\n" . $body . "\r\n.\r\n");
+            $output .= fgets($SMTPIN, 256) . "\r\n";
             fputs($SMTPIN, "QUIT\r\n");
             fclose($SMTPIN);
             return $output;
         }
-        return false;
+        throw new Exception("Unable to connect to SMTP server");
     }
 
 }

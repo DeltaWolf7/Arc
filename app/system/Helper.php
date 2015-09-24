@@ -836,8 +836,12 @@ class Helper {
 
                 \Log::createLog("info", "arcmail", "SMTP:: Server: " . $SMTP->value . ", PORT: " . $SMTPPort->value);
                 $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value);
-                $sender->SendMail($mailfrom->value, $to, $subject, $message, $headers);
+                $output = $sender->SendMail($mailfrom->value, $to, $subject, $message, $headers);
 
+                if (ARCDEBUG == true) {
+                    \Log::createLog("info", "arcmail", $output);
+                }
+                
                 if (!$sender) {
                     \Log::createLog("danger", "arcmail", "Failed: Subject: " . $subject . ", To: " . $to . " via SMTP.");
                 } else {
