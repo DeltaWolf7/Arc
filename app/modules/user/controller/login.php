@@ -16,7 +16,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     if ($user->verifyPassword($_POST["password"])) {
         if ($user->enabled) {
             system\Helper::arcSetUser($user);
-            Log::createLog("success", "user", "User logged in: " . $_POST["email"]);
+            Log::createLog("success", "user", "User logged in: " . $_POST["email"]);    
             system\Helper::arcAddMessage("success", "Login successful<script>window.location='/';</script>");
             return;
         } else {
