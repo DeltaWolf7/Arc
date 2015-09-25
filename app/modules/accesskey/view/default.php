@@ -46,11 +46,13 @@ if (isset($_GET["key"])) {
 
     function updateStatusCallback(data) {
         if (data.danger == 0) {
-            window.location = "<?php if (isset($_GET["location"])) {
+            window.location = "<?php
+if (isset($_GET["location"])) {
     echo $_GET["location"];
 } else {
     echo system\Helper::arcGetPath();
-} ?>";
+}
+?>";
         }
     }
 </script>

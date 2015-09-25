@@ -42,6 +42,26 @@ class AccessKey extends UserSetting {
         $user->getByID($setting->userid);
         return $user;
     }
+    
+    public static function getUserKey($userid) {
+        $setting = new UserSetting();
+        $setting->get(["AND" => ["key" => "ACCESSKEY", "userid" => $userid]]);
+
+        if ($setting->userid == 0) {
+            return null;
+        }
+        return $setting;
+    }
+    
+    public static function createKey($userid) {
+        if (AccessKey::getUserKey($userid) == null) {
+            $setting = new UserSetting();
+            $setting->key = "ACCESSKEY";
+            $setting->userid = $userid;
+            $setting->setting = AccessKey::generateKey();
+            $setting->update();
+        }
+    }
 
     public static function generateKey() {
         $key = com_create_guid();
