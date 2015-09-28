@@ -38,7 +38,7 @@ class Log extends DataProvider {
 
     public function __construct() {
         parent::__construct();
-        $this->when = date("y-m-d h:i:s");
+        $this->when = date("y-m-d H:i:s");
         $this->message = "";
         $this->table = ARCDBPREFIX . "logs";
         $this->columns = ["id", "type", "module", "when", "message"];

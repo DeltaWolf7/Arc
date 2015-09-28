@@ -13,7 +13,7 @@ class Blog extends DataProvider {
 
     public function __construct() {
         parent::__construct();
-        $this->date = date("y-m-d h:i:s");
+        $this->date = date("y-m-d H:i:s");
         $this->title = "";
         $this->content = "";
         $this->image = "";
