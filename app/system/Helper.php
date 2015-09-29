@@ -25,7 +25,7 @@ namespace system;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-require_once "medoo.min.php";
+include_once "medoo.min.php";
 
 class Helper {
 
@@ -356,7 +356,7 @@ class Helper {
 
             // Check if the template has a controller and include it if it does.
             if (file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/controller/controller.php")) {
-                require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/controller/controller.php";
+                include_once self::arcGetPath(true) . "app/templates/" . $template->value . "/controller/controller.php";
             }
 
             if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
@@ -372,9 +372,9 @@ class Helper {
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
             // Get module controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
             }
         } else {
             self::arcForceView("error", "error", false, ["403"]);
@@ -385,15 +385,15 @@ class Helper {
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php")) {
                 die("Unable to find header.php for template '" . $template->value . "'.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php";
+            include_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/header.php";
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
             // Get module view controller
             if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
             }
         } else {
             self::arcForceView("error", "error", false, ["403"]);
@@ -405,19 +405,19 @@ class Helper {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
                 }
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php";
             } else {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for administrative module '" . self::arcGetURLData("module") . "'.");
                 }
-                require_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
+                include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
 
             // Check if the template has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php")) {
                 die("Unable to find footer.php for template '" . $template->value . "'.");
             }
-            require_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php";
+            include_once self::arcGetPath(true) . "app/templates/" . $template->value . "/view/footer.php";
         }
     }
 
@@ -637,7 +637,7 @@ class Helper {
                         if (!in_array($module, $disabledItems)) {
                             self::$arc["menumodule"] = $module;
                             self::$arc["urldata"]["module"] = $module;
-                            require_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
+                            include_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
                         }
                     }
                 }
@@ -647,7 +647,7 @@ class Helper {
                         self::$arc["menumodule"] = $module;
                         self::$arc["menuadmin"] = true;
                         self::$arc["urldata"]["module"] = $module;
-                        require_once self::arcGetPath(true) . "app/modules/{$module}/administration/module.php";
+                        include_once self::arcGetPath(true) . "app/modules/{$module}/administration/module.php";
                         unset(self::$arc["menuadmin"]);
                     }
                 }
@@ -745,6 +745,10 @@ class Helper {
             return self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
         }
     }
+    
+    public static function arcGetModuleAbsolutePath() {
+            return self::arcGetPath() . "app/modules/" . self::arcGetURLData("module") . "/";
+    }
 
     /**
      * 
@@ -841,7 +845,7 @@ class Helper {
                 if (ARCDEBUG == true) {
                     \Log::createLog("info", "arcmail", $output);
                 }
-                
+
                 if (!$sender) {
                     \Log::createLog("danger", "arcmail", "Failed: Subject: " . $subject . ", To: " . $to . " via SMTP.");
                 } else {
@@ -1019,5 +1023,4 @@ class Helper {
     public static function arcGetWidgetPath($name) {
         echo self::arcGetPath() . "app/widgets/{$name}/widget.php";
     }
-
 }
