@@ -745,9 +745,9 @@ class Helper {
             return self::arcGetPath() . self::arcGetURLData("module") . "/administration/";
         }
     }
-    
+
     public static function arcGetModuleAbsolutePath() {
-            return self::arcGetPath() . "app/modules/" . self::arcGetURLData("module") . "/";
+        return self::arcGetPath() . "app/modules/" . self::arcGetURLData("module") . "/";
     }
 
     /**
@@ -1022,5 +1022,17 @@ class Helper {
 
     public static function arcGetWidgetPath($name) {
         echo self::arcGetPath() . "app/widgets/{$name}/widget.php";
+    }
+
+    public static function arcProcessWidgetTags($content) {
+        preg_match_all('/{{widget:([^,]+?)}}/', $content, $matches);
+        foreach ($matches[1] as $key => $filename) {
+            ob_start();
+            self::arcGetWidget($filename);
+            $newContent = ob_get_contents();
+            ob_end_clean();
+            $content = str_replace("{{widget:" . $filename . "}}", $newContent, $content);
+        }
+        return $content;
     }
 }
