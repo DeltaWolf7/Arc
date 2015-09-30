@@ -3,7 +3,7 @@
 system\Helper::arcOverrideView("display", false, [system\Helper::arcGetURLData("action")]);
 $page = Page::getBySEOURL(system\Helper::arcGetURLData("data1"));
 if ($page->id == 0) {
-    system\Helper::arcAddHeader("title", ARCTITLE); 
+    self::arcForceView("error", "error", false, ["404"]);
 } else {
     system\Helper::arcAddHeader("title", $page->title);
 }

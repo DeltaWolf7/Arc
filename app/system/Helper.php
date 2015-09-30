@@ -704,7 +704,12 @@ class Helper {
         foreach ($menus as $menu => $value) {
             if ($menu != "" && !is_numeric($menu)) {
                 echo "<li class=\"dropdown\"><a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">"
-                . "<i class='fa fa-list'></i> {$menu} <i class=\"caret\"></i></a>" . PHP_EOL
+                . "<i class='fa fa-";
+                if ($menu == "Administration")
+                    echo "cog";
+                else
+                    echo "list";
+                echo "'></i> {$menu} <i class=\"caret\"></i></a>" . PHP_EOL
                 . "<ul class=\"dropdown-menu\" role=\"menu\">" . PHP_EOL;
                 self::arcProcessMenuItems($value);
                 echo "</ul>" . PHP_EOL
