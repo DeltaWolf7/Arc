@@ -604,7 +604,7 @@ class Helper {
     /**
      * Processes modules and building menus from info data
      */
-    public static function arcGetMenu($menuItems = array(), $disabledItems = array()) {
+    public static function arcGetMenu($menuItems = array(), $disabledItems = array(), $adminOnly = false) {
         $modules = scandir(self::arcGetPath(true) . "app/modules");
 
         $groups[] = \UserGroup::getByName("Guests");
@@ -631,13 +631,15 @@ class Helper {
                     }
                 }
 
-                // module menu
-                if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
-                    if (\UserPermission::hasPermission($groups, $module)) {
-                        if (!in_array($module, $disabledItems)) {
-                            self::$arc["menumodule"] = $module;
-                            self::$arc["urldata"]["module"] = $module;
-                            include_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
+                if ($adminOnly == false) {
+                    // module menu
+                    if (file_exists(self::arcGetPath(true) . "app/modules/{$module}/module.php")) {
+                        if (\UserPermission::hasPermission($groups, $module)) {
+                            if (!in_array($module, $disabledItems)) {
+                                self::$arc["menumodule"] = $module;
+                                self::$arc["urldata"]["module"] = $module;
+                                include_once self::arcGetPath(true) . "app/modules/{$module}/module.php";
+                            }
                         }
                     }
                 }
@@ -1035,4 +1037,5 @@ class Helper {
         }
         return $content;
     }
+
 }
