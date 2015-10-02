@@ -17,7 +17,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $page->getByID($_POST["id"]);
             $page->content = htmlentities($_POST["html"]);
 
-            if (preg_match('`^[a-zA-Z0-9_]{1,}$`', $_POST["seourl"])) {
+            if (preg_match('`^[a-zA-Z0-9_-]{1,}$`', $_POST["seourl"])) {
                 $page->seourl = strtolower($_POST["seourl"]);
             } else {
                 system\Helper::arcAddMessage("danger", "Invalid SEO Url");
