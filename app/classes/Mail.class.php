@@ -130,34 +130,34 @@ class Mail {
                         $output = "";
 
                         // Connect to SMTP server
-                        fputs($SMTPIN, "EHLO\r\n");
-                        $output = fgets($SMTPIN, 1024) . "\r\n";
-                        fputs($SMTPIN, "auth login\r\n");
-                        $output .= fgets($SMTPIN, 1024) . "\r\n";
-                        fputs($SMTPIN, $this->username . "\r\n");
-                        $output .= fgets($SMTPIN, 1024) . "\r\n";
-                        fputs($SMTPIN, $this->password . "\r\n");
-                        $output .= fgets($SMTPIN, 256) . "\r\n";
+                        fwrite($SMTPIN, "EHLO\r\n");
+                        $output = fgets($SMTPIN) . "\r\n";
+                        fwrite($SMTPIN, "auth login\r\n");
+                        $output .= fgets($SMTPIN) . "\r\n";
+                        fwrite($SMTPIN, $this->username . "\r\n");
+                        $output .= fgets($SMTPIN) . "\r\n";
+                        fwrite($SMTPIN, $this->password . "\r\n");
+                        $output .= fgets($SMTPIN) . "\r\n";
 
                         // Mail from
-                        fputs($SMTPIN, "MAIL FROM: <" . $from . ">\r\n");
-                        $output .= fgets($SMTPIN, 1024) . "\r\n";
+                        fwrite($SMTPIN, "MAIL FROM: <" . $from . ">\r\n");
+                        $output .= fgets($SMTPIN) . "\r\n";
 
                         // Add to recipients
                         foreach ($to as $recipient) {
-                            fputs($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
-                            $output .= fgets($SMTPIN, 1024) . "\r\n";
+                            fwrite($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
+                            $output .= fgets($SMTPIN) . "\r\n";
                         }
 
                         // Add cc recipients
                         foreach ($cc as $recipient) {
-                            fputs($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
-                            $output .= fgets($SMTPIN, 1024) . "\r\n";
+                            fwrite($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
+                            $output .= fgets($SMTPIN) . "\r\n";
                         }
 
                         // Signal data
-                        fputs($SMTPIN, "DATA\r\n");
-                        $output .= fgets($SMTPIN, 1024) . "\r\n";
+                        fwrite($SMTPIN, "DATA\r\n");
+                        $output .= fgets($SMTPIN) . "\r\n";
 
                         // Build message data
                         $messageData = "";
@@ -178,10 +178,11 @@ class Mail {
                         // Add body
                         $messageData .= $message . "\r\n.\r\n";
                         // Send data                        
-                        fputs($SMTPIN, $messageData);
-                        $output .= fgets($SMTPIN, 256) . "\r\n";
+                        fwrite($SMTPIN, $messageData);
+                        $output .= fgets($SMTPIN) . "\r\n";
                         // Quit
-                        fputs($SMTPIN, "QUIT\r\n");
+                        fwrite($SMTPIN, "QUIT\r\n");
+                        $output .= fgets($SMTPIN);
                         fclose($SMTPIN);
                         Log::createLog("warning", "arcmail", $output);
                     }
