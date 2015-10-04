@@ -816,63 +816,6 @@ class Helper {
 
     /**
      * 
-     * @param array $to Array containing Name and Email address of the recipients.
-     * @param string $subject Subject of the email
-     * @param string $message Content of the email
-     * @param array $attachments Array of paths to attach
-     * @return string Null is returned on OK and the error on failure.
-     */
-    public static function arcSendMail($to, $subject, $message, $html = true) {
-        try {
-            \Log::createLog("info", "arcmail", "Send email request");
-
-            $headers = "MIME-Version: 1.0\r\n";
-            if ($html == true) {
-                $headers .= "Content-Type: text/html;\r\n";
-            } else {
-                $headers .= "Content-Type: text/plain;\r\n";
-            }
-            \Log::createLog("info", "arcmail", "Mail headers built");
-
-            $mailfrom = \SystemSetting::getByKey("ARC_MAIL_FROM");
-            $useSMTP = \SystemSetting::getByKey("ARC_MAIL_USE_SMTP");
-
-            if ($useSMTP->value == "1") {
-                \Log::createLog("info", "arcmail", "SMTP enabled");
-
-                $SMTP = \SystemSetting::getByKey("ARC_MAIL_SMTP_SERVER");
-                $SMTPPort = \SystemSetting::getByKey("ARC_MAIL_SMTP_PORT");
-                $SMTPU = \SystemSetting::getByKey("ARC_MAIL_SMTP_USERNAME");
-                $SMTPP = \SystemSetting::getByKey("ARC_MAIL_SMTP_PASSWORD");
-
-                \Log::createLog("info", "arcmail", "SMTP:: Server: " . $SMTP->value . ", PORT: " . $SMTPPort->value);
-                $sender = new \SMTP($SMTP->value, $SMTPPort->value, $SMTPU->value, $SMTPP->value);
-                $output = $sender->SendMail($mailfrom->value, $to, $subject, $message, $headers);
-
-                if (ARCDEBUG == true) {
-                    \Log::createLog("info", "arcmail", $output);
-                }
-
-                if (!$sender) {
-                    \Log::createLog("danger", "arcmail", "Failed: Subject: " . $subject . ", To: " . $to . " via SMTP.");
-                } else {
-                    \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to . " via SMTP.");
-                }
-            } else {
-                $headers .= "From: " . $mailfrom->value . "\r\n";
-                mail($to, $subject, $message, $headers);
-                \Log::createLog("info", "arcmail", "Sent: Subject: " . $subject . ", To: " . $to);
-            }
-
-            return true;
-        } catch (Exception $e) {
-            \Log::createLog("info", "arcmail", "Error: " . $e->getMessage());
-            return false;
-        }
-    }
-
-    /**
-     * 
      * @param string $date Date to convert
      * @return date In UK format
      */

@@ -90,7 +90,6 @@ General Methods
 - arcGetMenu(menuItems) return the menu item html, can be given custom menus (option)
 - arcGetModulePath(filesystem) return the url of the module or path of module if true
 - arcGetModules() returns array of usable modules
-- arcSendMail(to, subject, message, attachments) sends an email, with optional attachments
 - arcUKDateToSql(date) return a date in the UK format suitable for SQL queries
 - arcPagination(objects, page, amount) returns a collection of objects ready for pagination
 - arcGetPaginationView(objects, page, amount, simple, baseurl) returns pagination links to navigate pages

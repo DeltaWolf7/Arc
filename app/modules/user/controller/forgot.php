@@ -24,8 +24,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $message .= "<a href=\"" . system\Helper::arcGetModulePath() . "reset/" . base64_encode($user->id . "|" . $user->email)
             . "\">Reset Password</a></body></html>";
 
-    $mail = system\Helper::arcSendMail($to, "Password Reset Request", $message);
-
+    $mail = new Mail();
+    $mail->Send($to, "Password Reset Request", $message, $html);
+    
     system\Helper::arcAddMessage("success", "Password reset link has been sent to your Email");
     Log::createLog("warning", "user", "Password reset sent: " . $_POST["email"]);
 }
