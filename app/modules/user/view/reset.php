@@ -29,18 +29,12 @@ if (!is_numeric($data[0])) {
 
 <script>
     $("#btnReset").click(function () {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {password: $("#password").val(), password2: $("#password2").val(),
-                id: <?php echo $data[0]; ?>},
-            complete: function (data) {
-                updateStatus("status", updateStatusCallback);
-            }
-        }); 
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {password: $("#password").val(), password2: $("#password2").val(),id: <?php echo $data[0]; ?>}, complete, null)
     });
+    
+    function complete(data) {
+        updateStatus("status", updateStatusCallback);
+    }
 
     function updateStatusCallback(data) {
         if (data.danger == 0) {

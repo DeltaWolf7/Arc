@@ -21,10 +21,8 @@
 
 <script>
     $("#loginBtn").click(function () {
-        arcAjaxRequest(<?php system\Helper::arcGetDispatch(); ?>,
-        {email: $("#email").val(), password: $("#password").val(), sid: <?php system\Helper::arcGetSessionID(); ?>},
-        complete, null);
-    }
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>',{email: $("#email").val(), password: $("#password").val(), sid: '<?php system\Helper::arcGetSessionID(); ?>'}, complete, null);
+    });
     
     function complete(data) {
         updateStatus("status", updateStatusCallback); 

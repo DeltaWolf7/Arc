@@ -60,6 +60,9 @@ class Helper {
                     $count++;
                 }
             }
+            if (!isset(self::$arc["urldata"]["administration"])) {
+                self::$arc["urldata"]["administration"] = false;
+            }
         }
 
         // Default view data, if  nothing is set.
@@ -103,7 +106,7 @@ class Helper {
         self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/fullcalendar.min.js");
         self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/status.min.js");
+        self::arcAddHeader("js", self::arcGetPath() . "js/arc.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
@@ -111,7 +114,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/fullcalendar.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/status.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
 
         // Canonical path
         $path = self::arcGetModulePath();
@@ -267,11 +270,11 @@ class Helper {
      * Get the view based on the request
      */
     public static function arcGetView() {
-        
-        if (isset($_POST["sid"])) {
-            session_id($_POST["sid"]);
+
+        if (isset($_POST["arcid"])) {
+            self::arcSetSession($_POST["arcid"]);
         }
-        
+
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             \Log::createLog("success", "arc", "Detected upload request.");
             if (isset($_FILES['file']['name'])) {
@@ -337,11 +340,13 @@ class Helper {
         }
 
         // expired session - check for actual user because guests don't need to timeout.
-        $timeout = ARCSESSIONTIMEOUT * 60;
-        if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
-            session_unset();
-            session_destroy();
-            self::arcForceView("error", "error", false, ["419"]);
+        if (ARCSESSIONTIMEOUT > 0) {
+            $timeout = ARCSESSIONTIMEOUT * 60;
+            if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
+                session_unset();
+                session_destroy();
+                self::arcForceView("error", "error", false, ["419"]);
+            }
         }
 
         // update last activity time stamp
@@ -374,9 +379,13 @@ class Helper {
             $groups = self::arcGetUser()->getGroups();
         }
 
+        if (self::arcGetURLData("administration") == true && self::arcIsUserAdmin() == false) {
+            self::arcForceView("error", "error", false, ["403"]);
+        }
+
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
             // Get module controller
-            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
+            if (self::arcGetUrlData("administration") == false && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php")) {
                 include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/controller.php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php")) {
                 include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/controller.php";
@@ -395,7 +404,7 @@ class Helper {
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
             // Get module view controller
-            if (self::arcGetURLData("administration") == null && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
+            if (self::arcGetUrlData("administration") == false && file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php")) {
                 include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/controller/" . self::arcGetURLData("action") . ".php";
             } elseif (file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php")) {
                 include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/controller/" . self::arcGetURLData("action") . ".php";
@@ -406,7 +415,7 @@ class Helper {
 
         if (self::arcIsAjaxRequest() == false) {
             // Get module view      
-            if (self::arcGetURLData("administration") == null) {
+            if (self::arcGetUrlData("administration") == false) {
                 if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/view/" . self::arcGetURLData("action") . ".php")) {
                     die("Unable to find view '" . self::arcGetURLData("action") . "' for module '" . self::arcGetURLData("module") . "'.");
                 }
@@ -539,18 +548,21 @@ class Helper {
     /**
      * 
      * Check if logged in user is in a group
-     * @param string $groups Group name
+     * @param string/array $groups Group name
      * @return boolean true if they are
      */
     public static function arcIsUserInGroup($groups = Array()) {
         if (self::arcIsUserLoggedIn() == true) {
-            if (is_array($groups)) {
-                $grps = self::arcGetUser()->getGroups();
-                foreach ($groups as $group) {
-                    foreach ($grps as $grp) {
-                        if ($group == $grp->name) {
-                            return true;
-                        }
+            if (!is_array($groups)) {
+                $newGroup = Array();
+                $newGroup[] = $groups;
+                $groups = $newGroup;
+            }
+            $grps = self::arcGetUser()->getGroups();
+            foreach ($groups as $group) {
+                foreach ($grps as $grp) {
+                    if ($group == $grp->name) {
+                        return true;
                     }
                 }
             }
@@ -567,18 +579,17 @@ class Helper {
         if (self::arcGetUser() == null) {
             return false;
         } else {
-            foreach (self::arcGetUser()->getGroups() as $group) {
-                if ($group->name == "Adminsitrators") {
-                    return true;
-                }
-            }
-            return false;
+            return self::arcIsUserInGroup("Administrators");
         }
         return true;
     }
-    
+
     public static function arcGetSessionID() {
         return session_id();
+    }
+    
+    public static function arcSetSession($id) {
+        session_id($id);
     }
 
     /**
@@ -599,7 +610,7 @@ class Helper {
      * Output the path the the modules dispatch file
      */
     public static function arcGetDispatch() {
-        if (self::arcGetURLData("administration") == null) {
+        if (self::arcGetUrlData("administration") == false) {
             $url = self::arcGetPath() . self::arcGetURLData("module");
         } else {
             $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration";
@@ -748,14 +759,14 @@ class Helper {
      */
     public static function arcGetModulePath($filesystem = false) {
         if ($filesystem) {
-            if (self::arcGetURLData("administration") == null) {
+            if (self::arcGetUrlData("administration") == false) {
                 return self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/";
             } else {
                 return self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/";
             }
         }
 
-        if (self::arcGetURLData("administration") == null) {
+        if (self::arcGetUrlData("administration") == false) {
             return self::arcGetPath() . self::arcGetURLData("module") . "/";
         } else {
             return self::arcGetPath() . self::arcGetURLData("module") . "/administration/";

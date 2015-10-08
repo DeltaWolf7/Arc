@@ -19,17 +19,12 @@
 
 <script>
     $("#forgotBtn").click(function () {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val()},
-            complete: function (data) {
-                updateStatus("status", updateStatusCallback);
-            }
-        });
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {email: $("#email").val()}, complete, null);
     });
+    
+    function complete(data) {
+        updateStatus("status", updateStatusCallback);
+    }
 
     function updateStatusCallback(data) {
         if (data.danger == 0) {

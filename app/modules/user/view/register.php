@@ -32,18 +32,14 @@
 
 <script>
     $("#registerBtn").click(function () {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),
-                password: $("#password").val(), password2: $("#password2").val()},
-            complete: function (data) {
-                updateStatus("status", updateStatusCallback);
-            }
-        });
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', 
+        {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),password: $("#password").val(), password2: $("#password2").val()},
+        complete, null);
     });
+    
+    function complete(data) {
+        updateStatus("status", updateStatusCallback);
+    }
 
     function updateStatusCallback(data) {
         if (data.danger == 0) {

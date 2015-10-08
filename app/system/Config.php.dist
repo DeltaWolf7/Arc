@@ -49,7 +49,7 @@ class Config {
         // Project Title
         define('ARCTITLE', 'Arc Project');
         // Project version
-        define('ARCVERSION', '0.1.0.0');
+        define('ARCVERSION', '0.2.0.0');
         
         // Project Default Module
         define('ARCDEFAULTMODULE', 'page');
@@ -61,6 +61,7 @@ class Config {
         define('ARCDEBUG', true);
         
         // Session Timeout (minutes)
+        // Set to 0 to disable.
         define('ARCSESSIONTIMEOUT', 60);
         
         // Timezone (if not set, default to UK standard)

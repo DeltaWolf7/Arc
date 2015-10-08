@@ -36,16 +36,12 @@ $user = system\Helper::arcGetUser();
 
 <script>
     $("#saveBtn").click(function () {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {id: '<?php echo $user->id; ?>', firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-                password: $("#password").val(), password2: $("#password2").val()},
-            complete: function (data) {
-                updateStatus("status", null);
-            }
-        });
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {arcid: '<?php echo system\Helper::arcGetSessionID(); ?>',
+            firstname: $("#firstname").val(), lastname: $("#lastname").val(),
+            password: $("#password").val(), password2: $("#password2").val()}, complete, null);
     });
+
+    function complete(data) {
+        updateStatus("status", null);
+    }
 </script>
