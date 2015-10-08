@@ -267,6 +267,11 @@ class Helper {
      * Get the view based on the request
      */
     public static function arcGetView() {
+        
+        if (isset($_POST["sid"])) {
+            session_id($_POST["sid"]);
+        }
+        
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             \Log::createLog("success", "arc", "Detected upload request.");
             if (isset($_FILES['file']['name'])) {
@@ -570,6 +575,10 @@ class Helper {
             return false;
         }
         return true;
+    }
+    
+    public static function arcGetSessionID() {
+        return session_id();
     }
 
     /**

@@ -21,17 +21,14 @@
 
 <script>
     $("#loginBtn").click(function () {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {email: $("#email").val(), password: $("#password").val()},
-            complete: function (data) {
-               updateStatus("status", updateStatusCallback); 
-            }
-        });    
-    });
+        arcAjaxRequest(<?php system\Helper::arcGetDispatch(); ?>,
+        {email: $("#email").val(), password: $("#password").val(), sid: <?php system\Helper::arcGetSessionID(); ?>},
+        complete, null);
+    }
+    
+    function complete(data) {
+        updateStatus("status", updateStatusCallback); 
+    }
     
     function updateStatusCallback(data) {
         if (data.danger == 0) {
