@@ -32,15 +32,10 @@
 
 <script>
     function generate(userid) {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {user: userid},
-            complete: function (data) {
-                location.reload();
-            }
-        });
+        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {user: userid}, complete, null);
     }
-    </script>
+    
+    function complete() {
+        location.reload();
+    }
+</script>

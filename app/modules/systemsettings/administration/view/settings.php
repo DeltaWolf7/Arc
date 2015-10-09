@@ -58,36 +58,27 @@
 <script>
     var kstring;
     function getSettings() {
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {action: "settings"},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                $('#data').html(jdata.html);
-            }
-        });
+        arcAjaxRequest({action: "settings"}, null, settingsSuccess);
+    }
+
+    function settingsSuccess(data) {
+        var jdata = jQuery.parseJSON(JSON.stringify(data));
+        $('#data').html(jdata.html);
     }
 
     function editSetting(keystring) {
         kstring = keystring;
-        $.ajax({
-            url: "<?php system\Helper::arcGetDispatch(); ?>",
-            dataType: "json",
-            type: "post",
-            contentType: "application/x-www-form-urlencoded",
-            data: {action: "editsetting", key: keystring},
-            success: function (data) {
-                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                $('#sKey').val(jdata.skey);
-                $('#sValue').val(jdata.svalue);
-            },
-            complete: function () {
-                $("#editSetting").modal("show");
-            }
-        });
+        arcAjaxRequest({action: "editsetting", key: keystring}, editComplete, editSuccess);
+    }
+
+    function editSuccess(data) {
+        var jdata = jQuery.parseJSON(JSON.stringify(data));
+        $('#sKey').val(jdata.skey);
+        $('#sValue').val(jdata.svalue);
+    }
+
+    function editComplete(data) {
+        $("#editSetting").modal("show");
     }
 
     function deleteSetting(keystring) {
@@ -109,7 +100,7 @@
             }
         });
     });
-    
+
     $("#saveSettingBtn").click(function () {
         $.ajax({
             url: "<?php system\Helper::arcGetDispatch(); ?>",
@@ -122,7 +113,7 @@
                 getSettings();
                 updateStatus("status", null);
             }
-        });      
+        });
     });
 
     $(document).ready(function () {

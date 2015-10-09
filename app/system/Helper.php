@@ -100,13 +100,13 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/moment.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/fullcalendar.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/summernote.min.js");
-        self::arcAddHeader("js", self::arcGetPath() . "js/arc.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/fullcalendar.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
@@ -381,6 +381,7 @@ class Helper {
 
         if (self::arcGetURLData("administration") == true && self::arcIsUserAdmin() == false) {
             self::arcForceView("error", "error", false, ["403"]);
+            \Log::createLog("danger", "permissions", "Access denied to module '" . self::arcGetURLData("module") . "'");
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {

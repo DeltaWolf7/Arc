@@ -16,20 +16,3 @@
         <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath(); ?>">Cancel</a>
     </div>
 </div>
-
-<script>
-    $("#forgotBtn").click(function () {
-        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {email: $("#email").val()}, complete, null);
-    });
-    
-    function complete(data) {
-        updateStatus("status", updateStatusCallback);
-    }
-
-    function updateStatusCallback(data) {
-        if (data.danger == 0) {
-            $("#email").prop("disabled", true);
-            $("#forgotBtn").prop("disabled", true);
-        }
-    }
-</script>

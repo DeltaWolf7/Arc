@@ -28,19 +28,5 @@ if (!is_numeric($data[0])) {
 
 
 <script>
-    $("#btnReset").click(function () {
-        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {password: $("#password").val(), password2: $("#password2").val(),id: <?php echo $data[0]; ?>}, complete, null)
-    });
-    
-    function complete(data) {
-        updateStatus("status", updateStatusCallback);
-    }
-
-    function updateStatusCallback(data) {
-        if (data.danger == 0) {
-            $("#btnReset").prop("disabled", true);
-            $("#password").prop("disabled", true);
-            $("#password2").prop("disabled", true);
-        }
-    }
+    setSID('<?php echo $data[0]; ?>');
 </script>

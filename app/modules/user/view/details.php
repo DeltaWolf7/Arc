@@ -30,18 +30,10 @@ $user = system\Helper::arcGetUser();
         <div id="status"></div>
     </div>
     <div class="panel-footer text-right">
-        <a id="saveBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
+        <a id="saveDetailsBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
     </div>
 </div>
 
 <script>
-    $("#saveBtn").click(function () {
-        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', {arcid: '<?php echo system\Helper::arcGetSessionID(); ?>',
-            firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-            password: $("#password").val(), password2: $("#password2").val()}, complete, null);
-    });
-
-    function complete(data) {
-        updateStatus("status", null);
-    }
+    setSID('<?php echo system\Helper::arcGetSessionID(); ?>');
 </script>

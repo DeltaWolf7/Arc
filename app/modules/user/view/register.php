@@ -29,21 +29,3 @@
         <a id="registerBtn" class="btn btn-primary">Register</a>
     </div>
 </div>
-
-<script>
-    $("#registerBtn").click(function () {
-        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>', 
-        {firstname: $("#firstname").val(), lastname: $("#lastname").val(), email: $("#email").val(),password: $("#password").val(), password2: $("#password2").val()},
-        complete, null);
-    });
-    
-    function complete(data) {
-        updateStatus("status", updateStatusCallback);
-    }
-
-    function updateStatusCallback(data) {
-        if (data.danger == 0) {
-            window.location = "<?php echo system\Helper::arcGetPath(); ?>";
-        }
-    }
-</script>

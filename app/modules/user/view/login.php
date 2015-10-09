@@ -18,19 +18,3 @@
         <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath() . "forgot"; ?>">Forgot Password</a>
     </div>
 </div>
-
-<script>
-    $("#loginBtn").click(function () {
-        arcAjaxRequest('<?php system\Helper::arcGetDispatch(); ?>',{email: $("#email").val(), password: $("#password").val(), sid: '<?php system\Helper::arcGetSessionID(); ?>'}, complete, null);
-    });
-    
-    function complete(data) {
-        updateStatus("status", updateStatusCallback); 
-    }
-    
-    function updateStatusCallback(data) {
-        if (data.danger == 0) {
-            window.location = "<?php echo system\Helper::arcGetPath(); ?>";
-        }
-    }
-</script>

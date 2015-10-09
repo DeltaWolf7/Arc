@@ -2,6 +2,7 @@
     <h1>System Logs</h1>
 </div>
 
+<div class="text-right"><a class="btn btn-primary btn-xs" onclick="clearLogs();">Clear Logs</a></div>
 <div class="table-responsive">
     <table class="table table-hover table-condensed">
         <tr><th>Type</th><th>Module</th><th>When</th><th>Message</th></tr>
@@ -28,3 +29,13 @@
         ?>
     </table>
 </div>
+
+<script>
+    function clearLogs() {
+        arcAjaxRequest({}, complete, null); 
+    }
+    
+    function complete() {
+        location.reload();
+    }
+    </script>
