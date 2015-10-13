@@ -44,4 +44,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         Log::createLog("info", "settings", "Setting deleted: " . $_POST["key"]);
         system\Helper::arcAddMessage("success", "Setting deleted");
     }
+} else {
+
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/settings.js");
 }

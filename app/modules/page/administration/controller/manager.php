@@ -50,4 +50,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             system\Helper::arcReturnJSON(["html" => $table]);
         }
     }
+} else {
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/page.js");
 }

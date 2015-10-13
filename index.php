@@ -99,7 +99,8 @@ system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_PORT", "25", "Mail");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000", "System");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80", "System");
 system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30", "System");
-system\Helper::arcCheckSettingExists("ARC_THEME", "default", "System");
+system\Helper::arcCheckSettingExists("ARC_THEME", "default", "Theme");
+system\Helper::arcCheckSettingExists("ARC_ADMIN_THEME", "ace", "Theme");
 
 // Get content.
 system\Helper::arcGetView();

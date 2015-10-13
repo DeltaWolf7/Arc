@@ -7,8 +7,6 @@ if (system\Helper::arcGetURLData("action") == null) {
     system\Helper::arcOverrideView("login");
 }
 
-system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/user.js");
-
 if (system\Helper::arcGetURLData("action") == "details" && system\Helper::arcGetUser() == null) {
     system\Helper::arcOverrideView("login");
 }

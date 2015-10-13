@@ -9,10 +9,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         foreach ($users as $user) {
             $table .= "<tr><td>{$user->firstname}</td><td>{$user->lastname}</td><td>{$user->email}</td><td>";
             if ($user->enabled) {
-                    $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
-                } else {
-                    $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
-                }
+                $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
+            } else {
+                $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
+            }
             $table .= "</td><td class=\"text-right\"><a onclick=\"editUser({$user->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-edit\"></i>&nbsp;Edit</a>&nbsp;<a onclick=\"removeUser({$user->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i>&nbsp;Remove</a></td></tr>";
         }
         $table .= "</tbody></table>";
@@ -55,30 +55,30 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             system\Helper::arcAddMessage("danger", "Firstname cannot be empty");
             return;
         }
-        
+
         $user->lastname = ucwords(strtolower($_POST["lastname"]));
         if (empty($_POST["lastname"])) {
             system\Helper::arcAddMessage("danger", "Lastname cannot be empty");
             return;
         }
-        
+
         $test = User::getByEmail($_POST["email"]);
         if ($user->id == 0 && $test->id != 0) {
             system\Helper::arcAddMessage("danger", "User already exists with this email address");
             return;
         }
-        
+
         if ($user->id == 0 && empty($_POST["password"])) {
             system\Helper::arcAddMessage("danger", "New users must have a password");
             return;
         }
-        
+
         if ($_POST["enabled"] == "true") {
             $user->enabled = 1;
         } else {
             $user->enabled = 0;
         }
-     
+
         $user->email = strtolower($_POST["email"]);
         $user->update();
         system\Helper::arcAddMessage("success", "Changes saved");
@@ -109,24 +109,26 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     } elseif ($_POST["action"] == "addgroup") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        
+
         if ($user->id == 0) {
             system\Helper::arcAddMessage("danger", "User must be saved before group can be modified.");
             return;
         }
-        
-        $user->addToGroup($_POST["group"]);  
+
+        $user->addToGroup($_POST["group"]);
         system\Helper::arcAddMessage("success", "User added to group");
     } elseif ($_POST["action"] == "removefromgroup") {
         $user = new User();
         $user->getByID($_POST["id"]);
-        
+
         if ($user->id == 0) {
             system\Helper::arcAddMessage("danger", "User must be saved before group can be modified.");
             return;
         }
-        
-        $user->removeFromGroup($_POST["group"]);  
+
+        $user->removeFromGroup($_POST["group"]);
         system\Helper::arcAddMessage("success", "User removed from group");
     }
+} else {
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/user.js");
 }

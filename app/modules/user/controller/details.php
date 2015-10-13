@@ -18,4 +18,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user->update();
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Changes saved");
+} else {
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/details.js");
 }

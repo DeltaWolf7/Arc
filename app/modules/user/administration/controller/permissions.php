@@ -60,4 +60,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $permission->update();
         system\Helper::arcAddMessage("success", "Permission saved");
     }
+} else {
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/permissions.js");
 }

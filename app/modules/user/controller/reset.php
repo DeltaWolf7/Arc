@@ -22,4 +22,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user->update();
     system\Helper::arcAddMessage("success", "Your password has been reset. You can now login");
     Log::createLog("warning", "user", "Password reset: " . $user->email);
+} else {
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/reset.js");
 }

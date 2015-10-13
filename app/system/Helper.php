@@ -260,6 +260,9 @@ class Helper {
      */
     public static function arcGetThemePath($filesystem = false) {
         $theme = \SystemSetting::getByKey("ARC_THEME");
+        if (self::arcGetURLData("administration") == true) {
+            $theme = \SystemSetting::getByKey("ARC_ADMIN_THEME");
+        }
         if ($filesystem) {
             return self::arcGetPath(true) . "app/themes/" . $theme->value . "/";
         }
@@ -354,6 +357,9 @@ class Helper {
 
         // get the current theme
         $theme = \SystemSetting::getByKey("ARC_THEME");
+        if (self::arcGetURLData("administration") == true) {
+            $theme = \SystemSetting::getByKey("ARC_ADMIN_THEME");
+        }
 
         if (self::arcIsAjaxRequest() == false) {
             // Check the theme in config exists.
