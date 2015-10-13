@@ -258,12 +258,12 @@ class Helper {
      * @param bool $filesystem Get filesystem path if true
      * @return string Path to content
      */
-    public static function arcGetTemplatePath($filesystem = false) {
-        $template = \SystemSetting::getByKey("ARC_TEMPLATE");
+    public static function arcGetThemePath($filesystem = false) {
+        $theme = \SystemSetting::getByKey("ARC_THEME");
         if ($filesystem) {
-            return self::arcGetPath(true) . "app/themes/" . $template->value . "/";
+            return self::arcGetPath(true) . "app/themes/" . $theme->value . "/";
         }
-        return self::arcGetPath() . "app/themes/" . $template->value . "/";
+        return self::arcGetPath() . "app/themes/" . $theme->value . "/";
     }
 
     /**
@@ -352,21 +352,21 @@ class Helper {
         // update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
 
-        // get the current template
-        $template = \SystemSetting::getByKey("ARC_TEMPLATE");
+        // get the current theme
+        $theme = \SystemSetting::getByKey("ARC_THEME");
 
         if (self::arcIsAjaxRequest() == false) {
-            // Check the template in config exists.
-            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $template->value)) {
-                $name = $template->value;
-                $template->value = "default";
-                $template->update();
-                die("Unable to find template '" . $name . "'. Selected template reset to 'default'.");
+            // Check the theme in config exists.
+            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $theme->value)) {
+                $name = $theme->value;
+                $theme->value = "default";
+                $theme->update();
+                die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
             }
 
-            // Check if the template has a controller and include it if it does.
-            if (file_exists(self::arcGetPath(true) . "app/themes/" . $template->value . "/controller/controller.php")) {
-                include_once self::arcGetPath(true) . "app/themes/" . $template->value . "/controller/controller.php";
+            // Check if the theme has a controller and include it if it does.
+            if (file_exists(self::arcGetPath(true) . "app/themes/" . $theme->value . "/controller/controller.php")) {
+                include_once self::arcGetPath(true) . "app/themes/" . $theme->value . "/controller/controller.php";
             }
 
             if (!file_exists(self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module"))) {
@@ -396,11 +396,11 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == false) {
-            // Check if the template has a header and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $template->value . "/view/header.php")) {
-                die("Unable to find header.php for template '" . $template->value . "'.");
+            // Check if the theme has a header and include if it does.
+            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $theme->value . "/view/header.php")) {
+                die("Unable to find header.php for theme '" . $theme->value . "'.");
             }
-            include_once self::arcGetPath(true) . "app/themes/" . $template->value . "/view/header.php";
+            include_once self::arcGetPath(true) . "app/themes/" . $theme->value . "/view/header.php";
         }
 
         if (\UserPermission::hasPermission($groups, self::arcGetURLData("module"))) {
@@ -428,11 +428,11 @@ class Helper {
                 include_once self::arcGetPath(true) . "app/modules/" . self::arcGetURLData("module") . "/administration/view/" . self::arcGetURLData("action") . ".php";
             }
 
-            // Check if the template has a footer and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $template->value . "/view/footer.php")) {
-                die("Unable to find footer.php for template '" . $template->value . "'.");
+            // Check if the theme has a footer and include if it does.
+            if (!file_exists(self::arcGetPath(true) . "app/themes/" . $theme->value . "/view/footer.php")) {
+                die("Unable to find footer.php for theme '" . $theme->value . "'.");
             }
-            include_once self::arcGetPath(true) . "app/themes/" . $template->value . "/view/footer.php";
+            include_once self::arcGetPath(true) . "app/themes/" . $theme->value . "/view/footer.php";
         }
     }
 
@@ -774,7 +774,10 @@ class Helper {
         }
     }
 
-    public static function arcGetModuleAbsolutePath() {
+    public static function arcGetModuleAbsolutePath($admin = false) {
+        if ($admin == true) {
+            return self::arcGetPath() . "app/modules/" . self::arcGetURLData("module") . "/administration/";
+        }
         return self::arcGetPath() . "app/modules/" . self::arcGetURLData("module") . "/";
     }
 

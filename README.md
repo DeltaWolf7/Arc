@@ -75,7 +75,7 @@ General Methods
 - arcGetPath(filesystem) return the url of Arc or path of Arc if filesystem is true
 - arcGetHeader() returns an array containing all the current header information
 - arcGetFooter() returns an array containing all the current footer information
-- arcGetTemplatePath(filesystem) returns the url of the template or the path if filesystem is true
+- arcGetThemePath(filesystem) returns the url of the theme or the path if filesystem is true
 - arcForceView(module, action, administration, data) force a view to be used, overrides all other views
     (module: name of module, action: view of module, administration: is admin, data: data to pass as array)
 - arcClearStatus() clears all status messages from system

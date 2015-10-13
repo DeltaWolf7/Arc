@@ -32,10 +32,10 @@ if (function_exists('header_remove')) {
 }
 
 // Check for old versons of Internet Explorer
-if (preg_match('/(?i)msie [1-8]/', $_SERVER['HTTP_USER_AGENT'])) {
+if (preg_match('/(?i)msie [1-9]/', $_SERVER['HTTP_USER_AGENT'])) {
 // if IE<=8
     echo "<div class=\"alert alert-danger\">Warning! You are using an old unsupported version of Internet Explorer."
-    . " Please upgrade to version 9 or newer</div>";
+    . " Please upgrade to version 10 or newer</div>";
 }
 
 // Check that we are using PHP 5.3 or better.
@@ -99,7 +99,7 @@ system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_PORT", "25", "Mail");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000", "System");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80", "System");
 system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30", "System");
-system\Helper::arcCheckSettingExists("ARC_TEMPLATE", "default", "System");
+system\Helper::arcCheckSettingExists("ARC_THEME", "default", "System");
 
 // Get content.
 system\Helper::arcGetView();
