@@ -7,8 +7,6 @@
 <div class="footer">
     <div class="footer-inner">
         <div class="footer-content">
-            Copyright 2015 OnCloud.Solutions, 
-            Part of the Concorde IT Group
         </div>
     </div>
 </div>
