@@ -51,5 +51,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
     }
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/page.js");
+    system\Helper::arcAddFooter("js", system\Helper::arcGetWidgetPath("pagemanager") . "js/page.js");
 }

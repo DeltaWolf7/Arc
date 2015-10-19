@@ -701,7 +701,7 @@ class Helper {
     }
 
     public static function arcGetWidgetPath($name) {
-        echo self::arcGetPath() . "app/widgets/{$name}/widget.php";
+        echo self::arcGetPath() . "app/widgets/{$name}/";
     }
 
     public static function arcProcessWidgetTags($content) {
@@ -716,17 +716,16 @@ class Helper {
         return $content;
     }
 
-    public static function arcGetWidget($name, $parameters = array()) {
+    public static function arcGetWidget($name) {
         if (!file_exists(self::arcGetPath(true) . "app/widgets/{$name}")) {
             \Log::createLog("warning", "Widget", "Widget by the name of {$name} was not found.");
             return;
         }
-
-        if (!is_array($parameters)) {
-            \Log::createLog("error", "Widget", "Parameters not an array, called by {$name}.");
-            return;
+        
+        if (file_exists(self::arcGetPath(true) . "app/widgets/{$name}/controller/controller.php")) {
+            include_once self::arcGetPath(true) . "app/widgets/{$name}/controller/controller.php";
         }
-
+        
         include_once self::arcGetPath(true) . "app/widgets/{$name}/widget.php";
     }
 
