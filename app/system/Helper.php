@@ -556,24 +556,18 @@ class Helper {
      */
     public static function arcProcessMenuItems($menus) {
         foreach ($menus as $menu => $link) {
-            echo "<li><a href=\"" . self::arcGetPath() . $link . "\"><i class='fa fa-document'></i> {$menu}</a></li>";
+            if (count($link) == 1) {
+                echo "<li><a href=\"" . self::arcGetPath() . $link[key($link)] . "\"><i class='fa fa-document'></i> " . key($link) . "</a></li>";
+            } else {
+                echo "<li class=\"dropdown\">"
+                . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
+                . ucwords(key($menus)) . " <span class=\"caret\"></span></a><ul class=\"dropdown-menu\">";
+                foreach ($link as $name => $url) {
+                    echo "<li><a href=\"" . self::arcGetPath() . $url . "\"><i class='fa fa-document'></i> {$name}</a></li>";
+                }
+                echo "</ul></li>";
+            }
         }
-        
-        
-        /**
-         * <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li class="dropdown-header">Nav header</li>
-                  <li><a href="#">Separated link</a></li>
-                  <li><a href="#">One more separated link</a></li>
-                </ul>
-              </li>
-         */
     }
 
     /**
