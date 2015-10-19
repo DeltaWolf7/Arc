@@ -50,13 +50,7 @@ class Config {
         define('ARCTITLE', 'Arc Project');
         // Project version
         define('ARCVERSION', '0.2.0.0');
-        
-        // Project Default Module
-        define('ARCDEFAULTMODULE', 'page');
-        
-        // Project Default Action
-        define('ARCDEFAULTACTION', 'welcome');
-        
+                
         // Project debug mode
         define('ARCDEBUG', true);
         

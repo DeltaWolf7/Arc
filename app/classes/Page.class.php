@@ -72,7 +72,7 @@
 
         public function getPermissions() {
             $permissions = new UserPermission();
-            return $permissions->getCollection(["permission" => "page/" . $this->seourl]);
+            return $permissions->getCollection(["permission" => $this->seourl]);
         }
 
     }

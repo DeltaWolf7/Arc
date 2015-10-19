@@ -84,8 +84,6 @@ if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
 spl_autoload_register(function($class) {
     if (file_exists("app/classes/{$class}.class.php")) {
         require_once "app/classes/{$class}.class.php";
-    } elseif (!empty(system\Helper::arcGetURLData("module")) && file_exists("app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php")) {
-        require_once "app/modules/" . system\Helper::arcGetURLData("module") . "/classes/{$class}.class.php";
     }
 });
 
@@ -101,6 +99,7 @@ system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80", "System");
 system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30", "System");
 system\Helper::arcCheckSettingExists("ARC_THEME", "default", "Theme");
 system\Helper::arcCheckSettingExists("ARC_ADMIN_THEME", "ace", "Theme");
+system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome", "System");
 
 // Get content.
 system\Helper::arcGetView();
