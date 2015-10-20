@@ -245,6 +245,12 @@ class Helper {
             self::$arc["post"]["error"] = "404";
             self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
         }
+        
+        // get system messages
+        if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
+            self::arcGetStatus();
+            return;
+        }
 
         // expired session - check for actual user because guests don't need to timeout.
         if (ARCSESSIONTIMEOUT > 0) {
@@ -541,7 +547,7 @@ class Helper {
             if ($page->seourl != "error") {
                 if (\UserPermission::hasPermission($groups, $page->seourl)) {
                     $data = explode("/", $page->seourl);
-                    self::$arc["menus"][$data[0]][$page->title] = $page->seourl;
+                    self::$arc["menus"][ucwords($data[0])][$page->title] = $page->seourl;
                 }
             }
         }
@@ -561,7 +567,7 @@ class Helper {
             } else {
                 echo "<li class=\"dropdown\">"
                 . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . ucwords(key($menus)) . " <span class=\"caret\"></span></a><ul class=\"dropdown-menu\">";
+                . $menu . " <span class=\"caret\"></span></a><ul class=\"dropdown-menu\">";
                 foreach ($link as $name => $url) {
                     echo "<li><a href=\"" . self::arcGetPath() . $url . "\"><i class='fa fa-document'></i> {$name}</a></li>";
                 }
@@ -700,8 +706,11 @@ class Helper {
         echo utf8_encode(json_encode($array));
     }
 
-    public static function arcGetWidgetPath($name) {
-        echo self::arcGetPath() . "app/widgets/{$name}/";
+    public static function arcGetWidgetPath($name, $filesystem = false) {
+        if (!$filesystem) {
+            return self::arcGetPath() . "app/widgets/{$name}/";
+        }
+        return self::arcGetPath(true) . "app/widgets/{$name}/";
     }
 
     public static function arcProcessWidgetTags($content) {
@@ -721,12 +730,13 @@ class Helper {
             \Log::createLog("warning", "Widget", "Widget by the name of {$name} was not found.");
             return;
         }
-        
-        if (file_exists(self::arcGetPath(true) . "app/widgets/{$name}/controller/controller.php")) {
-            include_once self::arcGetPath(true) . "app/widgets/{$name}/controller/controller.php";
+
+        if (file_exists(self::arcGetPath(true) . "app/widgets/{$name}/widget.php")) {
+            include_once self::arcGetPath(true) . "app/widgets/{$name}/widget.php";
+        } else {
+            echo "The widget '{$name}' has no widget.php file.";
+            \Log::createLog("danger", "Widget", "Widget by the name of {$name} has no widget.php file.");
         }
-        
-        include_once self::arcGetPath(true) . "app/widgets/{$name}/widget.php";
     }
 
 }
