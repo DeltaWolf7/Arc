@@ -318,7 +318,7 @@ class Helper {
 
         if (self::arcIsAjaxRequest() == false) {
             // Show page
-            echo self::arcProcessWidgetTags(html_entity_decode($page->content));
+            echo self::arcProcessModuleTags(html_entity_decode($page->content));
 
             // Check if the theme has a footer and include if it does.
             if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php")) {
@@ -706,36 +706,36 @@ class Helper {
         echo utf8_encode(json_encode($array));
     }
 
-    public static function arcGetWidgetPath($name, $filesystem = false) {
+    public static function arcGetModulePath($name, $filesystem = false) {
         if (!$filesystem) {
-            return self::arcGetPath() . "app/widgets/{$name}/";
+            return self::arcGetPath() . "app/modules/{$name}/";
         }
-        return self::arcGetPath(true) . "app/widgets/{$name}/";
+        return self::arcGetPath(true) . "app/modules/{$name}/";
     }
 
-    public static function arcProcessWidgetTags($content) {
-        preg_match_all('/{{widget:([^,]+?)}}/', $content, $matches);
+    public static function arcProcessModuleTags($content) {
+        preg_match_all('/{{module:([^,]+?)}}/', $content, $matches);
         foreach ($matches[1] as $key => $filename) {
             ob_start();
-            self::arcGetWidget($filename);
+            self::arcGetModule($filename);
             $newContent = ob_get_contents();
             ob_end_clean();
-            $content = str_replace("{{widget:" . $filename . "}}", $newContent, $content);
+            $content = str_replace("{{module:" . $filename . "}}", $newContent, $content);
         }
         return $content;
     }
 
-    public static function arcGetWidget($name) {
-        if (!file_exists(self::arcGetPath(true) . "app/widgets/{$name}")) {
-            \Log::createLog("warning", "Widget", "Widget by the name of {$name} was not found.");
+    public static function arcGetModule($name) {
+        if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
+            \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
         }
-
-        if (file_exists(self::arcGetPath(true) . "app/widgets/{$name}/widget.php")) {
-            include_once self::arcGetPath(true) . "app/widgets/{$name}/widget.php";
+        
+        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php")) {
+            include_once self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php";
         } else {
-            echo "The widget '{$name}' has no widget.php file.";
-            \Log::createLog("danger", "Widget", "Widget by the name of {$name} has no widget.php file.");
+            echo "The modules '{$name}' has no controller.php file.";
+            \Log::createLog("danger", "Modules", "Modules by the name of {$name} has no controller.php file.");
         }
     }
 
