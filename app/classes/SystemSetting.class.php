@@ -34,6 +34,7 @@ class SystemSetting extends DataProvider {
     public $key;
     public $value;
     public $group;
+    public $userid;
 
     /**
      * SystemSetting constructor
@@ -42,19 +43,21 @@ class SystemSetting extends DataProvider {
         parent::__construct();
         $this->key = "";
         $this->value = "";
+        $this->userid = 0;
         $this->group = "Ungrouped";
         $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["key", "value", "group"];
+        $this->columns = ["key", "value", "group", "userid"];
     }
 
     /**
      * 
      * @param string $key Key of the setting
+     * @param int $id User ID of the setting
      * @return \SystemSetting setting if it exists
      */
-    public static function getByKey($key) {
+    public static function getByKey($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["key" => $key]);
+        $setting->get(["AND" => ["key" => $key, "userid" => $userid]]);
 
         // if no setting was found in the database, return empty setting with key.
         if (empty($setting->key)) {
@@ -68,9 +71,9 @@ class SystemSetting extends DataProvider {
      * @param string $key string value as key
      * @return \SystemSetting
      */
-    public static function keyExists($key) {
+    public static function keyExists($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["key" => $key]);
+        $setting->get(["AND" => ["key" => $key, "userid" => $userid]]);
         if (empty($setting->key)) {
             return false;
         }
@@ -79,11 +82,10 @@ class SystemSetting extends DataProvider {
 
     /**
      * 
-     * @param string $deliminater Deliminator to split the setting with.
      * @return array Containing the split values
      */
-    public function getArray($deliminater = ",") {
-        return explode($deliminater, $this->value);
+    public function getArrayFromJson() {
+        return json_decode($this->value);
     }
 
     /**
@@ -92,35 +94,13 @@ class SystemSetting extends DataProvider {
      */
     public static function getAll() {
         $settings = new SystemSetting();
-        return $settings->getCollection(["ORDER" => "group ASC"]);
+        return $settings->getCollection(["userid" => "0", "ORDER" => "group ASC"]);
     }
 
     /*
      * Delete setting with key
      */
-    public function delete($key) {
-        system\Helper::arcGetDatabase()->delete($this->table, ["key" => $key]);
+    public function delete($key, $id = 0) {
+        system\Helper::arcGetDatabase()->delete($this->table, ["AND" => ["key" => $key, "userid" => $id]]);
     }
-
-    /*
-     * Update the setting and save it to the database
-     */
-    public function update() {
-        $columns = array_slice($this->columns, 1);
-        $dataColumns = array();
-        $properties = get_object_vars($this);
-        foreach ($this->columns as $column) {
-            if ($column != "table" && $column != "columns") {
-                $dataColumns[$column] = $properties[$column];
-            }
-        }
-        $setting = SystemSetting::keyExists($this->key);
-        if ($setting == false) {
-            $dataColumns["key"] = $this->key;
-            system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
-        } else {
-            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["key" => $this->key]);
-        }
-    }
-
 }

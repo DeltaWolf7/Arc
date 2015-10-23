@@ -245,7 +245,7 @@ class Helper {
             self::$arc["post"]["error"] = "404";
             self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
         }
-        
+
         // get system messages
         if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
             self::arcGetStatus();
@@ -714,28 +714,44 @@ class Helper {
     }
 
     public static function arcProcessModuleTags($content) {
-        preg_match_all('/{{module:([^,]+?)}}/', $content, $matches);
+        preg_match_all('/{{module:([^,]+?):([^,]+?)}}/', $content, $matches);
         foreach ($matches[1] as $key => $filename) {
-            ob_start();
-            self::arcGetModule($filename);
-            $newContent = ob_get_contents();
-            ob_end_clean();
-            $content = str_replace("{{module:" . $filename . "}}", $newContent, $content);
+            foreach ($matches[2] as $key2 => $view) {
+                ob_start();
+                self::arcGetModule($filename, $view);
+                $newContent = ob_get_contents();
+                ob_end_clean();
+                $content = str_replace("{{module:" . $filename . ":" . $view . "}}", $newContent, $content);
+            }
         }
         return $content;
     }
 
-    public static function arcGetModule($name) {
+    /**
+     * 
+     * @param string $name Module name
+     * @param string $view View name
+     * Includes the module by name and view along with controller if it exists.
+     */
+    private static function arcGetModule($name, $view = "default") {
         if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
             \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
         }
-        
+
         if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php";
+        }
+
+        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php")) {
+            include_once self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php";
+        }
+
+        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
+            include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
         } else {
-            echo "The modules '{$name}' has no controller.php file.";
-            \Log::createLog("danger", "Modules", "Modules by the name of {$name} has no controller.php file.");
+            echo "The module '{$name}' has no view named '{$view}'.";
+            \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
         }
     }
 
