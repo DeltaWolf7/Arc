@@ -33,7 +33,3 @@ $user = system\Helper::arcGetUser();
         <a id="saveDetailsBtn" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
     </div>
 </div>
-
-<script>
-    setSID('<?php echo system\Helper::arcGetSessionID(); ?>');
-</script>

@@ -1,6 +1,6 @@
 // Register
 $("#registerBtn").click(function () {
-    arcAjaxRequest({firstname: $("#firstname").val(), lastname: $("#lastname").val(),
+    arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
         email: $("#email").val(), password: $("#password").val(), password2: $("#password2").val()},
             complete, null);
 });

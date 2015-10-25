@@ -15,6 +15,6 @@
     </div>
     <div class="panel-footer text-right">
         <a id="loginBtn" class="btn btn-primary">Login</a>
-        <a class="btn btn-default" href="<?php echo system\Helper::arcGetModulePath("user") . "forgot"; ?>">Forgot Password</a>
+        <a class="btn btn-default" href="<?php echo system\Helper::arcGetPath() . "forgot"; ?>">Forgot Password</a>
     </div>
 </div>

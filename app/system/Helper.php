@@ -191,7 +191,7 @@ class Helper {
      * Adds header information to a page from header array
      */
     public static function arcGetHeader() {
-// output header
+        // output header
         if (!empty(self::$arc["headerdata"])) {
             foreach (self::$arc["headerdata"] as $line) {
                 echo $line;
@@ -205,12 +205,13 @@ class Helper {
      * Adds footer information to a page from header array
      */
     public static function arcGetFooter() {
-// output header
+        // output header
         if (!empty(self::$arc["footerdata"])) {
             foreach (self::$arc["footerdata"] as $line) {
                 echo $line;
             }
         }
+        echo "<script>var arcsid = '" . self::arcGetSessionID() . "'</script>";
     }
 
     /**
@@ -230,26 +231,33 @@ class Helper {
      * Get the view based on the request
      */
     public static function arcGetView() {
-        // get page
         $uri = $_SERVER["REQUEST_URI"];
-        if ($uri == "/") {
-            $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-            $uri = $defaultPage->value;
-        }
-        $uri = trim($uri, '/');
-        $page = \Page::getBySEOURL($uri);
-        // does page exist
-        if ($page->id == 0) {
-            $page = \Page::getBySEOURL("error");
-            unset(self::$arc["post"]);
-            self::$arc["post"]["error"] = "404";
-            self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+        // set session if it exists.
+        if (self::arcGetPostData("arcsid") != null) {
+            self::arcSetSession(self::arcGetPostData("arcsid"));
         }
 
-        // get system messages
-        if (isset($_POST["action"]) && ($_POST["action"] == "getarcsystemmessages")) {
-            self::arcGetStatus();
-            return;
+        if (self::arcIsAjaxRequest() == false) {
+            // get page
+            if ($uri == "/") {
+                $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
+                $uri = $defaultPage->value;
+            }
+            $uri = trim($uri, '/');
+            $page = \Page::getBySEOURL($uri);
+            // does page exist
+            if ($page->id == 0) {
+                $page = \Page::getBySEOURL("error");
+                unset(self::$arc["post"]);
+                self::$arc["post"]["error"] = "404";
+                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            }
+        } else {
+            // get system messages
+            if (self::arcGetPostData("action") == "getarcsystemmessages") {
+                self::arcGetStatus();
+                return;
+            }
         }
 
         // expired session - check for actual user because guests don't need to timeout.
@@ -268,20 +276,19 @@ class Helper {
         // update last activity time stamp
         $_SESSION["LAST_ACTIVITY"] = time();
 
-
-        // get the current theme
-        $theme = \SystemSetting::getByKey("ARC_THEME");
-
-        // setup page
-        self::arcAddHeader("title", $page->title);
-        if (!empty($page->metadescription)) {
-            self::arcAddHeader("description", $page->metadescription);
-        }
-        if (!empty($page->metakeywords)) {
-            self::arcAddHeader("keywords", $page->metakeywords);
-        }
-
         if (self::arcIsAjaxRequest() == false) {
+            // get the current theme
+            $theme = \SystemSetting::getByKey("ARC_THEME");
+
+            // setup page
+            self::arcAddHeader("title", $page->title);
+            if (!empty($page->metadescription)) {
+                self::arcAddHeader("description", $page->metadescription);
+            }
+            if (!empty($page->metakeywords)) {
+                self::arcAddHeader("keywords", $page->metakeywords);
+            }
+
             // Check the theme in config exists.
             if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
                 $name = $theme->value;
@@ -314,9 +321,7 @@ class Helper {
                 die("Unable to find header.php for theme '" . $theme->value . "'.");
             }
             include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
-        }
 
-        if (self::arcIsAjaxRequest() == false) {
             // Show page
             echo self::arcProcessModuleTags(html_entity_decode($page->content));
 
@@ -325,6 +330,13 @@ class Helper {
                 die("Unable to find footer.php for theme '" . $theme->value . "'.");
             }
             include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php";
+        } else {
+            $data = explode("/", $uri);
+            if (isset($data[1]) && isset($data[2])) {
+                include self::arcGetModuleControllerPath($data[1], $data[2], true);
+            } else {
+                \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
+            }
         }
     }
 
@@ -547,7 +559,9 @@ class Helper {
             if ($page->seourl != "error") {
                 if (\UserPermission::hasPermission($groups, $page->seourl)) {
                     $data = explode("/", $page->seourl);
-                    self::$arc["menus"][ucwords($data[0])][$page->title] = $page->seourl;
+                    self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
+                    self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
+                    self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
                 }
             }
         }
@@ -561,19 +575,29 @@ class Helper {
      * Builds the html for the menu items
      */
     public static function arcProcessMenuItems($menus) {
-        foreach ($menus as $menu => $link) {
-            if (count($link) == 1) {
-                echo "<li><a href=\"" . self::arcGetPath() . $link[key($link)] . "\"><i class='fa fa-document'></i> " . key($link) . "</a></li>";
+        foreach ($menus as $menu => $item) {           
+            if (count($item) == 1) {
+                foreach ($item as $subitem => $more) {
+                    self::arcProcessMenuItem($more);
+                }
             } else {
                 echo "<li class=\"dropdown\">"
                 . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
                 . $menu . " <span class=\"caret\"></span></a><ul class=\"dropdown-menu\">";
-                foreach ($link as $name => $url) {
-                    echo "<li><a href=\"" . self::arcGetPath() . $url . "\"><i class='fa fa-document'></i> {$name}</a></li>";
+                foreach ($item as $subitem => $more) {
+                    self::arcProcessMenuItem($more);
                 }
                 echo "</ul></li>";
             }
         }
+    }
+
+    private static function arcProcessMenuItem($item) {
+        echo "<li><a href=\"" . self::arcGetPath() . $item["url"] . "\">";
+        if (!empty($item["icon"])) {
+            echo "<i class='{$item["icon"]}'></i> ";
+        }
+        echo $item["name"] . "</a></li>";
     }
 
     /**
@@ -713,6 +737,13 @@ class Helper {
         return self::arcGetPath(true) . "app/modules/{$name}/";
     }
 
+    public static function arcGetModuleControllerPath($name, $controller, $filesystem = false) {
+        if (!$filesystem) {
+            echo self::arcGetPath() . "{$name}/{$controller}";
+        }
+        return self::arcGetPath(true) . "app/modules/{$name}/controller/{$controller}.php";
+    }
+
     public static function arcProcessModuleTags($content) {
         preg_match_all('/{{module:([^,]+?):([^,]+?)}}/', $content, $matches);
         foreach ($matches[1] as $key => $filename) {
@@ -733,14 +764,10 @@ class Helper {
      * @param string $view View name
      * Includes the module by name and view along with controller if it exists.
      */
-    private static function arcGetModule($name, $view = "default") {
+    private static function arcGetModule($name, $view) {
         if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
             \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
-        }
-
-        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php")) {
-            include_once self::arcGetPath(true) . "app/modules/{$name}/controller/controller.php";
         }
 
         if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php")) {

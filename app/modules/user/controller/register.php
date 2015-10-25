@@ -56,5 +56,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Your details have been registered");
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/register.js");
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/register.js");
 }

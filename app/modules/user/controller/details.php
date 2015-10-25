@@ -19,5 +19,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Changes saved");
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/details.js");
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/details.js");
 }

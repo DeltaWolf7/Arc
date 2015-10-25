@@ -12,7 +12,7 @@ function forgotUpdateStatusCallback(data) {
 
 // Forgot
     $("#forgotBtn").click(function () {
-        arcAjaxRequest({email: $("#email").val()}, forgotComplete, null);
+        arcAjaxRequest("user/forgot", {email: $("#email").val()}, forgotComplete, null);
     });
     
     

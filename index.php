@@ -88,12 +88,9 @@ spl_autoload_register(function($class) {
 });
 
 // Default system settings
-system\Helper::arcCheckSettingExists("ARC_MAIL_FROM", "admin@server.local", "Mail");
-system\Helper::arcCheckSettingExists("ARC_MAIL_USE_SMTP", "0", "Mail");
-system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_USERNAME", "admin@server.local", "Mail");
-system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_PASSWORD", "password", "Mail");
-system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_SERVER", "localhost", "Mail");
-system\Helper::arcCheckSettingExists("ARC_MAIL_SMTP_PORT", "25", "Mail");
+system\Helper::arcCheckSettingExists("ARC_MAIL", "{\"smtp\":\"false\", \"server\":\"localhost\""
+        . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"admin@server.local\"}", "Mail");
+
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000", "System");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80", "System");
 system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30", "System");

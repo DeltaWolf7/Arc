@@ -30,5 +30,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     system\Helper::arcAddMessage("success", "Password reset link has been sent to your Email");
     Log::createLog("warning", "user", "Password reset sent: " . $_POST["email"]);
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath() . "js/forgot.js");
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/forgot.js");
 }

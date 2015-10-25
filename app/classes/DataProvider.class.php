@@ -100,8 +100,8 @@ abstract class DataProvider {
      * 
      * @param int $id Removes a database row based on the ID
      */
-    public function delete() {
-        system\Helper::arcGetDatabase()->delete($this->table, ["id" => $this->id]);
+    public function delete($id) {
+        system\Helper::arcGetDatabase()->delete($this->table, ["id" => $id]);
     }
 
     /**

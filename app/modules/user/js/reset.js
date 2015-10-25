@@ -13,6 +13,6 @@ function resetUpdateStatusCallback(data) {
 
 // Reset
     $("#btnReset").click(function () {
-        arcAjaxRequest({password: $("#password").val(), password2: $("#password2").val(), id: sid},
+        arcAjaxRequest("user/reset", {password: $("#password").val(), password2: $("#password2").val(), id: sid},
                 resetComplete, null)
     });

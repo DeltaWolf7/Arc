@@ -38,6 +38,8 @@
         public $seourl;
         public $metadescription;
         public $metakeywords;
+        public $sortorder;
+        public $iconclass;
 
         /**
          * Page constructor
@@ -50,8 +52,10 @@
             $this->metakeywords = "";
             $this->metatitle = "";
             $this->seourl = "";
+            $this->sortorder = 0;
+            $this->iconclass = "";
             $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords"];
+            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass"];
         }
 
         /**
@@ -67,7 +71,7 @@
 
         public static function getAllPages() {
             $page = new Page();
-            return $page->getCollection(["ORDER" => "seourl ASC"]);
+            return $page->getCollection(["ORDER" => "sortorder ASC"]);
         }
 
         public function getPermissions() {
