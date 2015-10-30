@@ -3,32 +3,32 @@
 if (system\Helper::arcIsAjaxRequest() == true) {
 
     if (empty($_POST["firstname"])) {
-        system\Helper::arcAddMessage("danger", "Firstname must be provided");
+        system\Helper::arcAddMessage("danger", "Please enter your firstname");
         return;
     }
 
     if (empty($_POST["lastname"])) {
-        system\Helper::arcAddMessage("danger", "Lastname must be provided");
+        system\Helper::arcAddMessage("danger", "Please enter your lastname");
         return;
     }
 
     if (empty($_POST["email"])) {
-        system\Helper::arcAddMessage("danger", "Email address must be provided");
+        system\Helper::arcAddMessage("danger", "Please enter your email address");
         return;
     }
 
     if (!filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
-        system\Helper::arcAddMessage("danger", "Invalid email address format");
+        system\Helper::arcAddMessage("danger", "Invalid email address entered");
         return;
     }
 
     if (empty($_POST["password"])) {
-        system\Helper::arcAddMessage("danger", "Password must be provided");
+        system\Helper::arcAddMessage("danger", "Please enter your password");
         return;
     }
 
     if (empty($_POST["password2"])) {
-        system\Helper::arcAddMessage("danger", "Password retype must be provided");
+        system\Helper::arcAddMessage("danger", "Please retype your password");
         return;
     }
 
