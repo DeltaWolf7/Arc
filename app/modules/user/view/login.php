@@ -10,12 +10,13 @@
                 <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password">
             </div>
             <a id="loginBtn" class="btn btn-primary btn-block">Login</a>
-            <p><a>Problems with login?</a></p>
+            <p><a>Problems signing in?</a></p>
         </div>
         <div class="col-md-5">
             <h3>New user? Sign up!</h3>
-            <p>Create your account to get access account management and exclusive services.</p>
-            <a class="btn btn-primary btn-block" onclick="switchView();">Create account</a>
+            <p>Creating a new account is fast and simple.</p>
+            <p>All you need is your email address and password of your choice. Click the button below to begin your registration now.</p>
+            <a class="btn btn-primary btn-block" style="margin-top: -2px;" onclick="switchView();">Create account</a>
         </div>
         <div class="col-md-1"></div>
     </div>
