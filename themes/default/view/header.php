@@ -7,22 +7,41 @@
         <?php system\Helper::arcGetHeader(); ?>
     </head>
     <body>
-        <div class="container">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                            <i class="sr-only">Toggle navigation</i>
-                            <i class="icon-bar"></i>
-                            <i class="icon-bar"></i>
-                            <i class="icon-bar"></i>
-                        </button>
-                        <div class="logo"><a href="<?php echo system\helper::arcGetPath(); ?>"><img src="<?php echo system\helper::arcGetThemePath() . "images/logo.png" ?>" alt="<?php echo ARCTITLE; ?>" /></a></div>
-                    </div>
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <?php system\Helper::arcGetMenu(); ?>
-                        </ul>
+        <!-- Outer Starts -->
+        <div class="container-fluid">
+
+            <!-- Header two Starts -->
+            <div class="header-2">
+
+                <!-- Container -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <!-- Logo section -->
+                            <div class="logo">
+                                <h1><a href="<?php echo system\Helper::arcGetPath(); ?>"><img src="<?php echo system\Helper::arcGetThemePath() . "images/logo.png"; ?>" alt="Arc Project"> Arc Project</a></h1>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+
+                            <!-- Navigation starts.  -->
+                            <div class="navy pull-right">			
+                                <ul>
+                                    <!-- Main menu -->
+                                    <?php system\Helper::arcGetMenu(); ?>
+                                </ul>
+                            </div>							
+                            <!-- Navigation ends -->
+
+                        </div>
+
                     </div>
                 </div>
-            </nav>
+            </div>
+
+            <!-- Header two ends -->
+
+
+            <!-- Main content starts -->
+
+            <div class="main-block index-portfolio">
