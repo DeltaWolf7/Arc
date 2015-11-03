@@ -81,11 +81,13 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
 
         // Get POST data
         self::$arc["post"] = array();
@@ -308,14 +310,15 @@ class Helper {
             $groups = self::arcGetUser()->getGroups();
         }
 
-        if (!\UserPermission::hasPermission($groups, $page->seourl)) {
-            $page = \Page::getBySEOURL("error");
-            unset(self::$arc["post"]);
-            self::$arc["post"]["error"] = "403";
-            self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-        }
-
         if (self::arcIsAjaxRequest() == false) {
+            if (!\UserPermission::hasPermission($groups, $page->seourl)) {
+                $page = \Page::getBySEOURL("error");
+                unset(self::$arc["post"]);
+                self::$arc["post"]["error"] = "403";
+                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            }
+
+
             // Check if the theme has a header and include if it does.
             if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php")) {
                 die("Unable to find header.php for theme '" . $theme->value . "'.");
@@ -575,7 +578,7 @@ class Helper {
      * Builds the html for the menu items
      */
     public static function arcProcessMenuItems($menus) {
-        foreach ($menus as $menu => $item) {           
+        foreach ($menus as $menu => $item) {
             if (count($item) == 1) {
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);

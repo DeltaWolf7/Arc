@@ -2,7 +2,7 @@ var page;
 
 function editPage(pageid) {
     page = pageid;
-    arcAjaxRequest({id: pageid, action: "edit"}, null, successEdit);
+    arcAjaxRequest("pagemanager/editpage", {id: page}, null, successEdit);
 }
 
 function successEdit(data) {
@@ -16,7 +16,7 @@ function successEdit(data) {
 }
 
 $("#savePageBtn").click(function () {
-    arcAjaxRequest({id: page, action: "save", title: $("#title").val(), seourl: $("#seourl").val(),
+    arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: $('.summernote').code()}, completeSave, null);
 });
@@ -42,7 +42,7 @@ function removePage(pageid) {
 }
 
 $("#doRemoveBtn").click(function () {
-    arcAjaxRequest({id: page, action: "remove"}, completeDo, null);
+    arcAjaxRequest("pagemanager/removepage", {id: page}, completeDo, null);
 });
 
 function completeDo(data) {
@@ -52,7 +52,7 @@ function completeDo(data) {
 }
 
 function getPages() {
-    arcAjaxRequest({action: "getpages"}, null, successGet);
+    arcAjaxRequest("pagemanager/getpages", {}, null, successGet);
 }
 
 function successGet(data) {
