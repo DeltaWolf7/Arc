@@ -8,7 +8,7 @@
     </head>
     <body>
         <!-- Outer Starts -->
-        <div class="container-fluid">
+        <div class="container-fluid container-fluid-nopad">
 
             <!-- Header two Starts -->
             <div class="header-2">
@@ -44,4 +44,4 @@
 
             <!-- Main content starts -->
 
-            <div class="main-block index-portfolio">
+            <div class="main-block">

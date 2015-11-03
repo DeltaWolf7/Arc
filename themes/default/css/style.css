@@ -14,7 +14,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-.container-fluid {
+.container-fluid-nopad {
     padding: 0;
 }
 

@@ -16,7 +16,7 @@
             <h3>New user? Sign up!</h3>
             <p>Creating a new account is fast and simple.</p>
             <p>All you need is your email address and password of your choice. Click the button below to begin your registration now.</p>
-            <a class="btn btn-primary btn-block" style="margin-top: -2px;" onclick="switchView();">Create account</a>
+            <a class="btn btn-primary btn-block" onclick="switchView();">Create account</a>
         </div>
         <div class="col-md-1"></div>
     </div>
