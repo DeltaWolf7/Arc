@@ -18,43 +18,32 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Page Details</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="title">Title</label>
-                                    <input type="text" class="form-control" id="title" placeholder="Title"
-                                           maxlength="200" data-toggle="tooltip" data-placement="top" title="Page Title (200 characters max)">
-                                </div>
-                                <div class="form-group">
-                                    <label for="seourl">SEO Url</label>
-                                    <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50"
-                                           data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
-                                </div>
 
-                            </div>
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" class="form-control" id="title" placeholder="Title"
+                                   maxlength="200" data-toggle="tooltip" data-placement="top" title="Page Title (200 characters max)">
                         </div>
+                        <div class="form-group">
+                            <label for="seourl">SEO Url</label>
+                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50"
+                                   data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
+                        </div>
+
                     </div>
                     <div class="col-md-6">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">META Details</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label for="metadescription">META Description</label>
-                                    <textarea class="form-control" id="metadescription" maxlength="160" placeholder="META Description" 
-                                              data-toggle="tooltip" data-placement="top" title="META Description (160 characters max)"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label for="metakeywords">META Keywords</label>
-                                    <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" 
-                                           data-toggle="tooltip" data-placement="top" title="Meta Keywords (69 characters max)">
-                                </div> 
-                            </div>
+
+                        <div class="form-group">
+                            <label for="metadescription">META Description</label>
+                            <textarea class="form-control" id="metadescription" maxlength="160" placeholder="META Description" 
+                                      data-toggle="tooltip" data-placement="top" title="META Description (160 characters max)"></textarea>
                         </div>
+                        <div class="form-group">
+                            <label for="metakeywords">META Keywords</label>
+                            <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" 
+                                   data-toggle="tooltip" data-placement="top" title="Meta Keywords (69 characters max)">
+                        </div> 
+
                     </div>
                 </div>
                 <div class="row">
