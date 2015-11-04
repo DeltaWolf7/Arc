@@ -3427,6 +3427,10 @@ body.boxed.img-5 {
     padding: 0;
 }
 
+.container-fluid {
+    margin: 0 10px 10px 10px;
+}
+
 /* Footer */
 .footer {
     position: absolute;
