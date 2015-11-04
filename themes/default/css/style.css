@@ -14,10 +14,6 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-.container-fluid-nopad {
-    padding: 0;
-}
-
 h1,
 h2,
 h3,
@@ -3426,11 +3422,21 @@ body.boxed.img-5 {
 	}
 }
 
+
+
+
+.container-fluid-nopad {
+    padding: 0;
+    margin-bottom: -60px;
+    padding-bottom: 60px;
+    height: auto;
+    min-height: 100%
+}
+
 /* Foot */
 .foot {
 	border-top: 3px solid;
-	margin-top: 30px;
-	padding: 15px 10px;
 	background: #333333;
 	color: #aaa;
+        height: 60px;
 }

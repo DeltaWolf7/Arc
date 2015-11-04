@@ -2,7 +2,13 @@
 
 <!-- Main content ends -->
 
-<!-- Foot Starts -->
+
+
+</div>
+
+<!-- Outer Ends -->		
+
+    <!-- Foot Starts -->
 
 <div class="foot">
     <!-- Container -->
@@ -14,10 +20,8 @@
 </div>
 
 <!-- Foot Ends -->
-
-</div>
-
-<!-- Outer Ends -->		
-<?php system\Helper::arcGetFooter(); ?>
+    
+    
+    <?php system\Helper::arcGetFooter(); ?>
 </body>
 </html>
