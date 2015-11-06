@@ -12,13 +12,15 @@ function successEdit(data) {
     $("#metadescription").val(jdata.metadescription);
     $("#metakeywords").val(jdata.metakeywords);
     $('.summernote').code(jdata.html);
+    $("#iconclass").val(jdata.iconclass);
+    $("#sortorder").val(jdata.sortorder);
     $("#myModal").modal('show');
 }
 
 $("#savePageBtn").click(function () {
     arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-        html: $('.summernote').code()}, completeSave, null);
+        html: $('.summernote').code(), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val()}, completeSave, null);
 });
 
 function completeSave(data) {

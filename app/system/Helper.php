@@ -78,7 +78,7 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
+        self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
@@ -269,7 +269,7 @@ class Helper {
                 session_unset();
                 session_destroy();
                 $page = \Page::getBySEOURL("error");
-                unset($arc["post"]);
+                unset(self::$arc["post"]);
                 self::$arc["post"]["error"] = "403";
                 self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
             }

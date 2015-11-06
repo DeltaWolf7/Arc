@@ -29,20 +29,30 @@
                             <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50"
                                    data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
                         </div>
+                        <div class="form-group">
+                            <label for="sortorder">Sort Order</label>
+                            <input type="text" class="form-control" id="sortorder" placeholder="Sort Order" maxlength="5"
+                                   data-toggle="tooltip" data-placement="top" title="Sort order">
+                        </div>
 
                     </div>
                     <div class="col-md-6">
 
                         <div class="form-group">
                             <label for="metadescription">META Description</label>
-                            <textarea class="form-control" id="metadescription" maxlength="160" placeholder="META Description" 
-                                      data-toggle="tooltip" data-placement="top" title="META Description (160 characters max)"></textarea>
+                            <input type="text" class="form-control" id="metadescription" maxlength="160" placeholder="META Description" 
+                                   data-toggle="tooltip" data-placement="top" title="META Description (160 characters max)">
                         </div>
                         <div class="form-group">
                             <label for="metakeywords">META Keywords</label>
                             <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" 
                                    data-toggle="tooltip" data-placement="top" title="Meta Keywords (69 characters max)">
                         </div> 
+                        <div class="form-group">
+                            <label for="iconclass">Icon Class</label>
+                            <input type="text" class="form-control" id="iconclass" placeholder="Icon Class" maxlength="20"
+                                   data-toggle="tooltip" data-placement="top" title="Icon Class">
+                        </div>
 
                     </div>
                 </div>
@@ -51,6 +61,13 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="summernote"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Insert module</label>
                             </div>
                         </div>
                     </div>
