@@ -326,6 +326,9 @@ class Helper {
             include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
 
             // Show page
+            if ($page->showtitle == "1") {
+                echo "<div class=\"page-header\"><h1>{$page->title}</h1></div>";
+            }
             echo self::arcProcessModuleTags(html_entity_decode($page->content));
 
             // Check if the theme has a footer and include if it does.

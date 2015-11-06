@@ -1,4 +1,5 @@
 </div>
+</div>
 <!-- Main content ends -->
 </div>
 <!-- Outer Ends -->		

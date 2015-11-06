@@ -1,7 +1,3 @@
-<div class="page-header">
-    <h1>Page Management</h1>
-</div>
-
 <div class="table-responsive">
     <table class="table table-hover table-condensed table-striped" id="pages">
     </table>
@@ -30,9 +26,18 @@
                                    data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
                         </div>
                         <div class="form-group">
-                            <label for="sortorder">Sort Order</label>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <label for="sortorder">Sort Order</label>
                             <input type="text" class="form-control" id="sortorder" placeholder="Sort Order" maxlength="5"
-                                   data-toggle="tooltip" data-placement="top" title="Sort order">
+                                   data-toggle="tooltip" data-placement="top" title="Sort order">                                    
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="showtitle">Show Title?</label>
+                                    <input class="form-control" type="checkbox" id="showtitle">
+                                </div>
+                            </div>
+                            
                         </div>
 
                     </div>
@@ -80,7 +85,7 @@
                                                     $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
                                                     foreach ($views as $view) {
                                                         if ($view != "." && $view != "..") {
-                                                            echo "<option>{{module:{$module}:" . substr($view, 0, -4) . "}}</option>";
+                                                            echo "<option value=\"{{module:{$module}:" . substr($view, 0, -4) . "}}\">{$module}:" . substr($view, 0, -4) . "</option>";
                                                         }
                                                     }
                                                 }

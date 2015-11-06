@@ -40,6 +40,7 @@
         public $metakeywords;
         public $sortorder;
         public $iconclass;
+        public $showtitle;
 
         /**
          * Page constructor
@@ -54,8 +55,9 @@
             $this->seourl = "";
             $this->sortorder = 0;
             $this->iconclass = "";
+            $this->showtitle = true;
             $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass"];
+            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass", "showtitle"];
         }
 
         /**

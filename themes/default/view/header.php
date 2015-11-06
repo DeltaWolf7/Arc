@@ -45,3 +45,4 @@
             <!-- Main content starts -->
 
             <div class="main-block">
+                <div class="container-fluid">
