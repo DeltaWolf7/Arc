@@ -67,7 +67,31 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Insert module</label>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="imodule">Insert Module</label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <select id="imodule" class="form-control">
+                                            <?php
+                                            $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
+                                            foreach ($modules as $module) {
+                                                if ($module != "." && $module != "..") {
+                                                    $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
+                                                    foreach ($views as $view) {
+                                                        if ($view != "." && $view != "..") {
+                                                            echo "<option>{{module:{$module}:" . substr($view, 0, -4) . "}}</option>";
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <a class="btn btn-primary" id="insertModule">Insert</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
