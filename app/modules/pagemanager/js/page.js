@@ -38,6 +38,10 @@ function updateStatusCallback(data) {
     }
 }
 
+$("#insertModule").click(function () {
+    $(".summernote").summernote("editor.insertText", $( "#imodule option:selected" ).text());
+});
+
 function removePage(pageid) {
     page = pageid;
     $("#deletePage").modal("show");
