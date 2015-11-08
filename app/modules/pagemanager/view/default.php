@@ -27,17 +27,20 @@
                         </div>
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-8">
                                     <label for="sortorder">Sort Order</label>
-                            <input type="text" class="form-control" id="sortorder" placeholder="Sort Order" maxlength="5"
-                                   data-toggle="tooltip" data-placement="top" title="Sort order">                                    
+                                    <input type="text" class="form-control" id="sortorder" placeholder="Sort Order" maxlength="5"
+                                           data-toggle="tooltip" data-placement="top" title="Sort order">                                    
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label for="showtitle">Show Title?</label>
-                                    <input class="form-control" type="checkbox" id="showtitle">
+                                    <select id="showtitle" class="form-control">
+                                        <option value="0">False</option>
+                                        <option value="1">True</option>
+                                    </select>
                                 </div>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -93,8 +96,8 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-1">
-                                        <a class="btn btn-primary" id="insertModule">Insert</a>
+                                    <div class="col-md-2">
+                                        <a class="btn btn-primary btn-block" id="insertModule">Insert</a>
                                     </div>
                                 </div>
                             </div>
