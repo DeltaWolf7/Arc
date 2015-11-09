@@ -56,10 +56,30 @@
                             <input type="text" class="form-control" id="metakeywords" maxlength="69" placeholder="META Keywords" 
                                    data-toggle="tooltip" data-placement="top" title="Meta Keywords (69 characters max)">
                         </div> 
-                        <div class="form-group">
-                            <label for="iconclass">Icon Class</label>
-                            <input type="text" class="form-control" id="iconclass" placeholder="Icon Class" maxlength="20"
-                                   data-toggle="tooltip" data-placement="top" title="Icon Class">
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="iconclass">Icon Class</label>
+                                    <input type="text" class="form-control" id="iconclass" placeholder="Icon Class" maxlength="20"
+                                           data-toggle="tooltip" data-placement="top" title="Icon Class">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="hidelogin">Hide On Login?</label>
+                                <select id="hidelogin" class="form-control">
+                                    <option value="0">False</option>
+                                    <option value="1">True</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label for="hidemenu">Hide Menu</label>
+                                <select id="hidemenu" class="form-control">
+                                    <option value="0">False</option>
+                                    <option value="1">True</option>
+                                </select>
+                            </div>
                         </div>
 
                     </div>

@@ -41,6 +41,8 @@
         public $sortorder;
         public $iconclass;
         public $showtitle;
+        public $hideonlogin;
+        public $hidefrommenu;
 
         /**
          * Page constructor
@@ -56,8 +58,10 @@
             $this->sortorder = 0;
             $this->iconclass = "";
             $this->showtitle = true;
+            $this->hideonlogin = false;
+            $this->hidefrommenu = false;
             $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass", "showtitle"];
+            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin", "hidefrommenu"];
         }
 
         /**

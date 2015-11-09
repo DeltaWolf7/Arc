@@ -11,6 +11,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $page->iconclass = $_POST["iconclass"];
     $page->title = $_POST["title"];
     $page->showtitle = $_POST["showtitle"];
+    $page->hideonlogin = $_POST["hidelogin"];
+    $page->hidefrommenu = $_POST["hidemenu"];
     $seo = Page::getBySEOURL($_POST["seourl"]);
     if ($seo->id != 0 && $seo->id != $page->id) {
         system\Helper::arcAddMessage("danger", "Duplicate SEO Url found, please choose another");

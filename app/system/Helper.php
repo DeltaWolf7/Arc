@@ -307,7 +307,7 @@ class Helper {
 
         $groups[] = \UserGroup::getByName("Guests");
         if (self::arcIsUserLoggedIn() == true) {
-            $groups = self::arcGetUser()->getGroups();
+            $groups = array_merge($groups, self::arcGetUser()->getGroups());
         }
 
         if (self::arcIsAjaxRequest() == false) {
@@ -558,18 +558,20 @@ class Helper {
 
         $groups[] = \UserGroup::getByName("Guests");
         if (self::arcIsUserLoggedIn() == true) {
-            $groups = self::arcGetUser()->getGroups();
+            $groups = array_merge($groups, self::arcGetUser()->getGroups());
         }
 
         foreach ($pages as $page) {
-            if ($page->seourl != "error") {
+
+                if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
+                    continue;
+                }
                 if (\UserPermission::hasPermission($groups, $page->seourl)) {
                     $data = explode("/", $page->seourl);
                     self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
                     self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
                     self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
                 }
-            }
         }
 
         self::arcProcessMenuItems(self::$arc["menus"]);

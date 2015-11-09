@@ -14,7 +14,9 @@ function successEdit(data) {
     $('.summernote').code(jdata.html);
     $("#iconclass").val(jdata.iconclass);
     $("#sortorder").val(jdata.sortorder);
-    $("#showtitle").val(jdata.showtitle );
+    $("#showtitle").val(jdata.showtitle);
+    $("#hidelogin").val(jdata.hidelogin);
+    $("#hidemenu").val(jdata.hidemenu);
     $("#myModal").modal('show');
 }
 
@@ -22,7 +24,7 @@ $("#savePageBtn").click(function () {
     arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: $('.summernote').code(), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
-        showtitle: $('#showtitle').val()}, completeSave, null);
+        showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val()}, completeSave, null);
 });
 
 function completeSave(data) {
