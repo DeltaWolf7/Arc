@@ -16,10 +16,14 @@ $("#forgotCancel").click(function () {
 });
 
 $("#sendReset").click(function () {
-    arcAjaxRequest("user/reset", {email: $("#email").val()}, complete, null);
+    arcAjaxRequest("user/reset", {email: $("#emailf").val()}, completeReset, null);
 });
 
 // Register/Login
+function completeReset() {
+    updateStatus("status");
+}
+
 function complete() {
     updateStatus("status", updateStatusCallback);
 }
@@ -49,6 +53,6 @@ function switchView() {
 // Register
 $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-        email: $("#email").val(), password: $("#password").val(), password2: $("#password2").val()},
+        email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()},
     complete, null);
 });
