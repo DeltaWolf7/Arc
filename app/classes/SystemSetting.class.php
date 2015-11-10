@@ -58,7 +58,6 @@ class SystemSetting extends DataProvider {
     public static function getByKey($key, $userid = 0) {
         $setting = new SystemSetting();
         $setting->get(["AND" => ["key" => $key, "userid" => $userid]]);
-
         // if no setting was found in the database, return empty setting with key.
         if (empty($setting->key)) {
             $setting->key = $key;
@@ -102,5 +101,26 @@ class SystemSetting extends DataProvider {
      */
     public function delete($key, $id = 0) {
         system\Helper::arcGetDatabase()->delete($this->table, ["AND" => ["key" => $key, "userid" => $id]]);
+    }
+    
+     /*
+     * Update the setting and save it to the database
+     */
+    public function update() {
+        $columns = array_slice($this->columns, 1);
+        $dataColumns = array();
+        $properties = get_object_vars($this);
+        foreach ($this->columns as $column) {
+            if ($column != "table" && $column != "columns") {
+                $dataColumns[$column] = $properties[$column];
+            }
+        }
+        $setting = SystemSetting::keyExists($this->key);
+        if ($setting == false) {
+            $dataColumns["key"] = $this->key;
+            system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
+        } else {
+            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["key" => $this->key]);
+        }
     }
 }
