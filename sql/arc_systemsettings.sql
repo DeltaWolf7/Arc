@@ -34,31 +34,6 @@ CREATE TABLE IF NOT EXISTS `arc_system_settings` (
   UNIQUE KEY `key` (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `arc_system_settings`
---
-
-INSERT INTO `arc_system_settings` (`key`, `value`, `group`, `userid`) VALUES
-('', '{"smtp":"false", "server":"localhost", "username":"", "password":"", "port":"25", "sender":"admin@server.local"}', 'Mail', 0),
-('ARC_ADMIN_THEME', 'ace', 'Theme', 0),
-('ARC_BLOG_CHAR_LIMIT', '600', 'Blog', 0),
-('ARC_BLOG_ENTRIES_PER_PAGE', '10', 'Blog', 0),
-('ARC_BLOG_MENU_TITLE', 'Blog', 'Blog', 0),
-('ARC_BLOG_NOLATEST', '10', 'Blog', 0),
-('ARC_BLOG_TITLE', 'Latest News', 'Blog', 0),
-('ARC_DEFAULT_PAGE', 'Welcome', 'System', 0),
-('ARC_FILE_UPLOAD_SIZE_BYTES', '2000000', 'System', 0),
-('ARC_KEEP_LOGS', '30', 'System', 0),
-('ARC_MAIL_FROM', 'admin@server.local', 'Mail', 0),
-('ARC_MAIL_SMTP_PASSWORD', 'password', 'Mail', 0),
-('ARC_MAIL_SMTP_PORT', '25', 'Mail', 0),
-('ARC_MAIL_SMTP_SERVER', 'localhost', 'Mail', 0),
-('ARC_MAIL_SMTP_USERNAME', 'admin@server.local', 'Mail', 0),
-('ARC_MAIL_USE_SMTP', '0', 'Mail', 0),
-('ARC_PAGE_MENU_NAME', 'Pages', 'System', 0),
-('ARC_THEME', 'default', 'Theme', 0),
-('ARC_THUMB_WIDTH', '80', 'System', 0);
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
