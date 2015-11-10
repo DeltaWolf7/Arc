@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-5 col-md-offset-1">
             <a id="loginBtn" class="btn btn-primary btn-block">Login</a>
-            <p><a id="btnForgot">Problems signing in?</a></p>
+            <a class="btn" id="btnForgot">Problems signing in?</a>
         </div>
         <div class="col-md-5">
             <a class="btn btn-primary btn-block" onclick="switchView();">Create account</a>
@@ -45,7 +45,18 @@
             <input maxlength="100" type="password" class="form-control" id="passwordr2" placeholder="Retype password" autocomplete="off">
         </div>
         <a id="registerBtn" class="btn btn-primary btn-block">Register</a>
-        <p><a onclick="switchView();">Already registered? Sign in</a></p>
+        <a class="btn" onclick="switchView();">Already registered? Sign in</a>
+    </div>
+</div>
+
+<div class="collapse" id="collapseC">
+    <div class="col-md-6 col-md-offset-1">
+        <h3>Forgot Password</h3>
+        <div class="form-group">
+            <input maxlength="100" type="text" class="form-control" id="emailf" placeholder="Email address">
+        </div>
+        <a id="sendReset" class="btn btn-primary btn-block">Request Reset</a>
+        <a class="btn" id="forgotCancel">Cancel</a>
     </div>
 </div>
 
