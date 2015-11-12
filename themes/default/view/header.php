@@ -9,7 +9,9 @@
     <body>
         <!-- Outer Starts -->
         <div class="container-fluid container-fluid-nopad">
-
+            <!-- Status -->
+            <div id="status"></div>
+            
             <!-- Header two Starts -->
             <div class="header-2">
 

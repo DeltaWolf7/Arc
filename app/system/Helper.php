@@ -513,11 +513,11 @@ class Helper {
         return true;
     }
 
-    public static function arcGetSessionID() {
+    private static function arcGetSessionID() {
         return session_id();
     }
 
-    public static function arcSetSession($id) {
+    private static function arcSetSession($id) {
         session_id($id);
     }
 
@@ -536,21 +536,6 @@ class Helper {
     }
 
     /**
-     * Output the path the the modules dispatch file
-     */
-    public static function arcGetDispatch() {
-        if (self::arcGetUrlData("administration") == false) {
-            $url = self::arcGetPath() . self::arcGetURLData("module");
-        } else {
-            $url = self::arcGetPath() . self::arcGetURLData("module") . "/administration";
-        }
-        if (self::arcGetURLData("action") != null) {
-            $url .= "/" . self::arcGetURLData("action");
-        }
-        echo $url;
-    }
-
-    /**
      * Processes modules and building menus from info data
      */
     public static function arcGetMenu() {
@@ -563,15 +548,15 @@ class Helper {
 
         foreach ($pages as $page) {
 
-                if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
-                    continue;
-                }
-                if (\UserPermission::hasPermission($groups, $page->seourl)) {
-                    $data = explode("/", $page->seourl);
-                    self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
-                    self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
-                    self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
-                }
+            if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
+                continue;
+            }
+            if (\UserPermission::hasPermission($groups, $page->seourl)) {
+                $data = explode("/", $page->seourl);
+                self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
+                self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
+                self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
+            }
         }
 
         self::arcProcessMenuItems(self::$arc["menus"]);
@@ -582,7 +567,7 @@ class Helper {
      * @param Array $menus Array containing menu data
      * Builds the html for the menu items
      */
-    public static function arcProcessMenuItems($menus) {
+    private static function arcProcessMenuItems($menus) {
         foreach ($menus as $menu => $item) {
             if (count($item) == 1) {
                 foreach ($item as $subitem => $more) {
@@ -591,7 +576,7 @@ class Helper {
             } else {
                 echo "<li class=\"dropdown\">"
                 . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . $menu . " <span class=\"caret\"></span></a><ul class=\"dropdown-menu\">";
+                . $menu . " </a><ul class=\"dropdown-menu\">";
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);
                 }

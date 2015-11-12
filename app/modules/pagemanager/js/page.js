@@ -6,7 +6,7 @@ function editPage(pageid) {
 }
 
 function successEdit(data) {
-    var jdata = jQuery.parseJSON(JSON.stringify(data));
+    var jdata = arcGetJson(data);
     $("#title").val(jdata.title);
     $("#seourl").val(jdata.seourl);
     $("#metadescription").val(jdata.metadescription);
@@ -28,19 +28,13 @@ $("#savePageBtn").click(function () {
 });
 
 function completeSave(data) {
-    updateStatus("status", updateStatusCallback);
-    if (data.danger == 0) {
-        $("#myModal").modal('hide');
-        getPages();
-    } else {
-        setTimeout(function () {
-            $("#myModal").modal('show');
-        }, 2000);
-    }
+    updateStatus("status");
+    $("#myModal").modal('hide');
+    getPages();
 }
 
 $("#insertModule").click(function () {
-    $(".summernote").summernote("editor.insertText", $("#imodule" ).val());
+    $(".summernote").summernote("editor.insertText", $("#imodule").val());
 });
 
 function removePage(pageid) {
@@ -63,7 +57,7 @@ function getPages() {
 }
 
 function successGet(data) {
-    var jdata = jQuery.parseJSON(JSON.stringify(data));
+    var jdata = arcGetJson(data);
     $('#pages').html(jdata.html);
 }
 
@@ -102,7 +96,7 @@ $(document).ready(function () {
 });
 
 function successSend(data) {
-    var jdata = jQuery.parseJSON(JSON.stringify(data));
+    var jdata = arcGetJson(data);
     if (jdata.status == "success") {
         $('.summernote').summernote("insertImage", jdata.data);
     } else {

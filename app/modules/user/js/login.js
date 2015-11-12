@@ -25,7 +25,7 @@ function completeReset() {
 }
 
 function complete(data) {
-    var jdata = jQuery.parseJSON(JSON.stringify(data));
+    var jdata = arcGetJson(data);
     if (jdata.url != "") {
         window.location = window.location.protocol + "//" + window.location.host + jdata.url;
     }

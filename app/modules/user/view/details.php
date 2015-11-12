@@ -24,7 +24,6 @@ $user = system\Helper::arcGetUser();
             <label for="retype">Retype</label>
             <input type="password" class="form-control" id="password2" maxlength="100" placeholder="Retype" autocomplete="off">
         </div>
-        <div id="status"></div>
     </div>
     <div class="panel-footer text-right">
         <a id="saveDetailsBtn" class="btn btn-primary">Update</a>

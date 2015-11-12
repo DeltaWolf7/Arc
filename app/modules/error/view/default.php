@@ -1,7 +1,4 @@
-<div class="page-header">
-    <h1>Error <?php echo system\Helper::arcGetPostData("error"); ?></h1>
-</div>
-
+<h1>Error <?php echo system\Helper::arcGetPostData("error"); ?></h1>
 <div class="jumbotron">
     <p><i class="fa fa-warning"></i> 
         <?php

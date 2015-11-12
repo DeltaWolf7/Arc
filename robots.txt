@@ -3,3 +3,5 @@ Disallow: /images/
 Disallow: /js/
 Disallow: /css/
 Disallow: /fonts/
+Disallow: /app/
+Disallow: /themes/

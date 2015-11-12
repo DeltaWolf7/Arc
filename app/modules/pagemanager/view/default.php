@@ -2,7 +2,6 @@
     <table class="table table-hover table-condensed table-striped" id="pages">
     </table>
 </div>
-<div id="status"></div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
