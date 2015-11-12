@@ -24,16 +24,13 @@ function completeReset() {
     updateStatus("status");
 }
 
-function complete() {
-    updateStatus("status", updateStatusCallback);
-}
-
-function updateStatusCallback(data) {
-    if (data.danger == 0) {
-        window.location = window.location.protocol + "//" + window.location.host;
+function complete(data) {
+    var jdata = jQuery.parseJSON(JSON.stringify(data));
+    if (jdata.url != "") {
+        window.location = window.location.protocol + "//" + window.location.host + jdata.url;
     }
+    updateStatus("status");
 }
-
 
 // Login effects
 var sview = false;

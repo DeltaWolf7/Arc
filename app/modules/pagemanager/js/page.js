@@ -29,9 +29,6 @@ $("#savePageBtn").click(function () {
 
 function completeSave(data) {
     updateStatus("status", updateStatusCallback);
-}
-
-function updateStatusCallback(data) {
     if (data.danger == 0) {
         $("#myModal").modal('hide');
         getPages();

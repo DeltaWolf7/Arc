@@ -27,6 +27,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     }
     system\Helper::arcAddMessage("danger", "Invalid username and/or password");
     Log::createLog("warning", "user", "Incorrect password: " . $_POST["email"]);
+    $url = SystemSetting::getByKey("ARC_LOGIN_URL");
+    system\Helper::arcReturnJSON(["url" => $url->value]);
 } else {
    return system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/login.js");
 }
