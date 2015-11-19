@@ -71,7 +71,7 @@
                                     <option value="1">True</option>
                                 </select>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <label for="hidemenu">Hide Menu</label>
                                 <select id="hidemenu" class="form-control">
@@ -120,8 +120,29 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="theme">Theme Override</label>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <select id="theme" class="form-control">
+                                            <option value="none">No Override</option>
+                                            <?php
+                                            $themes = scandir(system\Helper::arcGetPath(true) . "themes");
+                                            foreach ($themes as $theme) {
+                                                if ($theme != "." && $theme != "..") {
+                                                    echo "<option value=\"{$theme}\">{$theme}</option>";
+                                                }
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="modal-footer">

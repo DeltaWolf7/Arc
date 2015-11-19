@@ -25,7 +25,7 @@ namespace system;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-include_once "medoo.min.php";
+include_once "medoo.php";
 
 class Helper {
 
@@ -223,6 +223,13 @@ class Helper {
      */
     public static function arcGetThemePath($filesystem = false) {
         $theme = \SystemSetting::getByKey("ARC_THEME");
+        $uri = $_SERVER["REQUEST_URI"];
+        $uri = trim($uri, '/');
+        $page = \Page::getBySEOURL($uri);
+        if ($page->id != 0 && $page->theme != "none") {
+            $theme->value = $page->theme;
+        }
+        
         if ($filesystem) {
             return self::arcGetPath(true) . "themes/" . $theme->value . "/";
         }
@@ -297,6 +304,15 @@ class Helper {
                 $theme->value = "default";
                 $theme->update();
                 die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
+            }
+            
+            // If page has theme set, use it.
+            if ($page->theme != "none") {
+                $theme->value = $page->theme;
+                // If page theme is not present, switch to global theme.
+                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
+                    $theme = \SystemSetting::getByKey("ARC_THEME");
+                }
             }
 
             // Check if the theme has a controller and include it if it does.

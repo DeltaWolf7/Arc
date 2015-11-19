@@ -13,6 +13,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $page->showtitle = $_POST["showtitle"];
     $page->hideonlogin = $_POST["hidelogin"];
     $page->hidefrommenu = $_POST["hidemenu"];
+    $page->theme = $_POST["theme"];
     $seo = Page::getBySEOURL($_POST["seourl"]);
     if ($seo->id != 0 && $seo->id != $page->id) {
         system\Helper::arcAddMessage("danger", "Duplicate SEO Url found, please choose another");

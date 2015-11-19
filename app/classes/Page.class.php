@@ -43,6 +43,7 @@
         public $showtitle;
         public $hideonlogin;
         public $hidefrommenu;
+        public $theme;
 
         /**
          * Page constructor
@@ -60,8 +61,11 @@
             $this->showtitle = true;
             $this->hideonlogin = false;
             $this->hidefrommenu = false;
+            $this->theme = "none";
             $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metadescription", "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin", "hidefrommenu"];
+            $this->columns = ["id", "title", "content", "seourl", "metadescription",
+                "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
+                "hidefrommenu", "theme"];
         }
 
         /**
