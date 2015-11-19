@@ -9,7 +9,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $table .= "<tr class=\"active\"><td colspan=\"2\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> New Permission</a></td></tr>";
         foreach ($permissions as $permission) {
             $table .= "<tr><td>" . $permission->permission . "</td><td>";
-            if (file_exists(system\Helper::arcGetPath(true) . "/app/modules/{$permission->permission}")) {
+            $page = Page::getBySEOURL($permission->permission);
+            if ($page->id != 0) {
                 $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
             } else {
                 $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
