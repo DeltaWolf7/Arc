@@ -26,8 +26,9 @@ function completeReset() {
 
 function complete(data) {
     var jdata = arcGetJson(data);
-    if (jdata.url != "") {
-        window.location = window.location.protocol + "//" + window.location.host + jdata.url;
+    console.log(jdata.url);
+    if (jdata.url === undefined || jdata.url == null || jdata.url.length <= 0) {
+        window.location = window.location.protocol + "/" + window.location.host + jdata.url;
     }
     updateStatus("status");
 }

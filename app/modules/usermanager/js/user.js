@@ -3,53 +3,54 @@ var groupid;
 
 $(document).ready(function () {
     get("users");
+});
 
-    $("#addGroupBtn").click(function () {
-        if ($('#groups').val() != null) {
-            arcAjaxRequest("usermanager/addgroup", {id: userid, group: $('#groups').val()}, addGrpComplete, null);
-            updateStatus("status");
-        }
-    });
-
-    $("#removeFromGroupBtn").click(function () {
-        if ($('#groups2').val() != null) {
-            arcAjaxRequest("usermanager/removefromgroup", {id: userid, group: $('#groups2').val()}, remGrpComplete, null);
-            updateStatus("status");
-        }
-    });
-
-    $("#removeUserBtn").click(function () {
-        arcAjaxRequest("usermanager/remove", {id: userid}, remUserComplete, null);
-    });
-
-    $("#saveUserbtn").click(function () {
-        arcAjaxRequest("usermanager/saveuser", {id: userid, firstname: $('#firstname').val(),
-            lastname: $('#lastname').val(), email: $('#email').val(),
-            password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked")}, saveUserComplete, null);
-        updateStatus("status", updateStatusCallback);
-    });
-
-    $("#removeGroupDoBtn").click(function () {
-        arcAjaxRequest("usermanager/removegroup", {id: groupid}, removeGrpDoComplete, null);
+$("#addGroupBtn").click(function () {
+    if ($('#groups').val() != null) {
+        arcAjaxRequest("usermanager/addgroup", {id: userid, group: $('#groups').val()}, addGrpComplete, null);
         updateStatus("status");
-    });
+    }
+});
 
-    $("#saveGroupBtn").click(function () {
-        arcJaxRequest("usermanager/savegroup", {id: groupid, name: $('#groupname').val(),
-            description: $('#groupdescription').val()}, saveGroupComplete, null);
-        updateStatus("status", updateStatusCallback2);
-    });
+$("#removeFromGroupBtn").click(function () {
+    if ($('#groups2').val() != null) {
+        arcAjaxRequest("usermanager/removefromgroup", {id: userid, group: $('#groups2').val()}, remGrpComplete, null);
+        updateStatus("status");
+    }
+});
+
+$("#removeUserBtn").click(function () {
+    arcAjaxRequest("usermanager/remove", {id: userid}, remUserComplete, null);
+});
+
+$("#saveUserbtn").click(function () {
+    arcAjaxRequest("usermanager/saveuser", {id: userid, firstname: $('#firstname').val(),
+        lastname: $('#lastname').val(), email: $('#email').val(),
+        password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked")}, saveUserComplete, null);
+    updateStatus("status");
+});
+
+$("#removeGroupDoBtn").click(function () {
+    arcAjaxRequest("usermanager/removegroup", {id: groupid}, removeGrpDoComplete, null);
+    updateStatus("status");
+});
+
+$("#saveGroupBtn").click(function () {
+    arcAjaxRequest("usermanager/savegroup", {id: groupid, name: $('#groupname').val(),
+        description: $('#groupdescription').val()}, saveGroupComplete);
+    updateStatus("status");
 });
 
 function get(action) {
     if (action == "users") {
         $("#tabUsers").attr("class", "active");
         $("#tabGroups").removeClass("active");
+        arcAjaxRequest("usermanager/getusers", {}, null, getSuccess);
     } else {
         $("#tabUsers").removeClass("active");
         $("#tabGroups").attr("class", "active");
+        arcAjaxRequest("usermanager/getgroups", {}, null, getSuccess);
     }
-    arcAjaxRequest({action: action}, null, getSuccess);
 }
 
 function getSuccess(data) {
@@ -100,27 +101,20 @@ function remUserComplete() {
     $("#removeUserModal").modal("hide");
 }
 
-
-
 function saveUserComplete() {
     get("users");
-}
-
-function updateStatusCallback(data) {
-    if (data.danger == 0) {
-        $("#editUserModal").modal("hide");
-    }
+    $("#editUserModal").modal("hide");
 }
 
 function editGroup(id) {
     groupid = id;
-    arcAjaxRequest("usermanager/group", {id: groupid}, completeEditGroup, successEditGroup);
+    arcAjaxRequest("usermanager/group", {id: groupid}, successEditGroup, completeEditGroup);
 }
 
 function completeEditGroup(data) {
     var jdata = arcGetJson(data);
-    $('#groupname').val(jdata.name);
-    $('#groupdescription').val(jdata.description);
+    $("#groupname").val(jdata.name);
+    $("#groupdescription").val(jdata.description);
 }
 
 function successEditGroup(data) {
@@ -136,12 +130,7 @@ function removeGrpDoComplete() {
     $("#removeGroupModal").modal("hide");
 }
 
-function saveGroupComplete() {
+function saveGroupComplete(data) {
     get("groups");
-}
-
-function updateStatusCallback2(data) {
-    if (data.status == "success") {
-        $("#editGroupModal").modal("hide");
-    }
+    $("#editGroupModal").modal("hide");
 }

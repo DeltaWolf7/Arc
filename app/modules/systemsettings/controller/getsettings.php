@@ -10,8 +10,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $group = $setting->group;
         $table .= "<tr><td>{$setting->key}</td><td>{$setting->value}</td><td>{$setting->group}</td>"
-                . "<td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"editSetting('{$setting->key}');\"><i class=\"fa fa-edit\"></i> Edit</a>"
-                . " <a class=\"btn btn-default btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i> Delete</a></td></tr>";
+                . "<td class=\"text-right\"><div class=\"btn-group\" role=\"group\"><a class=\"btn btn-success btn-xs\" onclick=\"editSetting('{$setting->key}');\"><i class=\"fa fa-pencil\"></i></a>"
+                . "<a class=\"btn btn-danger btn-xs\" onclick=\"deleteSetting('{$setting->key}');\"><i class=\"fa fa-remove\"></i></a></div></td></tr>";
     }
     $table .= "</tbody>";
     system\Helper::arcReturnJSON(["html" => $table]);

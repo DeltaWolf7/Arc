@@ -21,5 +21,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
     }
     $table .= "</tbody></table>";
-    system\Helper::arcReturnJSON(["data" => $table]);
+    system\Helper::arcReturnJSON(["html" => $table]);
 }

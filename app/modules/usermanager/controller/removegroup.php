@@ -1,14 +1,14 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-    $user = new User();
-    $user->getByID($_POST["id"]);
-
-    if ($user->id == 0) {
-        system\Helper::arcAddMessage("danger", "User must be saved before group can be modified.");
+    $group = new UserGroup();
+    $group->getByID($_POST["id"]);
+    
+    if ($group->name == "Administrators" || $group->name == "Guests" || $group->name == "Users") {
+        system\Helper::arcAddMessage("danger", "Unable to delete builtin groups");
         return;
     }
-
-    $user->removeFromGroup($_POST["group"]);
-    system\Helper::arcAddMessage("success", "User removed from group");
+    
+    $group->delete($_POST["id"]);
+    system\Helper::arcAddMessage("success", "Group deleted");
 }
