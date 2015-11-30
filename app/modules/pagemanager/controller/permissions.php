@@ -1,3 +1,3 @@
 <?php
 
-system\Helper::arcAddFooter("js", system\Helper::arcGetModuleAbsolutePath(true) . "js/permissions.js");
+system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath(true) . "js/permissions.js");
