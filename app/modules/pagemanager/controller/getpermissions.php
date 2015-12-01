@@ -6,7 +6,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $table .= "<thead><tr><th>Module</th><th>Status</th><th></th></tr></thead><tbody>";
     foreach ($groups as $group) {
         $permissions = UserPermission::getByGroupID($group->id);
-        $table .= "<tr class=\"active\"><td colspan=\"2\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> New Permission</a></td></tr>";
+        $table .= "<tr class=\"active\"><td colspan=\"2\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i></a></td></tr>";
         foreach ($permissions as $permission) {
             $table .= "<tr><td>" . $permission->permission . "</td><td>";
             $page = Page::getBySEOURL($permission->permission);
@@ -16,7 +16,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $table .= "<div class=\"label label-danger\"><i class=\"fa fa-close\"></i></div>";
             }
             $table .= "</td>"
-                    . "<td class=\"text-right\"><a class=\"btn btn-default btn-xs\" onclick=\"editPermission({$group->id},{$permission->id});\"><i class=\"fa fa-pencil\"></i> Edit<a/> <a onclick=\"deletePermission({$permission->id});\" class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i> Delete<a/></td>"
+                    . "<td class=\"text-right\"><div class=\"btn-group\"><a class=\"btn btn-success btn-xs\" onclick=\"editPermission({$group->id},{$permission->id});\"><i class=\"fa fa-pencil\"></i><a/><a onclick=\"deletePermission({$permission->id});\" class=\"btn btn-danger btn-xs\"><i class=\"fa fa-remove\"></i><a/></div></td>"
                     . "</tr>";
         }
     }

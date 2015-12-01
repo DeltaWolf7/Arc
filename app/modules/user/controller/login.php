@@ -17,12 +17,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         if ($user->enabled) {
             system\Helper::arcSetUser($user);
             Log::createLog("success", "user", "User logged in: " . $_POST["email"]);
-            system\Helper::arcAddMessage("success", "Login successful.");
-
             system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/", "Login");
 
             $url = SystemSetting::getByKey("ARC_LOGIN_URL");
-            system\Helper::arcReturnJSON(["url" => $url->value]);
+            system\Helper::arcReturnJSON(["red" => $url->value]);
+            
+            system\Helper::arcAddMessage("success", "Login successful.");
             return;
         } else {
             system\Helper::arcAddMessage("danger", "Account disabled");

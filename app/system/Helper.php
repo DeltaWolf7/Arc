@@ -720,13 +720,14 @@ class Helper {
         return null;
     }
 
-    public static function arcCheckSettingExists($name, $value, $group) {
-        $setting = \SystemSetting::getByKey($name);
-        if (!\SystemSetting::keyExists($name)) {
+    public static function arcCheckSettingExists($name, $value, $group, $id = 0) {
+        $setting = \SystemSetting::getByKey($name, $id);
+        if (!\SystemSetting::keyExists($name, $id)) {
             $setting->value = $value;
             $setting->group = $group;
+            $setting->userid = $id;
             $setting->update();
-            \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "'");
+            \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "', ID: '" . $id . "'");
         }
     }
 

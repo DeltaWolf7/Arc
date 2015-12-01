@@ -2,11 +2,13 @@ var groupid;
 var pid;
 
 $("#savePermissionsBtn").click(function () {
-    arcAjaxRequest("usermanager/savepermission", {id: pid, group: groupid, module: $("#module").val()}, null, null);
-    updateStatus("status", updateStatusCallback3);
+    arcAjaxRequest("pagemanager/savepermission",
+        {id: pid, group: groupid, module: $("#module").val()},
+        saveComplete, null);
+    updateStatus("status");
 });
 
-function updateStatusCallback3(data) {
+function saveComplete(data) {
     if (data.danger == 0) {
         $("#editModal").modal("hide");
         getData();
@@ -16,7 +18,7 @@ function updateStatusCallback3(data) {
 function editPermission(group, id) {
     groupid = group;
     pid = id;
-    arcAjaxRequest("usermanager/editpermisson", {id: id}, null, successEdit);
+    arcAjaxRequest("pagemanager/editpermisson", {id: id}, null, successEdit);
 }
 
 function successEdit(data) {
@@ -26,20 +28,23 @@ function successEdit(data) {
 }
 
 function deletePermission(id) {
-    arcAjaxRequest("usermanager/deletepermisson", {id: id}, null, null);
-    updateStatus("status", null);
+    arcAjaxRequest("pagemanager/deletepermission", {id: id}, deleteComplete, null);
+}
+
+function deleteComplete() {
     getData();
+    updateStatus("status");
 }
 
 function getData() {
-    arcAjaxRequest("usermanager/getdata", {}, null, successData);
+    arcAjaxRequest("pagemanager/getpermissions", {}, null, successData);
 }
 
 function successData(data) {
     var jdata = arcGetJson(data);
-    $("#data").html(jdata.data);
+    $("#data").html(jdata.html);
 }
 
 $(document).ready(function () {
-        getData();
-    });
+    getData();
+});

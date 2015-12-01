@@ -1,6 +1,6 @@
 // Login
 $("#loginBtn").click(function () {
-    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, complete, null);
+    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, complete, success);
 });
 
 $("#btnForgot").click(function () {
@@ -25,12 +25,14 @@ function completeReset() {
 }
 
 function complete(data) {
-    var jdata = arcGetJson(data);
-    console.log(jdata.url);
-    if (jdata.url === undefined || jdata.url == null || jdata.url.length <= 0) {
-        window.location = window.location.protocol + "/" + window.location.host + jdata.url;
-    }
     updateStatus("status");
+}
+
+function success(data) {
+    var jdata = arcGetJson(data);
+    if (jdata.red) {
+        window.location = jdata.red;
+    }
 }
 
 // Login effects
@@ -52,5 +54,5 @@ function switchView() {
 $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
         email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()},
-    complete, null);
+            complete, null);
 });

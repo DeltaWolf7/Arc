@@ -7,9 +7,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     foreach ($users as $user) {
         $table .= "<tr><td>" . $user->getFullname() . "</td><td>";
         if ($user->enabled == true) {
-            $table .= "<i class=\"fa fa-check\"></i>";
+            $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i></div>";
         } else {
-            $table .= "<i class=\"fa fa-remove\"></i>";
+            $table .= "<div class=\"label label-danger\"><i class=\"fa fa-remove\"></i></div>";
         }
         $table .= "</td><td>" . $user->email . "</td><td class=\"text-right\">"
                 . "<div class=\"btn-group\" role=\"group\">"
