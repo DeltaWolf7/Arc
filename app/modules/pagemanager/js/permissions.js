@@ -3,16 +3,14 @@ var pid;
 
 $("#savePermissionsBtn").click(function () {
     arcAjaxRequest("pagemanager/savepermission",
-        {id: pid, group: groupid, module: $("#module").val()},
-        saveComplete, null);
-    updateStatus("status");
+            {id: pid, group: groupid, module: $("#module").val()},
+            saveComplete, null);
 });
 
-function saveComplete(data) {
-    if (data.danger == 0) {
-        $("#editModal").modal("hide");
-        getData();
-    }
+function saveComplete() {
+    $("#editModal").modal("hide");
+    getData();
+    updateStatus("status");
 }
 
 function editPermission(group, id) {
