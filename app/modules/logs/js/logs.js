@@ -1,5 +1,6 @@
 function clearLogs() {
     arcAjaxRequest("logs/deletelogs", {}, getLogs, null);
+    updateStatus("Status");
 }
 
 $(document).ready(function () {
