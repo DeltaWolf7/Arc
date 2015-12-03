@@ -91,36 +91,8 @@ class SystemSetting extends DataProvider {
      * 
      * @return array Collection of system settings
      */
-    public static function getAll() {
+    public static function getAll($userid = 0) {
         $settings = new SystemSetting();
-        return $settings->getCollection(["userid" => "0", "ORDER" => "group ASC"]);
-    }
-
-    /*
-     * Delete setting with key
-     */
-    public function delete($key, $id = 0) {
-        system\Helper::arcGetDatabase()->delete($this->table, ["AND" => ["key" => $key, "userid" => $id]]);
-    }
-    
-     /*
-     * Update the setting and save it to the database
-     */
-    public function update() {
-        $columns = array_slice($this->columns, 1);
-        $dataColumns = array();
-        $properties = get_object_vars($this);
-        foreach ($this->columns as $column) {
-            if ($column != "table" && $column != "columns") {
-                $dataColumns[$column] = $properties[$column];
-            }
-        }
-        $setting = SystemSetting::keyExists($this->key);
-        if ($setting == false) {
-            $dataColumns["key"] = $this->key;
-            system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
-        } else {
-            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["key" => $this->key]);
-        }
+        return $settings->getCollection(["userid" => $userid, "ORDER" => "group ASC"]);
     }
 }

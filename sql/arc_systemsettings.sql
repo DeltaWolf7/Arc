@@ -27,12 +27,14 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `arc_system_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(100) NOT NULL,
   `value` varchar(255) NOT NULL,
   `group` varchar(255) NOT NULL,
   `userid` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
