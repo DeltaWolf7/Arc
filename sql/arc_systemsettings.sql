@@ -32,8 +32,7 @@ CREATE TABLE IF NOT EXISTS `arc_system_settings` (
   `value` varchar(255) NOT NULL,
   `group` varchar(255) NOT NULL,
   `userid` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
