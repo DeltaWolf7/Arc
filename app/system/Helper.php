@@ -229,7 +229,7 @@ class Helper {
         if ($page->id != 0 && $page->theme != "none") {
             $theme->value = $page->theme;
         }
-        
+
         if ($filesystem) {
             return self::arcGetPath(true) . "themes/" . $theme->value . "/";
         }
@@ -246,118 +246,123 @@ class Helper {
             self::arcSetSession(self::arcGetPostData("arcsid"));
         }
 
-        if (self::arcIsAjaxRequest() == false) {
-            // get page
-            if ($uri == "/") {
-                $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-                $uri = $defaultPage->value;
-            }
-            $uri = trim($uri, '/');
-            $page = \Page::getBySEOURL($uri);
-            // does page exist
-            if ($page->id == 0) {
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "404";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-            }
+        if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
+            arcProcessImageUpload();
         } else {
-            // get system messages
-            if (self::arcGetPostData("action") == "getarcsystemmessages") {
-                self::arcGetStatus();
-                return;
-            }
-        }
 
-        // expired session - check for actual user because guests don't need to timeout.
-        if (ARCSESSIONTIMEOUT > 0) {
-            $timeout = ARCSESSIONTIMEOUT * 60;
-            if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
-                session_unset();
-                session_destroy();
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "403";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-            }
-        }
-
-        // update last activity time stamp
-        $_SESSION["LAST_ACTIVITY"] = time();
-
-        if (self::arcIsAjaxRequest() == false) {
-            // get the current theme
-            $theme = \SystemSetting::getByKey("ARC_THEME");
-
-            // setup page
-            self::arcAddHeader("title", $page->title);
-            if (!empty($page->metadescription)) {
-                self::arcAddHeader("description", $page->metadescription);
-            }
-            if (!empty($page->metakeywords)) {
-                self::arcAddHeader("keywords", $page->metakeywords);
-            }
-
-            // Check the theme in config exists.
-            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                $name = $theme->value;
-                $theme->value = "default";
-                $theme->update();
-                die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
-            }
-            
-            // If page has theme set, use it.
-            if ($page->theme != "none") {
-                $theme->value = $page->theme;
-                // If page theme is not present, switch to global theme.
-                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                    $theme = \SystemSetting::getByKey("ARC_THEME");
+            if (self::arcIsAjaxRequest() == false) {
+                // get page
+                if ($uri == "/") {
+                    $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
+                    $uri = $defaultPage->value;
+                }
+                $uri = trim($uri, '/');
+                $page = \Page::getBySEOURL($uri);
+                // does page exist
+                if ($page->id == 0) {
+                    $page = \Page::getBySEOURL("error");
+                    unset(self::$arc["post"]);
+                    self::$arc["post"]["error"] = "404";
+                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+                }
+            } else {
+                // get system messages
+                if (self::arcGetPostData("action") == "getarcsystemmessages") {
+                    self::arcGetStatus();
+                    return;
                 }
             }
 
-            // Check if the theme has a controller and include it if it does.
-            if (file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
-                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
-            }
-        }
-
-        $groups[] = \UserGroup::getByName("Guests");
-        if (self::arcIsUserLoggedIn() == true) {
-            $groups = array_merge($groups, self::arcGetUser()->getGroups());
-        }
-
-        if (self::arcIsAjaxRequest() == false) {
-            if (!\UserPermission::hasPermission($groups, $page->seourl)) {
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "403";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            // expired session - check for actual user because guests don't need to timeout.
+            if (ARCSESSIONTIMEOUT > 0) {
+                $timeout = ARCSESSIONTIMEOUT * 60;
+                if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
+                    session_unset();
+                    session_destroy();
+                    $page = \Page::getBySEOURL("error");
+                    unset(self::$arc["post"]);
+                    self::$arc["post"]["error"] = "403";
+                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+                }
             }
 
+            // update last activity time stamp
+            $_SESSION["LAST_ACTIVITY"] = time();
 
-            // Check if the theme has a header and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php")) {
-                die("Unable to find header.php for theme '" . $theme->value . "'.");
-            }
-            include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
+            if (self::arcIsAjaxRequest() == false) {
+                // get the current theme
+                $theme = \SystemSetting::getByKey("ARC_THEME");
 
-            // Show page
-            if ($page->showtitle == "1") {
-                echo "<div class=\"page-header\"><h1>{$page->title}</h1></div>";
-            }
-            echo self::arcProcessModuleTags(html_entity_decode($page->content));
+                // setup page
+                self::arcAddHeader("title", $page->title);
+                if (!empty($page->metadescription)) {
+                    self::arcAddHeader("description", $page->metadescription);
+                }
+                if (!empty($page->metakeywords)) {
+                    self::arcAddHeader("keywords", $page->metakeywords);
+                }
 
-            // Check if the theme has a footer and include if it does.
-            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php")) {
-                die("Unable to find footer.php for theme '" . $theme->value . "'.");
+                // Check the theme in config exists.
+                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
+                    $name = $theme->value;
+                    $theme->value = "default";
+                    $theme->update();
+                    die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
+                }
+
+                // If page has theme set, use it.
+                if ($page->theme != "none") {
+                    $theme->value = $page->theme;
+                    // If page theme is not present, switch to global theme.
+                    if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
+                        $theme = \SystemSetting::getByKey("ARC_THEME");
+                    }
+                }
+
+                // Check if the theme has a controller and include it if it does.
+                if (file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
+                    include_once self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
+                }
             }
-            include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php";
-        } else {
-            $data = explode("/", $uri);
-            if (isset($data[1]) && isset($data[2])) {
-                include self::arcGetModuleControllerPath($data[1], $data[2], true);
+
+            $groups[] = \UserGroup::getByName("Guests");
+            if (self::arcIsUserLoggedIn() == true) {
+                $groups = array_merge($groups, self::arcGetUser()->getGroups());
+            }
+
+            if (self::arcIsAjaxRequest() == false) {
+                if (!\UserPermission::hasPermission($groups, $page->seourl)) {
+                    $page = \Page::getBySEOURL("error");
+                    unset(self::$arc["post"]);
+                    self::$arc["post"]["error"] = "403";
+                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+                }
+
+
+                // Check if the theme has a header and include if it does.
+                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php")) {
+                    die("Unable to find header.php for theme '" . $theme->value . "'.");
+                }
+                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
+
+                // Show page
+                if ($page->showtitle == "1") {
+                    echo "<div class=\"page-header\"><h1>{$page->title}</h1></div>";
+                }
+                echo self::arcProcessModuleTags(html_entity_decode($page->content));
+
+                // Check if the theme has a footer and include if it does.
+                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php")) {
+                    die("Unable to find footer.php for theme '" . $theme->value . "'.");
+                }
+                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php";
             } else {
-                \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
+                $data = explode("/", $uri);
+                if (isset($data[1]) && isset($data[2])) {
+                    include self::arcGetModuleControllerPath($data[1], $data[2], true);
+                } else {
+                    \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
+                }
             }
         }
     }
