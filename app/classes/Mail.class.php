@@ -30,22 +30,22 @@
  * @author Craig Longford
  */
 class Mail {
-    
+       
     public function __construct() {
         // Get settings
         $settings = \SystemSetting::getByKey("ARC_MAIL");
-        $data = $settings->getArrayFromJson();
+        $this->data = $settings->getArrayFromJson();
         
         // Set default mode
-        if (boolval($data->{"smtp"}) == true)
+        if ($this->data->{"smtp"} == "true")
             $this->mode = "SMTP";
         else
             $this->mode = "MAIL";
     }
 
-    public function Mail($mode = "Mail") {
-// Set mode
-        switch (strtoupper($mode)) {
+    public function Mail($mode = "MAIL") {
+        // Set mode
+        switch (strtoupper(strtoupper($mode))) {
             case "MAIL":
                 $this->mode = "MAIL";
                 break;
@@ -67,11 +67,11 @@ class Mail {
      */
     public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array()) {
         try {
-            Log::createLog("info", "arcmail", "Send email request");
+            Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
             // Set from details
             if ($from == null) {
-                $from = $data->{"sender"};
+                $from = $this->data->{"sender"};
             }
 
             // Build to list
@@ -118,7 +118,7 @@ class Mail {
                     Log::createLog("success", "arcmail", "PHP mail sent.");
                     break;
                 case "SMTP":
-                    if ($SMTPIN = fsockopen($data->{"server"}, $data->{"port"})) {
+                    if ($SMTPIN = fsockopen($this->data->{"server"}, $this->data->{"port"})) {
                         // Output holder
                         $output = "";
 
@@ -127,9 +127,9 @@ class Mail {
                         $output = fgets($SMTPIN) . "\r\n";
                         fwrite($SMTPIN, "auth login\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $data->{"username"} . "\r\n");
+                        fwrite($SMTPIN, $this->data->{"username"} . "\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $data->{"password"} . "\r\n");
+                        fwrite($SMTPIN, $this->data->{"password"} . "\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
 
                         // Mail from
