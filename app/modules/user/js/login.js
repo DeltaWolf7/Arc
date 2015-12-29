@@ -24,14 +24,14 @@ function completeReset() {
     updateStatus("status");
 }
 
-function complete(data) {
+function complete() {
     updateStatus("status");
 }
 
 function success(data) {
     var jdata = arcGetJson(data);
-    if (jdata.red) {
-        window.location = jdata.red;
+    if (jdata.redirect) {
+        window.location = jdata.redirect;
     }
 }
 

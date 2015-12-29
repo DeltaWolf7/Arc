@@ -20,7 +20,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/", "Login");
 
             $url = SystemSetting::getByKey("ARC_LOGIN_URL");
-            system\Helper::arcReturnJSON(["red" => $url->value]);
+            system\Helper::arcReturnJSON(["redirect" => $url->value]);
             
             system\Helper::arcAddMessage("success", "Login successful.");
             return;

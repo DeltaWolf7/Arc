@@ -54,6 +54,11 @@ class Log extends DataProvider {
         $log->type = $type;
         $log->module = $module;
         $log->message = $message;
+        
+        
+        if (system\Helper::arcIsImpersonator()) {
+            $log->message = "Impersonated (" . system\Helper::arcGetImpersonator()->getFullname() . "): " . $log->message;
+        }
         $log->update();
         
         // get days
