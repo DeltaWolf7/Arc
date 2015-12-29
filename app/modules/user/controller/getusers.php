@@ -13,6 +13,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $table .= "</td><td>" . $user->email . "</td><td class=\"text-right\">"
                 . "<div class=\"btn-group\" role=\"group\">"
+                . "<a class=\"btn btn-primary btn-xs\" onclick=\"impersonateUser(" . $user->id . ")\"><i class=\"fa fa-user-secret\"></i></a>"
                 . "<a class=\"btn btn-success btn-xs\" onclick=\"editUser(" . $user->id . ")\"><i class=\"fa fa-pencil\"></i></a>"
                 . "<a class=\"btn btn-danger btn-xs\" onclick=\"removeUser(" . $user->id . ")\"><i class=\"fa fa-remove\"></i></a>"
                 . "</div>"

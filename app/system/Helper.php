@@ -246,6 +246,12 @@ class Helper {
             self::arcSetSession(self::arcGetPostData("arcsid"));
         }
 
+        //stop impersonating user
+        if ($uri == "/arcsiu") {
+            self::arcStopImpersonatingUser();
+            $uri = "/";
+        }
+
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
             arcProcessImageUpload();
         } else {
@@ -257,6 +263,7 @@ class Helper {
                     $uri = $defaultPage->value;
                 }
                 $uri = trim($uri, '/');
+
                 $page = \Page::getBySEOURL($uri);
                 // does page exist
                 if ($page->id == 0) {
@@ -344,6 +351,10 @@ class Helper {
                     die("Unable to find header.php for theme '" . $theme->value . "'.");
                 }
                 include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
+
+                if (isset($_SESSION["arc_imposter"])) {
+                    echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
+                }
 
                 // Show page
                 if ($page->showtitle == "1") {
@@ -471,6 +482,9 @@ class Helper {
      */
     public static function arcGetUser() {
         if (isset($_SESSION["arc_user"])) {
+            if (isset($_SESSION["arc_imposter"])) {
+                return unserialize($_SESSION["arc_imposter"]);
+            }
             return unserialize($_SESSION["arc_user"]);
         }
         return null;
@@ -482,6 +496,16 @@ class Helper {
      */
     public static function arcSetUser($user) {
         $_SESSION["arc_user"] = serialize($user);
+    }
+
+    public static function arcImpersonateUser($user) {
+        $_SESSION["arc_imposter"] = serialize($user);
+    }
+
+    public static function arcStopImpersonatingUser() {
+        if (isset($_SESSION["arc_imposter"])) {
+            unset($_SESSION["arc_imposter"]);
+        }
     }
 
     /**

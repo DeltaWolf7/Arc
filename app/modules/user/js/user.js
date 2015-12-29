@@ -134,3 +134,11 @@ function saveGroupComplete(data) {
     get("groups");
     $("#editGroupModal").modal("hide");
 }
+
+function impersonateUser(userid) {
+    arcAjaxRequest("user/impersonateUser", {id: userid}, impersonateComplete, null);
+}
+
+function impersonateComplete() {
+    updateStatus("status");
+}
