@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     $table = "<thead><tr><th>Key</th><th>Value</th><th>Group</th><th>&nbsp;</th></tr></tbody><tbody>";
-    $settings = SystemSetting::getAll();
+    $settings = SystemSetting::getAll($_POST["userid"]);
     $group = "";
     foreach ($settings as $setting) {
         if ($setting->group != $group && !empty($group)) {

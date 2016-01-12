@@ -1,7 +1,7 @@
 var kstring;
 
 function getSettings() {
-    arcAjaxRequest("systemsettings/getsettings", {}, null, settingsSuccess);
+    arcAjaxRequest("systemsettings/getusersettings", {userid: $("#userid").val()}, null, settingsSuccess);
 }
 
 function settingsSuccess(data) {
@@ -11,7 +11,7 @@ function settingsSuccess(data) {
 
 function editSetting(keystring) {
     kstring = keystring;
-    arcAjaxRequest("systemsettings/editsetting", {key: keystring}, editComplete, editSuccess);
+    arcAjaxRequest("systemsettings/editusersetting", {key: keystring, userid: $("#userid").val()}, editComplete, editSuccess);
 }
 
 function editSuccess(data) {
@@ -30,7 +30,7 @@ function deleteSetting(keystring) {
 }
 
 $("#doDeleteBtn").click(function () {
-    arcAjaxRequest("systemsettings/deletesetting", {key: kstring}, completeDoDelete, null);
+    arcAjaxRequest("systemsettings/deleteusersetting", {key: kstring, userid: $("#userid").val()}, completeDoDelete, null);
 });
 
 function completeDoDelete(data) {
@@ -40,7 +40,7 @@ function completeDoDelete(data) {
 }
 
 $("#saveSettingBtn").click(function () {
-    arcAjaxRequest("systemsettings/savesetting", {key: kstring, value: $('#sValue').val()}, completeSave, null);
+    arcAjaxRequest("systemsettings/saveusersetting", {key: kstring, value: $('#sValue').val(), userid: $("#userid").val()}, completeSave, null);
 });
 
 function completeSave(data) {

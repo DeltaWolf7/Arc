@@ -11,7 +11,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         return;
     }
 
-    $setting = SystemSetting::getByKey($_POST["key"]);
+    $setting = SystemSetting::getByKey($_POST["key"], $_POST["userid"]);
     if (empty($setting->key)) {
         $setting->key = ucwords($_POST["key"]);
     }
