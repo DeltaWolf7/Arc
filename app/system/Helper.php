@@ -603,7 +603,6 @@ class Helper {
         }
 
         foreach ($pages as $page) {
-
             if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
                 continue;
             }
@@ -612,6 +611,10 @@ class Helper {
                 self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
                 self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
                 self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
+                
+                if (count($data) == 1) {
+                    self::$arc["menus"][ucwords($data[0])]["icon"] = $page->iconclass;
+                }
             }
         }
 
@@ -629,10 +632,14 @@ class Helper {
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);
                 }
-            } else {
+            } else {            
+                $icon = "";
+                if (isset($item["icon"])) {
+                    $icon = $item["icon"];
+                }
                 echo "<li class=\"dropdown\">"
                 . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . $menu . " </a><ul class=\"dropdown-menu\">";
+                . "<i class='{$icon}'></i> {$menu}</a><ul class=\"dropdown-menu\">";
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);
                 }
