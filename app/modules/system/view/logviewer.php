@@ -17,4 +17,3 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
     <table class="table table-hover table-condensed" id="logs">     
     </table>
 </div>
-

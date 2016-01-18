@@ -78,7 +78,7 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddHeader("js", self::arcGetPath() . "js/jquery.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
@@ -767,11 +767,10 @@ class Helper {
         return null;
     }
 
-    public static function arcCheckSettingExists($name, $value, $group, $id = 0) {
+    public static function arcCheckSettingExists($name, $value, $id = 0) {
         $setting = \SystemSetting::getByKey($name, $id);
         if (!\SystemSetting::keyExists($name, $id)) {
             $setting->value = $value;
-            $setting->group = $group;
             $setting->userid = $id;
             $setting->update();
             \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "', ID: '" . $id . "'");

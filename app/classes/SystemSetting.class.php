@@ -33,7 +33,6 @@ class SystemSetting extends DataProvider {
 
     public $key;
     public $value;
-    public $group;
     public $userid;
 
     /**
@@ -46,7 +45,7 @@ class SystemSetting extends DataProvider {
         $this->userid = 0;
         $this->group = "Ungrouped";
         $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["key", "value", "group", "userid"];
+        $this->columns = ["id", "key", "value", "userid"];
     }
 
     /**

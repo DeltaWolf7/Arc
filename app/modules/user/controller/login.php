@@ -17,7 +17,7 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         if ($user->enabled) {
             system\Helper::arcSetUser($user);
             Log::createLog("success", "user", "User logged in: " . $_POST["email"]);
-            system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/", "Login");
+            system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
 
             $url = SystemSetting::getByKey("ARC_LOGIN_URL");
             system\Helper::arcReturnJSON(["redirect" => $url->value]);
