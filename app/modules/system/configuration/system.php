@@ -16,7 +16,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                 <input id="keepLogsDays" type="number" class="form-control" placeholder="30" value="<?php echo $logs->value; ?>">
                 <span class="input-group-addon">days</span>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveKeepLogsDays()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveKeepLogsDays()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -28,7 +28,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                 <input id="uploadLimit" type="number" class="form-control" placeholder="2000000" value="<?php echo $file_size->value; ?>">
                 <span class="input-group-addon">bytes</span>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveUploadLimit()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveUploadLimit()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -55,7 +55,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     ?>
                 </select>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveTheme()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveTheme()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -67,7 +67,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                 <input id="thumbWidth" type="number" class="form-control" placeholder="80" value="<?php echo $thumb->value; ?>">
                 <span class="input-group-addon">px</span>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveThumbWidth()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveThumbWidth()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -92,7 +92,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     ?>
                 </select>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveLoginURL()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveLoginURL()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -114,7 +114,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     ?>
                 </select>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveDefaultPage()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveDefaultPage()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>
@@ -132,7 +132,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     <option value="false"<?php if ($smtpData->smtp == "false") { echo " selected"; } ?>>False</option>
                 </select>
                 <span class="input-group-btn">
-                    <a class="btn btn-success" onclick="saveEmail()"><i class="fa fa-save"></i></a>
+                    <a class="btn btn-primary" onclick="saveEmail()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
                 </span>
             </div>
         </div>

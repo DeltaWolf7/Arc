@@ -52,4 +52,5 @@ function settingsSuccess(data) {
     var jdata = arcGetJson(data);
     $('#data').html(jdata.html);
     updateEmail();
+    $('[data-toggle="tooltip"]').tooltip()
 }

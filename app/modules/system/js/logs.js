@@ -6,6 +6,7 @@ function clearLogs() {
 $(document).ready(function () {
     getLogs();
     updateStatus("status");
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
