@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
     $setting->value = $_POST["url"];
     $setting->update();

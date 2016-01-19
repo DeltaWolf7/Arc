@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     if (empty($_POST["email"])) {
         system\Helper::arcAddMessage("danger", "Email address must be provided");
         return;

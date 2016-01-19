@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_THUMB_WIDTH");
     $setting->value = $_POST["width"];
     $setting->update();

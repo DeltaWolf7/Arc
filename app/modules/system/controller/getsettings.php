@@ -1,5 +1,5 @@
 <?php
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     ob_start();
     $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
     foreach ($modules as $module) {

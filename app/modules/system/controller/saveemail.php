@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_MAIL");
     $setting->value = "[\"smtp\":\"{$_POST["smtp"]}\", \"server\":\"{$_POST["server"]}\""
         . ", \"username\":\"{$_POST["username"]}\", \"password\":\"{$_POST["password"]}\","

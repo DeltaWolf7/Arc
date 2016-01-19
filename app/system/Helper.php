@@ -278,6 +278,11 @@ class Helper {
                     self::arcGetStatus();
                     return;
                 }
+                // new get
+                if (self::arcGetPostData("action") == "getarcstatusmessages") {
+                    self::arcGetStatusMessages();
+                    return;
+                }
             }
 
             // expired session - check for actual user because guests don't need to timeout.
@@ -476,6 +481,16 @@ class Helper {
         self::arcReturnJSON(["data" => $data, "warning" => $warning, "danger" => $danger]);
     }
 
+    // new
+    public static function arcGetStatusMessages() {
+        $data = array();
+        foreach ($_SESSION["status"] as $message) {
+            $data["messages"] = array("message" => $message["data"], "type" => $message["status"]);
+        }
+        $_SESSION["status"] = Array();
+        self::arcReturnJSON($data);
+    }
+
     /**
      * 
      * @return \User Return the logged in user object or null if no one
@@ -603,6 +618,7 @@ class Helper {
         }
 
         foreach ($pages as $page) {
+
             if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
                 continue;
             }
@@ -611,10 +627,6 @@ class Helper {
                 self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
                 self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
                 self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
-                
-                if (count($data) == 1) {
-                    self::$arc["menus"][ucwords($data[0])]["icon"] = $page->iconclass;
-                }
             }
         }
 
@@ -632,14 +644,10 @@ class Helper {
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);
                 }
-            } else {            
-                $icon = "";
-                if (isset($item["icon"])) {
-                    $icon = $item["icon"];
-                }
+            } else {
                 echo "<li class=\"dropdown\">"
                 . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . "<i class='{$icon}'></i> {$menu}</a><ul class=\"dropdown-menu\">";
+                . $menu . " </a><ul class=\"dropdown-menu\">";
                 foreach ($item as $subitem => $more) {
                     self::arcProcessMenuItem($more);
                 }

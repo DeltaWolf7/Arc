@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $logs = Log::getLogs();
     foreach ($logs as $log) {
         $log->delete($log->id);

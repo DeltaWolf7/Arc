@@ -7,5 +7,10 @@
 
 // Details
 function detailsComplete() {
-    updateStatus("status", null);
+    arcGetStatus(statusRefresh);
+}
+
+function statusRefresh(data) {
+    var jdata = arcGetJson(data);
+    swal("Success", jdata.messages.message, jdata.messages.type);
 }

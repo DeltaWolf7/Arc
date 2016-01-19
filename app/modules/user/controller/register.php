@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
 
     if (empty($_POST["firstname"])) {
         system\Helper::arcAddMessage("danger", "Please enter your firstname");

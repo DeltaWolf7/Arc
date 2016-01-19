@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $html = "<tr><th>Type</th><th>Module</th><th>When</th><th>Message</th></tr>";
     $logs = Log::getLogs();
 

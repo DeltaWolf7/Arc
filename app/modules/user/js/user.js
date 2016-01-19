@@ -8,14 +8,12 @@ $(document).ready(function () {
 $("#addGroupBtn").click(function () {
     if ($('#groups').val() != null) {
         arcAjaxRequest("user/addgroup", {id: userid, group: $('#groups').val()}, addGrpComplete, null);
-        updateStatus("status");
     }
 });
 
 $("#removeFromGroupBtn").click(function () {
     if ($('#groups2').val() != null) {
         arcAjaxRequest("user/removefromgroup", {id: userid, group: $('#groups2').val()}, remGrpComplete, null);
-        updateStatus("status");
     }
 });
 
@@ -27,19 +25,21 @@ $("#saveUserbtn").click(function () {
     arcAjaxRequest("user/saveuser", {id: userid, firstname: $('#firstname').val(),
         lastname: $('#lastname').val(), email: $('#email').val(),
         password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked")}, saveUserComplete, null);
-    updateStatus("status");
 });
 
 $("#removeGroupDoBtn").click(function () {
     arcAjaxRequest("user/removegroup", {id: groupid}, removeGrpDoComplete, null);
-    updateStatus("status");
 });
 
 $("#saveGroupBtn").click(function () {
     arcAjaxRequest("user/savegroup", {id: groupid, name: $('#groupname').val(),
         description: $('#groupdescription').val()}, saveGroupComplete);
-    updateStatus("status");
 });
+
+function statusRefresh(data) {
+    var jdata = arcGetJson(data);
+    swal("Success", jdata.messages.message, jdata.messages.type);
+}
 
 function get(action) {
     if (action == "users") {
@@ -56,6 +56,7 @@ function get(action) {
 function getSuccess(data) {
     var jdata = arcGetJson(data);
     $('#data').html(jdata.html);
+    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function addGrpComplete(data) {
@@ -104,6 +105,7 @@ function remUserComplete() {
 function saveUserComplete() {
     get("users");
     $("#editUserModal").modal("hide");
+    arcGetStatus(statusRefresh);
 }
 
 function editGroup(id) {
@@ -133,6 +135,7 @@ function removeGrpDoComplete() {
 function saveGroupComplete(data) {
     get("groups");
     $("#editGroupModal").modal("hide");
+    arcGetStatus(statusRefresh);
 }
 
 function impersonateUser(userid) {
@@ -140,5 +143,18 @@ function impersonateUser(userid) {
 }
 
 function impersonateComplete() {
-    updateStatus("status");
+    arcGetStatus(impersonateRefresh);
+}
+
+function impersonateRefresh(data) {
+    var jdata = arcGetJson(data);
+    swal(
+            {
+                title: "Success",
+                text: jdata.messages.message,
+                type: jdata.messages.type
+            },
+            function () {
+                window.location.href = "/";
+            });
 }
