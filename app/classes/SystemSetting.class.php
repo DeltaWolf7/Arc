@@ -43,7 +43,6 @@ class SystemSetting extends DataProvider {
         $this->key = "";
         $this->value = "";
         $this->userid = 0;
-        $this->group = "Ungrouped";
         $this->table = ARCDBPREFIX . "system_settings";
         $this->columns = ["id", "key", "value", "userid"];
     }
@@ -83,7 +82,7 @@ class SystemSetting extends DataProvider {
      * @return array Containing the split values
      */
     public function getArrayFromJson() {
-        return json_decode($this->value);
+        return json_decode($this->value, true);
     }
 
     /**
