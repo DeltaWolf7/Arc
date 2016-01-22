@@ -90,12 +90,13 @@ spl_autoload_register(function($class) {
 // Default system settings
 system\Helper::arcCheckSettingExists("ARC_MAIL", "{\"smtp\":\"false\", \"server\":\"localhost\""
         . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"admin@server.local\"}");
-system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
+system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "welcome");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
-system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "30");
+system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "31");
 system\Helper::arcCheckSettingExists("ARC_THEME", "default");
-system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "");
+system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
+system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\"}");
 
 // Get content.
 system\Helper::arcGetView();

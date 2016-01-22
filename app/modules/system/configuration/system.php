@@ -6,6 +6,7 @@ $thumb = SystemSetting::getByKey("ARC_THUMB_WIDTH");
 $login_url = SystemSetting::getByKey("ARC_LOGIN_URL");
 $default_page = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
 $mail = SystemSetting::getByKey("ARC_MAIL");
+$ldap = SystemSetting::getByKey("ARC_LDAP");
 ?>
 
 <div class="row">
@@ -83,11 +84,11 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     <?php
                     $pages = Page::getAllPages();
                     foreach ($pages as $page) {
-                            echo "<option";
-                            if ($login_url->value == $page->seourl) {
-                                echo " selected";
-                            }
-                            echo ">{$page->seourl}</option>";
+                        echo "<option";
+                        if ($login_url->value == $page->seourl) {
+                            echo " selected";
+                        }
+                        echo ">{$page->seourl}</option>";
                     }
                     ?>
                 </select>
@@ -105,11 +106,11 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                     <?php
                     $pages = Page::getAllPages();
                     foreach ($pages as $page) {
-                            echo "<option";
-                            if ($default_page->value == $page->seourl) {
-                                echo " selected";
-                            }
-                            echo ">{$page->seourl}</option>";
+                        echo "<option";
+                        if ($default_page->value == $page->seourl) {
+                            echo " selected";
+                        }
+                        echo ">{$page->seourl}</option>";
                     }
                     ?>
                 </select>
@@ -120,7 +121,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
         </div>
     </div>
 </div>
-    <hr />
+<hr />
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -128,8 +129,16 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                 <span class="input-group-addon">Use SMTP</span>
                 <?php $smtpData = $mail->getArrayFromJson(); ?>
                 <select id="useSMTP" class="form-control" onchange="updateEmail()">
-                    <option value="true"<?php if ($smtpData["smtp"] == "true") { echo " selected"; } ?>>True</option>
-                    <option value="false"<?php if ($smtpData["smtp"] == "false") { echo " selected"; } ?>>False</option>
+                    <option value="true"<?php
+                    if ($smtpData["smtp"] == "true") {
+                        echo " selected";
+                    }
+                    ?>>True</option>
+                    <option value="false"<?php
+                    if ($smtpData["smtp"] == "false") {
+                        echo " selected";
+                    }
+                    ?>>False</option>
                 </select>
                 <span class="input-group-btn">
                     <a class="btn btn-primary" onclick="saveEmail()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
@@ -170,3 +179,36 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
         </div>
     </div>
 </div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Use LDAP</span>
+                <?php $ldapData = $ldap->getArrayFromJson(); ?>
+                <select id="useLDAP" class="form-control" onchange="updateLDAP()">
+                    <option value="true"<?php
+                    if ($ldapData["ldap"] == "true") {
+                        echo " selected";
+                    }
+                    ?>>True</option>
+                    <option value="false"<?php
+                    if ($ldapData["ldap"] == "false") {
+                        echo " selected";
+                    }
+                    ?>>False</option>
+                </select>
+                <span class="input-group-btn">
+                    <a class="btn btn-primary" onclick="saveLDAP()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">LDAP Server</span>
+                <input id="ldapServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $ldapData["server"]; ?>">
+            </div>
+        </div>
+    </div>

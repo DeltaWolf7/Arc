@@ -11,25 +11,36 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
 
-    $user = \User::getByEmail($_POST["email"]);
+    $ldap = SystemSetting::getByKey("ARC_LDAP");
+    $ldapData = $ldap->getArrayFromJson();
+    if ($ldapData["ldap"] == "true") {
+        $ldap = ldap_connect($ldapData["server"]);
+        if ($bind = ldap_bind($ldap, $_POST["email"], $_POST['password'])) {
+            // build this, find email.
+        }
+    } else {
+        $user = \User::getByEmail($_POST["email"]);
 
-    if ($user->verifyPassword($_POST["password"])) {
-        if ($user->enabled) {
-            system\Helper::arcSetUser($user);
-            Log::createLog("success", "user", "User logged in: " . $_POST["email"]);
-            system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
+        if ($user->verifyPassword($_POST["password"])) {
+            if ($user->enabled) {
+                system\Helper::arcSetUser($user);
+                Log::createLog("success", "user", "User logged in: " . $_POST["email"]);
+                system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
 
-            $url = SystemSetting::getByKey("ARC_LOGIN_URL");
-            system\Helper::arcReturnJSON(["redirect" => $url->value]);
-            
-            system\Helper::arcAddMessage("success", "Login successful.");
-            return;
-        } else {
-            system\Helper::arcAddMessage("danger", "Account disabled");
-            Log::createLog("danger", "user", "Attempt to access disabled account: " . $_POST["email"]);
-            return;
+                $url = SystemSetting::getByKey("ARC_LOGIN_URL");
+                system\Helper::arcReturnJSON(["redirect" => $url->value]);
+
+                system\Helper::arcAddMessage("success", "Login successful.");
+                return;
+            } else {
+                system\Helper::arcAddMessage("danger", "Account disabled");
+                Log::createLog("danger", "user", "Attempt to access disabled account: " . $_POST["email"]);
+                return;
+            }
         }
     }
+
+
     system\Helper::arcAddMessage("danger", "Invalid username and/or password");
     Log::createLog("warning", "user", "Incorrect password: " . $_POST["email"]);
 } else {

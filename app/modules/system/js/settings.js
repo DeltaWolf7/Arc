@@ -28,6 +28,10 @@ function saveEmail() {
     sender: $("#smtpSender").val()}, null, updateStatus("status"));
 }
 
+function saveLDAP() {
+    arcAjaxRequest("system/saveldap", {ldap: $("#useLDAP").val(), server: $("#ldapServer").val()}, null, updateStatus("status"));
+}
+
 function updateEmail() {
     if ($("#useSMTP").val() == "false") {
         $("#smtpServer").prop("readonly", true);
@@ -44,6 +48,14 @@ function updateEmail() {
     }
 }
 
+function updateLDAP() {
+    if ($("#useLDAP").val() == "false") {
+        $("#ldapServer").prop("readonly", true);
+    } else {
+        $("#ldapServer").prop("readonly", false);
+    }
+}
+
 $(document).ready(function () {
     arcAjaxRequest("system/getsettings", {}, null, settingsSuccess);
 });
@@ -52,5 +64,6 @@ function settingsSuccess(data) {
     var jdata = arcGetJson(data);
     $('#data').html(jdata.html);
     updateEmail();
+    updateLDAP();
     $('[data-toggle="tooltip"]').tooltip()
 }
