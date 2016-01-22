@@ -128,8 +128,8 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
                 <span class="input-group-addon">Use SMTP</span>
                 <?php $smtpData = $mail->getArrayFromJson(); ?>
                 <select id="useSMTP" class="form-control" onchange="updateEmail()">
-                    <option value="true"<?php if ($smtpData->smtp == "true") { echo " selected"; } ?>>True</option>
-                    <option value="false"<?php if ($smtpData->smtp == "false") { echo " selected"; } ?>>False</option>
+                    <option value="true"<?php if ($smtpData["smtp"] == "true") { echo " selected"; } ?>>True</option>
+                    <option value="false"<?php if ($smtpData["smtp"] == "false") { echo " selected"; } ?>>False</option>
                 </select>
                 <span class="input-group-btn">
                     <a class="btn btn-primary" onclick="saveEmail()" data-toggle="tooltip" data-placement="bottom" title="Save"><i class="fa fa-save"></i></a>
@@ -141,31 +141,31 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Mail server</span>
-                <input id="smtpServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $smtpData->server; ?>">
+                <input id="smtpServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $smtpData["server"]; ?>">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Username</span>
-                <input id="smtpUser" type="text" class="form-control" value="<?php echo $smtpData->username; ?>">
+                <input id="smtpUser" type="text" class="form-control" value="<?php echo $smtpData["username"]; ?>">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Password</span>
-                <input id="smtpPass" type="password" class="form-control" value="<?php echo $smtpData->password; ?>">
+                <input id="smtpPass" type="password" class="form-control" value="<?php echo $smtpData["password"]; ?>">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Port</span>
-                <input id="smtpPort" type="number" class="form-control" placeholder="21" value="<?php echo $smtpData->port; ?>">
+                <input id="smtpPort" type="number" class="form-control" placeholder="21" value="<?php echo $smtpData["port"]; ?>">
             </div>
         </div>
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Sender</span>
-                <input id="smtpSender" type="email" class="form-control" value="<?php echo $smtpData->sender; ?>">
+                <input id="smtpSender" type="email" class="form-control" value="<?php echo $smtpData["sender"]; ?>">
             </div>
         </div>
     </div>
