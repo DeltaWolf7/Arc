@@ -603,7 +603,7 @@ class Helper {
     /**
      * Processes modules and building menus from info data
      */
-    public static function arcGetMenu() {
+    public static function arcGetMenu($ddcss = "dropdown", $ddtoggle = "dropdown-toggle", $ddmenu = "dropdown-menu") {
         $pages = \Page::getAllPages();
 
         $groups[] = \UserGroup::getByName("Guests");
@@ -624,7 +624,7 @@ class Helper {
             }
         }
 
-        self::arcProcessMenuItems(self::$arc["menus"]);
+        self::arcProcessMenuItems(self::$arc["menus"], $ddcss, $ddtoggle, $ddmenu);
     }
 
     /**
@@ -632,18 +632,18 @@ class Helper {
      * @param Array $menus Array containing menu data
      * Builds the html for the menu items
      */
-    private static function arcProcessMenuItems($menus) {
+    private static function arcProcessMenuItems($menus, $ddcss, $ddtoggle, $ddmenu) {
         foreach ($menus as $menu => $item) {
             if (count($item) == 1) {
                 foreach ($item as $subitem => $more) {
-                    self::arcProcessMenuItem($more);
+                    self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
                 }
             } else {
-                echo "<li class=\"dropdown\">"
-                . "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . $menu . " </a><ul class=\"dropdown-menu\">";
+                echo "<li class=\"{$ddcss}\">"
+                . "<a href=\"#\" class=\"{$ddtoggle}\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
+                . $menu . " </a><ul class=\"{$ddmenu}\">";
                 foreach ($item as $subitem => $more) {
-                    self::arcProcessMenuItem($more);
+                    self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
                 }
                 echo "</ul></li>";
             }
