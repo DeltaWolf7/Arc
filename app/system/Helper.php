@@ -43,12 +43,6 @@ class Helper {
         // Start session
         session_start();
 
-        // Default view data, if  nothing is set.
-        if (empty(self::$arc["urldata"])) {
-            self::$arc["urldata"]["module"] = ARCDEFAULTMODULE;
-            self::$arc["urldata"]["action"] = ARCDEFAULTACTION;
-        }
-
         // Initilise menu
         self::$arc["menus"] = Array();
 

@@ -29,7 +29,8 @@ function saveEmail() {
 }
 
 function saveLDAP() {
-    arcAjaxRequest("system/saveldap", {ldap: $("#useLDAP").val(), server: $("#ldapServer").val()}, null, updateStatus("status"));
+    arcAjaxRequest("system/saveldap", {ldap: $("#useLDAP").val(), server: $("#ldapServer").val()
+    , domain: $("#ldapDomain").val(), base: $("#ldapBase").val()}, null, updateStatus("status"));
 }
 
 function updateEmail() {
@@ -51,8 +52,12 @@ function updateEmail() {
 function updateLDAP() {
     if ($("#useLDAP").val() == "false") {
         $("#ldapServer").prop("readonly", true);
+        $("#ldapDomain").prop("readonly", true);
+        $("#ldapBase").prop("readonly", true);
     } else {
         $("#ldapServer").prop("readonly", false);
+        $("#ldapDomain").prop("readonly", false);
+        $("#ldapBase").prop("readonly", false);
     }
 }
 

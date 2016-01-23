@@ -211,4 +211,16 @@ $ldap = SystemSetting::getByKey("ARC_LDAP");
                 <input id="ldapServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $ldapData["server"]; ?>">
             </div>
         </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Domain</span>
+                <input id="ldapDomain" type="text" class="form-control" placeholder="mydomain" value="<?php echo $ldapData["domain"]; ?>">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Base</span>
+                <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local" value="<?php echo $ldapData["base"]; ?>">
+            </div>
+        </div>
     </div>
