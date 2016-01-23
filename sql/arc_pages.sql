@@ -55,8 +55,8 @@ INSERT INTO `arc_pages` (`id`, `title`, `content`, `seourl`, `metadescription`, 
 (6, 'Logout', '{{module:user:logout}}', 'account/logout', '', '', 999, '', 0, 0, 0, 'none'),
 (7, 'User Details', '{{module:user:details}}', 'account/details', '', '', 1, '', 1, 0, 0, 'none'),
 (8, 'Page Permissions', '&lt;p&gt;{{module:pagemanager:permissions}}&lt;br&gt;&lt;/p&gt;', 'administration/permissions', '', '', 0, '', 0, 0, 0, 'none'),
-(9, 'System Logs', '&lt;p&gt;{{module:logs:default}}&lt;br&gt;&lt;/p&gt;', 'administration/logs', '', '', 0, '', 0, 0, 0, 'none'),
-(10, 'System Settings', '&lt;p&gt;{{module:systemsettings:default}}&lt;br&gt;&lt;/p&gt;', 'administration/settings', '', '', 0, '', 0, 0, 0, 'none'),
+(9, 'System Logs', '&lt;p&gt;{{module:system:logviewer}}&lt;br&gt;&lt;/p&gt;', 'administration/logs', '', '', 0, '', 0, 0, 0, 'none'),
+(10, 'System Settings', '&lt;p&gt;{{module:system:systemsettings}}&lt;br&gt;&lt;/p&gt;', 'administration/settings', '', '', 0, '', 0, 0, 0, 'none'),
 (11, 'User Management', '&lt;p&gt;{{module:user:users}}&lt;br&gt;&lt;/p&gt;', 'administration/users', '', '', 0, '', 0, 0, 0, 'none');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
