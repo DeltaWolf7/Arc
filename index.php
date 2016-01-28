@@ -96,7 +96,9 @@ system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
 system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "31");
 system\Helper::arcCheckSettingExists("ARC_THEME", "default");
 system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
-system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\", \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
+system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","
+        . " \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
+system\Helper::arcCheckSettingExists("ARC_VERSION", "0.3.0.0");
 
 // Get content.
 system\Helper::arcGetView();

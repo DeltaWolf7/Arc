@@ -840,4 +840,8 @@ class Helper {
         }
     }
 
+    public static function arcGetVersion() {
+        $version = \SystemSetting::getByKey("ARC_VERSION");
+        return $version->value;
+    }
 }
