@@ -40,7 +40,6 @@ CREATE TABLE IF NOT EXISTS `arc_user_permissions` (
 INSERT INTO `arc_user_permissions` (`id`, `groupid`, `permission`) VALUES
 (1, 3, 'welcome'),
 (2, 3, 'error'),
-(3, 3, 'test/breadcrumb'),
 (4, 1, 'administration/pagemanager'),
 (5, 3, 'login'),
 (6, 2, 'account/logout'),
