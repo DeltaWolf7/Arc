@@ -1,1 +1,2 @@
-Forgot password broken.
+Editor for reset password email
+Fix summernote source issue

@@ -810,27 +810,4 @@ class Helper {
         $version = \SystemSetting::getByKey("ARC_VERSION");
         return $version->value;
     }
-
-    public static function arcGetSettingModules($includeOnly = array()) {
-        ob_start();
-        $modules = scandir(self::arcGetPath(true) . "app/modules");
-        foreach ($modules as $module) {
-            if ($module != "." && $module != "..") {
-                if (count($includeOnly) > 0 && !in_array($module, $includeOnly)) {
-                    continue;
-                }
-                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/configuration/system.php")) {
-                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/controller/default.php")) {
-                        $module_name = "";
-                        include self::arcGetPath(true) . "app/modules/" . $module . "/controller/default.php";
-                    }
-                    echo "<h3>" . ucwords($module) . "</h3>";
-                    include self::arcGetPath(true) . "app/modules/" . $module . "/configuration/system.php";
-                }
-            }
-        }
-        $html = ob_get_contents();
-        ob_end_clean();
-        return $html;
-    }
 }

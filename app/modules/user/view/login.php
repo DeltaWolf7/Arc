@@ -37,7 +37,7 @@
                 <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Lastname">
             </div>
             <div class="form-group">
-                <input maxlength="100" type="text" class="form-control" id="emailr" placeholder="Email address">
+                <input maxlength="100" type="email" class="form-control" id="emailr" placeholder="Email address">
             </div>
             <div class="form-group">
                 <input maxlength="100" type="password" class="form-control" id="passwordr" placeholder="Password" autocomplete="off">
@@ -54,7 +54,7 @@
         <div class="col-md-6 col-md-offset-1">
             <h3>Forgot Password</h3>
             <div class="form-group">
-                <input maxlength="100" type="text" class="form-control" id="emailf" placeholder="Email address">
+                <input maxlength="100" type="email" class="form-control" id="emailf" placeholder="Email address">
             </div>
             <a id="sendReset" class="btn btn-primary btn-block">Request Reset</a>
             <a class="btn" id="forgotCancel">Cancel</a>

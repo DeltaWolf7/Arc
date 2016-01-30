@@ -1,5 +1,9 @@
 function clearLogs() {
-    arcAjaxRequest("system/deletelogs", {}, getLogs, null);
+    arcAjaxRequest("system/deletelogs", {}, update);
+}
+
+function update() {
+    getLogs();
     arcGetStatus();
 }
 

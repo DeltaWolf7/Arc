@@ -55,6 +55,10 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Your details have been registered");
+    
+    system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
+    $url = SystemSetting::getByKey("ARC_LOGIN_URL");
+    system\Helper::arcReturnJSON(["redirect" => $url->value]);
 } else {
     system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/register.js");
 }

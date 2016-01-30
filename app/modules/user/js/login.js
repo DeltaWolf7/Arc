@@ -10,13 +10,18 @@ $("#btnForgot").click(function () {
 });
 
 $("#forgotCancel").click(function () {
+    cancelForgot();
+});
+
+function cancelForgot() {
     $('#collapseA').collapse('show');
     $('#collapseB').collapse('hide');
     $('#collapseC').collapse('hide');
-});
+}
 
 $("#sendReset").click(function () {
-    arcAjaxRequest("user/reset", {email: $("#emailf").val()});
+    arcAjaxRequest("user/reset", {email: $("#emailf").val()}, arcGetStatus);
+    cancelForgot();
 });
 
 function success(data) {
@@ -44,5 +49,5 @@ function switchView() {
 // Register
 $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-        email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()}, arcGetStatus);
+        email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()}, arcGetStatus, success);
 });

@@ -9,9 +9,11 @@ if (system\Helper::arcIsAjaxRequest()) {
         $password = md5(uniqid($user->email, true));
         $user->setPassword($password);
         $user->update();
+        
+        $messageS = SystemSetting::getByKey("ARC_PASSWORD_RESET_MESSAGE");
 
-        $message = "You or someone else has requested a password reset.<br />"
-                . "Your new password is '" . $password . "'.";
+        $message = html_entity_decode($messageS->value);
+        $message = str_replace("{password}", $password, $message);
 
         $mail = new Mail();
         $mail->Send($user->email, "Password Reset Request", $message, true);
