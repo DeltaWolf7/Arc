@@ -1,7 +1,5 @@
 <div id="data" class="table-responsive">
 </div>
-<div id="status"></div>
-
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

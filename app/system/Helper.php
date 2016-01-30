@@ -267,11 +267,6 @@ class Helper {
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
             } else {
-                // get system messages
-                if (self::arcGetPostData("action") == "getarcsystemmessages") {
-                    self::arcGetStatus();
-                    return;
-                }
                 // new get
                 if (self::arcGetPostData("action") == "getarcstatusmessages") {
                     self::arcGetStatusMessages();
@@ -437,49 +432,20 @@ class Helper {
         }
     }
 
-    public static function arcAddMessage($status, $data) {
-        $_SESSION["status"][] = ["data" => $data, "status" => $status];
+    public static function arcAddMessage($status, $data, $parameters = array()) {
+        $_SESSION["status"][] = ["data" => $data, "status" => $status, "parameters" => $parameters];
     }
 
     public static function arcClearStatus() {
         $_SESSION["status"] = Array();
     }
 
-    /**
-     * Output a standard status div.
-     */
-    public static function arcGetStatus() {
-        $data = "";
-        $warning = 0;
-        $danger = 0;
-        foreach ($_SESSION["status"] as $message) {
-            $data .= "<div id=\"" . uniqid() . "\" class=\"alert alert-" . $message["status"] . " alert-dismissible\" role=\"alert\">"
-                    . "<button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
-            switch ($message["status"]) {
-                case "danger":
-                    $danger++;
-                    $data .= "<i class=\"fa fa-close\"></i> ";
-                    break;
-                case "warning":
-                    $warning++;
-                    $data .= "<i class=\"fa fa-warning\"></i> ";
-                    break;
-                default:
-                    $data .= "<i class=\"fa fa-check\"></i> ";
-                    break;
-            }
-            $data .= $message["data"] . "</div>" . PHP_EOL;
-        }
-
-        $_SESSION["status"] = Array();
-        self::arcReturnJSON(["data" => $data, "warning" => $warning, "danger" => $danger]);
-    }
-
-    // new
+    // new notification manager
     public static function arcGetStatusMessages() {
         $data = array();
         foreach ($_SESSION["status"] as $message) {
-            $data["messages"] = array("message" => $message["data"], "type" => $message["status"]);
+            $data["messages"] = array("message" => $message["data"], "type" => $message["status"],
+                "parameters" => $message["parameters"]);
         }
         $_SESSION["status"] = Array();
         self::arcReturnJSON($data);
@@ -843,5 +809,28 @@ class Helper {
     public static function arcGetVersion() {
         $version = \SystemSetting::getByKey("ARC_VERSION");
         return $version->value;
+    }
+
+    public static function arcGetSettingModules($includeOnly = array()) {
+        ob_start();
+        $modules = scandir(self::arcGetPath(true) . "app/modules");
+        foreach ($modules as $module) {
+            if ($module != "." && $module != "..") {
+                if (count($includeOnly) > 0 && !in_array($module, $includeOnly)) {
+                    continue;
+                }
+                if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/configuration/system.php")) {
+                    if (file_exists(self::arcGetPath(true) . "app/modules/" . $module . "/controller/default.php")) {
+                        $module_name = "";
+                        include self::arcGetPath(true) . "app/modules/" . $module . "/controller/default.php";
+                    }
+                    echo "<h3>" . ucwords($module) . "</h3>";
+                    include self::arcGetPath(true) . "app/modules/" . $module . "/configuration/system.php";
+                }
+            }
+        }
+        $html = ob_get_contents();
+        ob_end_clean();
+        return $html;
     }
 }

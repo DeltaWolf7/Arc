@@ -1,6 +1,6 @@
 // Login
 $("#loginBtn").click(function () {
-    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, complete, success);
+    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, arcGetStatus, success);
 });
 
 $("#btnForgot").click(function () {
@@ -16,17 +16,8 @@ $("#forgotCancel").click(function () {
 });
 
 $("#sendReset").click(function () {
-    arcAjaxRequest("user/reset", {email: $("#emailf").val()}, completeReset, null);
+    arcAjaxRequest("user/reset", {email: $("#emailf").val()});
 });
-
-// Register/Login
-function completeReset() {
-    updateStatus("status");
-}
-
-function complete() {
-    updateStatus("status");
-}
 
 function success(data) {
     var jdata = arcGetJson(data);
@@ -53,6 +44,5 @@ function switchView() {
 // Register
 $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-        email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()},
-            complete, null);
+        email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()}, arcGetStatus);
 });

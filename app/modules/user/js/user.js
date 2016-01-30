@@ -36,11 +36,6 @@ $("#saveGroupBtn").click(function () {
         description: $('#groupdescription').val()}, saveGroupComplete);
 });
 
-function statusRefresh(data) {
-    var jdata = arcGetJson(data);
-    swal("Success", jdata.messages.message, jdata.messages.type);
-}
-
 function get(action) {
     if (action == "users") {
         $("#tabUsers").attr("class", "active");
@@ -56,7 +51,6 @@ function get(action) {
 function getSuccess(data) {
     var jdata = arcGetJson(data);
     $('#data').html(jdata.html);
-    $('[data-toggle="tooltip"]').tooltip();
 }
 
 function addGrpComplete(data) {
@@ -105,7 +99,7 @@ function remUserComplete() {
 function saveUserComplete() {
     get("users");
     $("#editUserModal").modal("hide");
-    arcGetStatus(statusRefresh);
+    arcGetStatus();
 }
 
 function editGroup(id) {
@@ -135,7 +129,7 @@ function removeGrpDoComplete() {
 function saveGroupComplete(data) {
     get("groups");
     $("#editGroupModal").modal("hide");
-    arcGetStatus(statusRefresh);
+    arcGetStatus();
 }
 
 function impersonateUser(userid) {
@@ -143,18 +137,6 @@ function impersonateUser(userid) {
 }
 
 function impersonateComplete() {
-    arcGetStatus(impersonateRefresh);
-}
-
-function impersonateRefresh(data) {
-    var jdata = arcGetJson(data);
-    swal(
-            {
-                title: "Success",
-                text: jdata.messages.message,
-                type: jdata.messages.type
-            },
-            function () {
-                window.location.href = "/";
-            });
+    arcGetStatus();
+    window.location.href = "/";
 }

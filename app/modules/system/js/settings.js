@@ -1,36 +1,10 @@
-function saveKeepLogsDays() {
-    arcAjaxRequest("system/savedays", {days: $("#keepLogsDays").val()}, null, updateStatus("status"));
-}
-
-function saveUploadLimit() {
-    arcAjaxRequest("system/saveuploadlimit", {limit: $("#uploadLimit").val()}, null, updateStatus("status"));
-}
-
-function saveTheme() {
-    arcAjaxRequest("system/savetheme", {theme: $("#theme").val()}, null, updateStatus("status"));
-}
-
-function saveThumbWidth() {
-    arcAjaxRequest("system/savethumbwidth", {width: $("#thumbWidth").val()}, null, updateStatus("status"));
-}
-
-function saveLoginURL() {
-    arcAjaxRequest("system/saveloginurl", {url: $("#loginURL").val()}, null, updateStatus("status"));
-}
-
-function saveDefaultPage() {
-    arcAjaxRequest("system/savedefaultpage", {url: $("#defaultPage").val()}, null, updateStatus("status"));
-}
-
-function saveEmail() {
-    arcAjaxRequest("system/saveemail", {smtp: $("#useSMTP").val(), server: $("#smtpServer").val(),
-    username: $("#smtpUser").val(), password: $("#smtpPass").val(), port: $("#smtpPort").val(),
-    sender: $("#smtpSender").val()}, null, updateStatus("status"));
-}
-
-function saveLDAP() {
-    arcAjaxRequest("system/saveldap", {ldap: $("#useLDAP").val(), server: $("#ldapServer").val()
-    , domain: $("#ldapDomain").val(), base: $("#ldapBase").val()}, null, updateStatus("status"));
+function saveSystem() {
+    arcAjaxRequest("system/savesettings", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
+        domain: $("#ldapDomain").val(), base: $("#ldapBase").val(), smtp: $("#useSMTP").val(),
+        smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
+        port: $("#smtpPort").val(), sender: $("#smtpSender").val(), defaultPage: $("#defaultPage").val(),
+        loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
+        limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val()}, arcGetStatus);
 }
 
 function updateEmail() {
@@ -70,5 +44,4 @@ function settingsSuccess(data) {
     $('#data').html(jdata.html);
     updateEmail();
     updateLDAP();
-    $('[data-toggle="tooltip"]').tooltip()
 }

@@ -30,7 +30,7 @@ $("#savePageBtn").click(function () {
 });
 
 function completeSave(data) {
-    updateStatus("status");
+    arcGetStatus();
     $("#myModal").modal('hide');
     getPages();
 }
@@ -51,7 +51,7 @@ $("#doRemoveBtn").click(function () {
 function completeDo(data) {
     getPages();
     $("#deletePage").modal("hide");
-    updateStatus("status", null);
+    arcGetStatus();
 }
 
 function getPages() {
@@ -102,7 +102,7 @@ function successSend(data) {
     if (jdata.status == "success") {
         $('.summernote').summernote("insertImage", jdata.data);
     } else {
-        updateStatus("status", null);
+        arcGetStatus();
     }
     $("body").removeClass();
     $("body").addClass("modal-open");

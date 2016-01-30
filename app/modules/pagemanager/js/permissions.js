@@ -10,7 +10,7 @@ $("#savePermissionsBtn").click(function () {
 function saveComplete() {
     $("#editModal").modal("hide");
     getData();
-    updateStatus("status");
+    arcGetStatus();
 }
 
 function editPermission(group, id) {
@@ -31,7 +31,7 @@ function deletePermission(id) {
 
 function deleteComplete() {
     getData();
-    updateStatus("status");
+    arcGetStatus();
 }
 
 function getData() {

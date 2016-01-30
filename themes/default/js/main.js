@@ -57,3 +57,15 @@ $(document).ready(function(){
 		format: "multitoggle"
 	});
 });
+
+function arcNotification(data) {
+    var type = "success";
+    var title = "Success";
+    if (data.messages.type == "danger") {
+        type = "error";
+        title = "Error";
+    }
+    swal(title, data.messages.message, type);
+}
+
+

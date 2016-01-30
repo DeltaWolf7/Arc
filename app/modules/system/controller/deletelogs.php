@@ -5,5 +5,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     foreach ($logs as $log) {
         $log->delete($log->id);
     }
-    system\Helper::arcAddMessage("success", "Logs purged.");
+    system\Helper::arcAddMessage("success", "Logs purged");
 }

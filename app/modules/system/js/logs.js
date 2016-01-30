@@ -1,12 +1,10 @@
 function clearLogs() {
     arcAjaxRequest("system/deletelogs", {}, getLogs, null);
-    updateStatus("Status");
+    arcGetStatus();
 }
 
 $(document).ready(function () {
     getLogs();
-    updateStatus("status");
-    $('[data-toggle="tooltip"]').tooltip();
 });
 
 
