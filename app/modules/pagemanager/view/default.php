@@ -104,10 +104,12 @@
                                             $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
                                             foreach ($modules as $module) {
                                                 if ($module != "." && $module != "..") {
-                                                    $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
-                                                    foreach ($views as $view) {
-                                                        if ($view != "." && $view != "..") {
-                                                            echo "<option value=\"{{module:{$module}:" . substr($view, 0, -4) . "}}\">{$module}:" . substr($view, 0, -4) . "</option>";
+                                                    if (file_exists(system\Helper::arcGetPath(true) . "app/modules/{$module}/view")) {
+                                                        $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
+                                                        foreach ($views as $view) {
+                                                            if ($view != "." && $view != "..") {
+                                                                echo "<option value=\"{{module:{$module}:" . substr($view, 0, -4) . "}}\">{$module}:" . substr($view, 0, -4) . "</option>";
+                                                            }
                                                         }
                                                     }
                                                 }

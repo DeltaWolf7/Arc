@@ -37,7 +37,7 @@ class Mail {
         $this->data = $settings->getArrayFromJson();
         
         // Set default mode
-        if ($this->data->{"smtp"} == "true")
+        if ($this->data["smtp"] == "true")
             $this->mode = "SMTP";
         else
             $this->mode = "MAIL";
@@ -71,7 +71,7 @@ class Mail {
 
             // Set from details
             if ($from == null) {
-                $from = $this->data->{"sender"};
+                $from = $this->data["sender"];
             }
 
             // Build to list
@@ -118,7 +118,7 @@ class Mail {
                     Log::createLog("success", "arcmail", "PHP mail sent.");
                     break;
                 case "SMTP":
-                    if ($SMTPIN = fsockopen($this->data->{"server"}, $this->data->{"port"})) {
+                    if ($SMTPIN = fsockopen($this->data["server"], $this->data["port"])) {
                         // Output holder
                         $output = "";
 
@@ -127,9 +127,9 @@ class Mail {
                         $output = fgets($SMTPIN) . "\r\n";
                         fwrite($SMTPIN, "auth login\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $this->data->{"username"} . "\r\n");
+                        fwrite($SMTPIN, $this->data["username"] . "\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $this->data->{"password"} . "\r\n");
+                        fwrite($SMTPIN, $this->data["password"] . "\r\n");
                         $output .= fgets($SMTPIN) . "\r\n";
 
                         // Mail from
