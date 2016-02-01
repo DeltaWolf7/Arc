@@ -11,7 +11,7 @@ function successEdit(data) {
     $("#seourl").val(jdata.seourl);
     $("#metadescription").val(jdata.metadescription);
     $("#metakeywords").val(jdata.metakeywords);
-    $('.summernote').code(jdata.html);
+    $('#summernote').summernote('code', jdata.html);
     $("#iconclass").val(jdata.iconclass);
     $("#sortorder").val(jdata.sortorder);
     $("#showtitle").val(jdata.showtitle);
@@ -26,7 +26,7 @@ $("#savePageBtn").click(function () {
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: $('.summernote').code(), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
-    theme: $('#theme').val()}, completeSave, null);
+        theme: $('#theme').val()}, completeSave, null);
 });
 
 function completeSave(data) {
@@ -64,7 +64,7 @@ function successGet(data) {
 }
 
 $(document).ready(function () {
-    $('.summernote').summernote({height: 250,
+    $('#summernote').summernote({
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['insert', ['superscript', 'subscript']],
@@ -77,23 +77,13 @@ $(document).ready(function () {
             ['link', ['link', 'picture', 'hr']],
             ['source', ['codeview']]
         ],
-        onImageUpload: function (files) {
-            sendFile(files[0]);
+        callbacks: {
+            onImageUpload: function (files) {
+                // upload image to server and create imgNode...
+                $summernote.summernote('insertNode', imgNode);
+            }
         }
     });
-
-    function sendFile(file) {
-        data = new FormData();
-        data.append("file", file);
-        arcAjaxRequest(data, null, successSend);
-        //data: data,
-        //    url: "<?php system\Helper::arcGetDispatch(); ?>",
-        //    cache: false,
-        //   type: "post",
-        //    contentType: false,
-        //   processData: false,
-        //   dataType: "json",
-    }
     getPages();
 });
 

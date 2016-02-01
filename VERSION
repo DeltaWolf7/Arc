@@ -1,7 +1,7 @@
 Name                            Version             Url
 ----                            -------             ---
-Bootstarp                       3.3.5               http://getbootstrap.com/
-Meedoo                          1.0.0.0             http://medoo.in/
-jQuery                          2.1.4               https://jquery.com/
-Summernote                      0.6.9               http://summernote.org/
-Font Awesome                    4.4.0               http://fortawesome.github.io/Font-Awesome/
+Bootstarp                       3.3.6               http://getbootstrap.com/
+Meedoo                          1.0.1               http://medoo.in/
+jQuery                          2.2.0               https://jquery.com/
+Summernote                      0.7.3               http://summernote.org/
+Font Awesome                    4.5.0               http://fortawesome.github.io/Font-Awesome/

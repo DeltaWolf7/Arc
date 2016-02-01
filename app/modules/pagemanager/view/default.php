@@ -87,7 +87,7 @@
                     <div class="form-group">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <div class="summernote"></div>
+                                <div id="summernote"></div>
                             </div>
                         </div>
                     </div>

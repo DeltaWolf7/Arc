@@ -1,4 +1,3 @@
 Editor for reset password email
-Fix summernote source issue
+Fix summernote image upload
 documents
-send file
