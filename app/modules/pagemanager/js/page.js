@@ -24,7 +24,7 @@ function successEdit(data) {
 $("#savePageBtn").click(function () {
     arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-        html: $('.summernote').code(), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
+        html: $('#summernote').summernote('code'), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
         theme: $('#theme').val()}, completeSave, null);
 });

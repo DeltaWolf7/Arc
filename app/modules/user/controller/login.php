@@ -10,16 +10,18 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("danger", "Password must be provided");
         return;
     }
-    
+
+
     // start ldap
     $ldap = SystemSetting::getByKey("ARC_LDAP");
     $ldapData = $ldap->getArrayFromJson();
 
     if ($ldapData["ldap"] == "true") {
-        Log::createLog("warning", "ldap", "User logged in: " . $_POST["email"]);
+        Log::createLog("warning", "ldap", "LDAP lookup: " . $_POST["email"]);
         $result = LDAPLogin($ldapData["server"], $_POST["email"], $_POST["password"], $ldapData["domain"], $ldapData["base"]);
         $user = \User::getByEmail($result["email"]);
-        
+        Log::createLog("info", "ldap", "LDAP user result id: " . $user->id);
+
         if (is_array($result)) {
             if ($user->id != 0) {
                 Log::createLog("success", "ldap", "User logged in: " . $_POST["email"]);
@@ -39,6 +41,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             }
         }
     }
+
     // end ldap
     $user = \User::getByEmail($_POST["email"]);
 
@@ -71,23 +74,31 @@ function doLogin($user) {
 }
 
 function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local") {
-    // https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/
-    $ldap = ldap_connect("ldap://{$server}");
-    $ldaprdn = "{$domain}\\{$username}";
-    ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
-    ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
-    $bind = @ldap_bind($ldap, $ldaprdn, $password);
-    if ($bind) {
-        $filter = "(sAMAccountName=$username)";
-        $result = ldap_search($ldap, $dc, $filter);
-        ldap_sort($ldap, $result, "sn");
-        $info = ldap_get_entries($ldap, $result);
-        $data = array();
-        $data["email"] = $info[0]["mail"][0];
-        $data["lastname"] = $info[0]["sn"][0];
-        $data["firstname"] = $info[0]["givenname"][0];
-        @ldap_close($ldap);
-        return $data;
+    try {
+// https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/
+        $ldap = ldap_connect("ldap://{$server}");
+        $ldaprdn = "{$domain}\\{$username}";
+        ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
+        ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
+        $bind = @ldap_bind($ldap, $ldaprdn, $password);
+        if ($bind) {
+            $filter = "(sAMAccountName=$username)";
+            $result = ldap_search($ldap, $dc, $filter);
+            if (!$result) {
+                Log::createLog("danger", "ldap", ldap_error($ldap));
+                return null;
+            }
+            ldap_sort($ldap, $result, "sn");
+            $info = ldap_get_entries($ldap, $result);
+            $data = array();
+            $data["email"] = $info[0]["mail"][0];
+            $data["lastname"] = $info[0]["sn"][0];
+            $data["firstname"] = $info[0]["givenname"][0];
+            @ldap_close($ldap);
+            return $data;
+        }
+    } catch (Exception $e) {
+        Log::createLog("danger", "ldap", $e->getMessage());
     }
     return null;
 }
