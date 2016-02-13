@@ -159,13 +159,24 @@ $ldap = SystemSetting::getByKey("ARC_LDAP");
     </div>
 </div>
 <hr />
+
+<?php
+if (!function_exists("ldap_connect")) {
+    ?>
+    <div class="alert alert-warning">PHP LDAP module not loaded. LDAP will not function.</div>
+    <?php
+}
+?>
+
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">Use LDAP</span>
                 <?php $ldapData = $ldap->getArrayFromJson(); ?>
-                <select id="useLDAP" class="form-control" onchange="updateLDAP()">
+                <select id="useLDAP" class="form-control" onchange="updateLDAP()" <?php if (!function_exists("ldap_connect")) {
+                    echo "disabled";
+                } ?>>
                     <option value="true"<?php
                     if ($ldapData["ldap"] == "true") {
                         echo " selected";
