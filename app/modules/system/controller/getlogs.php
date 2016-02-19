@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<tr><th>Type</th><th>Module</th><th>When</th><th>Message</th></tr>";
+    $html = "<thead><tr><th>Type</th><th>Module</th><th>When</th><th>Message</th></tr></thead><tbody>";
     $logs = Log::getLogs();
 
     foreach ($logs as $log) {
@@ -20,7 +20,7 @@ if (system\Helper::arcIsAjaxRequest()) {
                 $html .= "<span class=\"label label-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
                 break;
         }
-        $html .= "</td><td>{$log->module}</td><td>{$log->when}</td><td>{$log->message}</td></tr>";
+        $html .= "</td><td>{$log->module}</td><td>{$log->when}</td><td>{$log->message}</td></tr></tbody>";
     }
     system\Helper::arcReturnJSON(["html" => $html]);
 }

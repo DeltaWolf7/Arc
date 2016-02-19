@@ -36,7 +36,7 @@ function completeSave(data) {
 }
 
 $("#insertModule").click(function () {
-    $(".summernote").summernote("editor.insertText", $("#imodule").val());
+    $("#summernote").summernote("editor.insertText", $("#imodule").val());
 });
 
 function removePage(pageid) {
@@ -65,6 +65,7 @@ function successGet(data) {
 
 $(document).ready(function () {
     $('#summernote').summernote({
+        height: 300,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['insert', ['superscript', 'subscript']],

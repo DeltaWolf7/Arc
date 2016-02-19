@@ -75,7 +75,7 @@ function doLogin($user) {
 }
 
 function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local") {
-// https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/
+// https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
     $ldap = ldap_connect("ldap://{$server}");
     $ldaprdn = "{$domain}\\{$username}";
     ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
@@ -83,10 +83,10 @@ function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "
     $bind = @ldap_bind($ldap, $ldaprdn, $password);
     if ($bind) {
         $filter = "(sAMAccountName=$username)";
-        $result = ldap_search($ldap, $dc, $filter);     
+        $result = ldap_search($ldap, $dc, $filter);
         ldap_sort($ldap, $result, "sn");
         $info = ldap_get_entries($ldap, $result);
-        
+
         if (!isset($info[0]["mail"][0])) {
             Log::createLog("danger", "ldap", "Unable to query LDAP, check base settings.");
             return null;
