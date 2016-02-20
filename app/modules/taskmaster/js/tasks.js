@@ -12,8 +12,51 @@ function editSuccess(data) {
     $("#description").val(jdata.description);
     $("#tags").val(jdata.tags);
     $("#assign").val(jdata.owner);
+    $("#stat").val(jdata.status);
+    $("#hours").val(jdata.hours);
     $("#editModal").modal('show');
 }
+
+function getAllTasks() {
+    arcAjaxRequest("taskmaster/getAllTasks", {}, null, dataUpdate);
+}
+
+function getStatusTasks(status) {
+    arcAjaxRequest("taskmaster/getStatusTasks", {status: status}, null, dataUpdate);
+}
+
+function getTasksByUser(status) {
+    arcAjaxRequest("taskmaster/getUserTasks", {status: status}, null, dataUpdate);
+}
+
+function dataUpdate(data) {
+    var jdata = arcGetJson(data);
+    $("#data").html(jdata.html);
+}
+
+$("#searchBtn").click(function () {
+    arcAjaxRequest("taskmaster/doSearch", {search: $("#search").val()}, null, dataUpdate);
+    $("#search").val("");
+});
+
+$("#saveBtn").click(function () {
+    var dateValue = "0000-00-00 00:00:00";
+    if ($('#due').data("DateTimePicker").date() != null) {
+        dateValue = $('#due').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
+    }
+    arcAjaxRequest("taskmaster/saveTask", {due: dateValue,
+        description: $("#description").val(), tags: $("#tags").val(), owner: $("#assign").val(), status: $("#stat").val(),
+        id: taskid, hours: $("#hours").val()}, saveUpdate, null);
+});
+
+function saveUpdate() {
+    $("#editModal").modal('hide');
+    arcGetStatus();
+}
+
+$("#sendBtn").click(function() {
+    arcAjaxRequest("taskmaster/sendmail", {}, arcGetStatus, null);
+});
 
 $(document).ready(function () {
     $('#created').datetimepicker({
@@ -24,4 +67,6 @@ $(document).ready(function () {
         format: 'YYYY-MM-DD HH:mm:ss',
         sideBySide: true
     });
+
+    getTasksByUser("New");
 });
