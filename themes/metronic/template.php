@@ -14,8 +14,8 @@
                 <div class="container">
                     <!-- BEGIN LOGO -->
                     <div class="page-logo">
-                        <a href="">
-
+                        <a href="{{arc:path}}">
+                            <h1><img src="{{arc:themepath}}images/logo-h100.png" alt="Arc Project"> Arc project</h1>
                         </a>
                     </div>
                     <!-- END LOGO -->
@@ -45,7 +45,7 @@
                     <div class="container">
                         <!-- START CONTENT -->
                         {{arc:content}}
-                         <!-- END CONTENT -->
+                        <!-- END CONTENT -->
                     </div>
                 </div>
             </div>
@@ -73,4 +73,3 @@
         {{arc:footer}}
     </body>
 </html>
-                       
