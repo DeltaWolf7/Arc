@@ -29,6 +29,15 @@
                 <span class="input-group-btn text-right">
                         <a class="btn btn-default" id="sendBtn"><i class="fa fa-envelope"></i></a>
                     </span>
+                <?php
+                if (system\Helper::arcIsUserAdmin()) {
+                    ?>
+                <span class="input-group-btn text-right">
+                        <a class="btn btn-default" id="settingsBtn"><i class="fa fa-cog"></i></a>
+                    </span>
+                <?php
+                }
+                ?>
             </div>
         </div>
         <div class="row">
@@ -129,6 +138,29 @@
             </div>
             <div class="modal-footer">
                 <a class="btn btn-success" id="saveBtn">Save</a>
+                <a class="btn btn-danger" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
+                <h4 class="modal-title" id="myModalLabel">Settings</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon">Send Report To</span>
+                        <input id="emails" type="text" class="form-control" maxlength="255" placeholder="seperate,with,commas">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-success" id="saveSettingsBtn">Save</a>
                 <a class="btn btn-danger" data-dismiss="modal">Close</a>
             </div>
         </div>

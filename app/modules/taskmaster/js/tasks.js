@@ -49,14 +49,33 @@ $("#saveBtn").click(function () {
         id: taskid, hours: $("#hours").val()}, saveUpdate, null);
 });
 
+$("#saveSettingsBtn").click(function () {
+    arcAjaxRequest("taskmaster/saveSettings", {emails: $("#emails").val()}, saveSettings, null);
+});
+
 function saveUpdate() {
     $("#editModal").modal('hide');
+    arcGetStatus();
+}
+
+function saveSettings() {
+    $("#settingsModal").modal('hide');
     arcGetStatus();
 }
 
 $("#sendBtn").click(function() {
     arcAjaxRequest("taskmaster/sendmail", {}, arcGetStatus, null);
 });
+
+$("#settingsBtn").click(function() {
+    arcAjaxRequest("taskmaster/getSettings", {}, null, settingsSuccess);
+});
+
+function settingsSuccess(data) {
+    var jdata = arcGetJson(data);
+    $("#emails").val(jdata.emails);
+    $("#settingsModal").modal('show');
+}
 
 $(document).ready(function () {
     $('#created').datetimepicker({
