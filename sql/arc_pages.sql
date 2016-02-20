@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `arc_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL,
   `content` text NOT NULL,
-  `seourl` varchar(50) NOT NULL,
+  `seourl` varchar(100) NOT NULL,
   `metadescription` varchar(160) NOT NULL,
   `metakeywords` varchar(69) NOT NULL,
   `sortorder` int(11) NOT NULL,

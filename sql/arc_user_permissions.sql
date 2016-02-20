@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `arc_user_permissions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `groupid` int(11) NOT NULL,
-  `permission` varchar(50) NOT NULL,
+  `permission` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 

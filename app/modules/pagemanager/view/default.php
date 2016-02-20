@@ -21,8 +21,8 @@
                         </div>
                         <div class="form-group">
                             <label for="seourl">SEO Url</label>
-                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="50"
-                                   data-toggle="tooltip" data-placement="top" title="SEO Url (50 characters max)">
+                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="100"
+                                   data-toggle="tooltip" data-placement="top" title="SEO Url (100 characters max)">
                         </div>
                         <div class="form-group">
                             <div class="row">

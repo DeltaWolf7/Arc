@@ -313,3 +313,13 @@ if (App.isAngularJsApp() === false) {
         Layout.init(); // init metronic core componets
     });
 }
+
+function arcNotification(data) {
+    var type = "success";
+    var title = "Success";
+    if (data.messages.type == "danger") {
+        type = "error";
+        title = "Error";
+    }
+    swal(title, data.messages.message, type);
+}

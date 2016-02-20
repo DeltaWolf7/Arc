@@ -186,13 +186,15 @@ class Helper {
      * @global array $arc Arc settings storage
      * Adds header information to a page from header array
      */
-    public static function arcGetHeader() {
+    private static function arcGetHeader() {
         // output header
+        $content = "";
         if (!empty(self::$arc["headerdata"])) {
             foreach (self::$arc["headerdata"] as $line) {
-                echo $line;
+                $content .= $line;
             }
         }
+        return $content;
     }
 
     /**
@@ -200,14 +202,16 @@ class Helper {
      * @global array $arc Arc settings storage
      * Adds footer information to a page from header array
      */
-    public static function arcGetFooter() {
+    private static function arcGetFooter() {
         // output header
+        $content = "";
         if (!empty(self::$arc["footerdata"])) {
             foreach (self::$arc["footerdata"] as $line) {
-                echo $line;
+                $content .= $line;
             }
         }
-        echo "<script>var arcsid = '" . self::arcGetSessionID() . "'</script>";
+        $content .= "<script>var arcsid = '" . self::arcGetSessionID() . "'</script>";
+        return $content;
     }
 
     /**
@@ -339,28 +343,47 @@ class Helper {
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
 
-
-                // Check if the theme has a header and include if it does.
-                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php")) {
-                    die("Unable to find header.php for theme '" . $theme->value . "'.");
+                // template
+                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
+                   die("Unable to find template.php for theme '" . $theme->value . "'.");
                 }
-                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/header.php";
-
+                
+                $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
+                
+                // meta
+                $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
+                
+                // menu
+                $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
+                
+                // path
+                $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
+                
+                // themepath
+                $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
+                
+                // header
+                if ($page->showtitle == "1") {
+                    $content = str_replace("{{arc:title}}", "<div class=\"page-header\"><h1>{$page->title}</h1></div>", $content);
+                } else {
+                    $content = str_replace("{{arc:title}}", "", $content);
+                }
+                
+                // impersonating
                 if (isset($_SESSION["arc_imposter"])) {
                     echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
                 }
-
-                // Show page
-                if ($page->showtitle == "1") {
-                    echo "<div class=\"page-header\"><h1>{$page->title}</h1></div>";
-                }
-                echo self::arcProcessModuleTags(html_entity_decode($page->content));
-
-                // Check if the theme has a footer and include if it does.
-                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php")) {
-                    die("Unable to find footer.php for theme '" . $theme->value . "'.");
-                }
-                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/view/footer.php";
+                
+                // body
+                $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
+                
+                // version
+                $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
+                
+                // footer
+                $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
+                
+                echo $content;
             } else {
                 $data = explode("/", $uri);
                 if (isset($data[1]) && isset($data[2])) {
@@ -569,7 +592,8 @@ class Helper {
     /**
      * Processes modules and building menus from info data
      */
-    public static function arcGetMenu($ddcss = "dropdown", $ddtoggle = "dropdown-toggle", $ddmenu = "dropdown-menu") {
+    private static function arcGetMenu($ddcss = "dropdown", $ddtoggle = "dropdown-toggle", $ddmenu = "dropdown-menu") {
+        $content = "";
         $pages = \Page::getAllPages();
 
         $groups[] = \UserGroup::getByName("Guests");
@@ -590,7 +614,8 @@ class Helper {
             }
         }
 
-        self::arcProcessMenuItems(self::$arc["menus"], $ddcss, $ddtoggle, $ddmenu);
+        $content .= self::arcProcessMenuItems(self::$arc["menus"], $ddcss, $ddtoggle, $ddmenu);
+        return $content;
     }
 
     /**
@@ -599,29 +624,32 @@ class Helper {
      * Builds the html for the menu items
      */
     private static function arcProcessMenuItems($menus, $ddcss, $ddtoggle, $ddmenu) {
+        $content = "";
         foreach ($menus as $menu => $item) {
             if (count($item) == 1) {
                 foreach ($item as $subitem => $more) {
-                    self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
+                    $content .= self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
                 }
             } else {
-                echo "<li class=\"{$ddcss}\">"
+                $content .= "<li class=\"{$ddcss}\">"
                 . "<a href=\"#\" class=\"{$ddtoggle}\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
                 . $menu . " </a><ul class=\"{$ddmenu}\">";
                 foreach ($item as $subitem => $more) {
-                    self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
+                    $content .= self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
                 }
-                echo "</ul></li>";
+                $content .= "</ul></li>";
             }
         }
+        return $content;
     }
 
     private static function arcProcessMenuItem($item) {
-        echo "<li><a href=\"" . self::arcGetPath() . $item["url"] . "\">";
+        $content = "<li><a href=\"" . self::arcGetPath() . $item["url"] . "\">";
         if (!empty($item["icon"])) {
-            echo "<i class='{$item["icon"]}'></i> ";
+            $content .= "<i class='{$item["icon"]}'></i> ";
         }
-        echo $item["name"] . "</a></li>";
+        $content .= $item["name"] . "</a></li>";
+        return $content;
     }
 
     /**
@@ -808,6 +836,6 @@ class Helper {
 
     public static function arcGetVersion() {
         $version = \SystemSetting::getByKey("ARC_VERSION");
-        return $version->value;
+        return "Arc Version " . $version->value;
     }
 }
