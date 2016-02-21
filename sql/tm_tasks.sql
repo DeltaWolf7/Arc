@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tm_tasks` (
   `tags` varchar(255) NOT NULL,
   `status` varchar(50) NOT NULL,
   `donedate` datetime NOT NULL,
-  `hours` int(11) NOT NULL,
+  `hours` decimal(10,2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
