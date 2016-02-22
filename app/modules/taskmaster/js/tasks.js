@@ -40,13 +40,26 @@ $("#searchBtn").click(function () {
 });
 
 $("#saveBtn").click(function () {
+    if ($("#assign").val() == null) {
+        arcNotification({messages: {type: "danger", message: "You must select an assignee."}});
+        return;
+    }
+
+    if ($("#description").val() == "") {
+        arcNotification({messages: {type: "danger", message: "Task must have a description."}});
+        return;
+    }
+    
     var dateValue = "0000-00-00 00:00:00";
     if ($('#due').data("DateTimePicker").date() != null) {
         dateValue = $('#due').data("DateTimePicker").date().format("YYYY-MM-DD HH:mm:ss");
     }
+    
     arcAjaxRequest("taskmaster/saveTask", {due: dateValue,
         description: $("#description").val(), tags: $("#tags").val(), owner: $("#assign").val(), status: $("#stat").val(),
         id: taskid, hours: $("#hours").val()}, saveUpdate, null);
+    
+    $('#due').data("DateTimePicker").clear();
 });
 
 $("#saveSettingsBtn").click(function () {
