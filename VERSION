@@ -7,3 +7,4 @@ Summernote                      0.7.3               http://summernote.org/
 Font Awesome                    4.5.0               http://fortawesome.github.io/Font-Awesome/
 Datepicker                      4.17.37             https://eonasdan.github.io/bootstrap-datetimepicker/
 Moment                          2.11.2              http://momentjs.com/
+PHPMailer                       5.2.14              https://github.com/PHPMailer/PHPMailer

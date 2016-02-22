@@ -122,9 +122,13 @@ class Mail {
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->Host = $this->data["server"];
-                $mail->SMTPAuth = true;
-                $mail->Username = $this->data["username"];
-                $mail->Password = $this->data["password"];
+                if (empty($this->data["username"]) && empty($this->data["password"])) {
+                    $mail->SMTPAuth = false;
+                } else {
+                    $mail->SMTPAuth = true;
+                    $mail->Username = $this->data["username"];
+                    $mail->Password = $this->data["password"];
+                }
                 $mail->setFrom($from);
                 foreach ($to as $email) {
                     $mail->addAddress($email);
@@ -144,4 +148,5 @@ class Mail {
                 break;
         }
     }
+
 }
