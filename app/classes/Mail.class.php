@@ -30,12 +30,12 @@
  * @author Craig Longford
  */
 class Mail {
-       
+
     public function __construct() {
         // Get settings
         $settings = \SystemSetting::getByKey("ARC_MAIL");
         $this->data = $settings->getArrayFromJson();
-        
+
         // Set default mode
         if ($this->data["smtp"] == "true")
             $this->mode = "SMTP";
@@ -66,125 +66,82 @@ class Mail {
      * @return boolean True/False depending is the operation was completed.
      */
     public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array()) {
-        try {
-            Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
-            // Set from details
-            if ($from == null) {
-                $from = $this->data["sender"];
-            }
+        Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
-            // Build to list
-            if (!is_array($to)) {
-                $list = array();
-                $list[] = $to;
-                $to = $list;
-            }
+        // Set from details
+        if ($from == null) {
+            $from = $this->data["sender"];
+        }
 
-            // Build to list
-            if (!is_array($cc)) {
-                $list = array();
-                $list[] = $cc;
-                $cc = $list;
-            }
+        // Build to list
+        if (!is_array($to)) {
+            $list = array();
+            $list[] = $to;
+            $to = $list;
+        }
 
-            // Build Mail Header
-            $headers = "MIME-Version: 1.0\r\n";
-            if ($html == true) {
-                // Html content
-                $headers .= "Content-Type: text/html; charset=iso-8859-1\r\n";
-            } else {
-                // Plain test
-                $headers .= "Content-Type: text/plain;\r\n";
-            }
+        // Build to list
+        if (!is_array($cc)) {
+            $list = array();
+            $list[] = $cc;
+            $cc = $list;
+        }
 
-            Log::createLog("info", "arcmail", "Mail headers built");
+        // Build Mail Header
+        $headers = "MIME-Version: 1.0\r\n";
+        if ($html == true) {
+            // Html content
+            $headers .= "Content-Type: text/html; charset=iso-8859-1\r\n";
+        } else {
+            // Plain test
+            $headers .= "Content-Type: text/plain;\r\n";
+        }
 
-            switch ($this->mode) {
-                case "MAIL":
-                    // Add from header
-                    $headers .= "From: " . $from . "\r\n";
+        Log::createLog("info", "arcmail", "Mail headers built");
 
-                    // Build recipients list
-                    $toList = "";
-                    foreach ($to as $recipient) {
-                        $toList .= $recipient . ", ";
-                    }
-                    $toList = substr($toList, 0, -2);
-                    Log::createLog("success", "arcmail", "PHP mail created.");
+        switch ($this->mode) {
+            case "MAIL":
+                // Add from header
+                $headers .= "From: " . $from . "\r\n";
 
-                    // Send mail
-                    mail($toList, $subject, $message, $headers);
-                    Log::createLog("success", "arcmail", "PHP mail sent.");
-                    break;
-                case "SMTP":
-                    if ($SMTPIN = fsockopen($this->data["server"], $this->data["port"])) {
-                        // Output holder
-                        $output = "";
+                // Build recipients list
+                $toList = "";
+                foreach ($to as $recipient) {
+                    $toList .= $recipient . ", ";
+                }
+                $toList = substr($toList, 0, -2);
+                Log::createLog("success", "arcmail", "PHP mail created.");
 
-                        // Connect to SMTP server
-                        fwrite($SMTPIN, "EHLO\r\n");
-                        $output = fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, "auth login\r\n");
-                        $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $this->data["username"] . "\r\n");
-                        $output .= fgets($SMTPIN) . "\r\n";
-                        fwrite($SMTPIN, $this->data["password"] . "\r\n");
-                        $output .= fgets($SMTPIN) . "\r\n";
+                // Send mail
+                mail($toList, $subject, $message, $headers);
+                Log::createLog("success", "arcmail", "PHP mail sent.");
+                break;
+            case "SMTP":
+                include system\Helper::arcGetPath(true) . "app/classes/PHPMailer/PHPMailerAutoload.php";
+                $mail = new PHPMailer;
+                $mail->isSMTP();
+                $mail->Host = $this->data["server"];
+                $mail->SMTPAuth = true;
+                $mail->Username = $this->data["username"];
+                $mail->Password = $this->data["password"];
+                $mail->setFrom($from);
+                foreach ($to as $email) {
+                    $mail->addAddress($email);
+                }
+                foreach ($cc as $email) {
+                    $mail->addCC($email);
+                }
+                $mail->isHTML($html);
+                $mail->Subject = $subject;
+                $mail->Body = $message;
 
-                        // Mail from
-                        fwrite($SMTPIN, "MAIL FROM: <" . $from . ">\r\n");
-                        $output .= fgets($SMTPIN) . "\r\n";
-
-                        // Add to recipients
-                        foreach ($to as $recipient) {
-                            fwrite($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
-                            $output .= fgets($SMTPIN) . "\r\n";
-                        }
-
-                        // Add cc recipients
-                        foreach ($cc as $recipient) {
-                            fwrite($SMTPIN, "RCPT TO: <" . $recipient . ">\r\n");
-                            $output .= fgets($SMTPIN) . "\r\n";
-                        }
-
-                        // Signal data
-                        fwrite($SMTPIN, "DATA\r\n");
-                        $output .= fgets($SMTPIN) . "\r\n";
-
-                        // Build message data
-                        $messageData = "";
-                        // Add to recipients
-                        foreach ($to as $recipient) {
-                            $messageData .= "To: <" . $recipient . ">\r\n";
-                        }
-                        // Add cc recipients
-                        foreach ($cc as $recipient) {
-                            $messageData .= "Cc: <" . $recipient . ">\r\n";
-                        }
-                        // Add from
-                        $messageData .= "From: <" . $from . ">\r\n";
-                        // Add subject
-                        $messageData .= "Subject:" . $subject . "\r\n";
-                        // Add headers
-                        $messageData .= $headers . "\r\n\r\n";
-                        // Add body
-                        $messageData .= $message . "\r\n.\r\n";
-                        // Send data                        
-                        fwrite($SMTPIN, $messageData);
-                        $output .= fgets($SMTPIN) . "\r\n";
-                        // Quit
-                        fwrite($SMTPIN, "QUIT\r\n");
-                        $output .= fgets($SMTPIN);
-                        fclose($SMTPIN);
-                        Log::createLog("warning", "arcmail", $output);
-                    }
-                    Log::createLog("success", "arcmail", "SMTP connection failed.");
-                    break;
-            }
-        } catch (Exception $ex) {
-            Log::createLog("danger", "arcmail", "SMTP: " . $ex->getMessage());
+                if (!$mail->send()) {
+                    Log::createLog("danger", "arcmail", "SMTP: " . $mail->ErrorInfo);
+                } else {
+                    Log::createLog("success", "arcmail", "SMTP: Message sent");
+                }
+                break;
         }
     }
-
 }
