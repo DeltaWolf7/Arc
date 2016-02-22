@@ -13,13 +13,11 @@ function updateEmail() {
         $("#smtpUser").prop("readonly", true);
         $("#smtpPass").prop("readonly", true);
         $("#smtpPort").prop("readonly", true);
-        $("#smtpSender").prop("readonly", true);
     } else {
         $("#smtpServer").prop("readonly", false);
         $("#smtpUser").prop("readonly", false);
         $("#smtpPass").prop("readonly", false);
         $("#smtpPort").prop("readonly", false);
-        $("#smtpSender").prop("readonly", false);
     }
 }
 
