@@ -7,6 +7,7 @@ $login_url = SystemSetting::getByKey("ARC_LOGIN_URL");
 $default_page = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
 $mail = SystemSetting::getByKey("ARC_MAIL");
 $ldap = SystemSetting::getByKey("ARC_LDAP");
+$apikey = \SystemSetting::getByKey("ARC_APIKEY");
 ?>
 
 <div class="row">
@@ -208,6 +209,19 @@ if (!function_exists("ldap_connect")) {
             <div class="input-group">
                 <span class="input-group-addon">Base</span>
                 <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local" value="<?php echo $ldapData["base"]; ?>">
+            </div>
+        </div>
+    </div>
+</div>
+    
+    <hr />
+    
+   <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">API Key</span>
+                <input id="apiKey" type="text" class="form-control" value="<?php echo $apikey->value ?>" disabled>
             </div>
         </div>
     </div>

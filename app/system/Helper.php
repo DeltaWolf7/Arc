@@ -841,4 +841,18 @@ class Helper {
         $version = \SystemSetting::getByKey("ARC_VERSION");
         return "Arc Version " . $version->value;
     }
+    
+    public static function arcAPICall(){
+        $key = \SystemSetting::getByKey("ARC_APIKEY");
+        if (isset($_POST["key"]) && $key->value == $_POST["key"]) {
+            if (file_exists(self::arcGetPath(true) . "app/modules/{$_POST["api"]}/api.php")) {
+                include self::arcGetPath(true) . "app/modules/{$_POST["api"]}/api.php";
+                return;
+            } else {
+                self::arcReturnJSON(["message" => "Inavlid API module call"]);
+                return;
+            }
+        }
+        self::arcReturnJSON(["message" => "Inavlid API key"]);
+    }
 }
