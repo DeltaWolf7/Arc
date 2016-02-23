@@ -1,10 +1,19 @@
+<?php
+$ldap = SystemSetting::getByKey("ARC_LDAP");
+$ldapData = $ldap->getArrayFromJson();
+$login = "Email Address";
+if ($ldapData["ldap"] == "true") {
+    $login = "Username";
+}
+?>
 <div class="row">
     <div class="collapse in" id="collapseA">
         <div class="row">
+            <form id="loginForm">
             <div class="col-md-5 col-md-offset-1">
                 <h3>Sign in</h3>
                 <div class="form-group">
-                    <input maxlength="100" type="text" class="form-control" id="email" placeholder="Email Address">
+                    <input maxlength="100" type="text" class="form-control" id="email" placeholder="<?php echo $login; ?>">
                 </div>
                 <div class="form-group">
                     <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password">
@@ -15,6 +24,7 @@
                 <p>Creating a new account is fast and simple.</p>
                 <p>All you need is your email address and password of your choice. Click the button below to begin your registration now.</p>
             </div>
+            </form>
         </div>
         <div class="row">
             <div class="col-md-5 col-md-offset-1">

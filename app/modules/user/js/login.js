@@ -1,7 +1,11 @@
 // Login
 $("#loginBtn").click(function () {
-    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, arcGetStatus, success);
+    login();
 });
+
+function login() {
+    arcAjaxRequest("user/login", {email: $("#email").val(), password: $("#password").val()}, arcGetStatus, success);
+}
 
 $("#btnForgot").click(function () {
     $('#collapseA').collapse('hide');
@@ -50,4 +54,10 @@ function switchView() {
 $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
         email: $("#emailr").val(), password: $("#passwordr").val(), password2: $("#passwordr2").val()}, arcGetStatus, success);
+});
+
+$("#loginForm input").keypress(function (e) {
+    if (e.keyCode == 13) {
+        login();
+    }
 });
