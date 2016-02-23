@@ -4,7 +4,7 @@ function saveSystem() {
         smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
         port: $("#smtpPort").val(), sender: $("#smtpSender").val(), defaultPage: $("#defaultPage").val(),
         loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
-        limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val()}, arcGetStatus);
+        limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val()}, arcGetStatus);
 }
 
 function updateEmail() {

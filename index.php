@@ -102,6 +102,7 @@ system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.0");
 system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime().rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));
+system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
 
 
 if (!isset($_POST["api"])) {

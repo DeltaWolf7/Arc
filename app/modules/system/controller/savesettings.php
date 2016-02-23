@@ -36,5 +36,9 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = $_POST["limit"];
     $setting->update();
     
+    $setting = SystemSetting::getByKey("ARC_ALLOWREG");
+    $setting->value = $_POST["allowReg"];
+    $setting->update();
+       
     system\Helper::arcAddMessage("success", "System settings saved.");
 }

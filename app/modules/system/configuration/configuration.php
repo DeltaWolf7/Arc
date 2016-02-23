@@ -8,6 +8,7 @@ $default_page = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
 $mail = SystemSetting::getByKey("ARC_MAIL");
 $ldap = SystemSetting::getByKey("ARC_LDAP");
 $apikey = \SystemSetting::getByKey("ARC_APIKEY");
+$reg = \SystemSetting::getByKey("ARC_ALLOWREG");
 ?>
 
 <div class="row">
@@ -99,6 +100,28 @@ $apikey = \SystemSetting::getByKey("ARC_APIKEY");
                         echo ">{$page->seourl}</option>";
                     }
                     ?>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Allow Registration</span>
+                <select id="allowReg" class="form-control">
+                    <option value="true"<?php
+                    if ($reg->value == "true") {
+                        echo " selected";
+                    }
+                    ?>>True</option>
+                    <option value="false"<?php
+                    if ($reg->value  == "false") {
+                        echo " selected";
+                    }
+                    ?>>False</option>
                 </select>
             </div>
         </div>
