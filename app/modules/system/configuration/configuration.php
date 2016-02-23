@@ -175,9 +175,11 @@ if (!function_exists("ldap_connect")) {
             <div class="input-group">
                 <span class="input-group-addon">Use LDAP</span>
                 <?php $ldapData = $ldap->getArrayFromJson(); ?>
-                <select id="useLDAP" class="form-control" onchange="updateLDAP()" <?php if (!function_exists("ldap_connect")) {
+                <select id="useLDAP" class="form-control" onchange="updateLDAP()" <?php
+                if (!function_exists("ldap_connect")) {
                     echo "disabled";
-                } ?>>
+                }
+                ?>>
                     <option value="true"<?php
                     if ($ldapData["ldap"] == "true") {
                         echo " selected";
@@ -213,11 +215,11 @@ if (!function_exists("ldap_connect")) {
         </div>
     </div>
 </div>
-    
-    <hr />
-    
-   <div class="row">
-      <div class="col-md-12">
+
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">API Key</span>
