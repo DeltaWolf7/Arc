@@ -34,12 +34,6 @@ function updateLDAP() {
 }
 
 $(document).ready(function () {
-    arcAjaxRequest("system/getsettings", {}, null, settingsSuccess);
-});
-
-function settingsSuccess(data) {
-    var jdata = arcGetJson(data);
-    $('#data').html(jdata.html);
     updateEmail();
     updateLDAP();
-}
+});
