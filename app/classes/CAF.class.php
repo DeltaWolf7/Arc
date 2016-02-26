@@ -22,20 +22,21 @@ class CAF extends DataProvider {
     public $requestedServiceDate;
     public $gpDebtorID;
     public $gpContractReference;
-    public $serviceType;
-    public $currency;
-    public $supplierAnnualCost;
-    public $rdPartySupplier;
-    public $supplierCover;
-    public $termsJSON;
+    public $serviceInformationJSON;
     public $commercialJSON;
     public $additionalNotes;
     public $onboardingJSON;
     
     public function __construct() {
         parent::__construct();
-        $this->table = "caf";
-        $this->columns = [];
+        $this->table = "conc_caf";
+        $this->columns = ["id", "customerLegalName", "customerAddress", "customerStatus", "invoiceAddress",
+            "orderDate", "contractReference", "requestedServiceDate", "gpDebtorID", "gpContractReference",
+            "serviceInformationJSON", "commercialJSON", "additionalNotes", "onboardingJSON"];
     }
 
+     public static function getAll() {
+        $caf = new CAF();
+        return $caf->getCollection(["ORDER" => "customerLegalName ASC"]);
+    }
 }
