@@ -59,5 +59,6 @@ $("#registerBtn").click(function () {
 $("#loginForm input").keypress(function (e) {
     if (e.keyCode == 13) {
         login();
+        return false;
     }
 });

@@ -352,10 +352,7 @@ class Helper {
                 }
                 
                 $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
-                
-                // meta
-                $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
-                
+                          
                 // menu
                 $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
                 
@@ -382,6 +379,9 @@ class Helper {
                 
                 // version
                 $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
+                
+                // meta
+                $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
                 
                 // footer
                 $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
