@@ -7,7 +7,8 @@
 
         <?php
         $path = system\Helper::arcGetPath();
-        $url = explode("/", $_SERVER['REQUEST_URI']);
+        $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+        $url = explode("/", $uri_parts[0]);
         foreach ($url as $part) {
             if (!empty($part)) {
                 $path .= $part . "/";

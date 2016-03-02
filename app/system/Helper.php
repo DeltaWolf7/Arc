@@ -241,7 +241,8 @@ class Helper {
      * Get the view based on the request
      */
     public static function arcGetView() {
-        $uri = $_SERVER["REQUEST_URI"];
+        $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+        $uri = $uri_parts[0];
         // set session if it exists.
         if (self::arcGetPostData("arcsid") != null) {
             self::arcSetSession(self::arcGetPostData("arcsid"));
