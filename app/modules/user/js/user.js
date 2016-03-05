@@ -133,10 +133,13 @@ function saveGroupComplete(data) {
 }
 
 function impersonateUser(userid) {
-    arcAjaxRequest("user/impersonateUser", {id: userid}, impersonateComplete, null);
+    arcAjaxRequest("user/impersonateUser", {id: userid}, null, impersonateSuccess);
 }
 
-function impersonateComplete() {
+function impersonateSuccess(data) {
+    var jdata = arcGetJson(data);
     arcGetStatus();
-    window.location.href = "/";
+    if (jdata.status == "success") {
+        window.location.href = "/";
+    }
 }
