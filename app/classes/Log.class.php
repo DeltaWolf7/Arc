@@ -46,7 +46,7 @@ class Log extends DataProvider {
 
     public static function getLogs() {
         $logs = new Log();
-        return $logs->getCollection(["ORDER" => "when DESC"]);
+        return $logs->getCollection(["ORDER" => "id DESC"]);
     }
 
     public static function createLog($type, $module, $message) {

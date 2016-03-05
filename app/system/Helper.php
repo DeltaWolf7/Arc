@@ -255,7 +255,8 @@ class Helper {
         }
 
         if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
-            arcProcessImageUpload();
+            self::arcProcessImageUpload();
+            return;
         } else {
 
             if (self::arcIsAjaxRequest() == false) {
@@ -448,7 +449,7 @@ class Helper {
                     }
                     move_uploaded_file($location, $destination);
                     \Log::createLog("info", "arc", "Image moved to image folder.");
-                    echo json_encode(["data" => self::arcGetPath() . "images/" . $filename, "status" => "success"]);
+                    echo self::arcGetPath() . "images/" . $filename;
                     \Log::createLog("success", "arc", "Upload complete.");
                 } else {
                     \Log::createLog("danger", "arc", "Upload error " . $_FILES['file']['error']);

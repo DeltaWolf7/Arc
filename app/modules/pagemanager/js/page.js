@@ -26,13 +26,16 @@ $("#savePageBtn").click(function () {
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: $('#summernote').summernote('code'), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
-        theme: $('#theme').val()}, completeSave, null);
+        theme: $('#theme').val()}, null, successSave);
 });
 
-function completeSave(data) {
+function successSave(data) {
+    var jdata = arcGetJson(data);
+    if (jdata.status == "success") {
+        $("#myModal").modal('hide');
+        getPages();
+    }
     arcGetStatus();
-    $("#myModal").modal('hide');
-    getPages();
 }
 
 $("#insertModule").click(function () {
@@ -80,21 +83,10 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                // upload image to server and create imgNode...
-                $summernote.summernote('insertNode', imgNode);
+                arcUploadImage(files[0], $('#summernote'));
             }
         }
     });
+
     getPages();
 });
-
-function successSend(data) {
-    var jdata = arcGetJson(data);
-    if (jdata.status == "success") {
-        $('.summernote').summernote("insertImage", jdata.data);
-    } else {
-        arcGetStatus();
-    }
-    $("body").removeClass();
-    $("body").addClass("modal-open");
-}

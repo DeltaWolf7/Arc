@@ -64,6 +64,8 @@ function arcNotification(data) {
     if (data.messages.type == "danger") {
         type = "error";
         title = "Error";
+    } else {
+        type = data.messages.type
     }
     swal(title, data.messages.message, type);
 }
