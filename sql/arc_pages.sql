@@ -34,6 +34,3 @@ INSERT INTO `arc_pages` (`id`, `title`, `content`, `seourl`, `metadescription`, 
 (10, 'System Settings', '&lt;p&gt;{{module:system:systemsettings}}&lt;br&gt;&lt;/p&gt;', 'administration/settings', '', '', 0, '', 1, 0, 0, 'none'),
 (11, 'User Management', '&lt;p&gt;{{module:user:users}}&lt;br&gt;&lt;/p&gt;', 'administration/users', '', '', 0, '', 1, 0, 0, 'none');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

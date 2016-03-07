@@ -22,6 +22,3 @@ CREATE TABLE IF NOT EXISTS `arc_users` (
 INSERT INTO `arc_users` (`id`, `firstname`, `lastname`, `email`, `passwordhash`, `created`, `enabled`, `groups`) VALUES
 (1, 'Admin', 'Admin', 'admin@server.local', '$2y$10$V0uMtpafD9AniqZCdFp3xeGaMcLnQOsx7rqGG99juodlMfntUV/pm', '2015-03-15 10:07:37', 1, '["Users","Administrators"]');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

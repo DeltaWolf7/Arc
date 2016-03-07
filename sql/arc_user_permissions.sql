@@ -24,7 +24,3 @@ INSERT INTO `arc_user_permissions` (`id`, `groupid`, `permission`) VALUES
 (9, 1, 'administration/logs'),
 (10, 1, 'administration/settings'),
 (11, 1, 'administration/users');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

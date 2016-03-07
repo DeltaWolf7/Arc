@@ -18,6 +18,3 @@ INSERT INTO `arc_user_groups` (`id`, `name`, `description`) VALUES
 (2, 'Users', 'Arc System Users'),
 (3, 'Guests', 'Arc System Guests');
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
