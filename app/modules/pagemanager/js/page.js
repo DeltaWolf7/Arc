@@ -79,6 +79,7 @@ $(document).ready(function () {
             ['height', ['height']],
             ['table', ['table']],
             ['link', ['link', 'picture', 'hr']],
+            ['misc', ['fullscreen']],
             ['source', ['codeview']]
         ],
         callbacks: {
