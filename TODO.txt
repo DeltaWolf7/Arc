@@ -1,3 +1,2 @@
 Editor for reset password email
-Fix summernote image upload
 documents
