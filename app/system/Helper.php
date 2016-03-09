@@ -846,16 +846,23 @@ class Helper {
 
     public static function arcAPICall() {
         $key = \SystemSetting::getByKey("ARC_APIKEY");
+
         if (isset($_POST["key"])) {
             $value = $_POST["key"];
-        } else {
+        } elseif (isset($_GET["key"])) {
             $value = $_GET["key"];
+        } else {
+            self::arcReturnJSON(["message" => "No API key"]);
+            return;
         }
-        
+
         if (isset($_POST["api"])) {
             $api = $_POST["api"];
-        } else {
+        } elseif (isset($_GET["api"])) {
             $api = $_GET["api"];
+        } else {
+            self::arcReturnJSON(["message" => "No API requested"]);
+            return;
         }
 
 
@@ -864,11 +871,11 @@ class Helper {
                 include self::arcGetPath(true) . "app/modules/{$api}/api.php";
                 return;
             } else {
-                self::arcReturnJSON(["message" => "Inavlid API module call"]);
+                self::arcReturnJSON(["message" => "Invalid API module call"]);
                 return;
             }
         }
-        self::arcReturnJSON(["message" => "Inavlid API key"]);
+        self::arcReturnJSON(["message" => "Invalid API key"]);
     }
 
 }

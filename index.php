@@ -105,7 +105,7 @@ system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities(
 system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
 
 
-if (!isset($_POST["api"]) || !isset($_GET["api"])) {
+if (!isset($_POST["api"]) && !isset($_GET["api"])) {
 // Get content.
     system\Helper::arcGetView();
 } else {
