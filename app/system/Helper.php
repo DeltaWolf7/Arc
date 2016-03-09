@@ -78,7 +78,7 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        
+
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
@@ -350,44 +350,44 @@ class Helper {
 
                 // template
                 if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
-                   die("Unable to find template.php for theme '" . $theme->value . "'.");
+                    die("Unable to find template.php for theme '" . $theme->value . "'.");
                 }
-                
+
                 $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
-                          
+
                 // menu
                 $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
-                
+
                 // path
                 $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
-                
+
                 // themepath
                 $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-                
+
                 // header
                 if ($page->showtitle == "1") {
                     $content = str_replace("{{arc:title}}", "<div class=\"page-header\"><h1>{$page->title}</h1></div>", $content);
                 } else {
                     $content = str_replace("{{arc:title}}", "", $content);
                 }
-                
+
                 // impersonating
                 if (isset($_SESSION["arc_imposter"])) {
                     echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
                 }
-                
+
                 // body
                 $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
-                
+
                 // version
                 $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
-                
+
                 // meta
                 $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
-                
+
                 // footer
                 $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
-                
+
                 echo $content;
             } else {
                 $data = explode("/", $uri);
@@ -637,8 +637,8 @@ class Helper {
                 }
             } else {
                 $content .= "<li class=\"{$ddcss}\">"
-                . "<a href=\"#\" class=\"{$ddtoggle}\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                . $menu . " </a><ul class=\"{$ddmenu}\">";
+                        . "<a href=\"#\" class=\"{$ddtoggle}\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
+                        . $menu . " </a><ul class=\"{$ddmenu}\">";
                 foreach ($item as $subitem => $more) {
                     $content .= self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
                 }
@@ -843,12 +843,25 @@ class Helper {
         $version = \SystemSetting::getByKey("ARC_VERSION");
         return "Arc Version " . $version->value;
     }
-    
-    public static function arcAPICall(){
+
+    public static function arcAPICall() {
         $key = \SystemSetting::getByKey("ARC_APIKEY");
-        if (isset($_POST["key"]) && $key->value == $_POST["key"]) {
-            if (file_exists(self::arcGetPath(true) . "app/modules/{$_POST["api"]}/api.php")) {
-                include self::arcGetPath(true) . "app/modules/{$_POST["api"]}/api.php";
+        if (isset($_POST["key"])) {
+            $value = $_POST["key"];
+        } else {
+            $value = $_GET["key"];
+        }
+        
+        if (isset($_POST["api"])) {
+            $api = $_POST["api"];
+        } else {
+            $api = $_GET["api"];
+        }
+
+
+        if (isset($value) && $key->value == $value) {
+            if (file_exists(self::arcGetPath(true) . "app/modules/{$api}/api.php")) {
+                include self::arcGetPath(true) . "app/modules/{$api}/api.php";
                 return;
             } else {
                 self::arcReturnJSON(["message" => "Inavlid API module call"]);
@@ -857,4 +870,5 @@ class Helper {
         }
         self::arcReturnJSON(["message" => "Inavlid API key"]);
     }
+
 }
