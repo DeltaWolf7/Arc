@@ -84,6 +84,8 @@ if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
 spl_autoload_register(function($class) {
     if (file_exists("app/classes/{$class}.class.php")) {
         require_once "app/classes/{$class}.class.php";
+    }elseif (file_exists("app/classes/modules/{$class}.class.php")) {
+        require_once "app/classes/modules/{$class}.class.php";
     }
 });
 
