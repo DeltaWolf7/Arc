@@ -845,32 +845,35 @@ class Helper {
     }
 
     public static function getContent() {
-        // Check for API access.
+        // Break URL apart and check for API request
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
         $uri = $uri_parts[0];
+        
         if (strpos($uri, "/api/v1") === false) {
+            // No API, Get regular content
             self::arcGetView();
-            return;
+        } else {
+            // Handle API request
+            $key = \SystemSetting::getByKey("ARC_APIKEY");
+            $split = explode("/", $uri);
+
+            if (!isset($_GET["key"])) {
+                self::arcReturnJSON(["error" => "API key required to process request"]);
+                \Log::createLog("danger", "API", "API key required to process request");
+            } elseif (!isset($split[3]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api")) {
+                self::arcReturnJSON(["error" => "Invalid API request"]);
+                 \Log::createLog("danger", "API", "Invalid API request");
+            } elseif (!isset($split[4]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
+                self::arcReturnJSON(["error" => "Invalid API method request"]);
+                \Log::createLog("danger", "API", "Invalid API method request");
+            } elseif (isset($value) && $key->value == $value) {
+                self::arcReturnJSON(["error" => "Invalid API key"]);
+                \Log::createLog("danger", "API", "Invalid API key");
+            } else {
+                include self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
+                \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Method: {$split[4]}");
+            }
         }
-
-        $key = \SystemSetting::getByKey("ARC_APIKEY");
-        $split = explode("/", $uri);
-
-        if (!isset($_GET["key"])) {
-            self::arcReturnJSON(["error" => "API key required to process request"]);
-            return;
-        } elseif (!isset($split[3]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api")) {
-            self::arcReturnJSON(["error" => "Invalid API request"]);
-            return;
-        } elseif (!isset($split[4]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
-            self::arcReturnJSON(["error" => "Invalid API method request"]);
-            return;
-        }  elseif (isset($value) && $key->value == $value) {
-            self::arcReturnJSON(["error" => "Invalid API key"]);
-            return;
-        }
-
-        include self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
     }
 
 }
