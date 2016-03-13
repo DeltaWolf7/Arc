@@ -84,7 +84,7 @@ if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
 spl_autoload_register(function($class) {
     if (file_exists("app/classes/{$class}.class.php")) {
         require_once "app/classes/{$class}.class.php";
-    }elseif (file_exists("app/classes/modules/{$class}.class.php")) {
+    } elseif (file_exists("app/classes/modules/{$class}.class.php")) {
         require_once "app/classes/modules/{$class}.class.php";
     }
 });
@@ -101,15 +101,10 @@ system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
 system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","
         . " \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
 system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.0");
-system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime().rand()));
+system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime() . rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));
 system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
 
-
-if (!isset($_POST["api"]) && !isset($_GET["api"])) {
-// Get content.
-    system\Helper::arcGetView();
-} else {
-    system\Helper::arcAPICall();
-}
+// Get content
+system\Helper::GetContent();

@@ -22,5 +22,6 @@ Options -Indexes
     RewriteRule ^(.+)/$ $1 [R=307,L]
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php?$1 [QSA,L]
+    #QSA - No append, NC - not case sencertive, L - last rule
+    RewriteRule ^(.*)$ index.php?$1 [QSA,NC,L]
 </IfModule>

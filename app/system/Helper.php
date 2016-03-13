@@ -163,7 +163,7 @@ class Helper {
         }
     }
 
-    public static function arcGetPostData($name) {
+    private static function arcGetPostData($name) {
         if (isset(self::$arc["post"][$name]))
             return self::$arc["post"][$name];
         return null;
@@ -240,7 +240,7 @@ class Helper {
     /**
      * Get the view based on the request
      */
-    public static function arcGetView() {
+    private static function arcGetView() {
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
         $uri = $uri_parts[0];
         // set session if it exists.
@@ -844,38 +844,33 @@ class Helper {
         return "Arc Version " . $version->value;
     }
 
-    public static function arcAPICall() {
+    public static function getContent() {
+        // Check for API access.
+        $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
+        $uri = $uri_parts[0];
+        if (strpos($uri, "/api/v1") === false) {
+            self::arcGetView();
+            return;
+        }
+
         $key = \SystemSetting::getByKey("ARC_APIKEY");
+        $split = explode("/", $uri);
 
-        if (isset($_POST["key"])) {
-            $value = $_POST["key"];
-        } elseif (isset($_GET["key"])) {
-            $value = $_GET["key"];
-        } else {
-            self::arcReturnJSON(["message" => "No API key"]);
+        if (!isset($_GET["key"])) {
+            self::arcReturnJSON(["error" => "API key required to process request"]);
+            return;
+        } elseif (!isset($split[3]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api")) {
+            self::arcReturnJSON(["error" => "Invalid API request"]);
+            return;
+        } elseif (!isset($split[4]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
+            self::arcReturnJSON(["error" => "Invalid API method request"]);
+            return;
+        }  elseif (isset($value) && $key->value == $value) {
+            self::arcReturnJSON(["error" => "Invalid API key"]);
             return;
         }
 
-        if (isset($_POST["api"])) {
-            $api = $_POST["api"];
-        } elseif (isset($_GET["api"])) {
-            $api = $_GET["api"];
-        } else {
-            self::arcReturnJSON(["message" => "No API requested"]);
-            return;
-        }
-
-
-        if (isset($value) && $key->value == $value) {
-            if (file_exists(self::arcGetPath(true) . "app/modules/{$api}/api.php")) {
-                include self::arcGetPath(true) . "app/modules/{$api}/api.php";
-                return;
-            } else {
-                self::arcReturnJSON(["message" => "Invalid API module call"]);
-                return;
-            }
-        }
-        self::arcReturnJSON(["message" => "Invalid API key"]);
+        include self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
     }
 
 }
