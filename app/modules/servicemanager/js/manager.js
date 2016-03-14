@@ -6,3 +6,7 @@ function successGet(data) {
     var jdata = arcGetJson(data);
     $("#data").html(jdata.html);
 }
+
+function edit(id) {
+    $("#myModal").modal('show');
+}
