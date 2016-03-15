@@ -294,6 +294,9 @@ class Helper {
                     self::$arc["post"]["error"] = "403";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
+            } else {
+                session_set_cookie_params(86400);
+                ini_set('session.gc_maxlifetime', 86400);
             }
 
             // update last activity time stamp
