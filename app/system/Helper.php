@@ -74,7 +74,7 @@ class Helper {
         // Javascript, add required javascript files to header
         self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/moment.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
