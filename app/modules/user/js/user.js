@@ -53,11 +53,11 @@ function getSuccess(data) {
     $('#data').html(jdata.html);
 }
 
-function addGrpComplete(data) {
+function addGrpComplete() {
     editUser(userid);
 }
 
-function remGrpComplete(data) {
+function remGrpComplete() {
     editUser(userid);
 }
 
@@ -113,7 +113,7 @@ function completeEditGroup(data) {
     $("#groupdescription").val(jdata.description);
 }
 
-function successEditGroup(data) {
+function successEditGroup() {
     $("#editGroupModal").modal("show");
 }
 
@@ -126,7 +126,7 @@ function removeGrpDoComplete() {
     $("#removeGroupModal").modal("hide");
 }
 
-function saveGroupComplete(data) {
+function saveGroupComplete() {
     get("groups");
     $("#editGroupModal").modal("hide");
     arcGetStatus();

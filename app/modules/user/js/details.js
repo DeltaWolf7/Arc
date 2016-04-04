@@ -1,7 +1,6 @@
 // Details
     $("#saveDetailsBtn").click(function () {
-        arcAjaxRequest("user/details", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-            password: $("#password").val(), password2: $("#password2").val()}, detailsComplete, null);
+        arcAjaxRequest("user/details", $("#detailsForm").serialize(), detailsComplete, null);
     });
     
 
