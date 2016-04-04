@@ -40,6 +40,12 @@ class Helper {
      * Initialise the Helper class
      */
     public static function init() {
+        
+        // Prevent session expiring.
+        if (ARCSESSIONTIMEOUT == 0) {
+            ini_set('session.gc_maxlifetime', 30*60);
+        }
+        
         // Start session
         session_start();
 
@@ -74,7 +80,7 @@ class Helper {
         // Javascript, add required javascript files to header
         self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/moment.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
@@ -294,9 +300,6 @@ class Helper {
                     self::$arc["post"]["error"] = "403";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
-            } else {
-                session_set_cookie_params(86400);
-                ini_set('session.gc_maxlifetime', 86400);
             }
 
             // update last activity time stamp
