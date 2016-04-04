@@ -40,12 +40,7 @@ class Helper {
      * Initialise the Helper class
      */
     public static function init() {
-        
-        // Prevent session expiring.
-        if (ARCSESSIONTIMEOUT == 0) {
-            ini_set('session.gc_maxlifetime', 30*60);
-        }
-        
+                
         // Start session
         session_start();
 
@@ -300,6 +295,8 @@ class Helper {
                     self::$arc["post"]["error"] = "403";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
+            } else {
+                self::arcAddFooter("js", self::arcGetPath() . "js/arcsession.js");
             }
 
             // update last activity time stamp
