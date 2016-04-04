@@ -295,8 +295,6 @@ class Helper {
                     self::$arc["post"]["error"] = "419";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
-            } else {
-                self::arcAddFooter("js", self::arcGetPath() . "js/arcsession.js");
             }
 
             // update last activity time stamp
