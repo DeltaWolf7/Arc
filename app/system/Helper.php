@@ -292,7 +292,7 @@ class Helper {
                     session_destroy();
                     $page = \Page::getBySEOURL("error");
                     unset(self::$arc["post"]);
-                    self::$arc["post"]["error"] = "403";
+                    self::$arc["post"]["error"] = "419";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
             } else {
