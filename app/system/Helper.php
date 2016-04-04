@@ -295,6 +295,8 @@ class Helper {
                     self::$arc["post"]["error"] = "419";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
+            } else {
+                self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.min.js");
             }
 
             // update last activity time stamp
@@ -342,7 +344,7 @@ class Helper {
             }
 
             if (self::arcIsAjaxRequest() == false) {
-                if (!\UserPermission::hasPermission($groups, $page->seourl)) {
+                if (!\UserPermission::hasPermission($groups, $page->seourl) && isset(self::$arc["post"]["error"])) {
                     $page = \Page::getBySEOURL("error");
                     unset(self::$arc["post"]);
                     self::$arc["post"]["error"] = "403";

@@ -59,7 +59,7 @@ function arcUploadImage(file, $editor) {
         cache: false,
         contentType: false,
         processData: false,
-        beforeSend: function() {
+        beforeSend: function () {
             arcNotification({messages: {type: "info", message: "Please wait while the image is uploaded"}});
             arcGetStatus();
         },
