@@ -3,7 +3,7 @@ $user = system\Helper::arcGetUser();
 ?>
 
 <div class="row">
-    <form name="detailsForm">
+    <form id="detailsForm">
         <div class="form-group">
             <label for="firstname">Firstname</label>
             <input type="firstname" class="form-control" name="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
