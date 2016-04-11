@@ -1,10 +1,10 @@
 Name                            Version             Url
 ----                            -------             ---
 Bootstarp                       3.3.6               http://getbootstrap.com/
-Meedoo                          1.0.1               http://medoo.in/
-jQuery                          2.2.0               https://jquery.com/
-Summernote                      0.7.3               http://summernote.org/
+Meedoo                          1.0.2               http://medoo.in/
+jQuery                          2.2.3               https://jquery.com/
+Summernote                      0.8.5               http://summernote.org/
 Font Awesome                    4.5.0               http://fortawesome.github.io/Font-Awesome/
 Datepicker                      4.17.37             https://eonasdan.github.io/bootstrap-datetimepicker/
-Moment                          2.11.2              http://momentjs.com/
+Moment                          2.12.0              http://momentjs.com/
 PHPMailer                       5.2.14              https://github.com/PHPMailer/PHPMailer
