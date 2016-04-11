@@ -80,6 +80,17 @@ if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
     }
 }
 
+// Check the session directory exists and create it if not.
+if (!file_exists(system\Helper::arcGetPath(true) . "sessions")) {
+    echo "<div class=\"alert alert-warning\">Session directory not found. Arc will try to create it.</div>";
+    try {
+        mkdir(system\Helper::arcGetPath(true) . "sessions");
+        echo "<div class=\"alert alert-success\">Sessions directory created.</div>";
+    } catch (Exception $ex) {
+        echo "<div class=\"alert alert-danger\">Unable to create sessions directory. Error: " . $e->getMessage() . "</div>";
+    }
+}
+
 // Setup autoloader.
 spl_autoload_register(function($class) {
     if (file_exists("app/classes/{$class}.class.php")) {

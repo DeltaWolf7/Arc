@@ -49,7 +49,7 @@ class Config {
         // Project debug mode
         define('ARCDEBUG', true);
         
-        // Session Timeout (minutes)
+        // Session Timeout (minutes), default 1 hour.
         // Set to 0 to disable.
         define('ARCSESSIONTIMEOUT', 60);
         

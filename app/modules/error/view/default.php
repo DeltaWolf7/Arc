@@ -17,6 +17,11 @@
                 You do not have permission to access this resource.<br />
                 <?php
                 break;
+            case "401":
+                ?>
+                Your session has expired. Please login and try again.<br />
+                <?php
+                break;
             case "419":
                 ?>
                 Your authentication has expired. Please <a href="<?php echo system\Helper::arcGetPath() . "login"; ?>">login</a>.<br />
