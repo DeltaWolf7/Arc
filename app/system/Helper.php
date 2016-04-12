@@ -295,7 +295,7 @@ class Helper {
                     return;
                 }
             }
-
+            
             // expired session - check for actual user because guests don't need to timeout.
             if (ARCSESSIONTIMEOUT > 0) {
                 $timeout = ARCSESSIONTIMEOUT * 60;
@@ -352,9 +352,9 @@ class Helper {
             if (self::arcIsUserLoggedIn() == true) {
                 $groups = array_merge($groups, self::arcGetUser()->getGroups());
             }
-
+            
             if (self::arcIsAjaxRequest() == false) {
-                if (!\UserPermission::hasPermission($groups, $page->seourl) && isset(self::$arc["post"]["error"])) {
+                if (!\UserPermission::hasPermission($groups, $page->seourl)) {
                     $page = \Page::getBySEOURL("error");
                     unset(self::$arc["post"]);
                     self::$arc["post"]["error"] = "403";
