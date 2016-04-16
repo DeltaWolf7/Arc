@@ -111,7 +111,7 @@ system\Helper::arcCheckSettingExists("ARC_THEME", "default");
 system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
 system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","
         . " \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
-system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.0");
+system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.1");
 system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime() . rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));
