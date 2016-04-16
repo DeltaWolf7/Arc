@@ -40,19 +40,6 @@ class Helper {
      * Initialise the Helper class
      */
     public static function init() {
-
-        // Session lifetime set from config.
-        ini_set('session.gc_maxlifetime', ARCSESSIONTIMEOUT * 60);
-
-        // Enable session garbage collection with a 1% chance of
-        // running on each session_start()
-        ini_set('session.gc_probability', 1);
-        ini_set('session.gc_divisor', 100);
-
-        // Our own session save path;
-        // read/write permissions to this directory.
-        session_save_path(self::arcGetPath(true) . 'sessions');
-
         // Start session
         session_start();
 
@@ -309,6 +296,8 @@ class Helper {
                     self::$arc["post"]["error"] = "401";
                     self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
                 }
+            } else {
+                self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.min.js");
             }
 
             // update last activity time stamp
