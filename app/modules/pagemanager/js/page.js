@@ -84,7 +84,7 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete, true);
+                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete);
             }
         }
     });

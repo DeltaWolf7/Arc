@@ -1,8 +1,5 @@
 <?php
 
-system\Helper::arcReturnJSON(["path" => $_FILES['file']['name']]);
-return;
-
 if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
     Log::createLog("success", "arc", "Detected upload request.");
     if (isset($_FILES['file']['name'])) {
@@ -27,13 +24,19 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             Log::createLog("info", "arc", "Valid image type detected.");
 
-            $name = md5(uniqid(rand(), true));
-            $ext = explode('.', $_FILES['file']['name']);
-            $filename = $name . '.' . $ext[1];
+            //$name = md5(uniqid(rand(), true));
+            //$ext = explode('.', $_FILES['file']['name']);
+            //$filename = $name . '.' . $ext[1];
+            $filename = $_FILES['file']['name'];
+
             // force lowercase names
             $filename = strtolower($filename);
-            $destination = system\Helper::arcGetPath(true) . "images/" . $filename;
+            $destination = system\Helper::arcGetPath(true) . "assets/pagemanager/" . $filename;
 
+            if (!file_exists(system\Helper::arcGetPath(true) . "assets/pagemanager")) {
+                mkdir(system\Helper::arcGetPath(true) . "assets/pagemanager");
+            }
+            
             Log::createLog("info", "arc", "Destination: '" . $destination . "'");
 
             $location = $_FILES["file"]["tmp_name"];
@@ -42,7 +45,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             $size = getimagesize($location);
 
-           Log::createLog("info", "arc", "Size: " . $size[0]);
+            Log::createLog("info", "arc", "Size: " . $size[0]);
 
             if ($size == 0) {
                 system\Helper::arcAddMessage("danger", "Invalid image uploaded");
@@ -51,7 +54,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             }
             move_uploaded_file($location, $destination);
             Log::createLog("info", "arc", "Image moved to image folder.");
-            echo system\Helper::arcGetPath() . "images/" . $filename;
+            system\Helper::arcReturnJSON(["path" => system\Helper::arcGetPath() . "assets/pagemanager/" . $filename]);
             Log::createLog("success", "arc", "Upload complete.");
         } else {
             Log::createLog("danger", "arc", "Upload error " . $_FILES['file']['error']);

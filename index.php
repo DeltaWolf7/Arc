@@ -69,25 +69,14 @@ switch (ARCDEBUG) {
 require_once "app/system/Helper.php";
 system\Helper::init();
 
-// Check the image directory exists and create it if not.
-if (!file_exists(system\Helper::arcGetPath(true) . "images")) {
-    echo "<div class=\"alert alert-warning\">Images directory not found. Arc will try to create it.</div>";
+// Check the assets directory exists and create it if not.
+if (!file_exists(system\Helper::arcGetPath(true) . "assets")) {
+    echo "<div class=\"alert alert-warning\">Assets directory not found. Arc will try to create it.</div>";
     try {
-        mkdir(system\Helper::arcGetPath(true) . "images");
-        echo "<div class=\"alert alert-success\">Images directory created.</div>";
+        mkdir(system\Helper::arcGetPath(true) . "assets");
+        echo "<div class=\"alert alert-success\">Assets directory created.</div>";
     } catch (Exception $ex) {
-        echo "<div class=\"alert alert-danger\">Unable to create images directory. Error: " . $e->getMessage() . "</div>";
-    }
-}
-
-// Check the session directory exists and create it if not.
-if (!file_exists(system\Helper::arcGetPath(true) . "sessions")) {
-    echo "<div class=\"alert alert-warning\">Session directory not found. Arc will try to create it.</div>";
-    try {
-        mkdir(system\Helper::arcGetPath(true) . "sessions");
-        echo "<div class=\"alert alert-success\">Sessions directory created.</div>";
-    } catch (Exception $ex) {
-        echo "<div class=\"alert alert-danger\">Unable to create sessions directory. Error: " . $e->getMessage() . "</div>";
+        echo "<div class=\"alert alert-danger\">Unable to create assets directory. Error: " . $e->getMessage() . "</div>";
     }
 }
 
@@ -111,7 +100,7 @@ system\Helper::arcCheckSettingExists("ARC_THEME", "default");
 system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
 system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","
         . " \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
-system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.1");
+system\Helper::arcCheckSettingExists("ARC_VERSION", "0.4.0.2");
 system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime() . rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));

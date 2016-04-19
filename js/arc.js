@@ -1,34 +1,51 @@
 /*! Arc Project | Craig Longford */
 
 // AJAX request
-function arcAjaxRequest(path, data, complete, success, fileupload) {
+function arcAjaxRequest(path, data, complete, success) {
     data["arcsid"] = arcsid;
-    var process = true;
-    if (fileupload == null) {
-        //fileupload = "application/x-www-form-urlencoded";
+
+    if (data["lastModified"] != null && data["name"] != null && data["size"] != null) {
+        newdata = new FormData();
+        newdata.append("file", data);
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.host + "/" + path,
+            dataType: "json",
+            type: "post",
+            data: newdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            complete: function (e) {
+                if (typeof (complete) == "function") {
+                    complete(e);
+                }
+            },
+            success: function (e) {
+                if (typeof (success) == "function") {
+                    success(e);
+                }
+            }
+        });
     } else {
-        //fileupload = "multipart/form-data";
-        process = false;
+        $.ajax({
+            url: window.location.protocol + "//" + window.location.host + "/" + path,
+            dataType: "json",
+            type: "post",
+            data: data,
+            contentType: "application/x-www-form-urlencoded",
+            processData: true,
+            complete: function (e) {
+                if (typeof (complete) == "function") {
+                    complete(e);
+                }
+            },
+            success: function (e) {
+                if (typeof (success) == "function") {
+                    success(e);
+                }
+            }
+        });
     }
-     
-    $.ajax({
-        url: window.location.protocol + "//" + window.location.host + "/" + path,
-        dataType: "json",
-        type: "post",
-        contentType: false,
-        processData: process,
-        data: data,
-        complete: function (e) {
-            if (typeof (complete) == "function") {
-                complete(e)
-            }
-        },
-        success: function (e) {
-            if (typeof (success) == "function") {
-                success(e)
-            }
-        }
-    });
 }
 
 // Get status message
