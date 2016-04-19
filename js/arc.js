@@ -1,13 +1,17 @@
 /*! Arc Project | Craig Longford */
 
 // AJAX request
-function arcAjaxRequest(x, c, d, a) {
+function arcAjaxRequest(x, c, d, a, z) {
     c["arcsid"] = arcsid;
+    if (z == null) {
+        z = "application/x-www-form-urlencoded";
+    }
+    
     $.ajax({
         url: window.location.protocol + "//" + window.location.host + "/" + x,
         dataType: "json",
         type: "post",
-        contentType: "application/x-www-form-urlencoded",
+        contentType: z,
         data: c,
         complete: function (e) {
             if (typeof (d) == "function") {
@@ -46,29 +50,4 @@ function arcGetStatus() {
 // Convert JSON in to Javascript object
 function arcGetJson(data) {
     return jQuery.parseJSON(JSON.stringify(data));
-}
-
-//
-function arcUploadImage(file, $editor) {
-    data = new FormData();
-    data.append("file", file);
-    $.ajax({
-        data: data,
-        type: "POST",
-        url: window.location.protocol + "//" + window.location.host + "/",
-        cache: false,
-        contentType: false,
-        processData: false,
-        beforeSend: function () {
-            arcNotification({messages: {type: "info", message: "Please wait while the image is uploaded"}});
-            arcGetStatus();
-        },
-        success: function (url) {
-            if (url != "") {
-                $editor.summernote("insertImage", url);
-            } else {
-                arcGetStatus();
-            }
-        }
-    });
 }

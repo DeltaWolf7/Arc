@@ -60,7 +60,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     system\Helper::arcAddMessage("danger", "Invalid username and/or password");
     Log::createLog("warning", "user", "Incorrect password: " . $_POST["email"]);
 } else {
-    return system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/login.js");
+    return system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/login.js");
 }
 
 function doLogin($user) {

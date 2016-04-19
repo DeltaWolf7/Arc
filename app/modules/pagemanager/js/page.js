@@ -84,10 +84,14 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                arcUploadImage(files[0], $('#summernote'));
+                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete, "multipart/form-data");
             }
         }
     });
 
     getPages();
 });
+
+function uploadComplete(data) {
+    $('#summernote').summernote("insertImage", data);
+}

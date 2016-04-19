@@ -1,3 +1,3 @@
 <?php
 
-system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("pagemanager") . "js/permissions.js");
+system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/permissions.js");

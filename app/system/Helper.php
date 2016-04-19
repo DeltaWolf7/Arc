@@ -46,6 +46,9 @@ class Helper {
         // Initilise menu
         self::$arc["menus"] = Array();
 
+        // Set module path
+        self::$arc["modulepath"] = "";
+
         // Initilise status
         if (!isset($_SESSION["status"])) {
             self::arcClearStatus();
@@ -79,7 +82,7 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/fileinput.min.js");
-        
+
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
@@ -87,7 +90,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/fileinput.min.css");
-        
+
         // Get POST data
         self::$arc["post"] = array();
         foreach ($_POST as $key => $value) {
@@ -256,212 +259,148 @@ class Helper {
             $uri = "/";
         }
 
-        if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
-            self::arcProcessImageUpload();
-            return;
+        if (self::arcIsAjaxRequest() == false) {
+            // get page
+            if ($uri == "/") {
+                $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
+                $uri = $defaultPage->value;
+            }
+            $uri = trim($uri, '/');
+
+            $page = \Page::getBySEOURL($uri);
+            // does page exist
+            if ($page->id == 0) {
+                $page = \Page::getBySEOURL("error");
+                unset(self::$arc["post"]);
+                self::$arc["post"]["error"] = "404";
+                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            }
         } else {
-
-            if (self::arcIsAjaxRequest() == false) {
-                // get page
-                if ($uri == "/") {
-                    $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-                    $uri = $defaultPage->value;
-                }
-                $uri = trim($uri, '/');
-
-                $page = \Page::getBySEOURL($uri);
-                // does page exist
-                if ($page->id == 0) {
-                    $page = \Page::getBySEOURL("error");
-                    unset(self::$arc["post"]);
-                    self::$arc["post"]["error"] = "404";
-                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-                }
-            } else {
-                // new get
-                if (self::arcGetPostData("action") == "getarcstatusmessages") {
-                    self::arcGetStatusMessages();
-                    return;
-                }
+            // new get
+            if (self::arcGetPostData("action") == "getarcstatusmessages") {
+                self::arcGetStatusMessages();
+                return;
             }
-            
-            // expired session - check for actual user because guests don't need to timeout.
-            if (ARCSESSIONTIMEOUT > 0) {
-                $timeout = ARCSESSIONTIMEOUT * 60;
-                if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
-                    session_unset();
-                    session_destroy();
-                    $page = \Page::getBySEOURL("error");
-                    unset(self::$arc["post"]);
-                    self::$arc["post"]["error"] = "401";
-                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-                }
-            } else {
-                self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.min.js");
+        }
+
+        // expired session - check for actual user because guests don't need to timeout.
+        if (ARCSESSIONTIMEOUT > 0) {
+            $timeout = ARCSESSIONTIMEOUT * 60;
+            if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
+                session_unset();
+                session_destroy();
+                $page = \Page::getBySEOURL("error");
+                unset(self::$arc["post"]);
+                self::$arc["post"]["error"] = "401";
+                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            }
+        } else {
+            self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.min.js");
+        }
+
+        // update last activity time stamp
+        $_SESSION["LAST_ACTIVITY"] = time();
+
+        if (self::arcIsAjaxRequest() == false) {
+            // get the current theme
+            $theme = \SystemSetting::getByKey("ARC_THEME");
+
+            // setup page
+            self::arcAddHeader("title", $page->title);
+            if (!empty($page->metadescription)) {
+                self::arcAddHeader("description", $page->metadescription);
+            }
+            if (!empty($page->metakeywords)) {
+                self::arcAddHeader("keywords", $page->metakeywords);
             }
 
-            // update last activity time stamp
-            $_SESSION["LAST_ACTIVITY"] = time();
+            // Check the theme in config exists.
+            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
+                $name = $theme->value;
+                $theme->value = "default";
+                $theme->update();
+                die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
+            }
 
-            if (self::arcIsAjaxRequest() == false) {
-                // get the current theme
-                $theme = \SystemSetting::getByKey("ARC_THEME");
-
-                // setup page
-                self::arcAddHeader("title", $page->title);
-                if (!empty($page->metadescription)) {
-                    self::arcAddHeader("description", $page->metadescription);
-                }
-                if (!empty($page->metakeywords)) {
-                    self::arcAddHeader("keywords", $page->metakeywords);
-                }
-
-                // Check the theme in config exists.
+            // If page has theme set, use it.
+            if ($page->theme != "none") {
+                $theme->value = $page->theme;
+                // If page theme is not present, switch to global theme.
                 if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                    $name = $theme->value;
-                    $theme->value = "default";
-                    $theme->update();
-                    die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
-                }
-
-                // If page has theme set, use it.
-                if ($page->theme != "none") {
-                    $theme->value = $page->theme;
-                    // If page theme is not present, switch to global theme.
-                    if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                        $theme = \SystemSetting::getByKey("ARC_THEME");
-                    }
-                }
-
-                // Check if the theme has a controller and include it if it does.
-                if (file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
-                    include_once self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
+                    $theme = \SystemSetting::getByKey("ARC_THEME");
                 }
             }
 
-            $groups[] = \UserGroup::getByName("Guests");
-            if (self::arcIsUserLoggedIn() == true) {
-                $groups = array_merge($groups, self::arcGetUser()->getGroups());
+            // Check if the theme has a controller and include it if it does.
+            if (file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
+                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
             }
-            
-            if (self::arcIsAjaxRequest() == false) {
-                if (!\UserPermission::hasPermission($groups, $page->seourl)) {
-                    $page = \Page::getBySEOURL("error");
-                    unset(self::$arc["post"]);
-                    self::$arc["post"]["error"] = "403";
-                    self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-                }
+        }
 
-                // template
-                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
-                    die("Unable to find template.php for theme '" . $theme->value . "'.");
-                }
+        $groups[] = \UserGroup::getByName("Guests");
+        if (self::arcIsUserLoggedIn() == true) {
+            $groups = array_merge($groups, self::arcGetUser()->getGroups());
+        }
 
-                $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
+        if (self::arcIsAjaxRequest() == false) {
+            if (!\UserPermission::hasPermission($groups, $page->seourl)) {
+                $page = \Page::getBySEOURL("error");
+                unset(self::$arc["post"]);
+                self::$arc["post"]["error"] = "403";
+                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
+            }
 
-                // menu
-                $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
+            // template
+            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
+                die("Unable to find template.php for theme '" . $theme->value . "'.");
+            }
 
-                // path
-                $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
+            $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
 
-                // themepath
-                $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
+            // menu
+            $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
 
-                // header
-                if ($page->showtitle == "1") {
-                    $content = str_replace("{{arc:title}}", "<div class=\"page-header\"><h1>{$page->title}</h1></div>", $content);
-                } else {
-                    $content = str_replace("{{arc:title}}", "", $content);
-                }
+            // path
+            $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
 
-                // impersonating
-                if (isset($_SESSION["arc_imposter"])) {
-                    echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
-                }
+            // themepath
+            $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
 
-                // body
-                $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
-
-                // version
-                $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
-
-                // meta
-                $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
-
-                // footer
-                $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
-
-                echo $content;
+            // header
+            if ($page->showtitle == "1") {
+                $content = str_replace("{{arc:title}}", "<div class=\"page-header\"><h1>{$page->title}</h1></div>", $content);
             } else {
-                $data = explode("/", $uri);
-                if (isset($data[1]) && isset($data[2])) {
-                    include self::arcGetModuleControllerPath($data[1], $data[2], true);
-                } else {
-                    \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
-                }
+                $content = str_replace("{{arc:title}}", "", $content);
+            }
+
+            // impersonating
+            if (isset($_SESSION["arc_imposter"])) {
+                echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
+            }
+
+            // body
+            $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
+
+            // version
+            $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
+
+            // meta
+            $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
+
+            // footer
+            $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
+
+            echo $content;
+        } else {
+            $data = explode("/", $uri);
+            if (isset($data[1]) && isset($data[2])) {
+                include self::arcGetModuleControllerPath($data[1], $data[2], true);
+            } else {
+                \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
             }
         }
-    }
 
-    public static function arcProcessImageUpload() {
-        if (self::arcIsAjaxRequest() == true && count($_FILES) > 0) {
-            \Log::createLog("success", "arc", "Detected upload request.");
-            if (isset($_FILES['file']['name'])) {
-                if (!$_FILES['file']['error']) {
-                    \Log::createLog("success", "arc", "Starting image upload.");
-
-                    $filesize = \SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
-                    \Log::createLog("info", "arc", "Upload size limit: " . $filesize->value);
-
-                    if ($_FILES['file']['size'] > $filesize->value) {
-                        self::arcAddMessage("danger", "Image file size exceeds limit");
-                        \Log::createLog("danger", "arc", "Image exceeds size limit.");
-                        return;
-                    }
-                    $file_type = $_FILES['file']['type'];
-                    \Log::createLog("info", "arc", "Type: " . $_FILES['file']['type']);
-                    if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
-                        self::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
-                        \Log::createLog("danger", "arc", "Invalid image type.");
-                        return;
-                    }
-
-                    \Log::createLog("info", "arc", "Valid image type detected.");
-
-                    $name = md5(uniqid(rand(), true));
-                    $ext = explode('.', $_FILES['file']['name']);
-                    $filename = $name . '.' . $ext[1];
-                    // force lowercase names
-                    $filename = strtolower($filename);
-                    $destination = self::arcGetPath(true) . "images/" . $filename;
-
-                    \Log::createLog("info", "arc", "Destination: '" . $destination . "'");
-
-                    $location = $_FILES["file"]["tmp_name"];
-
-                    \Log::createLog("info", "arc", "Source: '" . $location . "'");
-
-                    $size = getimagesize($location);
-
-                    \Log::createLog("info", "arc", "Size: " . $size[0]);
-
-                    if ($size == 0) {
-                        self::arcAddMessage("danger", "Invalid image uploaded");
-                        \Log::createLog("danger", "arc", "Invalid image size.");
-                        return;
-                    }
-                    move_uploaded_file($location, $destination);
-                    \Log::createLog("info", "arc", "Image moved to image folder.");
-                    echo self::arcGetPath() . "images/" . $filename;
-                    \Log::createLog("success", "arc", "Upload complete.");
-                } else {
-                    \Log::createLog("danger", "arc", "Upload error " . $_FILES['file']['error']);
-                    self::arcAddMessage("danger", "Error occured while uploading image");
-                }
-            }
-            return;
-        }
+        self::$arc["modulepath"] = "";
     }
 
     public static function arcAddMessage($status, $data, $parameters = array()) {
@@ -791,11 +730,11 @@ class Helper {
         echo utf8_encode(json_encode($array));
     }
 
-    public static function arcGetModulePath($name, $filesystem = false) {
+    public static function arcGetModulePath($filesystem = false) {
         if (!$filesystem) {
-            return self::arcGetPath() . "app/modules/{$name}/";
+            return self::arcGetPath() . self::$arc["modulepath"];
         }
-        return self::arcGetPath(true) . "app/modules/{$name}/";
+        return self::arcGetPath(true) . self::$arc["modulepath"];
     }
 
     public static function arcGetModuleControllerPath($name, $controller, $filesystem = false) {
@@ -830,6 +769,8 @@ class Helper {
             \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
         }
+
+        self::$arc["modulepath"] = "app/modules/{$name}/";
 
         if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php";

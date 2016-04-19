@@ -60,5 +60,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     $url = SystemSetting::getByKey("ARC_LOGIN_URL");
     system\Helper::arcReturnJSON(["redirect" => $url->value]);
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("user") . "js/register.js");
+    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/register.js");
 }

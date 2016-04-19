@@ -8,5 +8,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         $data .= "<option value=\"{$group->name}\">{$group->name}</option>";
     }
     $data .= "</select>";
-    echo json_encode(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled)]);
+    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled)]);
 }

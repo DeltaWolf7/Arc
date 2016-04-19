@@ -1,3 +1,3 @@
 <?php
 
-system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath("system") . "js/logs.js");
+system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/logs.js");
