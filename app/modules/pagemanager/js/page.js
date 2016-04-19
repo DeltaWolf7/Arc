@@ -84,7 +84,7 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete, "multipart/form-data");
+                arcAjaxRequest("pagemanager/uploadimage", files[0], uploadComplete2, uploadComplete, true);
             }
         }
     });
@@ -93,5 +93,10 @@ $(document).ready(function () {
 });
 
 function uploadComplete(data) {
+    console.log(data);
     $('#summernote').summernote("insertImage", data);
+}
+
+function uploadComplete2(data) {
+    console.log(data);
 }

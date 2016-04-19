@@ -1,17 +1,24 @@
 /*! Arc Project | Craig Longford */
 
 // AJAX request
-function arcAjaxRequest(x, c, d, a, z) {
+function arcAjaxRequest(x, c, d, a, fileupload) {
     c["arcsid"] = arcsid;
-    if (z == null) {
-        z = "application/x-www-form-urlencoded";
+    var process = true;
+    if (fileupload == null) {
+        fileupload = "application/x-www-form-urlencoded";
+    } else {
+        fileupload = "multipart/form-data";
+        process = false;
     }
+    
+    console.log(fileupload + " | " + process);
     
     $.ajax({
         url: window.location.protocol + "//" + window.location.host + "/" + x,
         dataType: "json",
         type: "post",
-        contentType: z,
+        contentType: fileupload,
+        processData: process,
         data: c,
         complete: function (e) {
             if (typeof (d) == "function") {
@@ -23,7 +30,7 @@ function arcAjaxRequest(x, c, d, a, z) {
                 a(e)
             }
         }
-    })
+    });
 }
 
 // Get status message
