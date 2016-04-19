@@ -1,6 +1,9 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true && count($_FILES) > 0) {
+system\Helper::arcReturnJSON(["path" => $_FILES['file']['name']]);
+return;
+
+if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
     Log::createLog("success", "arc", "Detected upload request.");
     if (isset($_FILES['file']['name'])) {
         if (!$_FILES['file']['error']) {

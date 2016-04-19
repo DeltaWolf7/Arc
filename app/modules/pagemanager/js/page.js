@@ -84,7 +84,7 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                arcAjaxRequest("pagemanager/uploadimage", files[0], uploadComplete2, uploadComplete, true);
+                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete, true);
             }
         }
     });
@@ -93,10 +93,6 @@ $(document).ready(function () {
 });
 
 function uploadComplete(data) {
-    console.log(data);
-    $('#summernote').summernote("insertImage", data);
-}
-
-function uploadComplete2(data) {
-    console.log(data);
+    var jdata = arcGetJson(data);
+    $('#summernote').summernote("insertImage", jdata.path);
 }
