@@ -181,7 +181,7 @@ class Helper {
      */
     public static function arcGetPath($filesystem = false) {
         if ($filesystem) {
-            return $_SERVER["DOCUMENT_ROOT"] . "/";
+            return $_SERVER["DOCUMENT_ROOT"];
         }
         if (ARCFORCENOSSL == true) {
             return "http://{$_SERVER['HTTP_HOST']}/";
