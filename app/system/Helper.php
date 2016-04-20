@@ -365,6 +365,21 @@ class Helper {
             // menu
             $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
 
+            // menu with li style
+            preg_match_all('/{{arc:menu:([^,]+?)}}/', $content, $matches);
+            foreach ($matches[1] as $key => $li) {
+                $content = str_replace("{{arc:menu:$li}}", self::arcGetMenu($li), $content);
+            }
+
+            // menu with li style and a style
+            preg_match_all('/{{arc:menu:([^,]+?):([^,]+?)}}/', $content, $matches);
+            foreach ($matches[1] as $key => $li) {
+                foreach ($matches[2] as $key2 => $ahref) {
+                    $content = str_replace("{{arc:menu:$li:$ahref}}", self::arcGetMenu($li, $ahref), $content);
+                }
+            }
+
+
             // path
             $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
 
