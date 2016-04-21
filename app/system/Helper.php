@@ -364,21 +364,15 @@ class Helper {
 
             // menu
             $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
-
-            // menu with li style
-            preg_match_all('/{{arc:menu:([^,]+?)}}/', $content, $matches);
-            foreach ($matches[1] as $key => $li) {
-                $content = str_replace("{{arc:menu:$li}}", self::arcGetMenu($li), $content);
+            
+            // custom menu
+            if (file_exists(self::arcGetThemePath(true) . "menu.php")) {
+                ob_start();
+                include self::arcGetThemePath(true) . "menu.php";
+                $newContent = ob_get_contents();
+                ob_end_clean();
+                $content = str_replace("{{arc:custommenu}}", $newContent, $content);
             }
-
-            // menu with li style and a style
-            preg_match_all('/{{arc:menu:([^,]+?):([^,]+?)}}/', $content, $matches);
-            foreach ($matches[1] as $key => $li) {
-                foreach ($matches[2] as $key2 => $ahref) {
-                    $content = str_replace("{{arc:menu:$li:$ahref}}", self::arcGetMenu($li, $ahref), $content);
-                }
-            }
-
 
             // path
             $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
@@ -557,6 +551,31 @@ class Helper {
         }
     }
 
+    public static function arcGetMenuData() {
+        $menu = array();
+        $pages = \Page::getAllPages();
+
+        $groups[] = \UserGroup::getByName("Guests");
+        if (self::arcIsUserLoggedIn() == true) {
+            $groups = array_merge($groups, self::arcGetUser()->getGroups());
+        }
+
+        foreach ($pages as $page) {
+
+            if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
+                continue;
+            }
+            if (\UserPermission::hasPermission($groups, $page->seourl)) {
+                $data = explode("/", $page->seourl);
+                $menu[ucwords($data[0])][$page->title]["name"] = $page->title;
+                $menu[ucwords($data[0])][$page->title]["url"] = $page->seourl;
+                $menu[ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
+            }
+        }
+        
+        return $menu;
+    }
+    
     /**
      * Processes modules and building menus from info data
      */

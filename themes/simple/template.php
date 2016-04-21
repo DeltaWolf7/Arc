@@ -293,22 +293,16 @@
                 <div id="sidebar-left" class="col-lg-2 col-sm-1">
                     <input type="text" class="search hidden-sm" placeholder="..." />
                     <div class="nav-collapse sidebar-nav collapse navbar-collapse bs-navbar-collapse">
-                        <ul class="nav nav-tabs nav-stacked main-menu">
-                        {{arc:menu::submenu}}
-                        </ul>
+                        {{arc:custommenu}}
                     </div>
                 </div>
                 <!-- end: Main Menu -->
                 <!-- start: Content -->
                 <div id="content" class="col-lg-10 col-sm-11">
-                    <div class="row">
-                        
-                                    <h2>{{arc:title}}</h2>
-                               
-                                    {{arc:content}}
-                                
-                          	
-                    </div><!--/row-->
+                   
+                        <h2>{{arc:title}}</h2>
+                        {{arc:content}}
+                    
                 </div>
                 <!-- end: Content -->
             </div><!--/row-->		
