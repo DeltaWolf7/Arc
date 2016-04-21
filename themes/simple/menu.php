@@ -1,6 +1,5 @@
 <?php
 $menus = system\Helper::arcGetMenuData();
-//print_r($menuItems);
 $menu = "";
 ?>
 
