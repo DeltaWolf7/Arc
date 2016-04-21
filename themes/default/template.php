@@ -27,10 +27,8 @@
 
                             <!-- Navigation starts.  -->
                             <div class="navy pull-right">			
-                                <ul>
                                     <!-- Main menu -->
                                     {{arc:menu}}
-                                </ul>
                             </div>							
                             <!-- Navigation ends -->
 

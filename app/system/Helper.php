@@ -362,16 +362,14 @@ class Helper {
 
             $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
 
-            // menu
-            $content = str_replace("{{arc:menu}}", self::arcGetMenu(), $content);
-            
+           
             // custom menu
             if (file_exists(self::arcGetThemePath(true) . "menu.php")) {
                 ob_start();
                 include self::arcGetThemePath(true) . "menu.php";
                 $newContent = ob_get_contents();
                 ob_end_clean();
-                $content = str_replace("{{arc:custommenu}}", $newContent, $content);
+                $content = str_replace("{{arc:menu}}", $newContent, $content);
             }
 
             // path
@@ -551,7 +549,7 @@ class Helper {
         }
     }
 
-    public static function arcGetMenuData() {
+    public static function arcGetMenu() {
         $menu = array();
         $pages = \Page::getAllPages();
 
@@ -576,69 +574,6 @@ class Helper {
         return $menu;
     }
     
-    /**
-     * Processes modules and building menus from info data
-     */
-    private static function arcGetMenu($ddcss = "dropdown", $ddtoggle = "dropdown-toggle", $ddmenu = "dropdown-menu") {
-        $content = "";
-        $pages = \Page::getAllPages();
-
-        $groups[] = \UserGroup::getByName("Guests");
-        if (self::arcIsUserLoggedIn() == true) {
-            $groups = array_merge($groups, self::arcGetUser()->getGroups());
-        }
-
-        foreach ($pages as $page) {
-
-            if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
-                continue;
-            }
-            if (\UserPermission::hasPermission($groups, $page->seourl)) {
-                $data = explode("/", $page->seourl);
-                self::$arc["menus"][ucwords($data[0])][$page->title]["name"] = $page->title;
-                self::$arc["menus"][ucwords($data[0])][$page->title]["url"] = $page->seourl;
-                self::$arc["menus"][ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
-            }
-        }
-
-        $content .= self::arcProcessMenuItems(self::$arc["menus"], $ddcss, $ddtoggle, $ddmenu);
-        return $content;
-    }
-
-    /**
-     * 
-     * @param Array $menus Array containing menu data
-     * Builds the html for the menu items
-     */
-    private static function arcProcessMenuItems($menus, $ddcss, $ddtoggle, $ddmenu) {
-        $content = "";
-        foreach ($menus as $menu => $item) {
-            if (count($item) == 1) {
-                foreach ($item as $subitem => $more) {
-                    $content .= self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
-                }
-            } else {
-                $content .= "<li class=\"{$ddcss}\">"
-                        . "<a href=\"#\" class=\"{$ddtoggle}\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">"
-                        . $menu . " </a><ul class=\"{$ddmenu}\">";
-                foreach ($item as $subitem => $more) {
-                    $content .= self::arcProcessMenuItem($more, $ddcss, $ddtoggle, $ddmenu);
-                }
-                $content .= "</ul></li>";
-            }
-        }
-        return $content;
-    }
-
-    private static function arcProcessMenuItem($item) {
-        $content = "<li><a href=\"" . self::arcGetPath() . $item["url"] . "\">";
-        if (!empty($item["icon"])) {
-            $content .= "<i class='{$item["icon"]}'></i> ";
-        }
-        $content .= $item["name"] . "</a></li>";
-        return $content;
-    }
-
     /**
      * 
      * @param array $objects Collection of objects
@@ -818,7 +753,7 @@ class Helper {
         if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
         } else {
-            echo "The module '{$name}' has no view named '{$view}'.";
+            echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
             \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
         }
     }

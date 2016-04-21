@@ -293,7 +293,7 @@
                 <div id="sidebar-left" class="col-lg-2 col-sm-1">
                     <input type="text" class="search hidden-sm" placeholder="..." />
                     <div class="nav-collapse sidebar-nav collapse navbar-collapse bs-navbar-collapse">
-                        {{arc:custommenu}}
+                        {{arc:menu}}
                     </div>
                 </div>
                 <!-- end: Main Menu -->
