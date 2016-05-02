@@ -380,7 +380,7 @@ class Helper {
 
             // header
             if ($page->showtitle == "1") {
-                $content = str_replace("{{arc:title}}", "<div class=\"page-header\"><h1>{$page->title}</h1></div>", $content);
+                $content = str_replace("{{arc:title}}", "{$page->title}", $content);
             } else {
                 $content = str_replace("{{arc:title}}", "", $content);
             }
