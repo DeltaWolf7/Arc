@@ -48,6 +48,9 @@ class Helper {
 
         // Set module path
         self::$arc["modulepath"] = "";
+        
+        // Version
+        self::$arc["version"] = "0.4.0.2";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -759,8 +762,7 @@ class Helper {
     }
 
     public static function arcGetVersion() {
-        $version = \SystemSetting::getByKey("ARC_VERSION");
-        return "Arc Version " . $version->value;
+        return "Arc Version " . self::$arc["version"];
     }
 
     public static function getContent() {
