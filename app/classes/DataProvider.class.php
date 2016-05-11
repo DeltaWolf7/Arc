@@ -44,7 +44,7 @@ abstract class DataProvider {
      * @param string $where Where array to get data
      * Fills the object once data has been collected
      */
-    public function get($where) {
+    protected function get($where) {
         $data = system\Helper::arcGetDatabase()->get($this->table, $this->columns, $where);
         $this->fill($data);
     }
@@ -54,7 +54,7 @@ abstract class DataProvider {
      * @param int $id ID of the item to fetch from the database
      * @return object Returns the object filled with data
      */
-    public function getByID($id) {
+    protected function getByID($id) {
         return $this->get(["id" => $id]);
     }
 
@@ -63,7 +63,7 @@ abstract class DataProvider {
      * @param array $where Array containing the claused to fetch data
      * @return object collection, filled with data
      */
-    public function getCollection($where) {
+    protected function getCollection($where) {
         $data = system\Helper::arcGetDatabase()->select($this->table, $this->columns, $where);
         $collection = array();
         if (is_array($data)) {
@@ -80,7 +80,7 @@ abstract class DataProvider {
     /**
      * Updates the data of an object in the database
      */
-    public function update() {
+    protected function update() {
         $columns = array_slice($this->columns, 1);
         $dataColumns = array();
         $properties = get_object_vars($this);
@@ -100,7 +100,7 @@ abstract class DataProvider {
      * 
      * @param int $id Removes a database row based on the ID
      */
-    public function delete($id) {
+    protected function delete($id) {
         system\Helper::arcGetDatabase()->delete($this->table, ["id" => $id]);
     }
 
