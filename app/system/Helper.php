@@ -84,7 +84,6 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/fileinput.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
@@ -92,7 +91,6 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/fileinput.min.css");
 
         // Get POST data
         self::$arc["post"] = array();

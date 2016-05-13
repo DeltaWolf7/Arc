@@ -3,7 +3,7 @@
         Media Browser
     </div>
     <div class="panel-body">
-        <a class="btn btn-primary"><i class="fa fa-upload"></i> Upload</a>
+        <a class="btn btn-primary btn-file"><i class="fa fa-upload"></i> Upload <input type="file"></a>
         <a class="btn btn-primary"><i class="fa fa-folder"></i> New Folder</a>
         <a class="btn btn-primary"><i class="fa fa-recycle"></i> Delete</a>
     </div>
