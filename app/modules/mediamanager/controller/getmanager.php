@@ -33,15 +33,22 @@ if (system\Helper::arcIsAjaxRequest()) {
 }
 
 function GetPath($path) {
-    $files = scandir(system\Helper::arcGetPath(true) . $path);
+    $fullPath = system\Helper::arcGetPath(true) . $path . "/";
+    $files = scandir($fullPath);
     $html = "";
     foreach ($files as $file) {
         if ($file != "." && $file != "..") {
-            if (is_dir($path . $file)) {
-                $fi = new FilesystemIterator($path . $file, FilesystemIterator::SKIP_DOTS);
-                $html .= "<tr><td><a onclick=\"getPath('{$path}{$file}')\"><i class=\"fa fa-folder\"></i> {$file}</a></td><td>" . iterator_count($fi) . " items</td><td>" . date("d M Y", filectime($path . $file)) . "</td></tr>";
+            if (is_dir($fullPath . $file)) {
+                $fi = new FilesystemIterator($fullPath . $file, FilesystemIterator::SKIP_DOTS);
+                $html .= "<tr><td><a onclick=\"getPath('{$path}{$file}')\"><i class=\"fa fa-folder\"></i> {$file}</a></td><td>" . iterator_count($fi) 
+                        . " items</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td></tr>";
             } else {
-                $html .= "<tr><td><a href=\"" . system\Helper::arcGetPath() . "{$path}{$file}\" target=\"_new\"><i class=\"fa fa-file\"></i> {$file}<a/></td><td>" . FileSizeConvert(filesize($path . $file)) . "</td><td>" . date("d M Y", filectime($path . $file)) . "</td></tr>";
+                $html .= "<tr><td><a href=\"" . system\Helper::arcGetPath();
+                if ($path[strlen($path) - 1] != "/") {
+                    $path .= "/";
+                }
+                    $html .= "{$path}{$file}\" target=\"_new\"><i class=\"fa fa-file\"></i> {$file}<a/></td><td>" 
+                . FileSizeConvert(filesize($fullPath . $file)) . "</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td></tr>";
             }
         }
     }
