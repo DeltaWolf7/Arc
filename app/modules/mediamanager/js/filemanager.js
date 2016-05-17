@@ -18,8 +18,7 @@ $(document).on('change', '.btn-file :file', function() {
         numFiles = input.get(0).files ? input.get(0).files.length : 1,
         label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 
-    /*NOT WORKING WITH PATH*/
-    arcAjaxRequest("mediamanager/uploadfile", input[0].files[0], null, uploadComplete);
+    arcAjaxRequest("mediamanager/uploadfile", input[0].files[0], null, uploadComplete, {path: path});
         
     input.trigger('fileselect', [numFiles, label]);
 });

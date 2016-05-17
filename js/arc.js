@@ -1,12 +1,22 @@
 /*! Arc Project | Craig Longford */
 
 // AJAX request
-function arcAjaxRequest(path, data, complete, success) {
+function arcAjaxRequest(path, data, complete, success, extended) {
     data["arcsid"] = arcsid;
 
     if (data["lastModified"] != null && data["name"] != null && data["size"] != null) {
         newdata = new FormData();
         newdata.append("file", data);
+
+        // add extended properties.
+        if (Array.isArray(extended)) {
+            for (var item in extended) {
+                if (extended.hasOwnProperty(item)) {
+                    newdata.append(item, extended[item]);
+                }
+            }
+        }
+
         $.ajax({
             url: window.location.protocol + "//" + window.location.host + "/" + path,
             dataType: "json",
