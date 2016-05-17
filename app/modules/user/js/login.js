@@ -55,7 +55,7 @@ $("#registerBtn").click(function () {
     arcAjaxRequest("user/register", $("#registerForm").serialize(), arcGetStatus, success);
 });
 
-$(".loginForm input").keypress(function (e) {
+$("#loginForm input").keypress(function (e) {
     if (e.keyCode == 13) {
         login();
         return false;
