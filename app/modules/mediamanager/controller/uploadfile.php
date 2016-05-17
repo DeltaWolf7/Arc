@@ -1,32 +1,28 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
-    Log::createLog("success", "arc", "Detected upload request.");
     if (isset($_FILES['file']['name'])) {
         if (!$_FILES['file']['error']) {
-            Log::createLog("success", "arc", "Starting image upload.");
+            Log::createLog("success", "mediamanager", "Starting file upload.");
 
             $filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
-            Log::createLog("info", "arc", "Upload size limit: " . $filesize->value);
+            Log::createLog("info", "mediamanager", "Upload size limit: " . $filesize->value);
 
             if ($_FILES['file']['size'] > $filesize->value) {
-                system\Helper::arcAddMessage("danger", "Image file size exceeds limit");
-                Log::createLog("danger", "arc", "Image exceeds size limit.");
+                system\Helper::arcAddMessage("danger", "File size exceeds limit");
+                Log::createLog("danger", "mediamanager", "File exceeds size limit.");
                 return;
             }
             $file_type = $_FILES['file']['type'];
             Log::createLog("info", "arc", "Type: " . $_FILES['file']['type']);
-            if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
-                system\Helper::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
-                Log::createLog("danger", "arc", "Invalid image type.");
+            
+            // manage file types not allowed here.
+            if (($file_type == "application/octet-stream") || ($file_type == "text/html") || ($file_type == "application/x-msdownload")) {
+                system\Helper::arcAddMessage("danger", "This type of file is not allowed. ({$file_type})");
+                Log::createLog("danger", "mediamanager", "Blocked file type: {$file_type}");
                 return;
             }
 
-            Log::createLog("info", "arc", "Valid image type detected.");
-
-            //$name = md5(uniqid(rand(), true));
-            //$ext = explode('.', $_FILES['file']['name']);
-            //$filename = $name . '.' . $ext[1];
             $filename = $_FILES['file']['name'];
 
             // force lowercase names
@@ -37,28 +33,28 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
                 mkdir(system\Helper::arcGetPath(true) . "assets/");
             }
             
-            Log::createLog("info", "arc", "Destination: '" . $destination . "'");
+            Log::createLog("info", "mediamanager", "Destination: '" . $destination . "'");
 
             $location = $_FILES["file"]["tmp_name"];
 
-            Log::createLog("info", "arc", "Source: '" . $location . "'");
+            Log::createLog("info", "mediamanager", "Source: '" . $location . "'");
 
-            $size = getimagesize($location);
+            $size = filesize($location);
 
-            Log::createLog("info", "arc", "Size: " . $size[0]);
+            Log::createLog("info", "mediamanager", "Size: " . $size[0]);
 
             if ($size == 0) {
-                system\Helper::arcAddMessage("danger", "Invalid image uploaded");
-                Log::createLog("danger", "arc", "Invalid image size.");
+                system\Helper::arcAddMessage("danger", "Invalid file uploaded");
+                Log::createLog("danger", "mediamanager", "Invalid file size.");
                 return;
             }
             move_uploaded_file($location, $destination);
-            Log::createLog("info", "arc", "Image moved to image folder.");
+            Log::createLog("info", "mediamanager", "File moved to image folder.");
             system\Helper::arcReturnJSON(["path" => system\Helper::arcGetPath() . "assets/" . $filename]);
-            Log::createLog("success", "arc", "Upload complete.");
+            Log::createLog("success", "mediamanager", "Upload complete.");
         } else {
-            Log::createLog("danger", "arc", "Upload error " . $_FILES['file']['error']);
-            system\Helper::arcAddMessage("danger", "Error occured while uploading image");
+            Log::createLog("danger", "mediamanager", "Upload error " . $_FILES['file']['error']);
+            system\Helper::arcAddMessage("danger", "Error occured while uploading file");
         }
     }
 }
