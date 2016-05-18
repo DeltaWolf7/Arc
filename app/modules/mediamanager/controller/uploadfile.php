@@ -15,7 +15,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             }
             $file_type = $_FILES['file']['type'];
             Log::createLog("info", "arc", "Type: " . $_FILES['file']['type']);
-            
+
             // manage file types not allowed here.
             if (($file_type == "application/octet-stream") || ($file_type == "text/html") || ($file_type == "application/x-msdownload")) {
                 system\Helper::arcAddMessage("danger", "This type of file is not allowed. ({$file_type})");
@@ -27,12 +27,16 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             // force lowercase names
             $filename = strtolower($filename);
-            $destination = system\Helper::arcGetPath(true) . "assets/" . $filename;
-
-            if (!file_exists(system\Helper::arcGetPath(true) . "assets/")) {
-                mkdir(system\Helper::arcGetPath(true) . "assets/");
+            $destination = system\Helper::arcGetPath(true) . $_POST["path"];
+            if (substr($destination, -1) != "/") {
+                $destination .= "/";
             }
-            
+            $destination .= $filename;
+
+            if (!file_exists(system\Helper::arcGetPath(true) . $_POST["path"])) {
+                mkdir(system\Helper::arcGetPath(true) . $_POST["path"]);
+            }
+
             Log::createLog("info", "mediamanager", "Destination: '" . $destination . "'");
 
             $location = $_FILES["file"]["tmp_name"];
@@ -50,7 +54,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             }
             move_uploaded_file($location, $destination);
             Log::createLog("info", "mediamanager", "File moved to image folder.");
-            system\Helper::arcReturnJSON(["path" => system\Helper::arcGetPath() . "assets/" . $filename]);
+            system\Helper::arcAddMessage("success", "File uploaded");
             Log::createLog("success", "mediamanager", "Upload complete.");
         } else {
             Log::createLog("danger", "mediamanager", "Upload error " . $_FILES['file']['error']);

@@ -11,16 +11,11 @@ function getManager() {
 function getComplete(data) {
     var jdata = arcGetJson(data);
     $("#managerView").html(jdata.html);
+    $('[data-toggle="popover"]').popover();
 }
 
-$(document).on('change', '.btn-file :file', function() {
-    var input = $(this),
-        numFiles = input.get(0).files ? input.get(0).files.length : 1,
-        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-
-    arcAjaxRequest("mediamanager/uploadfile", input[0].files[0], null, uploadComplete, {path: path});
-        
-    input.trigger('fileselect', [numFiles, label]);
+$(document).on('change', '.btn-file :file', function () {
+    arcAjaxRequest("mediamanager/uploadfile", $(this)[0].files[0], uploadComplete, null, {path: path});
 });
 
 function uploadComplete() {
@@ -33,3 +28,6 @@ function getPath(folderPath) {
     getManager();
 }
 
+function createFolder() {
+    arcAjaxRequest("mediamanager/createfolder", {path: path, name: $("#folderName").val()}, uploadComplete, null);
+}

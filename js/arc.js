@@ -9,11 +9,9 @@ function arcAjaxRequest(path, data, complete, success, extended) {
         newdata.append("file", data);
 
         // add extended properties.
-        if (Array.isArray(extended)) {
-            for (var item in extended) {
-                if (extended.hasOwnProperty(item)) {
-                    newdata.append(item, extended[item]);
-                }
+        for (var item in extended) {
+            if (extended.hasOwnProperty(item)) {
+                newdata.append(item, extended[item]);
             }
         }
 

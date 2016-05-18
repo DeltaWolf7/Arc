@@ -6,23 +6,30 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "Media Browser"
             . "</div>"
             . "<div class=\"panel-body\">"
-            . "<a class=\"btn btn-primary btn-file\"><i class=\"fa fa-upload\"></i> Upload <input type=\"file\"></a>"
-            . " <a class=\"btn btn-primary\"><i class=\"fa fa-folder\"></i> New Folder</a>"
-            . "</div>"
-            . "<div class=\"panel-body\">"
+            . "<div class=\"row\">";
+
+    $html .= "<div class=\"col-md-6\">"
             . "<i class=\"fa fa-home\"></i> /" . $_POST["path"];
-
-
     if ($_POST["path"] != "assets/") {
         $backUrl = "";
         $back = explode("/", $_POST["path"]);
         for ($i = 0; $i < count($back) - 1; $i++) {
-            $backUrl .= $back[$i]. "/";
+            $backUrl .= $back[$i] . "/";
         }
         $html .= " <a onclick=\"getPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i></a>";
     }
-    
-    $html.= "</div>"
+    $html .= "</div>"
+            . "<div class=\"col-md-6 text-right\">"
+            . "<a class=\"btn btn-primary btn-xs btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</a>"
+            . " <a class=\"btn btn-primary btn-xs\" data-toggle=\"popover\" placement=\"top\" title=\"Folder Name\" data-html=\"true\" data-content=\""
+            . "<form class='form-inline'>"
+            . "<input type='text' class='form-control' id='folderName'>"
+            . " <a class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></button>"
+            . "</form>"
+            . "\"><i class=\"fa fa-folder\"></i> New Folder</a>"
+            . "</div>"
+            . "</div>"
+            . "</div>"
             . "<div class=\"panel-body\">"
             . "<table class=\"table table-striped\" id=\"browser\">";
     $html .= GetPath($_POST["path"]);
@@ -40,15 +47,15 @@ function GetPath($path) {
         if ($file != "." && $file != "..") {
             if (is_dir($fullPath . $file)) {
                 $fi = new FilesystemIterator($fullPath . $file, FilesystemIterator::SKIP_DOTS);
-                $html .= "<tr><td><a onclick=\"getPath('{$path}{$file}')\"><i class=\"fa fa-folder\"></i> {$file}</a></td><td>" . iterator_count($fi) 
-                        . " items</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td></tr>";
+                $html .= "<tr><td><a onclick=\"getPath('{$path}{$file}')\"><i class=\"fa fa-folder\"></i> {$file}</a></td><td>" . iterator_count($fi)
+                        . " items</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td><td class=\"text-right\"><a class=\"btn btn-danger btn-xs\" onclick=\"deleteItem('{$file}')\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
             } else {
                 $html .= "<tr><td><a href=\"" . system\Helper::arcGetPath();
                 if ($path[strlen($path) - 1] != "/") {
                     $path .= "/";
                 }
-                    $html .= "{$path}{$file}\" target=\"_new\"><i class=\"fa fa-file\"></i> {$file}<a/></td><td>" 
-                . FileSizeConvert(filesize($fullPath . $file)) . "</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td></tr>";
+                $html .= "{$path}{$file}\" target=\"_new\"><i class=\"fa fa-file\"></i> {$file}<a/></td><td>"
+                        . FileSizeConvert(filesize($fullPath . $file)) . "</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td><td class=\"text-right\"><a class=\"btn btn-danger btn-xs\" onclick=\"deleteItem('{$file}')\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
             }
         }
     }
