@@ -11,7 +11,6 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
 
-
     // start ldap
     $ldap = SystemSetting::getByKey("ARC_LDAP");
     $ldapData = $ldap->getArrayFromJson();

@@ -48,7 +48,7 @@ class Helper {
 
         // Set module path
         self::$arc["modulepath"] = "";
-        
+
         // Version
         self::$arc["version"] = "0.4.0.2";
 
@@ -84,14 +84,14 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
-        
+
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
-        
+
         // Get POST data
         self::$arc["post"] = array();
         foreach ($_POST as $key => $value) {
@@ -363,7 +363,7 @@ class Helper {
 
             $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
 
-           
+
             // custom menu
             if (file_exists(self::arcGetThemePath(true) . "menu.php")) {
                 ob_start();
@@ -571,10 +571,10 @@ class Helper {
                 $menu[ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
             }
         }
-        
+
         return $menu;
     }
-    
+
     /**
      * 
      * @param array $objects Collection of objects
