@@ -27,14 +27,11 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             // force lowercase names
             $filename = strtolower($filename);
-            $destination = system\Helper::arcGetPath(true) . $_POST["path"];
-            if (substr($destination, -1) != "/") {
-                $destination .= "/";
-            }
-            $destination .= $filename;
+            $path = system\Helper::arcGetPath(true) . "assets" . $_POST["path"];
+            $destination = $path . "/" . $filename;
 
-            if (!file_exists(system\Helper::arcGetPath(true) . $_POST["path"])) {
-                mkdir(system\Helper::arcGetPath(true) . $_POST["path"]);
+            if (!file_exists($path)) {
+                mkdir($path);
             }
 
             Log::createLog("info", "mediamanager", "Destination: '" . $destination . "'");

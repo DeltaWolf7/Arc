@@ -4,7 +4,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $folder = strtolower($_POST["name"]);
     
-    $destination = system\Helper::arcGetPath(true) . $_POST["path"];
+    $destination = system\Helper::arcGetPath(true) . "assets" . $_POST["path"];
     if (substr($destination, -1) != "/") {
         $destination .= "/";
     }

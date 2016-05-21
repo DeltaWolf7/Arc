@@ -1,6 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
+
     $html = "<div class=\"panel panel-primary\">"
             . "<div class=\"panel-heading\">"
             . "Media Browser"
@@ -8,57 +9,78 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<div class=\"panel-body\">"
             . "<div class=\"row\">";
 
+    // buttons
     $html .= "<div class=\"col-md-6\">"
-            . "<i class=\"fa fa-home\"></i> /" . $_POST["path"];
-    if ($_POST["path"] != "assets/") {
+            . "<a class=\"btn btn-success btn-xs btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</a>"
+            . " <a class=\"btn btn-primary btn-xs\" data-toggle=\"popover\" placement=\"top\" title=\"Create Folder\" data-html=\"true\" data-content=\""
+            . "<form class='form-inline'>"
+            . "<input type='text' class='form-control' id='folderName'>"
+            . " <a class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></a>"
+            . "</form>"
+            . "\"><i class=\"fa fa-folder\"></i> New Folder</a>"
+            . " <a class=\"btn btn-danger btn-xs\" onclick=\"doDelete()\"><i class=\"fa fa-recycle\"></i> Delete Selected</a>";
+    if ($_POST["path"] != "") {
         $backUrl = "";
         $back = explode("/", $_POST["path"]);
         for ($i = 0; $i < count($back) - 1; $i++) {
             $backUrl .= $back[$i] . "/";
         }
-        $html .= " <a onclick=\"getPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i></a>";
+        $backUrl = rtrim($backUrl, "/");
+        $html .= " <a class=\"btn btn-primary btn-xs\" onclick=\"getFolderPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i> Up</a>";
     }
+    $html .= "</div>";
+
+    // path
+    $html .= "<div class=\"col-md-6 text-right\">"
+            . "<i class=\"fa fa-home\"></i> ";
+    if ($_POST["path"] == "") {
+        $html .= "/";
+    } else {
+        $html .= $_POST["path"];
+    };
+    $html .= "</div>";
+
+
     $html .= "</div>"
-            . "<div class=\"col-md-6 text-right\">"
-            . "<a class=\"btn btn-primary btn-xs btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</a>"
-            . " <a class=\"btn btn-primary btn-xs\" data-toggle=\"popover\" placement=\"top\" title=\"Folder Name\" data-html=\"true\" data-content=\""
-            . "<form class='form-inline'>"
-            . "<input type='text' class='form-control' id='folderName'>"
-            . " <a class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></button>"
-            . "</form>"
-            . "\"><i class=\"fa fa-folder\"></i> New Folder</a>"
             . "</div>"
-            . "</div>"
-            . "</div>"
-            . "<div class=\"panel-body\">"
-            . "<table class=\"table table-striped\" id=\"browser\">";
-    $html .= GetPath($_POST["path"]);
-    $html .= "</table>"
+            . "<div class=\"panel-body\">";
+    $html .= GetPath($_POST["path"])
             . "</div>"
             . "</div>";
     system\Helper::arcReturnJSON(["html" => $html]);
 }
 
 function GetPath($path) {
-    $fullPath = system\Helper::arcGetPath(true) . $path . "/";
+    $fullPath = system\Helper::arcGetPath(true) . "assets/" . $path . "/";
+    $webPath = system\Helper::arcGetPath() . "assets" . $path;
     $files = scandir($fullPath);
+
     $html = "";
     foreach ($files as $file) {
         if ($file != "." && $file != "..") {
+            $html .= "<div class=\"row\">"
+                    . "<div class=\"col-md-1 col-10px\"><input type=\"checkbox\" id=\"{$file}\" onchange=\"mark('{$path}/{$file}')\"><label for=\"{$file}\"></label></div>";
             if (is_dir($fullPath . $file)) {
+                // folder
                 $fi = new FilesystemIterator($fullPath . $file, FilesystemIterator::SKIP_DOTS);
-                $html .= "<tr><td><a onclick=\"getPath('{$path}{$file}')\"><i class=\"fa fa-folder\"></i> {$file}</a></td><td>" . iterator_count($fi)
-                        . " items</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td><td class=\"text-right\"><a class=\"btn btn-danger btn-xs\" onclick=\"deleteItem('{$file}')\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
+                $html .= "<div class=\"col-md-7\"><i class=\"fa fa-folder\"></i> <a style=\"cursor:pointer;\" onclick=\"getFolderPath('{$path}/{$file}')\">{$file}</a></div>"
+                        . "<div class=\"col-md-2\">" . iterator_count($fi) . ngettext(" item", " items", iterator_count($fi)) . "</div>"
+                        . "<div class=\"col-md-2\">" . date("d M Y", filectime($fullPath . $file)) . "</div>";
             } else {
-                $html .= "<tr><td><a href=\"" . system\Helper::arcGetPath();
-                if ($path[strlen($path) - 1] != "/") {
-                    $path .= "/";
-                }
-                $html .= "{$path}{$file}\" target=\"_new\"><i class=\"fa fa-file\"></i> {$file}<a/></td><td>"
-                        . FileSizeConvert(filesize($fullPath . $file)) . "</td><td>" . date("d M Y", filectime($fullPath . $file)) . "</td><td class=\"text-right\"><a class=\"btn btn-danger btn-xs\" onclick=\"deleteItem('{$file}')\"><i class=\"fa fa-close\"></i> Delete</a></td></tr>";
+                // file
+                $html .= "<div class=\"col-md-7\"><i class=\"fa fa-file\"></i> <a href=\"{$webPath}/{$file}\" target=\"_new\">{$file}<a/></div>"
+                        . "<div class=\"col-md-2\">" . FileSizeConvert(filesize($fullPath . $file)) . "</div>"
+                        . "<div class=\"col-md-2\">" . date("d M Y", filectime($fullPath . $file)) . "</div>";
             }
+            $html .= "</div>";
         }
     }
+    // no files
+    if (count($files) == 2) {
+        $html .= "<div class=\"row\"><div class=\"col-md-12 text-center\">Folder is empty.</div></div>";
+    }
+
+
     return $html;
 }
 
@@ -90,7 +112,7 @@ function FileSizeConvert($bytes) {
     foreach ($arBytes as $arItem) {
         if ($bytes >= $arItem["VALUE"]) {
             $result = $bytes / $arItem["VALUE"];
-            $result = str_replace(".", ",", strval(round($result, 2))) . " " . $arItem["UNIT"];
+            $result = strval(round($result, 2)) . " " . $arItem["UNIT"];
             break;
         }
     }

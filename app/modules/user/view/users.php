@@ -60,9 +60,7 @@
                                     <input type="password" class="form-control" id="retype" placeholder="Retype" autocomplete="off">
                                 </div>
                                 <div class="form-group text-right">
-                                    <div class="checkbox">
-                                        <label><input type="checkbox" id="enabled" /> Account Enabled</label>
-                                    </div>
+                                        <input type="checkbox" id="enabled" /><label for="enabled">Account Enabled</label>
                                 </div>
                             </div>
                         </div>

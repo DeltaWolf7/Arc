@@ -1,11 +1,17 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<thead><tr><th>Type</th><th>Module</th><th>When</th><th>Message</th></tr></thead><tbody>";
+    $html = "<div class=\"row\">"
+            . "<div class=\"col-md-1\"><strong>Type</strong></div>"
+            . "<div class=\"col-md-1\"><strong>Module</strong></div>"
+            . "<div class=\"col-md-2\"><strong>When</strong></div>"
+            . "<div class=\"col-md-8\"><strong>Message</strong></div>"
+            . "</div>";
     $logs = Log::getLogs();
 
     foreach ($logs as $log) {
-        $html .= "<tr><td>";
+        $html .= "<div class=\"row\">"
+                . "<div class=\"col-md-1\">";
         switch ($log->type) {
             case "success":
                 $html .= "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Success<span>";
@@ -20,7 +26,12 @@ if (system\Helper::arcIsAjaxRequest()) {
                 $html .= "<span class=\"label label-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
                 break;
         }
-        $html .= "</td><td>{$log->module}</td><td>{$log->when}</td><td>{$log->message}</td></tr></tbody>";
+        $html .= "</div>"
+                . "<div class=\"col-md-1\">{$log->module}</div>"
+                . "<div class=\"col-md-2\">{$log->when}</div>"
+                . "<div class=\"col-md-8\">{$log->message}</div>"
+                . "</div>";
     }
+
     system\Helper::arcReturnJSON(["html" => $html]);
 }

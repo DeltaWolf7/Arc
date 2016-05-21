@@ -65,6 +65,8 @@
                   </div>
                   <!-- END loader widget-->
                   
+                  {{arc:content}}
+                  
                </aside>
                <!-- END dashboard sidebar-->
             </div>
