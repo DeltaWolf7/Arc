@@ -39,6 +39,10 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_ALLOWREG");
     $setting->value = $_POST["allowReg"];
     $setting->update();
+    
+    $setting = SystemSetting::getByKey("ARC_PHP_LOG_PATH");
+    $setting->value = $_POST["phpLog"];
+    $setting->update();
        
     system\Helper::arcAddMessage("success", "System settings saved.");
 }

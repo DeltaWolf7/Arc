@@ -24,7 +24,9 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
     <div id="php" class="tab-pane fade">
         <p class="small">
         <?php
-        $path = system\Helper::arcGetPath(true) . "error_log";
+        $setting = SystemSetting::getByKey("ARC_PHP_LOG_PATH");    
+        $path = $setting->value;
+        
         if (file_exists($path)) {
             $log = nl2br(file_get_contents($path));
             $log = str_replace("[", "<mark>[", $log);

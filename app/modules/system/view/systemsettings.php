@@ -9,6 +9,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
 $ldap = SystemSetting::getByKey("ARC_LDAP");
 $apikey = \SystemSetting::getByKey("ARC_APIKEY");
 $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
+$phpLog = \SystemSetting::getByKey("ARC_PHP_LOG_PATH");
 ?>
 
 <div class="row">
@@ -242,11 +243,20 @@ if (!function_exists("ldap_connect")) {
 <hr />
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
             <div class="input-group">
                 <span class="input-group-addon">API Key</span>
                 <input id="apiKey" type="text" class="form-control" value="<?php echo $apikey->value ?>" disabled>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">PHP Log Path</span>
+                <input id="phpLogPath" type="text" class="form-control" value="<?php echo $phpLog->value ?>">
             </div>
         </div>
     </div>
