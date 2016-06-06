@@ -104,7 +104,6 @@ system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime() . rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));
 system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
-system\Helper::arcCheckSettingExists("ARC_PHP_LOG_PATH", system\Helper::arcGetPath(true) . "error_log");
 
 // Get content
 system\Helper::GetContent();
