@@ -18,7 +18,17 @@ function successEdit(data) {
     $("#hidelogin").val(jdata.hidelogin);
     $("#hidemenu").val(jdata.hidemenu);
     $("#theme").val(jdata.theme);
-    $("#myModal").modal('show');
+    animate(true);
+}
+
+function animate(showEditor) {
+    if (showEditor === true) {
+        $('#listDiv').fadeOut(300);
+        $('#editorDiv').delay(400).fadeIn(300);
+    } else {   
+        $('#editorDiv').fadeOut(300);
+        $('#listDiv').delay(400).fadeIn(300);
+    }
 }
 
 $("#savePageBtn").click(function () {
@@ -29,10 +39,14 @@ $("#savePageBtn").click(function () {
         theme: $('#theme').val()}, null, successSave);
 });
 
+$("#closeBtn").click(function () {
+    animate(false);
+});
+
 function successSave(data) {
     var jdata = arcGetJson(data);
     if (jdata.status == "success") {
-        $("#myModal").modal('hide');
+        animate(false);
         getPages();
     }
     arcGetStatus();
@@ -68,7 +82,7 @@ function successGet(data) {
 
 $(document).ready(function () {
     $('#summernote').summernote({
-        height: 300,
+        height: 600,
         toolbar: [
             ['style', ['bold', 'italic', 'underline', 'clear']],
             ['insert', ['superscript', 'subscript']],
@@ -89,6 +103,7 @@ $(document).ready(function () {
         }
     });
 
+    $("#editorDiv").hide();
     getPages();
 });
 

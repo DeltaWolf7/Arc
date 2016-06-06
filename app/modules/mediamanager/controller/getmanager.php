@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-
+    
     $html = "<div class=\"panel panel-primary\">"
             . "<div class=\"panel-heading\">"
             . "Media Browser"

@@ -91,7 +91,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
-
+        
         // Get POST data
         self::$arc["post"] = array();
         foreach ($_POST as $key => $value) {
