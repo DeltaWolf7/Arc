@@ -48,3 +48,14 @@ function getFolderPath(folderPath) {
 function createFolder() {
     arcAjaxRequest("mediamanager/createfolder", {path: path, name: $("#folderName").val()}, uploadComplete, null);
 }
+
+function getLink() {
+    var data = JSON.stringify(marked);
+    arcAjaxRequest("mediamanager/getlink", {items: data}, null, getLinkComplete);
+}
+
+function getLinkComplete(data) {
+    var jdata = arcGetJson(data);
+    $("#linkText").val(jdata.links);
+    $("#getLinkModal").modal('show');
+}

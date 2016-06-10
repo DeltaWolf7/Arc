@@ -18,7 +18,8 @@ if (system\Helper::arcIsAjaxRequest()) {
             . " <a class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></a>"
             . "</form>"
             . "\"><i class=\"fa fa-folder\"></i> New Folder</a>"
-            . " <a class=\"btn btn-danger btn-xs\" onclick=\"doDelete()\"><i class=\"fa fa-recycle\"></i> Delete Selected</a>";
+            . " <a class=\"btn btn-danger btn-xs\" onclick=\"doDelete()\"><i class=\"fa fa-recycle\"></i> Delete Selected</a>"
+            . " <a class=\"btn btn-primary btn-xs\" onclick=\"getLink()\"><i class=\"fa fa-link\"></i> Get Link</a>";
     if ($_POST["path"] != "") {
         $backUrl = "";
         $back = explode("/", $_POST["path"]);
