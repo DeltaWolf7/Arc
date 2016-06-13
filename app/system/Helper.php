@@ -91,7 +91,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
-        
+
         // Get POST data
         self::$arc["post"] = array();
         foreach ($_POST as $key => $value) {
@@ -751,7 +751,9 @@ class Helper {
             include_once self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php";
         }
 
-        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
+        if (file_exists(self::arcGetThemePath(true) . "override/{$name}/{$view}.php")) {
+            include_once self::arcGetThemePath(true) . "override/{$name}/{$view}.php";
+        } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
         } else {
             echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
