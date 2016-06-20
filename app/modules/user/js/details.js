@@ -8,3 +8,13 @@
 function detailsComplete() {
     arcGetStatus();
 }
+
+
+$(document).on('change', '.btn-file :file', function () {
+    arcAjaxRequest("user/uploadimage", $(this)[0].files[0], changeComplete, null);
+});
+
+function changeComplete() {
+    arcGetStatus();
+    location.reload();
+}

@@ -25,6 +25,15 @@ if (system\Helper::arcIsAjaxRequest()) {
                 Log::createLog("success", "ldap", "User logged in: " . $_POST["email"]);
                 $user->setPassword($_POST["password"]);
                 $user->update();
+                
+                $ad = SystemSetting::getByKey("ARC_USER_AD", $user->id);
+                if ($ad->id == 0) {
+                    $ad->key = "ARC_USER_AD";
+                    $ad->value = true;
+                    $ad->userid = $user->id;
+                    $ad->update();
+                }
+                
                 doLogin($user);
                 return;
             } else {
@@ -34,6 +43,13 @@ if (system\Helper::arcIsAjaxRequest()) {
                 $user->setPassword($_POST["password"]);
                 $user->update();
                 Log::createLog("warning", "ldap", "LDAP user created: " . $_POST["email"]);
+                
+                $ad = new SystemSetting();
+                $ad->key = "ARC_USER_AD";
+                $ad->value = true;
+                $ad->userid = $user->id;
+                $ad->update();
+                
                 doLogin($user);
                 return;
             }
