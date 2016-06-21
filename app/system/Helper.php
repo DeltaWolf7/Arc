@@ -373,12 +373,6 @@ class Helper {
                 $content = str_replace("{{arc:menu}}", $newContent, $content);
             }
 
-            // path
-            $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
-
-            // themepath
-            $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-
             // header
             if ($page->showtitle == "1") {
                 $content = str_replace("{{arc:title}}", "{$page->title}", $content);
@@ -394,6 +388,12 @@ class Helper {
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
 
+            // path
+            $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
+
+            // themepath
+            $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
+            
             // version
             $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
 
