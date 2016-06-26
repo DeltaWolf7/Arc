@@ -1,17 +1,17 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 logo">LOGO HERE</div>
-    </div>
-</div>
-<div class="container">
-    <div class="time"></div>
-    <div class="date"></div>
-</div>
-<footer class="footer">
+<?php
+system\Helper::arcCheckSettingExists("ARCREC_LOGO", "");
+$logo = SystemSetting::getByKey("ARCREC_LOGO");
+?>
+
+<header class="header">
     <div class="container">
         <div class="row">
-            <div class="col-md-6 text-right"><a class="btn btn-default btn-xl">Sign In</a></div>
-            <div class="col-md-6 text-left"><a class="btn btn-default btn-xl">Sign Out</a></div>
+            <div class="col-md-6">Welcome</div>
+            <div class="col-md-6 text-right">
+                <?php if (!empty($logo->value)) { echo "<img src=\"" . $logo->value . "\" />"; } ?>
+            </div>
         </div>
     </div>
-</footer>
+</header>
+
+<div id="data"></div>

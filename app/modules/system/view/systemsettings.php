@@ -118,7 +118,7 @@ $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
                     }
                     ?>>True</option>
                     <option value="false"<?php
-                    if ($reg->value  == "false") {
+                    if ($reg->value == "false") {
                         echo " selected";
                     }
                     ?>>False</option>

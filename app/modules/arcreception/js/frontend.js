@@ -1,6 +1,22 @@
 $(document).ready(function () {
-    startTime();
+    getState("splash");
 });
+
+function getState(state) {
+    if (state == "splash") {
+        arcAjaxRequest("arcreception/getsplash", {}, null, updateScreen);
+    } else if (state == "signin") {
+        arcAjaxRequest("arcreception/getsignin", {}, null, updateScreen);
+    }
+}
+
+function updateScreen(data) {
+    var jdata = arcGetJson(data);
+    $("#data").html(jdata.html);
+    if (jdata.state == "splash") {
+        startTime();
+    }
+}
 
 function startTime() {
     $(".time").html(moment().format("HH:mm:ss"));

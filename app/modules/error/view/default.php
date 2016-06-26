@@ -4,7 +4,7 @@
         <?php
         http_response_code(system\Helper::arcGetPostData("error"));
         Log::createLog("danger", "error", "Error (" . system\Helper::arcGetPostData("error") . "): " . system\Helper::arcGetPostData("path"));
-        
+
         switch (system\Helper::arcGetPostData("error")) {
             case "404":
                 ?>
@@ -28,7 +28,7 @@
                 <?php
                 break;
             default:
-                echo "Unhandled error occured: " . system\Helper::arcGetPostData("error"); 
+                echo "Unhandled error occured: " . system\Helper::arcGetPostData("error");
                 break;
         }
         ?>
