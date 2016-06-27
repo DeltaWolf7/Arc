@@ -25,7 +25,7 @@ function animate(showEditor) {
     if (showEditor === true) {
         $('#listDiv').fadeOut(300);
         $('#editorDiv').delay(400).fadeIn(300);
-    } else {   
+    } else {
         $('#editorDiv').fadeOut(300);
         $('#listDiv').delay(400).fadeIn(300);
     }
@@ -34,7 +34,7 @@ function animate(showEditor) {
 $("#savePageBtn").click(function () {
     arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-        html: $('#summernote').summernote('code'), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
+        html: arcCleanSummernote($('#summernote').summernote('code')), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
         theme: $('#theme').val()}, null, successSave);
 });
@@ -83,8 +83,11 @@ function successGet(data) {
 $(document).ready(function () {
     $('#summernote').summernote({
         height: 600,
+        codemirror: {// codemirror options
+            theme: 'monokai'
+        },
         toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
             ['insert', ['superscript', 'subscript']],
             ['font', ['strikethrough']],
             ['fontsize', ['fontsize']],
@@ -92,9 +95,9 @@ $(document).ready(function () {
             ['para', ['ul', 'ol', 'paragraph']],
             ['height', ['height']],
             ['table', ['table']],
-            ['link', ['link', 'picture', 'hr']],
+            ['link', ['link', 'picture', 'video', 'hr']],
             ['misc', ['fullscreen']],
-            ['source', ['codeview']]
+            ['source', ['undo', 'redo', 'codeview']]
         ],
         callbacks: {
             onImageUpload: function (files) {

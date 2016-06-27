@@ -77,68 +77,65 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div id="summernote"></div>
-                </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <div id="summernote"></div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="col-md-12">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label for="imodule">Insert Module</label>
-                        </div>
-                        <div class="col-md-4">
-                            <select id="imodule" class="form-control">
-                                <?php
-                                $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
-                                foreach ($modules as $module) {
-                                    if ($module != "." && $module != "..") {
-                                        if (file_exists(system\Helper::arcGetPath(true) . "app/modules/{$module}/view")) {
-                                            $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
-                                            foreach ($views as $view) {
-                                                if ($view != "." && $view != "..") {
-                                                    echo "<option value=\"{{module:{$module}:" . substr($view, 0, -4) . "}}\">{$module}:" . substr($view, 0, -4) . "</option>";
-                                                }
-                                            }
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Modules</span>
+                    <select id="imodule" class="form-control">
+                        <?php
+                        $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
+                        foreach ($modules as $module) {
+                            if ($module != "." && $module != "..") {
+                                if (file_exists(system\Helper::arcGetPath(true) . "app/modules/{$module}/view")) {
+                                    $views = scandir(system\Helper::arcGetPath(true) . "app/modules/{$module}/view");
+                                    foreach ($views as $view) {
+                                        if ($view != "." && $view != "..") {
+                                            echo "<option value=\"{{module:{$module}:" . substr($view, 0, -4) . "}}\">{$module}:" . substr($view, 0, -4) . "</option>";
                                         }
                                     }
                                 }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="col-md-1">
-                            <a class="btn btn-primary btn-block" id="insertModule">Insert</a>
-                        </div>
-                        <div class="col-md-2">
-                            <label for="theme">Theme Override</label>
-                        </div>
-                        <div class="col-md-3">
-                            <select id="theme" class="form-control">
-                                <option value="none">No Override</option>
-                                <?php
-                                $themes = scandir(system\Helper::arcGetPath(true) . "themes");
-                                foreach ($themes as $theme) {
-                                    if ($theme != "." && $theme != "..") {
-                                        echo "<option value=\"{$theme}\">{$theme}</option>";
-                                    }
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
+                            }
+                        }
+                        ?>
+                    </select>
+                    <span class="input-group-btn"><a class="btn btn-primary btn-block" id="insertModule">Insert</a></span>
                 </div>
             </div>
         </div>
 
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="input-group">
+                    <span class="input-group-addon">Theme</span>
+                    <select id="theme" class="form-control">
+                        <option value="none">No Override</option>
+                        <?php
+                        $themes = scandir(system\Helper::arcGetPath(true) . "themes");
+                        foreach ($themes as $theme) {
+                            if ($theme != "." && $theme != "..") {
+                                echo "<option value=\"{$theme}\">{$theme}</option>";
+                            }
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="text-right">
-    <a class="btn btn-default" id="closeBtn">Close</a>
-    <a class="btn btn-primary" id="savePageBtn">Save</a>
+        <a class="btn btn-default" id="closeBtn">Close</a>
+        <a class="btn btn-primary" id="savePageBtn">Save</a>
     </div>
 </div>
 
