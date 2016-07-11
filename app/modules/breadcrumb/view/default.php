@@ -1,4 +1,3 @@
-<div class="breadcrumbs" id="breadcrumbs">
     <ul class="breadcrumb">
         <li>
             <i class="fa fa-home home-icon"></i>
@@ -21,4 +20,3 @@
         }
         ?>
     </ul>
-</div>

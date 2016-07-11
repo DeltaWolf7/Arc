@@ -52,9 +52,7 @@
             <!-- RIBBON -->
             <div id="ribbon">
                 <!-- breadcrumb -->
-                <ol class="breadcrumb">
                     {{module:breadcrumb:default}}
-                </ol>
                 <!-- end breadcrumb -->
             </div>
             <!-- END RIBBON -->
