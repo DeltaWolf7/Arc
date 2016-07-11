@@ -57,8 +57,6 @@
             </div>
             <!-- END RIBBON -->
 
-
-
             <!-- MAIN CONTENT -->
             <div id="content">
 
@@ -68,7 +66,7 @@
                     <!-- col -->
                     <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
                         <h1 class="page-title txt-color-blueDark">
-
+                            {{arc:pageicon}}
                             <!-- PAGE HEADER -->
                             {{arc:title}}
                         </h1>
@@ -141,7 +139,7 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 pageSetUp();
-            })
+            });
         </script>
     </body>
 </html>

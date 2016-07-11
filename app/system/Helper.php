@@ -388,6 +388,9 @@ class Helper {
             if (isset($_SESSION["arc_imposter"])) {
                 echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
             }
+            
+            //template modules
+            $content = self::arcProcessModuleTags($content);
 
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
@@ -400,6 +403,9 @@ class Helper {
             
             // version
             $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
+            
+            // page icon
+            $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
 
             // meta
             $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
@@ -407,8 +413,6 @@ class Helper {
             // footer
             $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
             
-            $content = self::arcProcessModuleTags($content);
-
             echo $content;
         } else {
             $data = explode("/", $uri);
@@ -577,7 +581,7 @@ class Helper {
                 $menu[ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
             }
         }
-
+        
         return $menu;
     }
 
