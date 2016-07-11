@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.2";
+        self::$arc["version"] = "0.4.0.3";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -406,6 +406,8 @@ class Helper {
 
             // footer
             $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
+            
+            $content = self::arcProcessModuleTags($content);
 
             echo $content;
         } else {
