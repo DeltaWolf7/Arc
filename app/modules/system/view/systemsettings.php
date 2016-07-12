@@ -9,6 +9,7 @@ $mail = SystemSetting::getByKey("ARC_MAIL");
 $ldap = SystemSetting::getByKey("ARC_LDAP");
 $apikey = \SystemSetting::getByKey("ARC_APIKEY");
 $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
+$logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
 ?>
 
 <div class="row">
@@ -123,6 +124,14 @@ $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
                     }
                     ?>>False</option>
                 </select>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Site Logo Path</span>
+                <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
             </div>
         </div>
     </div>

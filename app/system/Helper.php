@@ -392,6 +392,10 @@ class Helper {
             //template modules
             $content = self::arcProcessModuleTags($content);
 
+            // site logo
+            $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
+            $content = str_replace("{{arc:sitelogo}}", $logo->value, $content);
+            
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
 

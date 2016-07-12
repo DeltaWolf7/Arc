@@ -33,5 +33,22 @@ foreach ($menus as $grandfather => $parent) {
                 . "</li>";
     }
 }
+
+// extra theme menu
+$html .= "<li><a href=\"#\"><i class=\"fa fa-bars\"></i> <span class=\"menu-item-parent\">Theme</span></a>"
+        . "<ul>"
+        . "<li><a onclick=\"setMenu('menu-on-top')\">Menu Top</a></li>"
+        . "<li><a onclick=\"setMenu('')\">Menu Left</a></li>"
+        . "<li><a onclick=\"setMenu('minified')\">Menu Left/Minified</a></li>"
+        . "<li><a onclick=\"setStyle('')\">Default</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-1')\">Dark Elegance</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-2')\">Ultra Light</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-3')\">Google Skin</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-4')\">Pixel Smash</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-5')\">Glass</a></li>"
+        . "<li><a onclick=\"setStyle('smart-style-6')\">Material Design</a></li>"
+        . "</ul>"
+        . "</li>";
+
 $html .= "</ul>";
 echo $html;

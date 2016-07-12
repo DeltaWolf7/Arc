@@ -5,24 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         {{arc:header}}
     </head>
-    <body class="fixed-header menu-on-top">
+    <body id="uB" class="fixed-page-footer fixed-header fixed-navigation">
         <!-- #HEADER -->
         <header id="header">
             <div id="logo-group">
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"> <img src="{{arc:themepath}}images/logo.png" alt=""> </span>
+                <span id="logo"> <img src="{{arc:sitelogo}}" alt=""> </span>
                 <!-- END LOGO PLACEHOLDER -->
             </div>
 
             <!-- #TOGGLE LAYOUT BUTTONS -->
             <!-- pulled right: nav area -->
             <div class="pull-right">
-
-                <!-- collapse menu button -->
-                <div id="hide-menu" class="btn-header pull-right">
-                    <span> <a href="javascript:void(0);" data-action="toggleMenu" title="Collapse Menu"><i class="fa fa-reorder"></i></a> </span>
-                </div>
-                <!-- end collapse menu -->
 
                 <!-- fullscreen button -->
                 <div id="fullscreen" class="btn-header transparent pull-right">
@@ -52,7 +46,7 @@
             <!-- RIBBON -->
             <div id="ribbon">
                 <!-- breadcrumb -->
-                    {{module:breadcrumb:default}}
+                {{module:breadcrumb:default}}
                 <!-- end breadcrumb -->
             </div>
             <!-- END RIBBON -->
@@ -72,7 +66,7 @@
                         </h1>
                     </div>
                     <!-- end col -->
-                    
+
                 </div>
                 <!-- end row -->
 
@@ -87,7 +81,7 @@
 
                             <!-- Widget ID (each widget will need unique ID)-->
                             <div class="well">
-                                
+
                                 {{arc:content}}
 
                             </div>

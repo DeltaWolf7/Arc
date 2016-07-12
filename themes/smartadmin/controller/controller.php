@@ -10,3 +10,4 @@ system\Helper::arcAddHeader("css", system\Helper::arcGetThemePath() . "css/style
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/SmartNotification.min.js");
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/app.config.js");
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/app.min.js");
+system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/storage.js");

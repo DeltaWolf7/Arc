@@ -1,3 +1,12 @@
+html{
+    height:100%;
+    min-height:100%;
+}
+
+body{
+    min-height:100%;
+}
+
 #logo img {
     width: auto;
     margin-top: -10px;
@@ -5,4 +14,13 @@
 
 .page-title {
     margin-bottom: 10px;
+}
+
+.smart-style-2 span.menu-item-parent {
+    padding-left: 10px;
+}
+
+.smart-style-3 #logo img {
+    width: auto;
+    margin-top: -10px;
 }
