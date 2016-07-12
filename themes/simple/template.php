@@ -15,7 +15,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>	
-                <a class="navbar-brand col-lg-2 col-sm-1 col-xs-12" href="{{arc:path}}"><span>Arc Project</span></a>
+                <a class="navbar-brand col-lg-2 col-sm-1 col-xs-12" href="{{arc:path}}"><img src="{{arc:sitelogo}}" alt=""></a>
                 <!-- start: Header Menu -->
                 <div class="nav-no-collapse header-nav">
                     <ul class="nav navbar-nav pull-right">

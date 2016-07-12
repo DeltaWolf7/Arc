@@ -394,7 +394,7 @@ class Helper {
 
             // site logo
             $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
-            $content = str_replace("{{arc:sitelogo}}", $logo->value, $content);
+            $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
             
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);

@@ -11,3 +11,4 @@ system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/SmartNo
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/app.config.js");
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/app.min.js");
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/storage.js");
+system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/styles.js");
