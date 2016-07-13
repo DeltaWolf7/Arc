@@ -383,15 +383,17 @@ class Helper {
             } else {
                 $content = str_replace("{{arc:title}}", "", $content);
             }
-
-            // impersonating
-            if (isset($_SESSION["arc_imposter"])) {
-                echo "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>";
-            }
-            
+          
             //template modules
             $content = self::arcProcessModuleTags($content);
-
+            
+            // impersonating
+            if (isset($_SESSION["arc_imposter"])) {
+                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content); 
+            } else {
+                $content = str_replace("{{arc:impersonate}}", "", $content);
+            }
+            
             // site logo
             $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
             $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);

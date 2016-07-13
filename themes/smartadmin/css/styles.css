@@ -24,3 +24,10 @@ body{
     width: auto;
     margin-top: -10px;
 }
+
+.smart-style-5 .list-group-item {
+    background-color: transparent;
+    background: url(../images/glass.jpg) no-repeat center top fixed;
+    color: #fff;
+    border-color: rgba(255,255,225,.25);
+}

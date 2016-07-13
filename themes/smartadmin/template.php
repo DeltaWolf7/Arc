@@ -54,6 +54,8 @@
             <!-- MAIN CONTENT -->
             <div id="content">
 
+                {{arc:impersonate}}
+                
                 <!-- row -->
                 <div class="row">
 

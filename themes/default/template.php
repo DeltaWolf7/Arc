@@ -44,6 +44,7 @@
             <!-- Main content starts -->
 
             <div class="main-block">
+                {{arc:impersonate}}
                 <div class="page-header"><h1>{{arc:title}}</h1></div>
                 <div class="container-fluid">
                     {{arc:content}}
