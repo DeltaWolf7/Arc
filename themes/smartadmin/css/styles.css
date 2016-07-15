@@ -31,3 +31,21 @@ body{
     color: #fff;
     border-color: rgba(255,255,225,.25);
 }
+
+#header {
+    height: 60px;
+}
+
+.left-panel {
+    padding-top: 10px;
+}
+
+.fixed-header #main {
+    margin-top: 59px;
+}
+
+.fixed-navigation nav {
+    margin-top: 10px;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
