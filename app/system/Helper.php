@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.3";
+        self::$arc["version"] = "0.4.0.4";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -735,6 +735,12 @@ class Helper {
         return self::arcGetPath(true) . "app/modules/{$name}/controller/{$controller}.php";
     }
 
+    /**
+     * 
+     * Process module tags in content
+     * @param string $content
+     * @return string
+     */
     public static function arcProcessModuleTags($content) {
         preg_match_all('/{{module:([^,]+?):([^,]+?)}}/', $content, $matches);
         foreach ($matches[1] as $key => $filename) {
@@ -777,10 +783,19 @@ class Helper {
         }
     }
 
+    /**
+     * 
+     * Returns the Arc version
+     * @return string
+     */
     public static function arcGetVersion() {
         return "Arc Version " . self::$arc["version"];
     }
 
+    
+    /**
+     * Used to get Arc to build the content of the page or preform API request.
+     */
     public static function getContent() {
         // Break URL apart and check for API request
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
@@ -811,5 +826,39 @@ class Helper {
                 \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Method: {$split[4]}");
             }
         }
+    }
+    
+    /**
+     * 
+     * Converts a date to the format specified in settings.
+     * @param string $date
+     * @return date
+     */
+    public static function arcConvertDate($date) {
+        $format = \SystemSetting::getByKey("ARC_DATEFORMAT");
+        return date($format->value, strtotime($date));
+    }
+    
+    /**
+     * 
+     * Converts a time to the format specified in settings.
+     * @param string $date
+     * @return date
+     */
+    public static function arcConvertTime($time) {
+        $format = \SystemSetting::getByKey("ARC_TIMEFORMAT");
+        return date($format->value, strtotime($time));
+    }
+    
+    /**
+     * 
+     * Converts a date and time to the format specified in settings.
+     * @param string $datetime
+     * @return date
+     */
+    public static function arcConvertDateTime($datetime) {
+        $formatD = \SystemSetting::getByKey("ARC_DATEFORMAT");
+        $formatT = \SystemSetting::getByKey("ARC_TIMEFORMAT");
+        return date($formatD->value . " " . $formatT->value, strtotime($datetime));
     }
 }

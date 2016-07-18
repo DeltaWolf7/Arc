@@ -28,7 +28,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         }
         $html .= "</div>"
                 . "<div class=\"col-md-1\">{$log->module}</div>"
-                . "<div class=\"col-md-2\">{$log->when}</div>"
+                . "<div class=\"col-md-2\">" . system\Helper::arcConvertDateTime($log->when) . "</div>"
                 . "<div class=\"col-md-8\">{$log->message}</div>"
                 . "</div>";
     }

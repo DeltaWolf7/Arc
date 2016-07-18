@@ -44,5 +44,13 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = $_POST["siteLogo"];
     $setting->update();
        
+    $setting = SystemSetting::getByKey("ARC_DATEFORMAT");
+    $setting->value = $_POST["dateFormat"];
+    $setting->update();
+    
+    $setting = SystemSetting::getByKey("ARC_TIMEFORMAT");
+    $setting->value = $_POST["timeFormat"];
+    $setting->update();
+    
     system\Helper::arcAddMessage("success", "System settings saved.");
 }

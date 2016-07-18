@@ -105,6 +105,10 @@ system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities(
                 . "Your new password is '{password}'."));
 system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
 system\Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48.png");
+system\Helper::arcCheckSettingExists("ARC_DATEFORMAT", "d-m-Y");
+system\Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
 
 // Get content
 system\Helper::GetContent();
+
+system\Helper::arcConvertDate("06-30-2016");

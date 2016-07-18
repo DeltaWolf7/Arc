@@ -10,6 +10,8 @@ $ldap = SystemSetting::getByKey("ARC_LDAP");
 $apikey = \SystemSetting::getByKey("ARC_APIKEY");
 $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
 $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
+$dateformat = \SystemSetting::getByKey("ARC_DATEFORMAT");
+$timeformat = \SystemSetting::getByKey("ARC_TIMEFORMAT");
 ?>
 
 <div class="row">
@@ -132,6 +134,24 @@ $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
             <div class="input-group">
                 <span class="input-group-addon">Site Logo Path</span>
                 <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Date Format</span>
+                <input id="dateFormat" type="text" class="form-control" placeholder="d/m/Y" value="<?php echo $dateformat->value; ?>">
+            </div>
+        </div>
+    </div>
+     <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Time Format</span>
+                <input id="timeFormat" type="text" class="form-control" placeholder="H:i:s" value="<?php echo $timeformat->value; ?>">
             </div>
         </div>
     </div>
