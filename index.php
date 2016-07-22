@@ -110,5 +110,3 @@ system\Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
 
 // Get content
 system\Helper::GetContent();
-
-system\Helper::arcConvertDate("06-30-2016");

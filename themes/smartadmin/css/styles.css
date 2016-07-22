@@ -10,7 +10,6 @@ body{
 #logo img {
     width: auto;
     margin-top: -10px;
-    height: 55px;
 }
 
 .page-title {
@@ -50,7 +49,6 @@ body{
     overflow-y: hidden;
     overflow-x: hidden;
 }
-
 
 /* Let's get this party started */
 ::-webkit-scrollbar {

@@ -67,6 +67,14 @@ class Mail {
      */
     public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array()) {
 
+        if ($html == true) {
+            $theme = SystemSetting::getByKey("ARC_THEME");
+            if (file_exists(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php")) {
+                $content = file_get_contents(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php");
+                $message = system\Helper::arcParseEmail($content, $message);
+            }            
+        }
+        
         Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
         // Set from details

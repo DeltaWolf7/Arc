@@ -10,7 +10,7 @@
         <header id="header">
             <div id="logo-group">
                 <!-- PLACE YOUR LOGO HERE -->
-                <span id="logo"><a href="{{arc:arcpath}}"><img src="{{arc:sitelogo}}" alt=""></a></span>
+                <span id="logo"> <img src="{{arc:sitelogo}}" alt=""> </span>
                 <!-- END LOGO PLACEHOLDER -->
             </div>
 

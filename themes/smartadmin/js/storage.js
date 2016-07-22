@@ -1,10 +1,12 @@
 $( document ).ready(function() {
     if (localStorage.getItem("uBClassMenu") == null) {
-        $("#uB").addClass("menu-on-top");
+        $("#uB").addClass("minified");
     } else {
         $("#uB").addClass(localStorage.getItem("uBClassMenu"));
     }
-    if (localStorage.getItem("uBClassStyle") !== null) {
+    if (localStorage.getItem("uBClassStyle") == null) {
+        $("#uB").addClass("smart-style-5");
+    } else {
         $("#uB").addClass(localStorage.getItem("uBClassStyle"));
     }
 });

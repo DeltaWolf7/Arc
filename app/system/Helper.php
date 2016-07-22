@@ -383,21 +383,21 @@ class Helper {
             } else {
                 $content = str_replace("{{arc:title}}", "", $content);
             }
-          
+
             //template modules
             $content = self::arcProcessModuleTags($content);
-            
+
             // impersonating
             if (isset($_SESSION["arc_imposter"])) {
-                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content); 
+                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content);
             } else {
                 $content = str_replace("{{arc:impersonate}}", "", $content);
             }
-            
+
             // site logo
             $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
             $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
-            
+
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
 
@@ -406,10 +406,10 @@ class Helper {
 
             // themepath
             $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-            
+
             // version
             $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
-            
+
             // page icon
             $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
 
@@ -418,7 +418,7 @@ class Helper {
 
             // footer
             $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
-            
+
             echo $content;
         } else {
             $data = explode("/", $uri);
@@ -430,6 +430,23 @@ class Helper {
         }
 
         self::$arc["modulepath"] = "";
+    }
+
+    public static function arcParseEmail($content, $message) {
+        // site logo
+        $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
+        $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
+
+        // path
+        $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
+
+        // themepath
+        $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
+        
+        // email body
+        $content = str_replace("{{arc:emailcontent}}", $message, $content);
+
+        return $content;
     }
 
     public static function arcAddMessage($status, $data, $parameters = array()) {
@@ -587,7 +604,7 @@ class Helper {
                 $menu[ucwords($data[0])][$page->title]["icon"] = $page->iconclass;
             }
         }
-        
+
         return $menu;
     }
 
@@ -792,7 +809,6 @@ class Helper {
         return "Arc Version " . self::$arc["version"];
     }
 
-    
     /**
      * Used to get Arc to build the content of the page or preform API request.
      */
@@ -827,7 +843,7 @@ class Helper {
             }
         }
     }
-    
+
     /**
      * 
      * Converts a date to the format specified in settings.
@@ -838,7 +854,7 @@ class Helper {
         $format = \SystemSetting::getByKey("ARC_DATEFORMAT");
         return date($format->value, strtotime($date));
     }
-    
+
     /**
      * 
      * Converts a time to the format specified in settings.
@@ -849,7 +865,7 @@ class Helper {
         $format = \SystemSetting::getByKey("ARC_TIMEFORMAT");
         return date($format->value, strtotime($time));
     }
-    
+
     /**
      * 
      * Converts a date and time to the format specified in settings.
@@ -861,4 +877,5 @@ class Helper {
         $formatT = \SystemSetting::getByKey("ARC_TIMEFORMAT");
         return date($formatD->value . " " . $formatT->value, strtotime($datetime));
     }
+
 }
