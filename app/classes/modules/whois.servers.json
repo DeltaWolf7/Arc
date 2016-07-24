@@ -2083,7 +2083,10 @@
     ],
     "me": [
         "whois.meregistry.net",
-        "NOT FOUND"
+        "NOT FOUND",
+        "Creation Date",
+        "Registry Expiry Date",
+        "Updated Date"
     ],
     "me.uk": [
         "whois.nic.uk",
@@ -2283,7 +2286,10 @@
     ],
     "net": [
         "whois.crsnic.net",
-        "No match for"
+        "No match for",
+        "Creation Date",
+        "Registrar Registration Expiration Date",
+        "Updated Date"
     ],
     "net.au": [
         "whois.aunic.net",
@@ -3131,7 +3137,10 @@
     ],
     "solutions": [
         "whois.donuts.co",
-        "Domain not found"
+        "Domain not found",
+        "Creation Date",
+        "Registry Expiry Date",
+        "Updated Date"
     ],
     "sos.pl": [
         "whois.dns.pl",
@@ -3423,7 +3432,10 @@
     ],
     "uk.com": [
         "whois.centralnic.com",
-        "DOMAIN NOT FOUND"
+        "DOMAIN NOT FOUND",
+        "Creation Date",
+        "Registry Expiry Date",
+        "Updated Date"
     ],
     "uk.net": [
         "whois.centralnic.com",
