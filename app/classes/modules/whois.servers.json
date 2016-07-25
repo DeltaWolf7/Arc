@@ -309,7 +309,10 @@
     ],
     "biz": [
         "whois.nic.biz",
-        "Not found"
+        "Not found",
+        "Domain Registration Date",
+        "Domain Expiration Date",
+        "Domain Last Updated Date"
     ],
     "biz.pl": [
         "whois.dns.pl",
@@ -2011,7 +2014,10 @@
     ],
     "ltd.uk": [
         "whois.nic.uk",
-        "No match"
+        "No match",
+        "Registered on",
+        "Expiry date",
+        "Last updated"
     ],
     "ltda": [
         "whois.afilias-srs.net",
@@ -2082,7 +2088,7 @@
         "No match for"
     ],
     "me": [
-        "whois.meregistry.net",
+        "whois.nic.me",
         "NOT FOUND",
         "Creation Date",
         "Registry Expiry Date",
@@ -2641,7 +2647,10 @@
     ],
     "org.uk": [
         "whois.nic.uk",
-        "No match"
+        "No match",
+        "Registered on",
+        "Expiry date",
+        "Last updated"
     ],
     "org.ve": [
         "whois.nic.ve",
