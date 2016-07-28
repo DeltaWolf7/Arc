@@ -114,7 +114,6 @@ class User extends DataProvider {
         $groups[] = $name;
         $this->groups = json_encode($groups);
         $this->update();
-        echo $this->groups;
     }
 
     /*
