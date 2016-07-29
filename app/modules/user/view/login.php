@@ -6,6 +6,7 @@ if ($ldapData["ldap"] == "true") {
     $login = "Username";
 }
 $reg = SystemSetting::getByKey("ARC_ALLOWREG");
+$company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 ?>
 <div class="row">
     <div class="collapse in" id="collapseA">
@@ -48,6 +49,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <?php } ?>
         </div>
     </div>
+    
 
     <div class="collapse" id="collapseB">
         <div class="col-md-6 col-md-offset-1">
@@ -59,6 +61,11 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                 <div class="form-group">
                     <input maxlength="50" type="text" class="form-control" name="lastname" placeholder="Lastname">
                 </div>
+                <?php if ($company->value == "true") { ?>
+                    <div class="form-group">
+                        <input maxlength="50" type="text" class="form-control" name="company" placeholder="Company">
+                    </div>
+                <?php } ?>
                 <div class="form-group">
                     <input maxlength="100" type="email" class="form-control" name="emailr" placeholder="Email address">
                 </div>

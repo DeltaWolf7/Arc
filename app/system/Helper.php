@@ -675,17 +675,17 @@ class Helper {
     }
 
     public static function arcGetThumbImage($image, $width = null) {
-        if (!empty($image) && file_exists(self::arcGetPath(true) . "images/{$image}")) {
+        if (!empty($image) && file_exists(self::arcGetPath(true) . "assets/{$image}")) {
             $thumbWidth = \SystemSetting::getByKey("ARC_THUMB_WIDTH");
             if ($width == null) {
                 $width = $thumbWidth->value;
             }
-            if (!file_exists(self::arcGetPath(true) . "images/thumbs")) {
-                mkdir(self::arcGetPath(true) . "images/thumbs");
+            if (!file_exists(self::arcGetPath(true) . "assets/thumbs")) {
+                mkdir(self::arcGetPath(true) . "assets/thumbs");
             }
             $filename = $width . "_" . $image;
-            if (!file_exists(self::arcGetPath(true) . "images/thumbs/{$filename}")) {
-                $size = getimagesize(self::arcGetPath(true) . "images/{$image}");
+            if (!file_exists(self::arcGetPath(true) . "assets/thumbs/{$filename}")) {
+                $size = getimagesize(self::arcGetPath(true) . "assets/{$image}");
                 $ratio = $size[0] / $size[1]; // width/height
                 if ($ratio > 1) {
                     $width = $width;
@@ -694,27 +694,27 @@ class Helper {
                     $width = $width * $ratio;
                     $height = $width;
                 }
-                $src = imagecreatefromstring(file_get_contents(self::arcGetPath(true) . "images/{$image}"));
+                $src = imagecreatefromstring(file_get_contents(self::arcGetPath(true) . "assets/{$image}"));
                 $dst = imagecreatetruecolor($width, $height);
                 imagecopyresampled($dst, $src, 0, 0, 0, 0, $width, $height, $size[0], $size[1]);
                 imagedestroy($src);
 
-                $extension = strtolower(strrchr(self::arcGetPath(true) . "images/{$image}", '.'));
+                $extension = strtolower(strrchr(self::arcGetPath(true) . "assets/{$image}", '.'));
                 switch ($extension) {
                     case '.jpg':
                     case '.jpeg':
-                        imagejpeg($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
+                        imagejpeg($dst, self::arcGetPath(true) . "assets/thumbs/{$filename}");
                         break;
                     case '.gif':
-                        imagegif($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
+                        imagegif($dst, self::arcGetPath(true) . "assets/thumbs/{$filename}");
                         break;
                     case '.png':
-                        imagepng($dst, self::arcGetPath(true) . "images/thumbs/{$filename}");
+                        imagepng($dst, self::arcGetPath(true) . "assets/thumbs/{$filename}");
                         break;
                 }
                 imagedestroy($dst);
             }
-            return self::arcGetPath() . "images/thumbs/{$filename}";
+            return self::arcGetPath() . "assets/thumbs/{$filename}";
         }
         return null;
     }

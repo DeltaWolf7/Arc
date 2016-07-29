@@ -48,6 +48,10 @@
                                     <input type="text" class="form-control" id="lastname" placeholder="Lastname">
                                 </div>
                                 <div class="form-group">
+                                    <label for="company">Company</label>
+                                    <input type="text" class="form-control" id="company" placeholder="Company">
+                                </div>
+                                <div class="form-group">
                                     <label for="email">Email</label>
                                     <input type="text" class="form-control" id="email" placeholder="Email" disabled="true">
                                 </div>

@@ -6,6 +6,8 @@ $image = "<i class=\"fa fa-user fa-5x\"></i>";
 if (!empty($profileImage->value)) {
     $image = "<img style=\"max-width: 100px;\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
+$company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
+$comp = Company::getByUser($user->id);
 ?>
 
 <div class="row">
@@ -19,6 +21,12 @@ if (!empty($profileImage->value)) {
                 <label for="lastname">Lastname</label>
                 <input type="lastname" class="form-control" name="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
             </div>
+            <?php if ($company->value == "true") { ?>
+                <label for="company">Company</label>
+                <div class="form-group">
+                    <input maxlength="50" type="text" class="form-control" name="company" placeholder="" <?php if ($company->value == false) { echo "readonly=\"true\""; } ?> value="<?php if ($comp != null) { echo $comp->name; } ?>">
+                </div>
+            <?php } ?>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" name="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">

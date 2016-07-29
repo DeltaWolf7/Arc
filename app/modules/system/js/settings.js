@@ -5,7 +5,8 @@ function saveSystem() {
         port: $("#smtpPort").val(), sender: $("#smtpSender").val(), defaultPage: $("#defaultPage").val(),
         loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
         limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val(),
-        siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val()}, arcGetStatus);
+        siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val(),
+        company: $("#company").val()}, arcGetStatus);
 }
 
 function updateEmail() {

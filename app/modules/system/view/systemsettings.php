@@ -1,19 +1,3 @@
-<?php
-$logs = SystemSetting::getByKey("ARC_KEEP_LOGS");
-$file_size = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
-$theme_setting = SystemSetting::getByKey("ARC_THEME");
-$thumb = SystemSetting::getByKey("ARC_THUMB_WIDTH");
-$login_url = SystemSetting::getByKey("ARC_LOGIN_URL");
-$default_page = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-$mail = SystemSetting::getByKey("ARC_MAIL");
-$ldap = SystemSetting::getByKey("ARC_LDAP");
-$apikey = \SystemSetting::getByKey("ARC_APIKEY");
-$reg = \SystemSetting::getByKey("ARC_ALLOWREG");
-$logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
-$dateformat = \SystemSetting::getByKey("ARC_DATEFORMAT");
-$timeformat = \SystemSetting::getByKey("ARC_TIMEFORMAT");
-?>
-
 <div class="row">
     <div class="col-md-6">
         <div class="form-group">
@@ -152,6 +136,27 @@ $timeformat = \SystemSetting::getByKey("ARC_TIMEFORMAT");
             <div class="input-group">
                 <span class="input-group-addon">Time Format</span>
                 <input id="timeFormat" type="text" class="form-control" placeholder="H:i:s" value="<?php echo $timeformat->value; ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">Show Company At Register</span>
+                <select id="company" class="form-control">
+                    <option value="true"<?php
+                    if ($company->value == "1") {
+                        echo " selected";
+                    }
+                    ?>>True</option>
+                    <option value="false"<?php
+                    if ($company->value == "0") {
+                        echo " selected";
+                    }
+                    ?>>False</option>
+                </select>
             </div>
         </div>
     </div>

@@ -34,6 +34,19 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("danger", "New users must have a password");
         return;
     }
+    
+    if (!empty($_POST["company"])) {
+        $comp = Company::getByName(ucwords($_POST["company"]));
+        if ($comp->id == 0) {
+            $comp = new Company();
+            $comp->name = ucwords($_POST["company"]);
+            $comp->update();
+        }
+        
+        $compsetting = SystemSetting::getByKey("ARC_COMPANY", $user->id);
+        $compsetting->value = $comp->id;
+        $compsetting->update();
+    }
 
     if ($_POST["enabled"] == "true") {
         $user->enabled = 1;

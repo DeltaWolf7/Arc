@@ -32,7 +32,6 @@
 class Company extends DataProvider {
 
     public $name;
-    public $users;
 
     /**
      * User constructor
@@ -40,52 +39,23 @@ class Company extends DataProvider {
     public function __construct() {
         parent::__construct();
         $this->name = "";
-        $this->users = "[\"\"]";
         $this->table = ARCDBPREFIX . "companies";
-        $this->columns = ["id", "name", "users"];
+        $this->columns = ["id", "name"];
     }
-
-    public function getUsers() {
-        $users = [];
-        foreach (json_decode($this->users) as $user) {
-            $grp = new User();
-            $grp->getByID($user);
-            if ($grp->id != 0) {
-                $users[] = $grp;
-            }
-        }
-        return $users;
+    
+    public static function getByName($name) {
+        $company = new Company();
+        $company->get(["name" => $name]);
+        return $company;
     }
-
-    /*
-     * Add user to company
-     */
-
-    public function addToCompany($id) {
-        $groups = json_decode($this->users);
-        foreach ($groups as $group) {
-            if ($group == $id) {
-                return;
-            }
+    
+    public static function getByUser($id) {
+        $setting = SystemSetting::getByKey("ARC_COMPANY", $id);
+        $company = null;
+        if ($setting->id > 0) {
+            $company = new Company();
+            $company->getByID($setting->value);
         }
-        $groups[] = $id;
-        $this->users = json_encode($groups);
-        $this->update();
-    }
-
-    /*
-     * Remove user from company
-     */
-
-    public function removeFromCompany($id) {
-        $groups = json_decode($this->users);
-        $newGroups = [];
-        for ($i = 0; $i < count($groups); $i++) {
-            if ($groups[$i] != $id) {
-                $newGroups[] = $groups[$i];
-            }
-        }
-        $this->users = json_encode($newGroups);
-        $this->update();
+        return $company;
     }
 }

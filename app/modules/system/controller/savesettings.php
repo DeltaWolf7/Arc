@@ -52,5 +52,9 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = $_POST["timeFormat"];
     $setting->update();
     
+    $setting = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
+    $setting->value = $_POST["company"];
+    $setting->update();
+    
     system\Helper::arcAddMessage("success", "System settings saved.");
 }

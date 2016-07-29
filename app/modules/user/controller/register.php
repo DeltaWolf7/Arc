@@ -11,7 +11,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("danger", "Please enter your lastname");
         return;
     }
-
+    
     if (empty($_POST["emailr"])) {
         system\Helper::arcAddMessage("danger", "Please enter your email address");
         return;
@@ -52,6 +52,20 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
     $user->setPassword($_POST["passwordr"]);
     $user->update();
+    
+    $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
+    if (!empty($_POST["company"]) && $company->value == "true") {
+        $comp = Company::getByName(ucwords($_POST["company"]));
+        if ($comp->id == 0) {
+            $comp = new Company();
+            $comp->name = ucwords($_POST["company"]);
+            $comp->update();
+        }
+        
+        $compsetting = SystemSetting::getByKey("ARC_COMPANY", $user->id);
+        $compsetting->value = $comp->id;
+        $compsetting->update();
+    }
 
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Your details have been registered");

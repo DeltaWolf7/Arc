@@ -59,6 +59,7 @@ class SystemSetting extends DataProvider {
         // if no setting was found in the database, return empty setting with key.
         if (empty($setting->key)) {
             $setting->key = $key;
+            $setting->userid = $userid;
         }
         return $setting;
     }

@@ -8,5 +8,12 @@ if (system\Helper::arcIsAjaxRequest()) {
         $data .= "<option value=\"{$group->name}\">{$group->name}</option>";
     }
     $data .= "</select>";
-    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled)]);
+    
+    $comp = Company::getByUser($user->id);
+    $company = "";
+    if ($comp != null) {
+        $company = $comp->name;
+    }
+    
+    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled), "company" => $company]);
 }
