@@ -1,5 +1,5 @@
 function clearLogs() {
-    arcAjaxRequest("system/deletelogs", {}, update);
+    arcAjaxRequest("arc/logviewerdelete", {}, update);
 }
 
 function update() {
@@ -13,7 +13,7 @@ $(document).ready(function () {
 
 
 function getLogs() {
-    arcAjaxRequest("system/getlogs", {}, null, updateView);
+    arcAjaxRequest("arc/logviewerget", {}, null, updateView);
 }
 
 function updateView(data) {

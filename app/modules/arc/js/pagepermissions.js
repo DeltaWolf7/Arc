@@ -2,7 +2,7 @@ var groupid;
 var pid;
 
 $("#savePermissionsBtn").click(function () {
-    arcAjaxRequest("pagemanager/savepermission",
+    arcAjaxRequest("arc/pagepermissionssave",
             {id: pid, group: groupid, module: $("#module").val()},
             saveComplete, null);
 });
@@ -16,7 +16,7 @@ function saveComplete() {
 function editPermission(group, id) {
     groupid = group;
     pid = id;
-    arcAjaxRequest("pagemanager/editpermisson", {id: id}, null, successEdit);
+    arcAjaxRequest("arc/pagepermissionsedit", {id: id}, null, successEdit);
 }
 
 function successEdit(data) {
@@ -26,7 +26,7 @@ function successEdit(data) {
 }
 
 function deletePermission(id) {
-    arcAjaxRequest("pagemanager/deletepermission", {id: id}, deleteComplete, null);
+    arcAjaxRequest("arc/pagepermissionsdelete", {id: id}, deleteComplete, null);
 }
 
 function deleteComplete() {
@@ -35,7 +35,7 @@ function deleteComplete() {
 }
 
 function getData() {
-    arcAjaxRequest("pagemanager/getpermissions", {}, null, successData);
+    arcAjaxRequest("arc/pagepermissionsget", {}, null, successData);
 }
 
 function successData(data) {

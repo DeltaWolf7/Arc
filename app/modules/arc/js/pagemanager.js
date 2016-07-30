@@ -2,7 +2,7 @@ var page;
 
 function editPage(pageid) {
     page = pageid;
-    arcAjaxRequest("pagemanager/editpage", {id: page}, null, successEdit);
+    arcAjaxRequest("arc/pagemanageredit", {id: page}, null, successEdit);
 }
 
 function successEdit(data) {
@@ -32,7 +32,7 @@ function animate(showEditor) {
 }
 
 $("#savePageBtn").click(function () {
-    arcAjaxRequest("pagemanager/savepage", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
+    arcAjaxRequest("arc/pagemanagersave", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: arcCleanSummernote($('#summernote').summernote('code')), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
@@ -62,7 +62,7 @@ function removePage(pageid) {
 }
 
 $("#doRemoveBtn").click(function () {
-    arcAjaxRequest("pagemanager/removepage", {id: page}, completeDo, null);
+    arcAjaxRequest("arc/pagemanagerremove", {id: page}, completeDo, null);
 });
 
 function completeDo(data) {
@@ -72,7 +72,7 @@ function completeDo(data) {
 }
 
 function getPages() {
-    arcAjaxRequest("pagemanager/getpages", {}, null, successGet);
+    arcAjaxRequest("arc/pagemanagerget", {}, null, successGet);
 }
 
 function successGet(data) {
@@ -101,7 +101,7 @@ $(document).ready(function () {
         ],
         callbacks: {
             onImageUpload: function (files) {
-                arcAjaxRequest("pagemanager/uploadimage", files[0], null, uploadComplete);
+                arcAjaxRequest("arc/pagemanagerupload", files[0], null, uploadComplete);
             }
         }
     });

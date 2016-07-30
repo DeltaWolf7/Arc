@@ -13,7 +13,7 @@ function mark(item) {
 
 function doDelete() {
     var data = JSON.stringify(marked);
-    arcAjaxRequest("mediamanager/dodelete", {items: data}, uploadComplete, null);
+    arcAjaxRequest("arc/mediamanagerdelete", {items: data}, uploadComplete, null);
 }
 
 $(document).ready(function () {
@@ -21,7 +21,7 @@ $(document).ready(function () {
 });
 
 function getManager() {
-    arcAjaxRequest("mediamanager/getmanager", {path: path}, null, getComplete);
+    arcAjaxRequest("arc/mediamanagerget", {path: path}, null, getComplete);
 }
 
 function getComplete(data) {
@@ -32,7 +32,7 @@ function getComplete(data) {
 }
 
 $(document).on('change', '.btn-file :file', function () {
-    arcAjaxRequest("mediamanager/uploadfile", $(this)[0].files[0], uploadComplete, null, {path: path});
+    arcAjaxRequest("arc/mediamanagerupload", $(this)[0].files[0], uploadComplete, null, {path: path});
 });
 
 function uploadComplete() {
@@ -46,12 +46,12 @@ function getFolderPath(folderPath) {
 }
 
 function createFolder() {
-    arcAjaxRequest("mediamanager/createfolder", {path: path, name: $("#folderName").val()}, uploadComplete, null);
+    arcAjaxRequest("arc/mediamanagercreate", {path: path, name: $("#folderName").val()}, uploadComplete, null);
 }
 
 function getLink() {
     var data = JSON.stringify(marked);
-    arcAjaxRequest("mediamanager/getlink", {items: data}, null, getLinkComplete);
+    arcAjaxRequest("arc/mediamanagergetlink", {items: data}, null, getLinkComplete);
 }
 
 function getLinkComplete(data) {

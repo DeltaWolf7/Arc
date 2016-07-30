@@ -60,7 +60,7 @@ function GetPath($path) {
     foreach ($files as $file) {
         if ($file != "." && $file != "..") {
             $html .= "<div class=\"row\">"
-                    . "<div class=\"col-md-1 col-10px\"><input type=\"checkbox\" id=\"{$file}\" onchange=\"mark('{$path}/{$file}')\"><label for=\"{$file}\"></label></div>";
+                    . "<div class=\"col-md-1\" style=\"width: 10px;\"><input type=\"checkbox\" id=\"{$file}\" onchange=\"mark('{$path}/{$file}')\"><label for=\"{$file}\"></label></div>";
             if (is_dir($fullPath . $file)) {
                 // folder
                 $fi = new FilesystemIterator($fullPath . $file, FilesystemIterator::SKIP_DOTS);

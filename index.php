@@ -91,7 +91,7 @@ spl_autoload_register(function($class) {
 
 // Default system settings
 system\Helper::arcCheckSettingExists("ARC_MAIL", "{\"smtp\":\"false\", \"server\":\"localhost\""
-        . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"admin@server.local\"}");
+        . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"Admin <admin@server.local>\"}");
 system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "welcome");
 system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
 system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");

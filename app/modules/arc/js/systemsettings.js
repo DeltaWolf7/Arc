@@ -1,5 +1,5 @@
 function saveSystem() {
-    arcAjaxRequest("system/savesettings", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
+    arcAjaxRequest("arc/systemsettingsupdate", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
         domain: $("#ldapDomain").val(), base: $("#ldapBase").val(), smtp: $("#useSMTP").val(),
         smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
         port: $("#smtpPort").val(), sender: $("#smtpSender").val(), defaultPage: $("#defaultPage").val(),
