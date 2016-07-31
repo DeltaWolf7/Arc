@@ -7,18 +7,18 @@ $(document).ready(function () {
 
 $("#addGroupBtn").click(function () {
     if ($('#groups').val() != null) {
-        arcAjaxRequest("user/addgroup", {id: userid, group: $('#groups').val()}, addGrpComplete, null);
+        arcAjaxRequest("arc/addgroup", {id: userid, group: $('#groups').val()}, addGrpComplete, null);
     }
 });
 
 $("#removeFromGroupBtn").click(function () {
     if ($('#groups2').val() != null) {
-        arcAjaxRequest("user/removefromgroup", {id: userid, group: $('#groups2').val()}, remGrpComplete, null);
+        arcAjaxRequest("arc/removefromgroup", {id: userid, group: $('#groups2').val()}, remGrpComplete, null);
     }
 });
 
 $("#removeUserBtn").click(function () {
-    arcAjaxRequest("user/remove", {id: userid}, remUserComplete, null);
+    arcAjaxRequest("arc/remove", {id: userid}, remUserComplete, null);
 });
 
 $("#saveUserbtn").click(function () {
@@ -29,11 +29,11 @@ $("#saveUserbtn").click(function () {
 });
 
 $("#removeGroupDoBtn").click(function () {
-    arcAjaxRequest("user/removegroup", {id: groupid}, removeGrpDoComplete, null);
+    arcAjaxRequest("arc/removegroup", {id: groupid}, removeGrpDoComplete, null);
 });
 
 $("#saveGroupBtn").click(function () {
-    arcAjaxRequest("user/savegroup", {id: groupid, name: $('#groupname').val(),
+    arcAjaxRequest("arc/savegroup", {id: groupid, name: $('#groupname').val(),
         description: $('#groupdescription').val()}, saveGroupComplete);
 });
 
@@ -41,11 +41,11 @@ function get(action) {
     if (action == "users") {
         $("#tabUsers").attr("class", "active");
         $("#tabGroups").removeClass("active");
-        arcAjaxRequest("user/getusers", {}, null, getSuccess);
+        arcAjaxRequest("arc/getusers", {}, null, getSuccess);
     } else {
         $("#tabUsers").removeClass("active");
         $("#tabGroups").attr("class", "active");
-        arcAjaxRequest("user/getgroups", {}, null, getSuccess);
+        arcAjaxRequest("arc/getgroups", {}, null, getSuccess);
     }
 }
 
@@ -64,7 +64,7 @@ function remGrpComplete() {
 
 function editUser(id) {
     userid = id;
-    arcAjaxRequest("user/user", {id: userid}, editUserComplete, editUserSuccess);
+    arcAjaxRequest("arc/user", {id: userid}, editUserComplete, editUserSuccess);
 }
 
 function editUserSuccess(data) {
@@ -106,7 +106,7 @@ function saveUserComplete() {
 
 function editGroup(id) {
     groupid = id;
-    arcAjaxRequest("user/group", {id: groupid}, successEditGroup, completeEditGroup);
+    arcAjaxRequest("arc/group", {id: groupid}, successEditGroup, completeEditGroup);
 }
 
 function completeEditGroup(data) {
@@ -135,7 +135,7 @@ function saveGroupComplete() {
 }
 
 function impersonateUser(userid) {
-    arcAjaxRequest("user/impersonateUser", {id: userid}, null, impersonateSuccess);
+    arcAjaxRequest("arc/impersonateUser", {id: userid}, null, impersonateSuccess);
 }
 
 function impersonateSuccess(data) {

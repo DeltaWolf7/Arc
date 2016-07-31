@@ -1,6 +1,6 @@
 // Details
     $("#saveDetailsBtn").click(function () {
-        arcAjaxRequest("user/details", $("#detailsForm").serialize(), detailsComplete, null);
+        arcAjaxRequest("arc/userdetails", $("#detailsForm").serialize(), detailsComplete, null);
     });
     
 
@@ -11,7 +11,7 @@ function detailsComplete() {
 
 
 $(document).on('change', '.btn-file :file', function () {
-    arcAjaxRequest("user/uploadimage", $(this)[0].files[0], changeComplete, null);
+    arcAjaxRequest("arc/userdetailsuploadimage", $(this)[0].files[0], changeComplete, null);
 });
 
 function changeComplete() {

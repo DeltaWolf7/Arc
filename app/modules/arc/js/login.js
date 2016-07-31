@@ -4,7 +4,7 @@ $("#loginBtn").click(function () {
 });
 
 function login() {
-    arcAjaxRequest("user/login", $("#loginForm").serialize(), arcGetStatus, success);
+    arcAjaxRequest("arc/login", $("#loginForm").serialize(), arcGetStatus, success);
 }
 
 $("#btnForgot").click(function () {
@@ -24,7 +24,7 @@ function cancelForgot() {
 }
 
 $("#sendReset").click(function () {
-    arcAjaxRequest("user/reset", $("#resetForm").serialize(), arcGetStatus);
+    arcAjaxRequest("arc/reset", $("#resetForm").serialize(), arcGetStatus);
     cancelForgot();
 });
 
@@ -52,7 +52,7 @@ function switchView() {
 
 // Register
 $("#registerBtn").click(function () {
-    arcAjaxRequest("user/register", $("#registerForm").serialize(), arcGetStatus, success);
+    arcAjaxRequest("arc/register", $("#registerForm").serialize(), arcGetStatus, success);
 });
 
 $("#loginForm input").keypress(function (e) {

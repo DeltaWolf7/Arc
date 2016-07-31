@@ -6,6 +6,6 @@ $(document).ready(function () {
 
 function refreshSn() {
     setTimeout(function () {
-        arcAjaxRequest("user/keepalive", {}, null, refreshSn());
+        arcAjaxRequest("arc/keepalive", {}, null, refreshSn());
     }, time);
 };
