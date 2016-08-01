@@ -76,7 +76,12 @@ abstract class DataProvider {
         }
         return $collection;
     }
-
+    
+    public function getCount($where) {
+        $count = system\Helper::arcGetDatabase()->count($this->table, $where);
+        return $count;
+    }
+    
     /**
      * Updates the data of an object in the database
      */

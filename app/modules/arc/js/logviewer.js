@@ -1,3 +1,5 @@
+var page = 0;
+
 function clearLogs() {
     arcAjaxRequest("arc/logviewerdelete", {}, update);
 }
@@ -8,12 +10,12 @@ function update() {
 }
 
 $(document).ready(function () {
-    getLogs();
+    getLogs(0);
 });
 
-
-function getLogs() {
-    arcAjaxRequest("arc/logviewerget", {}, null, updateView);
+function getLogs(pageNo) {
+    page = pageNo;
+    arcAjaxRequest("arc/logviewerget", {page: page}, null, updateView);
 }
 
 function updateView(data) {

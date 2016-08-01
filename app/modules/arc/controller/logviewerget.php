@@ -7,7 +7,10 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<div class=\"col-md-2\"><strong>When</strong></div>"
             . "<div class=\"col-md-8\"><strong>Message</strong></div>"
             . "</div>";
-    $logs = Log::getLogs();
+
+    $count = Log::count();
+    $noPages = $count / 50;
+    $logs = Log::getPagination(50, $_POST["page"] * 50);
 
     foreach ($logs as $log) {
         $html .= "<div class=\"row\">"
@@ -32,6 +35,20 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<div class=\"col-md-8\">{$log->message}</div>"
                 . "</div>";
     }
+
+    $html .= "<nav aria-label=\"...\">"
+            . "<ul class=\"pager\">";
+    if ($_POST["page"] != 0) {
+        $lastPage = $_POST['page'] - 1;
+        $html .= "<li><a onclick=\"getLogs({$lastPage})\">Previous</a></li>";
+    }
+
+    if ($_POST["page"] < $noPages - 1) {
+        $nextPage = $_POST["page"] + 1;
+        $html .= "<li><a onclick=\"getLogs({$nextPage})\">Next</a></li>";
+    }
+    $html .= "</ul>"
+            . "</nav>";
 
     system\Helper::arcReturnJSON(["html" => $html]);
 }

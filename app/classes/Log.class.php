@@ -48,7 +48,17 @@ class Log extends DataProvider {
         $logs = new Log();
         return $logs->getCollection(["ORDER" => "id DESC"]);
     }
-
+    
+    public static function getPagination($limit = 50, $offset = 0) {
+        $logs = new Log();
+        return $logs->getCollection(["ORDER" => "id DESC", "LIMIT" => [$offset, $limit]]);
+    }
+    
+    public static function count() {
+        $logs = new Log();
+        return $logs->getCount([]);
+    }
+    
     public static function createLog($type, $module, $message) {
         $log = new Log();
         $log->type = $type;
