@@ -608,65 +608,6 @@ class Helper {
         return $menu;
     }
 
-    /**
-     * 
-     * @param array $objects Collection of objects
-     * @param int $page Page number
-     * @param int $amount Amount of object per page
-     * @return array Collection of objects
-     */
-    public static function arcPagination($objects, $page, $amount) {
-        $pagecount = $amount * $page;
-        return array_slice($objects, $pagecount, $amount);
-    }
-
-    /**
-     * 
-     * Pagination view
-     * @param array $objects collection of objects
-     * @param int $page page number
-     * @param int $amount amount per page
-     * @param boolean $simple simple view or complex
-     * @param string $baseurl of next page
-     */
-    public static function arcGetPaginationView($objects, $page, $amount, $simple = false, $baseurl = "") {
-        $noperpage = count($objects) / $amount;
-        $link1 = "";
-        $link2 = "";
-        if (!empty($page) && $page > 1) {
-            $prev = $page - 1;
-            $link1 = "{$baseurl}/{$prev}";
-        }
-
-        if ($page < $noperpage - 1) {
-            $next = $page + 1;
-            $link2 = "{$baseurl}/{$next}";
-        }
-
-        if (!$simple) {
-            $html = "<nav><ul class=\"pagination\"><li><a href=\"{$link1}\""
-                    . " aria-label=\"Previous\"><span aria-hidden=\"true\">&laquo;</span></a></li>";
-
-            for ($i = 0; $i <= $noperpage; $i++) {
-                $count = $i + 1;
-                $html .= "<li><a href=\"{$baseurl}/";
-                if (!empty($i)) {
-                    $html .= $i;
-                }
-                $html .= "\">{$count}</a></li>";
-            }
-
-            $html .= "<li><a href=\"{$link2}\" aria-label=\"Next\"><span aria-hidden=\"true\">&raquo;</span></a></li>"
-                    . "</ul></nav>";
-        } else {
-            $html = "<nav><ul class=\"pager\">";
-            $html .= "<li class=\"previous\"><a href=\"{$link2}\"><span aria-hidden=\"true\">&larr;</span> Older</a></li>";
-            $html .= "<li class=\"next\"><a href=\"{$link1}\">Newer <span aria-hidden=\"true\">&rarr;</span></a></li>";
-            $html .= "</ul></nav>";
-        }
-        echo $html;
-    }
-
     public static function arcIsAjaxRequest() {
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
             return true;
