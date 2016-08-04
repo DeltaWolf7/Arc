@@ -22,7 +22,7 @@ $("#removeUserBtn").click(function () {
 });
 
 $("#saveUserbtn").click(function () {
-    arcAjaxRequest("user/saveuser", {id: userid, firstname: $('#firstname').val(),
+    arcAjaxRequest("arc/saveuser", {id: userid, firstname: $('#firstname').val(),
         lastname: $('#lastname').val(), email: $('#email').val(),
         password: $('#password').val(), retype: $('#retype').val(), enabled: $("#enabled").prop("checked"),
         company: $('#company').val()}, saveUserComplete, null);
