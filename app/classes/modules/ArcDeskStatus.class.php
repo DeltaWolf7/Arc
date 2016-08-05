@@ -10,4 +10,10 @@ class ArcDeskStatus extends DataProvider {
         $this->columns = ["id", "name"];
         $this->table = "arcdesk_statuses";
     }
+    
+    public static function getByID($id) {
+        $status = new ArcDeskStatus();
+        $status->get(["id" => $id]);
+        return $status;
+    }
 }

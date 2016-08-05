@@ -1,13 +1,11 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-        $permission = new UserPermission();
-        $permission->getByID($_POST["id"]);
+        $permission = UserPermission::getByID($_POST["id"]);
         $permission->groupid = $_POST["group"];
         $permission->permission = $_POST["module"];
 
-        $group = new UserGroup();
-        $group->getByID($_POST["group"]);
+        $group = UserGroup::getByID($_POST["group"]);
         $permissions = $group->getPermissions();
         foreach ($permissions as $perm) {
             if ($perm->permission == $permission->permission && $perm->id != $permission->id) {

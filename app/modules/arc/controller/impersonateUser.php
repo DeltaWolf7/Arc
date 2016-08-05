@@ -2,8 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
 
-    $user = new User();
-    $user->getByID($_POST["id"]);
+    $user = User::getByID($_POST["id"]);
 
     if ($user->id != system\Helper::arcGetUser()->id) {
         system\Helper::arcImpersonateUser($user);

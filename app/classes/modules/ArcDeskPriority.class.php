@@ -12,4 +12,10 @@ class ArcDeskPriority extends DataProvider {
         $this->table = "arcdesk_priority";
         $this->columns = ["id", "name", "sortorder"];
     }
+    
+    public static function getByID($id) {
+        $status = new ArcDeskPriority();
+        $status->get(["id" => $id]);
+        return $status;
+    }
 }

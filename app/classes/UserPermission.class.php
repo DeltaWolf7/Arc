@@ -79,9 +79,13 @@ class UserPermission extends DataProvider {
      * @return \UserGroup Gets user's group
      */
     public function getGroup() {
-        $group = new UserGroup();
-        $group->getByID($this->groupid);
+        $group = UserGroup::getByID($this->groupid);
         return $group;
     }
-
+    
+    public static function getByID($id) {
+        $permission = new UserPermission();
+        $permission->get(["id" => $id]);
+        return $permission;
+    }
 }

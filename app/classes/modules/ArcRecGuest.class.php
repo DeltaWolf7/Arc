@@ -21,4 +21,10 @@ class ArcRecGuest extends DataProvider {
         $this->table = "arcrec_guests";
         $this->columns = ["id", "name", "email", "image", "company", "phone", "title"];
     }
+    
+    public static function getByID($id) {
+        $guest = new ArcRecGuest();
+        $guest->get(["id" => $id]);
+        return $guest;
+    }
 }

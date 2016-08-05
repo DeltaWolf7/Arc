@@ -1,8 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-        $permission = new UserPermission();
-        $permission->getByID($_POST["id"]);
+        $permission = UserPermission::getByID($_POST["id"]);
         $data = "<div class=\"form-group\"><label for=\"module\">Module</label>"
                 . "<select id=\"module\" class=\"form-control\">";
         $pages = Page::getAllPages();

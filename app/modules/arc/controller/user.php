@@ -1,8 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $user = new User();
-    $user->getByID($_POST["id"]);
+    $user = User::getByID($_POST["id"]);
     $data = "<label for=\"groups2\">In Groups</label><select id=\"groups2\" class=\"form-control\" size=\"16\">";
     foreach ($user->getGroups() as $group) {
         $data .= "<option value=\"{$group->name}\">{$group->name}</option>";

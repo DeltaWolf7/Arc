@@ -65,6 +65,12 @@ class User extends DataProvider {
         $user->get(["email" => $email]);
         return $user;
     }
+    
+    public static function getByID($id) {
+        $user = new User();
+        $user->get(["id" => $id]);
+        return $user;
+    }
 
     /**
      * 

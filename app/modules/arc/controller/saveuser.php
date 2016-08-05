@@ -1,8 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $user = new User();
-    $user->getByID($_POST["id"]);
+    $user = User::getByID($_POST["id"]);
     // password settings
     if (!empty($_POST["password"])) {
         if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {

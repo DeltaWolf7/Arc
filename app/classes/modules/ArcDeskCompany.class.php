@@ -20,4 +20,10 @@ class ArcDeskCompany extends DataProvider {
         $company->get(["name" => $name]);
         return $company;
     }
+    
+    public static function getByID($id) {
+        $company = new ArcDeskCompany();
+        $company->get(["id" => $id]);
+        return $company;
+    }
 }

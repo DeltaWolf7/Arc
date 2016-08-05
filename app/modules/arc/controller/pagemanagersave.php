@@ -1,8 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-    $page = new Page();
-    $page->getByID($_POST["id"]);
+    $page = Page::getByID($_POST["id"]);
     $page->content = htmlentities($_POST["html"]);
     $page->seourl = strtolower($_POST["seourl"]);
     

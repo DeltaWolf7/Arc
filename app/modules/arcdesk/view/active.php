@@ -10,21 +10,16 @@ $tickets = ArcDeskTicket::getByStatus("1");
     <div class="col-md-10">
             <?php
             foreach ($tickets as $ticket) {
-                $company = new ArcDeskCompany();
-                $company->getByID($ticket->companyid);
+                $company = ArcDeskCompany::getByID($ticket->companyid);
                 $assigned = "Not Assigned";
                 if ($ticket->agentid != 0) {
-                    $user = new User();
-                    $user->getByID($ticket->agentid);
+                    $user = User::getByID($ticket->agentid);
                     $assigned = $user->getFullname();
                 }
-                $requester = new User();
-                $requester->getByID($ticket->requesterid);
-                $status = new ArcDeskStatus();
-                $status->getByID($ticket->statusid);
+                $requester = User::getByID($ticket->requesterid);
+                $status = ArcDeskStatus::getByID($ticket->statusid);
                 
-                $priority = new ArcDeskPriority();
-                $priority->getByID($ticket->priorityid);
+                $priority = ArcDeskPriority::getByID($ticket->priorityid);
 
                 echo "<div class=\"row ticket\"><div class=\"col-md-1 ticket-green\"><div class=\"checkbox\"><input type=\"checkbox\"></div></div>"
                 . "<div class=\"col-md-8\"><a><strong>{$ticket->subject}</strong></a> <small>#{$ticket->type}-{$ticket->reference}</small>"

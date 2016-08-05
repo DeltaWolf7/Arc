@@ -26,8 +26,7 @@ class ArcRecEvent extends DataProvider {
         $guests = json_decode($this->guests, true);
         $collection = array();
         foreach ($guests as $guest) {
-            $user = new ArcRecGuest();
-            $user->getByID($guest);
+            $user = ArcRecGuest::getByID($guest);
             $collection[] = $user;
         }
         return $collection;

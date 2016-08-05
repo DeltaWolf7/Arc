@@ -51,15 +51,6 @@ abstract class DataProvider {
 
     /**
      * 
-     * @param int $id ID of the item to fetch from the database
-     * @return object Returns the object filled with data
-     */
-    public function getByID($id) {
-        return $this->get(["id" => $id]);
-    }
-
-    /**
-     * 
      * @param array $where Array containing the claused to fetch data
      * @return object collection, filled with data
      */

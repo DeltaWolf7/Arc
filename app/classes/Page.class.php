@@ -24,70 +24,72 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Description of page
+ *
+ * @author Craig
+ */
+class Page extends DataProvider {
 
+    public $title;
+    public $content;
+    public $seourl;
+    public $metadescription;
+    public $metakeywords;
+    public $sortorder;
+    public $iconclass;
+    public $showtitle;
+    public $hideonlogin;
+    public $hidefrommenu;
+    public $theme;
 
     /**
-     * Description of page
-     *
-     * @author Craig
+     * Page constructor
      */
-    class Page extends DataProvider {
-
-        public $title;
-        public $content;
-        public $seourl;
-        public $metadescription;
-        public $metakeywords;
-        public $sortorder;
-        public $iconclass;
-        public $showtitle;
-        public $hideonlogin;
-        public $hidefrommenu;
-        public $theme;
-
-        /**
-         * Page constructor
-         */
-        public function __construct() {
-            parent::__construct();
-            $this->title = "";
-            $this->content = "";
-            $this->metadescription = "";
-            $this->metakeywords = "";
-            $this->metatitle = "";
-            $this->seourl = "";
-            $this->sortorder = 0;
-            $this->iconclass = "";
-            $this->showtitle = true;
-            $this->hideonlogin = false;
-            $this->hidefrommenu = false;
-            $this->theme = "none";
-            $this->table = ARCDBPREFIX . "pages";
-            $this->columns = ["id", "title", "content", "seourl", "metadescription",
-                "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
-                "hidefrommenu", "theme"];
-        }
-
-        /**
-         * 
-         * @param string $seourl SEO Url
-         * @return \Page
-         */
-        public static function getBySEOURL($seourl) {
-            $page = new Page();
-            $page->get(["seourl" => $seourl]);
-            return $page;
-        }
-
-        public static function getAllPages() {
-            $page = new Page();
-            return $page->getCollection(["ORDER" => "sortorder ASC"]);
-        }
-
-        public function getPermissions() {
-            $permissions = new UserPermission();
-            return $permissions->getCollection(["permission" => $this->seourl]);
-        }
-
+    public function __construct() {
+        parent::__construct();
+        $this->title = "";
+        $this->content = "";
+        $this->metadescription = "";
+        $this->metakeywords = "";
+        $this->metatitle = "";
+        $this->seourl = "";
+        $this->sortorder = 0;
+        $this->iconclass = "";
+        $this->showtitle = true;
+        $this->hideonlogin = false;
+        $this->hidefrommenu = false;
+        $this->theme = "none";
+        $this->table = ARCDBPREFIX . "pages";
+        $this->columns = ["id", "title", "content", "seourl", "metadescription",
+            "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
+            "hidefrommenu", "theme"];
     }
 
+    /**
+     * 
+     * @param string $seourl SEO Url
+     * @return \Page
+     */
+    public static function getBySEOURL($seourl) {
+        $page = new Page();
+        $page->get(["seourl" => $seourl]);
+        return $page;
+    }
+
+    public static function getAllPages() {
+        $page = new Page();
+        return $page->getCollection(["ORDER" => "sortorder ASC"]);
+    }
+
+    public function getPermissions() {
+        $permissions = new UserPermission();
+        return $permissions->getCollection(["permission" => $this->seourl]);
+    }
+
+    public static function getByID($id) {
+        $page = new Page();
+        $page->get(["id" => $id]);
+        return $page;
+    }
+}

@@ -24,88 +24,95 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Description of usergroups
+ *
+ * @author craig
+ */
+class UserGroup extends DataProvider {
 
+    public $name;
+    public $description;
 
     /**
-     * Description of usergroups
-     *
-     * @author craig
+     * UserGroup constructor
      */
-    class UserGroup extends DataProvider {
+    public function __construct() {
+        parent::__construct();
+        $this->name = "";
+        $this->description = "";
+        $this->table = ARCDBPREFIX . "user_groups";
+        $this->columns = ["id", "name", "description"];
+    }
 
-        public $name;
-        public $description;
+    /**
+     * 
+     * @param string $name Name of the group
+     * @return \UserGroup
+     */
+    public static function getByName($name) {
+        $group = new UserGroup();
+        $group->get(["name" => $name]);
+        return $group;
+    }
 
-        /**
-         * UserGroup constructor
-         */
-        public function __construct() {
-            parent::__construct();
-            $this->name = "";
-            $this->description = "";
-            $this->table = ARCDBPREFIX . "user_groups";
-            $this->columns = ["id", "name", "description"];
-        }
+    /**
+     * 
+     * @return UserPermission Permission of the user of a group
+     */
+    public function getPermissions() {
+        return UserPermission::getByGroupID($this->id);
+    }
 
-        /**
-         * 
-         * @param string $name Name of the group
-         * @return \UserGroup
-         */
-        public static function getByName($name) {
-            $group = new UserGroup();
-            $group->get(["name" => $name]);
-            return $group;
-        }
+    /**
+     * 
+     * @return UserGroup Returns all groups
+     */
+    public static function getAllGroups() {
+        $groups = new UserGroup();
+        return $groups->getCollection(["ORDER" => "name ASC"]);
+    }
 
-        /**
-         * 
-         * @return UserPermission Permission of the user of a group
-         */
-        public function getPermissions() {
-            return UserPermission::getByGroupID($this->id);
-        }
+    /*
+     * Get all users
+     */
 
-        /**
-         * 
-         * @return UserGroup Returns all groups
-         */
-        public static function getAllGroups() {
-            $groups = new UserGroup();
-            return $groups->getCollection(["ORDER" => "name ASC"]);
-        }
-        
-        /*
-         * Get all users
-         */
-        public function getUsers() {
-            $users = User::getAllUsers();
-            $grpUsers = Array();
-            foreach ($users as $user) {
-                if ($user->inGroup($this->name)) {
-                    $grpUsers[] = $user;
-                }
-            }
-            return $grpUsers;
-        }
-        
-        /*
-         * Update group and save it to the database
-         */
-        public function update() {
-            if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
-                parent::update();
+    public function getUsers() {
+        $users = User::getAllUsers();
+        $grpUsers = Array();
+        foreach ($users as $user) {
+            if ($user->inGroup($this->name)) {
+                $grpUsers[] = $user;
             }
         }
-        
-        /*
-         * Deleet group from database
-         */
-        public function delete($id) {
-            $group = new UserGroup();
-            $group->getByID($id);
-            if ($group->name != "Administrators" && $group->name != "Guests" && $group->name != "Users") {
-                parent::delete($id);
-            }
+        return $grpUsers;
+    }
+
+    public static function getByID($id) {
+        $group = new UserGroup();
+        $group->get(["id" => $id]);
+        return $group;
+    }
+
+    /*
+     * Update group and save it to the database
+     */
+
+    public function update() {
+        if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
+            parent::update();
         }
     }
+
+    /*
+     * Deleet group from database
+     */
+
+    public function delete($id) {
+        $group = UserGroup::getByID($id);
+        if ($group->name != "Administrators" && $group->name != "Guests" && $group->name != "Users") {
+            parent::delete($id);
+        }
+    }
+
+}

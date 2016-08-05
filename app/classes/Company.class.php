@@ -49,6 +49,12 @@ class Company extends DataProvider {
         return $company;
     }
     
+    public static function getByID($id) {
+        $company = new Company();
+        $company->get(["id" => $id]);
+        return $company;
+    }
+    
     public static function getByUser($id) {
         $setting = SystemSetting::getByKey("ARC_COMPANY", $id);
         $company = null;
