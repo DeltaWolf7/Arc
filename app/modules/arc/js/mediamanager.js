@@ -56,6 +56,11 @@ function getLink() {
 
 function getLinkComplete(data) {
     var jdata = arcGetJson(data);
-    $("#linkText").val(jdata.links);
-    $("#getLinkModal").modal('show');
+    if (typeof (getLinkText) == "function") {
+        getLinkText(jdata.links);
+    } else {
+        $("#linkText").val(jdata.links);
+        $("#getLinkModal").modal('show');
+        console.log("Implement a getLinkText function to capture links.");
+    }
 }
