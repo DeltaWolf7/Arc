@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         {{arc:header}}
     </head>
-    <body id="uB" class="fixed-page-footer fixed-header fixed-navigation">
+    <body id="uB" class="fixed-page-footer fixed-header fixed-navigation professional">
         <!-- #HEADER -->
         <header id="header">
             <div id="logo-group">
