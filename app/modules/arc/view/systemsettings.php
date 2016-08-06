@@ -382,7 +382,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpSender">Sender</label>
-                        <input id="smtpSender" type="email" class="form-control" value="<?php echo $smtpData["sender"]; ?>">
+                        <input id="smtpSender" type="text" class="form-control" value="<?php echo $smtpData["sender"]; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
