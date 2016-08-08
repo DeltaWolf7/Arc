@@ -820,22 +820,14 @@ class Helper {
     }
 
     public static function arcEncrypt($string) {
-        // check we have a iv key, if not create one.
-        self::arcCheckSettingExists("ARC_KEY", openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc")));
-        self::arcCheckSettingExists("ARC_PAIR", openssl_random_pseudo_bytes(32));
-        
-        $iv = \SystemSetting::getByKey("ARC_KEY")->value;
-        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
-        
-        $encrypted = openssl_encrypt($string, "aes-256-cbc", $encryption_key, 0, $iv);
+        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;     
+        $encrypted = openssl_encrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $encrypted;
     }
     
     public static function arcDecrypt($string) {
-        $iv = \SystemSetting::getByKey("ARC_KEY")->value;
         $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
-        
-        $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, $iv);
+        $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $decrypted;
     }
 

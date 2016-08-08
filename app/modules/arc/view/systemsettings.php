@@ -350,7 +350,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpPass">Password</label>
-                        <input id="smtpPass" type="password" class="form-control" value="<?php echo $smtpData["password"]; ?>">
+                        <input id="smtpPass" type="password" class="form-control" value="<?php echo system\Helper::arcDecrypt($smtpData["password"]); ?>">
                     </div>
                 </div>
                 <div class="col-md-8">

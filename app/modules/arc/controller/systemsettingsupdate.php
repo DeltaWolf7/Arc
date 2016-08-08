@@ -18,9 +18,11 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = $_POST["loginURL"];
     $setting->update();
     
+    $password = system\Helper::arcEncrypt($_POST["password"]);
+    
     $setting = SystemSetting::getByKey("ARC_MAIL");
     $setting->value = "{\"smtp\":\"{$_POST["smtp"]}\", \"server\":\"{$_POST["smtpserver"]}\""
-        . ", \"username\":\"{$_POST["username"]}\", \"password\":\"{$_POST["password"]}\","
+        . ", \"username\":\"{$_POST["username"]}\", \"password\":\"{$password}\","
         . " \"port\":\"{$_POST["port"]}\", \"sender\":\"{$_POST["sender"]}\"}";
     $setting->update();
     

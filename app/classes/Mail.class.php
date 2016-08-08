@@ -130,12 +130,16 @@ class Mail {
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->Host = $this->data["server"];
+                             
                 if (empty($this->data["username"]) && empty($this->data["password"])) {
                     $mail->SMTPAuth = false;
                 } else {
                     $mail->SMTPAuth = true;
                     $mail->Username = $this->data["username"];
-                    $mail->Password = $this->data["password"];
+                    
+                    $smtp_password = system\Helper::arcDecrypt($this->data["password"]);
+                    
+                    $mail->Password = $smtp_password;
                 }
                 $mail->setFrom($from);
                 foreach ($to as $email) {
