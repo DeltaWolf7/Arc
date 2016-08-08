@@ -442,7 +442,7 @@ class Helper {
 
         // themepath
         $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-        
+
         // email body
         $content = str_replace("{{arc:emailcontent}}", $message, $content);
 
@@ -817,6 +817,26 @@ class Helper {
         $formatD = \SystemSetting::getByKey("ARC_DATEFORMAT");
         $formatT = \SystemSetting::getByKey("ARC_TIMEFORMAT");
         return date($formatD->value . " " . $formatT->value, strtotime($datetime));
+    }
+
+    public static function arcEncrypt($string) {
+        // check we have a iv key, if not create one.
+        self::arcCheckSettingExists("ARC_KEY", openssl_random_pseudo_bytes(openssl_cipher_iv_length("aes-256-cbc")));
+        self::arcCheckSettingExists("ARC_PAIR", openssl_random_pseudo_bytes(32));
+        
+        $iv = \SystemSetting::getByKey("ARC_KEY")->value;
+        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
+        
+        $encrypted = openssl_encrypt($string, "aes-256-cbc", $encryption_key, 0, $iv);
+        return $encrypted;
+    }
+    
+    public static function arcDecrypt($string) {
+        $iv = \SystemSetting::getByKey("ARC_KEY")->value;
+        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
+        
+        $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, $iv);
+        return $decrypted;
     }
 
 }
