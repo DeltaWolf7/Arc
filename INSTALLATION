@@ -1,0 +1,14 @@
+1. Create a database and import the included SQL files.
+2. Rename the config.php.dist file in app/system to config.php
+3. Edit the config.php file:-
+    a. ARCDBSERVER - database server
+    b. ARCDBNAME - database name
+    c. ARCDBUSER - database username
+    d. ARCDBPASSWORD - database password
+    e. ARCDBTYPE - database type
+    f. ARCDBPREFIX - table prefix, no change required
+    g. ARCDEBUG - enable/disable debug mode
+    h. ARCSESSIONTIMEOUT - session timeout
+    i. ARCFORCENOSSL - force SSL off
+    j. ARCIVKEYPAIR - Encryption key, MUST BE CHANGED
+4. Login to site with 'admin@server.local' and 'password'
