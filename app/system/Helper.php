@@ -33,7 +33,7 @@ class Helper {
      * 
      * Array containing all Arc data
      */
-    private static $arc = Array();
+    private static $arc = [];
 
     /**
      * 
@@ -44,7 +44,7 @@ class Helper {
         session_start();
 
         // Initilise menu
-        self::$arc["menus"] = Array();
+        self::$arc["menus"] = [];
 
         // Set module path
         self::$arc["modulepath"] = "";
@@ -101,7 +101,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
 
         // Get POST data
-        self::$arc["post"] = array();
+        self::$arc["post"] = [];
         foreach ($_POST as $key => $value) {
             self::$arc["post"][$key] = $value;
         }
@@ -453,22 +453,22 @@ class Helper {
         return $content;
     }
 
-    public static function arcAddMessage($status, $data, $parameters = array()) {
+    public static function arcAddMessage($status, $data, $parameters = []) {
         $_SESSION["status"][] = ["data" => $data, "status" => $status, "parameters" => $parameters];
     }
 
     public static function arcClearStatus() {
-        $_SESSION["status"] = Array();
+        $_SESSION["status"] = [];
     }
 
     // new notification manager
     public static function arcGetStatusMessages() {
-        $data = array();
+        $data = [];
         foreach ($_SESSION["status"] as $message) {
             $data["messages"] = array("message" => $message["data"], "type" => $message["status"],
                 "parameters" => $message["parameters"]);
         }
-        $_SESSION["status"] = Array();
+        $_SESSION["status"] = [];
         self::arcReturnJSON($data);
     }
 
@@ -532,10 +532,10 @@ class Helper {
      * @param string/array $groups Group name
      * @return boolean true if they are
      */
-    public static function arcIsUserInGroup($groups = Array()) {
+    public static function arcIsUserInGroup($groups = []) {
         if (self::arcIsUserLoggedIn() == true) {
             if (!is_array($groups)) {
-                $newGroup = Array();
+                $newGroup = [];
                 $newGroup[] = $groups;
                 $groups = $newGroup;
             }
@@ -588,7 +588,7 @@ class Helper {
     }
 
     public static function arcGetMenu() {
-        $menu = array();
+        $menu = [];
         $pages = \Page::getAllPages();
 
         $groups[] = \UserGroup::getByName("Guests");
@@ -683,6 +683,11 @@ class Helper {
         echo utf8_encode(json_encode($array));
     }
 
+    /**
+     * 
+     * @param type $filesystem
+     * @return type
+     */
     public static function arcGetModulePath($filesystem = false) {
         if (!$filesystem) {
             return self::arcGetPath() . self::$arc["modulepath"];
@@ -690,6 +695,13 @@ class Helper {
         return self::arcGetPath(true) . self::$arc["modulepath"];
     }
 
+    /**
+     * 
+     * @param string $name
+     * @param type $controller
+     * @param type $filesystem
+     * @return type
+     */
     public static function arcGetModuleControllerPath($name, $controller, $filesystem = false) {
         if (!$filesystem) {
             echo self::arcGetPath() . "{$name}/{$controller}";
@@ -823,16 +835,25 @@ class Helper {
         return date($formatD->value . " " . $formatT->value, strtotime($datetime));
     }
 
+    /**
+     * 
+     * @param string String to encrypt
+     * @return string
+     */
     public static function arcEncrypt($string) {
         $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;     
         $encrypted = openssl_encrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $encrypted;
     }
     
+    /**
+     * 
+     * @param string String to decrypt
+     * @return string
+     */
     public static function arcDecrypt($string) {
         $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
         $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $decrypted;
     }
-
 }
