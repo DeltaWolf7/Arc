@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.5";
+        self::$arc["version"] = "0.4.0.6";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -65,7 +65,11 @@ class Helper {
                     "database_name" => ARCDBNAME,
                     "server" => ARCDBSERVER,
                     "username" => ARCDBUSER,
-                    "password" => ARCDBPASSWORD
+                    "password" => ARCDBPASSWORD,
+                    'charset' => ARCCHARSET,
+                    'option' => [
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+        ]
                 ]);
             } else {
                 self::$arc["database"] = new \medoo([
@@ -255,7 +259,7 @@ class Helper {
     /**
      * Get the view based on the request
      */
-    private static function arcGetView() {
+    private static function arcGetView() {  
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
         $uri = $uri_parts[0];
         // set session if it exists.

@@ -45,6 +45,8 @@ class Config {
         define('ARCDBTYPE', 'mysql');
         // Database prefix
         define('ARCDBPREFIX', 'arc_');
+        // Database charset
+        define('ARCCHARSET', 'utf8');
                 
         // Project debug mode
         define('ARCDEBUG', true);

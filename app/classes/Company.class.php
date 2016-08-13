@@ -67,6 +67,6 @@ class Company extends DataProvider {
     
     public static function getAll() {
         $company = new Company();
-        return $company->getCollection(["ORDER" => "name ASC"]);
+        return $company->getCollection(["ORDER" => ['name' => 'ASC']]);
     }
 }

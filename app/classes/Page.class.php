@@ -79,7 +79,7 @@ class Page extends DataProvider {
 
     public static function getAllPages() {
         $page = new Page();
-        return $page->getCollection(["ORDER" => "sortorder ASC"]);
+        return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
     }
 
     public function getPermissions() {

@@ -35,7 +35,7 @@ abstract class DataProvider {
      */
     public function __construct() {
         $this->id = 0;
-        $this->table = "";
+        $this->table = '';
         $this->columns = array();
     }
 
@@ -81,14 +81,14 @@ abstract class DataProvider {
         $dataColumns = array();
         $properties = get_object_vars($this);
         foreach ($columns as $column) {
-            if ($column != "table" && $column != "columns") {
+            if ($column != 'table' && $column != 'columns') {
                 $dataColumns[$column] = $properties[$column];
             }
-        }
+        }    
         if ($this->id == 0) {
             $this->id = system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
         } else {
-            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ["id" => $this->id]);
+            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ['id' => $this->id]);
         }
     }
 
@@ -97,7 +97,7 @@ abstract class DataProvider {
      * @param int $id Removes a database row based on the ID
      */
     public function delete($id) {
-        system\Helper::arcGetDatabase()->delete($this->table, ["id" => $id]);
+        system\Helper::arcGetDatabase()->delete($this->table, ['id' => $id]);
     }
 
     /**

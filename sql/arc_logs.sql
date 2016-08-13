@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `arc_logs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(50) NOT NULL,
   `module` varchar(50) NOT NULL,
-  `when` datetime NOT NULL,
+  `event` datetime NOT NULL,
   `message` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;

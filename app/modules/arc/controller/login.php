@@ -22,7 +22,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
         if (is_array($result)) {
             if ($user->id != 0) {
-                Log::createLog("success", "ldap", "User logged in: " . $_POST["email"]);
+                Log::createLog("success", "ldap", "User logged in: {$_POST["email"]}");
                 $user->setPassword($_POST["password"]);
                 $user->update();
                 

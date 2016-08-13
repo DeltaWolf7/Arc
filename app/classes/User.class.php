@@ -78,7 +78,7 @@ class User extends DataProvider {
      */
     public static function getAllUsers() {
         $user = new User();
-        return $user->getCollection(["ORDER" => "firstname ASC"]);
+        return $user->getCollection(["ORDER" => ['firstname' => 'ASC']]);
     }
 
     public function inGroup($name) {

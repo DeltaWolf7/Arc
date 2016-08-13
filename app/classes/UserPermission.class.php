@@ -41,8 +41,8 @@ class UserPermission extends DataProvider {
         parent::__construct();
         $this->groupid = 0;
         $this->permission = "";
-        $this->table = ARCDBPREFIX . "user_permissions";
-        $this->columns = ["id", "groupid", "permission"];
+        $this->table = ARCDBPREFIX . 'user_permissions';
+        $this->columns = ['id', 'groupid', 'permission'];
     }
 
     /**
@@ -71,7 +71,7 @@ class UserPermission extends DataProvider {
      */
     public static function getByGroupID($groupid) {
         $permission = new UserPermission();
-        return $permission->getCollection(["groupid" => $groupid]);
+        return $permission->getCollection(['groupid' => $groupid]);
     }
 
     /**
@@ -85,7 +85,7 @@ class UserPermission extends DataProvider {
     
     public static function getByID($id) {
         $permission = new UserPermission();
-        $permission->get(["id" => $id]);
+        $permission->get(['id' => $id]);
         return $permission;
     }
 }

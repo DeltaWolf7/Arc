@@ -32,26 +32,26 @@
 class Log extends DataProvider {
 
     public $message;
-    public $when;
+    public $event;
     public $type;
     public $module;
 
     public function __construct() {
         parent::__construct();
-        $this->when = date("y-m-d H:i:s");
+        $this->event = date("y-m-d H:i:s");
         $this->message = "";
-        $this->table = ARCDBPREFIX . "logs";
-        $this->columns = ["id", "type", "module", "when", "message"];
+        $this->table = ARCDBPREFIX . 'logs';
+        $this->columns = ['id', 'type', 'module', 'event', 'message'];
     }
 
     public static function getLogs() {
         $logs = new Log();
-        return $logs->getCollection(["ORDER" => "id DESC"]);
+        return $logs->getCollection(['ORDER' => ['id' => 'DESC']]);
     }
     
     public static function getPagination($limit = 50, $offset = 0) {
         $logs = new Log();
-        return $logs->getCollection(["ORDER" => "id DESC", "LIMIT" => [$offset, $limit]]);
+        return $logs->getCollection(['ORDER' => ['id' => 'DESC'], 'LIMIT' => [$offset, $limit]]);
     }
     
     public static function count() {
@@ -73,7 +73,7 @@ class Log extends DataProvider {
         
         // get days
         $days = SystemSetting::getByKey("ARC_KEEP_LOGS");    
-        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.when) > " . $days->value);
+        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.event) > " . $days->value);
     }
 
 }

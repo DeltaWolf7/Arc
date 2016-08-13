@@ -92,6 +92,6 @@ class SystemSetting extends DataProvider {
      */
     public static function getAll($userid = 0) {
         $settings = new SystemSetting();
-        return $settings->getCollection(["userid" => $userid, "ORDER" => "group ASC"]);
+        return $settings->getCollection(["userid" => $userid, "ORDER" => ['group' => 'ASC']]);
     }
 }
