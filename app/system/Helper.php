@@ -68,7 +68,7 @@ class Helper {
                     "password" => ARCDBPASSWORD,
                     'charset' => ARCCHARSET,
                     'option' => [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
         ]
                 ]);
             } else {
