@@ -36,7 +36,12 @@ class ArcDeskTicket extends DataProvider {
         $this->statusid = 0;
         $this->companyid = 0;
         $this->table = "arcdesk_tickets";
-        $this->columns = ["id", "created", "reference", "subject", "desciprtion", "requesterid", "due", "priorityid", "source", "type", "groupid", "agentid", "categoryid", "tags", "statusid", "companyid"];
+        $this->map = ["id" => "id", "created" => "created", "reference" => "reference", "subject" => "subject",
+            "description" => "description", "requesterid" => "requesterid", "due" => "due", "priorityid" => "priorityid",
+            "source" => "source", "type" => "type", "groupid" => "groupid", "agentid" => "agentid", "categoryid" => "categoryid",
+            "tags" => "tags", "statusid" => "statusid", "companyid" => "companyid"];
+        $this->columns = ["id", "created", "reference", "subject", "desciprtion", "requesterid", "due",
+            "priorityid", "source", "type", "groupid", "agentid", "categoryid", "tags", "statusid", "companyid"];
     }
 
     public static function getByStatus($statusid) {

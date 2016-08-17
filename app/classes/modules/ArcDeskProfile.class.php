@@ -20,6 +20,8 @@ class ArcDeskProfile extends DataProvider {
         $this->image = "";
         $this->jobrole = "";
         $this->table = "arcdesk_profile";
+        $this->map = ["id" => "id", "userid" => "userid", "phone" => "phone", "modile" => "modile",
+            "skillid" => "skillid", "xp" => "xp", "image" => "image", "jobrole" => "jobrole"];
         $this->columns = ["id", "userid", "phone", "mobile", "skillid", "xp", "image", "jobrole"];
     }
     

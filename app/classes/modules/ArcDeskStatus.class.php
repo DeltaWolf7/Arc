@@ -8,6 +8,7 @@ class ArcDeskStatus extends DataProvider {
         parent::__construct();
         $this->name = "";
         $this->columns = ["id", "name"];
+        $this->map = ["id" => "id", "name" => "name"];
         $this->table = "arcdesk_statuses";
     }
     

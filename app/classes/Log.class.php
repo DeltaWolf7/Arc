@@ -41,6 +41,7 @@ class Log extends DataProvider {
         $this->event = date("y-m-d H:i:s");
         $this->message = "";
         $this->table = ARCDBPREFIX . 'logs';
+        $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event", "message" => "message"];
         $this->columns = ['id', 'type', 'module', 'event', 'message'];
     }
 

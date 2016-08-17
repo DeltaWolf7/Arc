@@ -4,8 +4,8 @@
 
 CREATE TABLE IF NOT EXISTS `arc_system_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `key` varchar(100) NOT NULL,
-  `value` text NOT NULL,
+  `skey` varchar(100) NOT NULL,
+  `svalue` text NOT NULL,
   `userid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `key` (`key`)

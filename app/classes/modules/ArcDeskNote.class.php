@@ -15,6 +15,8 @@ class ArcDeskNote extends DataProvider {
         $this->internal = false;
         $this->createdby = 0;
         $this->note = "";
+        $this->map = ["id" => "id", "ticketid" => "ticketid", "created" => "created",
+            "internal" => "internal", "createdby" => "createdby", "note" => "note"];
         $this->columns = ["id", "ticketid", "created", "internal", "createdby", "note"];
         $this->table = "arcdesk_ticketnotes";
     }

@@ -14,6 +14,8 @@ class ArcDeskHistory extends DataProvider {
         $this->newstatus = 0;
         $this->changeid = 0;
         $this->table = "arcdesk_history";
+        $this->map = ["id" => "id", "created" => "created", "laststatus" => "laststatus",
+            "newstatus" => "newstatus", "changeid" => "changeid"];
         $this->columns = ["id", "created", "laststatus", "newstatus", "changeid"];
     }
 }

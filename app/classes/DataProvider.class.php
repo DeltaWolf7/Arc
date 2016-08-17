@@ -29,6 +29,7 @@ abstract class DataProvider {
     public $id;
     public $table;
     public $columns;
+    public $map;
 
     /**
      * DataProvider constructor
@@ -36,7 +37,8 @@ abstract class DataProvider {
     public function __construct() {
         $this->id = 0;
         $this->table = '';
-        $this->columns = array();
+        $this->columns = [];
+        $this->map = [];
     }
 
     /**
@@ -77,13 +79,10 @@ abstract class DataProvider {
      * Updates the data of an object in the database
      */
     public function update() {
-        $columns = array_slice($this->columns, 1);
-        $dataColumns = array();
+        $dataColumns = [];
         $properties = get_object_vars($this);
-        foreach ($columns as $column) {
-            if ($column != 'table' && $column != 'columns') {
-                $dataColumns[$column] = $properties[$column];
-            }
+        foreach ($this->map as $property => $column) {
+            $dataColumns[$column] = $properties[$property];
         }    
         if ($this->id == 0) {
             $this->id = system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
@@ -107,8 +106,10 @@ abstract class DataProvider {
      */
     protected function fill($data) {
         if (is_array($data)) {
-            foreach ($data as $property => $value) {
-                $this->$property = $value;
+            foreach ($this->map as $property => $column) {
+                if (!empty($data[$column])) {
+                    $this->$property = $data[$column];
+                }
             }
         }
     }

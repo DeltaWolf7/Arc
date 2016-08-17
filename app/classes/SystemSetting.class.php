@@ -44,7 +44,8 @@ class SystemSetting extends DataProvider {
         $this->value = "";
         $this->userid = 0;
         $this->table = ARCDBPREFIX . "system_settings";
-        $this->columns = ["id", "key", "value", "userid"];
+        $this->map = ["id" => "id", "key" => "skey", "value" => "svalue", "userid" => "userid"];
+        $this->columns = ["id", "skey", "svalue", "userid"];
     }
 
     /**
@@ -55,7 +56,7 @@ class SystemSetting extends DataProvider {
      */
     public static function getByKey($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["AND" => ["key" => $key, "userid" => $userid]]);
+        $setting->get(["AND" => ["skey" => $key, "userid" => $userid]]);
         // if no setting was found in the database, return empty setting with key.
         if (empty($setting->key)) {
             $setting->key = $key;
@@ -71,7 +72,7 @@ class SystemSetting extends DataProvider {
      */
     public static function keyExists($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["AND" => ["key" => $key, "userid" => $userid]]);
+        $setting->get(["AND" => ["skey" => $key, "userid" => $userid]]);
         if (empty($setting->key)) {
             return false;
         }
@@ -92,6 +93,6 @@ class SystemSetting extends DataProvider {
      */
     public static function getAll($userid = 0) {
         $settings = new SystemSetting();
-        return $settings->getCollection(["userid" => $userid, "ORDER" => ['group' => 'ASC']]);
+        return $settings->getCollection(["userid" => $userid]);
     }
 }

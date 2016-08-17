@@ -10,6 +10,7 @@ class ArcDeskPriority extends DataProvider {
         $this->name = "";
         $this->sortorder = 0;
         $this->table = "arcdesk_priority";
+        $this->map = ["id" => "id", "name" => "name", "sortorder" => "sortorder"];
         $this->columns = ["id", "name", "sortorder"];
     }
     

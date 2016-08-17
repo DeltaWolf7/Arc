@@ -19,6 +19,8 @@ class ArcRecGuest extends DataProvider {
         $this->phone = "";
         $this->title = "";
         $this->table = "arcrec_guests";
+        $this->map = ["id" => "id", "name" => "name", "image" => "image", "company" => "company",
+            "phone" => "phone", "title" => "title"];
         $this->columns = ["id", "name", "email", "image", "company", "phone", "title"];
     }
     

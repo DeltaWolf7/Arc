@@ -12,6 +12,7 @@ class ArcDeskCompany extends DataProvider {
         $this->members = "[]";
         $this->contacts = "[]";
         $this->table = "arcdesk_companies";
+        $this->map = ["id" => "id", "name" => "name", "members" => "members", "contacts" => "contacts"];
         $this->columns = ["id", "name", "members", "contacts"];
     }
     

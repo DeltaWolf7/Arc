@@ -40,6 +40,7 @@ class Company extends DataProvider {
         parent::__construct();
         $this->name = "";
         $this->table = ARCDBPREFIX . "companies";
+        $this->map = ["id" => "id", "name" => "name"];
         $this->columns = ["id", "name"];
     }
     

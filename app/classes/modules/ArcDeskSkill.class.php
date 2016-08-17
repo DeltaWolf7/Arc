@@ -12,6 +12,7 @@ class ArcDeskSkill extends DataProvider {
         $this->skill = "";
         $this->level = "";
         $this->table = "arcdesk_skillmatrix";
+        $this->map = ["id" => "id", "userid" => "userid", "skill" => "skill", "level" => "level"];
         $this->columns = ["id", "userid", "skill", "level"];
     }
 }

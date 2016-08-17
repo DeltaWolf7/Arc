@@ -61,6 +61,10 @@ class Page extends DataProvider {
         $this->hidefrommenu = false;
         $this->theme = "none";
         $this->table = ARCDBPREFIX . "pages";
+        $this->map = ["id" => "id", "title" => "title", "content" => "content",
+            "seourl" => "seourl", "metadescription" => "metadescription", "metakeywords" => "metakeywords",
+            "sortorder" => "sortorder", "iconclass" => "iconclass", "showtitle" => "showtitle",
+            "hideonlogin" => "hideonlogin", "hidefrommenu" => "hidefrommenu", "theme" => "theme"];
         $this->columns = ["id", "title", "content", "seourl", "metadescription",
             "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
             "hidefrommenu", "theme"];

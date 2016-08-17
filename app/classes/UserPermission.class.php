@@ -42,6 +42,7 @@ class UserPermission extends DataProvider {
         $this->groupid = 0;
         $this->permission = "";
         $this->table = ARCDBPREFIX . 'user_permissions';
+        $this->map = ["id" => "id", "groupid" => "groupid", "permission" => "permission"];
         $this->columns = ['id', 'groupid', 'permission'];
     }
 

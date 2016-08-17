@@ -14,6 +14,8 @@ class ArcRecEvent extends DataProvider {
         $this->guests = "[\"\"]";
         $this->eventdate = "";
         $this->table = "arcrec_events";
+        $this->map = ["id" => "id", "roomid" => "roomid", "hosts" => "hosts", "guests" => "guests",
+            "eventdate" => "eventdate"];
         $this->columns = ["id", "roomid", "hosts", "guests", "eventdate"];
     }
     
