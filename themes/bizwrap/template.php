@@ -24,9 +24,9 @@
                                     <a class="brand" href="{{arc:path}}"><img src="{{arc:sitelogo}}" alt=""></a> <!-- .topnav -->
                                     <div class="btn-toolbar topnav">
                                         <div class="btn-group">
-                                            <a id="changeSidebarPos" class="btn btn-default" rel="tooltip"
+                                            <a id="changeSidebarPos" class="btn btn-primary" rel="tooltip"
                                                data-original-title="Show / Hide Sidebar" data-placement="bottom">
-                                                <i class="fa fa-arrows-alt"></i>
+                                                <i class="fa fa-bars"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -108,7 +108,7 @@
 
                 <div class="clearfix"></div>
                 <div id="footer">
-                    <p>{{arc:version}}</p>
+                    <div class="muted text-right">{{arc:version}}</div>
                 </div>
 
                 {{arc:footer}}

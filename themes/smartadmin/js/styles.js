@@ -35,6 +35,4 @@ function arcNotification(data) {
         icon: "fa fa-" + icon + " shake animated",
         timeout: 6000
     });
-
-    e.preventDefault();
 }

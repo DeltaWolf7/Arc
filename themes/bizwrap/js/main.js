@@ -33,42 +33,13 @@ jQuery(document).ready(function($) {
 });
 
 function arcNotification(data) {
-    var title = "";
-    var colour = "";
-    var icon = "";
-
-    switch (data.messages.type) {
-        case "warning":
-            title = "Warning";
-            colour = "#C79121";
-            icon = "shield";
-            break;
-        case "danger":
-            title = "Error";
-            colour = "#C46A69";
-            icon = "warning";
-            break;
-        case "success":
-            title = "Success";
-            colour = "#739E73";
-            icon = "check";
-            break;
-        case "info":
-            title = "Information";
-            colour = "#3276B1";
-            icon = "bell";
-            break;
-            
+    var type = "success";
+    var title = "Success";
+    if (data.messages.type == "danger") {
+        type = "error";
+        title = "Error";
+    } else {
+        type = data.messages.type
     }
-
-    $.bigBox({
-        title: title,
-        content: data.messages.message,
-        color: colour,
-        //timeout: 6000,
-        icon: "fa fa-" + icon + " shake animated",
-        timeout: 6000
-    });
-
-    e.preventDefault();
+    swal(title, data.messages.message, type);
 }

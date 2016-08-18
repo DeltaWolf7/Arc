@@ -5,7 +5,7 @@ Meedoo                          1.1.2               http://medoo.in/
 jQuery                          3.1.0               https://jquery.com/
 Summernote                      0.8.1               http://summernote.org/
 Font Awesome                    4.6.3               http://fortawesome.github.io/Font-Awesome/
-Datepicker                      4.17.37             https://eonasdan.github.io/bootstrap-datetimepicker/
+Datepicker                      295db97 (18/08/16)  https://eonasdan.github.io/bootstrap-datetimepicker/
 Moment                          2.14.1              http://momentjs.com/
 PHPMailer                       5.2.16              https://github.com/PHPMailer/PHPMailer
 CodeMirror                      5.17.0              http://codemirror.net/
