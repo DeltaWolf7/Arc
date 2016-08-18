@@ -1044,7 +1044,8 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', en
     color:#fff;
 }
 .navbar .brand img {
-    height: 30px;
+    height: 40px;
+    padding-top: 5px;
 }
 #menu a .label {
     background:#2773ae;
