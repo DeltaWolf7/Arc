@@ -6,6 +6,7 @@ $("#loginBtn").click(function () {
 function login() {
     $("#email").prop("disabled", true);
     $("#password").prop("disabled", true);
+    $("#loginBtn").prop("disabled", true);
     arcAjaxRequest("arc/login", {email: $("#email").val(), password: $("#password").val()}, showMessage, success);
 }
 
@@ -23,6 +24,7 @@ function showMessage() {
     arcGetStatus();
     $("#email").prop("disabled", false);
     $("#password").prop("disabled", false);
+    $("#loginBtn").prop("disabled", false);
 }
 
 function cancelForgot() {
