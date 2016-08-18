@@ -11,17 +11,17 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 <div class="row">
     <div class="collapse in" id="collapseA">
         <div class="row">
-            <form id="loginForm">
+      
                 <div class="col-md-5 col-md-offset-1">
                     <h3>Sign in</h3>
                     <form name="loginForm">
                         <div class="form-group">
-                            <input maxlength="100" type="text" class="form-control" name="email" placeholder="<?php echo $login; ?>">
+                            <input maxlength="100" type="text" class="form-control" id="email" placeholder="<?php echo $login; ?>">
                         </div>
                         <div class="form-group">
-                            <input maxlength="100" type="password" class="form-control" name="password" placeholder="Password">
+                            <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password">
                         </div>
-                    </form>
+              
                 </div>
                 <div class="col-md-5">
                     <?php if ($reg->value == "true") { ?>
@@ -54,28 +54,28 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
     <div class="collapse" id="collapseB">
         <div class="col-md-6 col-md-offset-1">
             <h3>New user registration</h3>
-            <form id="registerForm">
+        
                 <div class="form-group">
-                    <input maxlength="50" type="text" class="form-control" name="firstname" placeholder="Firstname">
+                    <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="Firstname">
                 </div>
                 <div class="form-group">
-                    <input maxlength="50" type="text" class="form-control" name="lastname" placeholder="Lastname">
+                    <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Lastname">
                 </div>
                 <?php if ($company->value == "true") { ?>
                     <div class="form-group">
-                        <input maxlength="50" type="text" class="form-control" name="company" placeholder="Company">
+                        <input maxlength="50" type="text" class="form-control" id="company" placeholder="Company">
                     </div>
                 <?php } ?>
                 <div class="form-group">
-                    <input maxlength="100" type="email" class="form-control" name="emailr" placeholder="Email address">
+                    <input maxlength="100" type="email" class="form-control" id="emailr" placeholder="Email address">
                 </div>
                 <div class="form-group">
-                    <input maxlength="100" type="password" class="form-control" name="passwordr" placeholder="Password" autocomplete="off">
+                    <input maxlength="100" type="password" class="form-control" id="passwordr" placeholder="Password" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <input maxlength="100" type="password" class="form-control" name="passwordr2" placeholder="Retype password" autocomplete="off">
+                    <input maxlength="100" type="password" class="form-control" id="passwordr2" placeholder="Retype password" autocomplete="off">
                 </div>
-            </form>
+   
             <a id="registerBtn" class="btn btn-primary btn-block">Register</a>
             <a class="btn" onclick="switchView();">Already registered? Sign in</a>
         </div>
@@ -84,11 +84,11 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
     <div class="collapse" id="collapseC">
         <div class="col-md-6 col-md-offset-1">
             <h3>Forgot Password</h3>
-            <form id="resetForm">
+         
                 <div class="form-group">
-                    <input maxlength="100" type="email" class="form-control" name="emailf" placeholder="Email address">
+                    <input maxlength="100" type="email" class="form-control" id="emailf" placeholder="Email address">
                 </div>
-            </form>
+           
             <a id="sendReset" class="btn btn-primary btn-block">Request Reset</a>
             <a class="btn" id="forgotCancel">Cancel</a>
         </div>

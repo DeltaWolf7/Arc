@@ -73,7 +73,7 @@
                     <!-- #left -->
                     <div id="left">
                         <!-- .user-media -->
-                        
+                        {{module:bizwrap:user}}
                         <!-- /.user-media -->
                         <!-- #menu -->
                         {{arc:menu}}

@@ -4,7 +4,7 @@ $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
 
 $image = "<i class=\"fa fa-user fa-5x\"></i>";
 if (!empty($profileImage->value)) {
-    $image = "<img style=\"max-width: 100px;\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
+    $image = "<img class=\"img-thumbnail\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
 $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 $comp = Company::getByUser($user->id);

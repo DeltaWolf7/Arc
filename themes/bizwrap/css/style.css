@@ -151,7 +151,7 @@ body.padTop44 {
     display: block;
     float: left;
     position: relative;
-    width: 220px;
+    width: 180px;
 }
 #left .user-media {
     color: #000;
@@ -185,7 +185,7 @@ body.padTop44 {
 /* END #left div */
 /* BEGIN main content */
 #content {
-    margin-left: 220px;
+    margin-left: 180px;
     margin-right: 0;
     -webkit-transition: margin-left 0.4s;
     -moz-transition: margin-left 0.4s;

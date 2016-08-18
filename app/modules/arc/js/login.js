@@ -4,7 +4,9 @@ $("#loginBtn").click(function () {
 });
 
 function login() {
-    arcAjaxRequest("arc/login", $("#loginForm").serialize(), arcGetStatus, success);
+    $("#email").prop("disabled", true);
+    $("#password").prop("disabled", true);
+    arcAjaxRequest("arc/login", {email: $("#email").val(), password: $("#password").val()}, showMessage, success);
 }
 
 $("#btnForgot").click(function () {
@@ -17,6 +19,12 @@ $("#forgotCancel").click(function () {
     cancelForgot();
 });
 
+function showMessage() {
+    arcGetStatus();
+    $("#email").prop("disabled", false);
+    $("#password").prop("disabled", false);
+}
+
 function cancelForgot() {
     $('#collapseA').collapse('show');
     $('#collapseB').collapse('hide');
@@ -24,7 +32,7 @@ function cancelForgot() {
 }
 
 $("#sendReset").click(function () {
-    arcAjaxRequest("arc/reset", $("#resetForm").serialize(), arcGetStatus);
+    arcAjaxRequest("arc/reset", {emailf: $("#emailf").val()}, arcGetStatus);
     cancelForgot();
 });
 
@@ -52,12 +60,13 @@ function switchView() {
 
 // Register
 $("#registerBtn").click(function () {
-    arcAjaxRequest("arc/register", $("#registerForm").serialize(), arcGetStatus, success);
+    arcAjaxRequest("arc/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
+        company: $("#company").val(), emailr: $("#emailr").val(), passwordr: $("#passwordr").val(),
+    passwordr2: $("#passwordr2").val()}, arcGetStatus, success);
 });
 
-$("#loginForm input").keypress(function (e) {
+$("#password").keypress(function (e) {
     if (e.keyCode == 13) {
         login();
-        return false;
     }
 });
