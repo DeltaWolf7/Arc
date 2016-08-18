@@ -68,8 +68,8 @@ class Helper {
                     "password" => ARCDBPASSWORD,
                     'charset' => ARCCHARSET,
                     'option' => [
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-        ]
+                        \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+                    ]
                 ]);
             } else {
                 self::$arc["database"] = new \medoo([
@@ -259,7 +259,7 @@ class Helper {
     /**
      * Get the view based on the request
      */
-    private static function arcGetView() {  
+    private static function arcGetView() {
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
         $uri = $uri_parts[0];
         // set session if it exists.
@@ -398,30 +398,13 @@ class Helper {
                 $content = str_replace("{{arc:impersonate}}", "", $content);
             }
 
-            // site logo
-            $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
-            $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
-
             // body
             $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
-
-            // path
-            $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
-
-            // themepath
-            $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-
-            // version
-            $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
 
             // page icon
             $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
 
-            // meta
-            $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
-
-            // footer
-            $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
+            $content = self::arcProcessTags($content);
 
             echo $content;
         } else {
@@ -437,6 +420,16 @@ class Helper {
     }
 
     public static function arcParseEmail($content, $message) {
+        $content = self::arcProcessTags($content);
+
+        // email body
+        $content = str_replace("{{arc:emailcontent}}", $message, $content);
+
+        return $content;
+    }
+
+    private static function arcProcessTags($content) {
+
         // site logo
         $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
         $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
@@ -447,8 +440,14 @@ class Helper {
         // themepath
         $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
 
-        // email body
-        $content = str_replace("{{arc:emailcontent}}", $message, $content);
+        // version
+        $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
+
+        // meta
+        $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
+
+        // footer
+        $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
 
         return $content;
     }
@@ -747,6 +746,7 @@ class Helper {
             include_once self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php";
         }
 
+        ob_start();
         if (file_exists(self::arcGetThemePath(true) . "override/{$name}/{$view}.php")) {
             include_once self::arcGetThemePath(true) . "override/{$name}/{$view}.php";
         } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
@@ -755,6 +755,10 @@ class Helper {
             echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
             \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
         }
+        $newContent = ob_get_contents();
+        self::arcProcessTags($newContent);
+        ob_end_clean();
+        echo $newContent;
     }
 
     /**
@@ -841,11 +845,11 @@ class Helper {
      * @return string
      */
     public static function arcEncrypt($string) {
-        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;     
+        $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
         $encrypted = openssl_encrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $encrypted;
     }
-    
+
     /**
      * 
      * @param string String to decrypt
@@ -856,4 +860,5 @@ class Helper {
         $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $decrypted;
     }
+
 }
