@@ -3,7 +3,7 @@
     </table>
 </div>
 
-<div id="editorDiv">
+<div id="editorDiv" style="display: none;">
     <div class="row">
         <div class="col-md-6">
 

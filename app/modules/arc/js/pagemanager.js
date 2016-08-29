@@ -106,7 +106,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#editorDiv").hide();
+    
     getPages();
 });
 

@@ -24,7 +24,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
                 $log = str_replace("[", "<mark>[", $log);
                 $log = str_replace("]", "]</mark>", $log);
                 $log = str_replace("PHP Warning:", "<label class=\"label label-warning\">Warning</label><br />", $log);
-                $log = str_replace("PHP Error:", "<label class=\"label label-danger\">Error</label><br />", $log);
+                $log = str_replace("PHP Fatal error:", "<label class=\"label label-danger\">Error</label><br />", $log);
                 $log = str_replace("PHP Notice:", "<label class=\"label label-default\">Notice</label><br />", $log);
                 echo $log;
             } else {
