@@ -8,6 +8,6 @@ CREATE TABLE IF NOT EXISTS `arc_system_settings` (
   `svalue` text NOT NULL,
   `userid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `key` (`key`)
+  UNIQUE KEY `skey` (`skey`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
