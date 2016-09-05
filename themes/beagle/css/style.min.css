@@ -8150,7 +8150,6 @@ canvas {
 (-o-min-device-pixel-ratio:2/1),
 (min-resolution:192dpi) {
     .be-top-header .navbar-header .navbar-brand {
-        background-image: url(../img/logo-xx.png);
         background-size: 102px 27px
     }
 }
@@ -8405,14 +8404,14 @@ canvas {
 }
 
 .be-color-header .be-top-header .navbar-header .navbar-brand {
-    background-image: url(../img/logo-white.png)
+    
 }
 
 @media (-webkit-min-device-pixel-ratio:2),
 (-o-min-device-pixel-ratio:2/1),
 (min-resolution:192dpi) {
     .be-color-header .be-top-header .navbar-header .navbar-brand {
-        background-image: url(../img/logo-white-xx.png)
+       
     }
 }
 
@@ -11910,7 +11909,7 @@ li.L9 {
 }
 
 .be-error-404 .error-container .error-number {
-    background: url(../img/404-bg.png) center center no-repeat;
+    
     background-size: contain
 }
 
@@ -17020,7 +17019,7 @@ label {
 }
 
 .gritter-item-wrapper {
-    background: url(../lib/jquery.gritter/images/gritter-bg.png);
+    
     box-shadow: 0 0 4px rgba(0, 0, 0, .2)
 }
 
