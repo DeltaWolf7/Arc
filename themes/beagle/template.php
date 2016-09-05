@@ -10,11 +10,11 @@
       <nav class="navbar navbar-default navbar-fixed-top be-top-header">
         <div class="container-fluid">
             <div class="navbar-header"><a href="{{arc:path}}" class="navbar-brand"><img style="max-height: 55px; padding-top: 5px;" src="{{arc:sitelogo}}"></a></div>
-          <!--<div class="be-right-navbar">
-            <ul class="nav navbar-nav navbar-right be-icons-nav">
-              <li class="dropdown"><a href="#" role="button" aria-expanded="false" class="be-toggle-right-sidebar"><span class="fa fa-cog fa-2x"></span></a></li>
-            </ul>
-          </div>/-->
+            <div class="be-right-navbar">
+                <ul class="nav navbar-nav navbar-right be-user-nav">
+                    <li><a href="{{arc:path}}"><img class="img-responsive" style="padding-top: 5px;" src="{{arc:sitelogo}}"></a><li>
+                </ul>
+            </div>
         </div>
       </nav>
       <div class="be-left-sidebar">
@@ -37,30 +37,6 @@
           {{arc:content}}
         </div>
       </div>
-      <!--<nav class="be-right-sidebar">
-        <div class="sb-content">
-          <div class="tab-navigation">
-            <ul role="tablist" class="nav nav-tabs nav-justified">
-              <li role="presentation" class="active"><a href="#tab1" aria-controls="chat" role="tab" data-toggle="tab">tab 1</a></li>
-              <li role="presentation"><a href="#tab2" aria-controls="todo" role="tab" data-toggle="tab">tab 2</a></li>
-              <li role="presentation"><a href="#tab3" aria-controls="settings" role="tab" data-toggle="tab">tab 3</a></li>
-            </ul>
-          </div>
-          <div class="tab-panel">
-            <div class="tab-content">
-              <div id="tab1" role="tabpanel" class="tab-pane active">
-                tab 1                
-              </div>
-              <div id="tab2" role="tabpanel" class="tab-pane">
-                tab 2
-              </div>
-              <div id="tab3" role="tabpanel" class="tab-pan">
-                tab 3
-              </div>
-            </div>
-          </div>
-        </div>
-      </nav>/-->
     </div>
     {{arc:footer}}
   </body>

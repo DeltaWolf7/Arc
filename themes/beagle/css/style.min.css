@@ -8321,10 +8321,15 @@ canvas {
 }
 
 .be-top-header .be-right-navbar .navbar-nav {
-    background-color: transparent
+    background-color: transparent;
+    display: none;
 }
 
 @media (max-width:767px) {
+    .be-top-header .be-right-navbar .navbar-nav {
+        display: inline;
+    }
+    
     .be-top-header .be-right-navbar .navbar-nav>li.open>a,
     .be-top-header .be-right-navbar .navbar-nav>li.open>a:active,
     .be-top-header .be-right-navbar .navbar-nav>li.open>a:focus,
@@ -8344,12 +8349,10 @@ canvas {
         -webkit-justify-content: space-between;
         -ms-flex-pack: justify;
         justify-content: space-between;
-        border-bottom: 1px solid #4285f4;
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
-        background-color: #4285f4;
         z-index: 1030
     }
 }
