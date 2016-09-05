@@ -4,6 +4,7 @@ Bootstarp                       3.3.7               http://getbootstrap.com/
 Meedoo                          1.1.3               http://medoo.in/
 jQuery                          3.1.0               https://jquery.com/
 Summernote                      0.8.2               http://summernote.org/
+    - applied path patch to font in css ../fonts/summernote replaces font/summernote
 Font Awesome                    4.6.3               http://fortawesome.github.io/Font-Awesome/
 Datepicker                      4.17.42             https://eonasdan.github.io/bootstrap-datetimepicker/
 Moment                          2.14.1              http://momentjs.com/

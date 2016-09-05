@@ -749,6 +749,10 @@ class Helper {
         ob_start();
         if (file_exists(self::arcGetThemePath(true) . "override/{$name}/{$view}.php")) {
             include_once self::arcGetThemePath(true) . "override/{$name}/{$view}.php";
+            // allow override on controller
+            if (file_exists(self::arcGetThemePath(true) . "controller/override/{$name}/{$view}.php")) {
+                include_once self::arcGetThemePath(true) . "controller/override/{$name}/{$view}.php";
+            }
         } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
         } else {

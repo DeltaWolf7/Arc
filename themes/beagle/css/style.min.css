@@ -2758,94 +2758,6 @@ caption {
     color: #777
 }
 
-.table-hover>tbody>tr.active:hover>td,
-.table-hover>tbody>tr.active:hover>th,
-.table-hover>tbody>tr.danger:hover>td,
-.table-hover>tbody>tr.danger:hover>th,
-.table-hover>tbody>tr.info:hover>td,
-.table-hover>tbody>tr.info:hover>th,
-.table-hover>tbody>tr.success:hover>td,
-.table-hover>tbody>tr.success:hover>th,
-.table-hover>tbody>tr.warning:hover>td,
-.table-hover>tbody>tr.warning:hover>th,
-.table-hover>tbody>tr:hover>.active,
-.table-hover>tbody>tr:hover>.danger,
-.table-hover>tbody>tr:hover>.info,
-.table-hover>tbody>tr:hover>.success,
-.table-hover>tbody>tr:hover>.warning,
-.table-hover>tbody>tr>td.active:hover,
-.table-hover>tbody>tr>td.danger:hover,
-.table-hover>tbody>tr>td.info:hover,
-.table-hover>tbody>tr>td.success:hover,
-.table-hover>tbody>tr>td.warning:hover,
-.table-hover>tbody>tr>th.active:hover,
-.table-hover>tbody>tr>th.danger:hover,
-.table-hover>tbody>tr>th.info:hover,
-.table-hover>tbody>tr>th.success:hover,
-.table-hover>tbody>tr>th.warning:hover,
-.table>tbody>tr.active>td,
-.table>tbody>tr.active>th,
-.table>tbody>tr.danger>td,
-.table>tbody>tr.danger>th,
-.table>tbody>tr.info>td,
-.table>tbody>tr.info>th,
-.table>tbody>tr.success>td,
-.table>tbody>tr.success>th,
-.table>tbody>tr.warning>td,
-.table>tbody>tr.warning>th,
-.table>tbody>tr>td.active,
-.table>tbody>tr>td.danger,
-.table>tbody>tr>td.info,
-.table>tbody>tr>td.success,
-.table>tbody>tr>td.warning,
-.table>tbody>tr>th.active,
-.table>tbody>tr>th.danger,
-.table>tbody>tr>th.info,
-.table>tbody>tr>th.success,
-.table>tbody>tr>th.warning,
-.table>tfoot>tr.active>td,
-.table>tfoot>tr.active>th,
-.table>tfoot>tr.danger>td,
-.table>tfoot>tr.danger>th,
-.table>tfoot>tr.info>td,
-.table>tfoot>tr.info>th,
-.table>tfoot>tr.success>td,
-.table>tfoot>tr.success>th,
-.table>tfoot>tr.warning>td,
-.table>tfoot>tr.warning>th,
-.table>tfoot>tr>td.active,
-.table>tfoot>tr>td.danger,
-.table>tfoot>tr>td.info,
-.table>tfoot>tr>td.success,
-.table>tfoot>tr>td.warning,
-.table>tfoot>tr>th.active,
-.table>tfoot>tr>th.danger,
-.table>tfoot>tr>th.info,
-.table>tfoot>tr>th.success,
-.table>tfoot>tr>th.warning,
-.table>thead>tr.active>td,
-.table>thead>tr.active>th,
-.table>thead>tr.danger>td,
-.table>thead>tr.danger>th,
-.table>thead>tr.info>td,
-.table>thead>tr.info>th,
-.table>thead>tr.success>td,
-.table>thead>tr.success>th,
-.table>thead>tr.warning>td,
-.table>thead>tr.warning>th,
-.table>thead>tr>td.active,
-.table>thead>tr>td.danger,
-.table>thead>tr>td.info,
-.table>thead>tr>td.success,
-.table>thead>tr>td.warning,
-.table>thead>tr>th.active,
-.table>thead>tr>th.danger,
-.table>thead>tr>th.info,
-.table>thead>tr>th.success,
-.table>thead>tr>th.warning {
-    color: #fff
-}
-
 .table {
     width: 100%;
     max-width: 100%;
@@ -4002,8 +3914,7 @@ tbody.collapse.in {
     text-decoration: none;
     background-color: transparent;
     background-image: none;
-    filter: progid: DXImageTransform.Microsoft.gradient(enabled=false);
-    cursor: not-allowed;
+    cursor: not-allowed
 }
 
 .open>.dropdown-menu {
@@ -6278,17 +6189,17 @@ button.list-group-item-danger.active:hover {
 }
 
 .panel-default {
-    border-color: #ddd
+    border-color: #ddd;
 }
 
 .panel-default>.panel-heading {
     color: #333;
     background-color: transparent;
-    border-color: #ddd
+    border-color: #ddd;
 }
 
 .panel-default>.panel-heading+.panel-collapse>.panel-body {
-    border-top-color: #ddd
+    border-top-color: #ddd;
 }
 
 .panel-default>.panel-heading .badge {
@@ -6616,7 +6527,7 @@ button.close {
 
 .be-wrapper,
 html {
-    overflow-x: hidden
+    overflow-x: hidden;
 }
 
 @media (min-width:768px) {
@@ -7002,7 +6913,6 @@ html {
     background-image: -o-linear-gradient(left, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, .0001) 100%);
     background-image: linear-gradient(to right, rgba(0, 0, 0, .5) 0, rgba(0, 0, 0, .0001) 100%);
     background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1)
 }
 
 .carousel-control.right {
@@ -7012,7 +6922,6 @@ html {
     background-image: -o-linear-gradient(left, rgba(0, 0, 0, .0001) 0, rgba(0, 0, 0, .5) 100%);
     background-image: linear-gradient(to right, rgba(0, 0, 0, .0001) 0, rgba(0, 0, 0, .5) 100%);
     background-repeat: repeat-x;
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1)
 }
 
 .carousel-control:focus,
@@ -8449,7 +8358,7 @@ canvas {
     .be-top-header .be-toggle-right-sidebar {
         margin-right: 0;
         padding-left: 5px;
-        padding-right: 9px
+        padding-right: 9px;
     }
 }
 
@@ -8568,7 +8477,7 @@ canvas {
 }
 
 .be-icons-nav>li.dropdown>a {
-    padding: 0 10px
+    margin-top: 10px;
 }
 
 .be-icons-nav>li.dropdown>a .icon {
@@ -9468,7 +9377,7 @@ canvas {
 
 .be-right-sidebar {
     background-color: #FAFAFA;
-    margin-top: 61px;
+    margin-top: 71px;
     padding-bottom: 61px;
     position: fixed;
     width: 290px;
@@ -15150,10 +15059,9 @@ fieldset[disabled] .btn-color.btn-evernote:hover {
 .panel-heading {
     font-size: 18px;
     font-weight: 300;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 10;
+    padding-right: 10;
     padding-bottom: 10px;
-    margin: 0 20px;
     border-bottom-width: 0;
     border-radius: 3px 3px 0 0
 }
@@ -16699,7 +16607,6 @@ a.text-danger:hover {
 }
 
 label {
-    font-weight: 400;
     font-size: 13px;
     margin-bottom: 8px;
     color: #666
@@ -16993,7 +16900,8 @@ label {
 }
 
 .input-group-btn .btn {
-    height: 48px
+    height: 48px;
+    padding-top: 10px;
 }
 
 .input-lg {

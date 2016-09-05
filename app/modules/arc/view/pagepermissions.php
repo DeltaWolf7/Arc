@@ -1,4 +1,8 @@
-<div id="data" class="table-responsive">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div id="data" class="table-responsive">
+        </div>
+    </div>
 </div>
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
