@@ -14,10 +14,18 @@ $("#btnRegsiter").click(function () {
 });
 
 $("#cancelBtn").click(function () {
+    resetLogin();
+});
+
+$("#cancelBtn2").click(function () {
+    resetLogin();
+});
+
+function resetLogin() {
     $("#loginDiv").show();
     $("#forgotDiv").hide();
     $("#registerDiv").hide();
-});
+}
 
 $("#btnForgot").click(function () {
     $("#loginDiv").hide();
@@ -25,8 +33,6 @@ $("#btnForgot").click(function () {
     $("#registerDiv").hide();
 });
 
-$("#sendReset").click(function() {
-    $("#loginDiv").show();
-    $("#forgotDiv").hide();
-    $("#registerDiv").hide();
+$("#sendReset").click(function () {
+    resetLogin();
 });

@@ -48,14 +48,9 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input maxlength="100" type="password" class="form-control" id="passwordr2" placeholder="Retype password" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <a id="registerBtn" class="btn btn-primary btn-xl btn-block">Register</a>
-                                </div>
-                                <div class="col-md-6">
-                                    <a class="btn btn-danger btn-xl btn-block" id="cancelBtn">Cancel</a>
-                                </div>
-                            </div>
+                            <a id="registerBtn" class="btn btn-primary btn-xl">Register</a>
+                            <br /><br />
+                            <a class="btn btn-danger btn-xl" id="cancelBtn">Cancel</a>
                         </div>
                     </div>
                     <div class="panel-body" id="forgotDiv" style="display: none;">
@@ -63,7 +58,8 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input id="emailf" type="text" placeholder="Email Address" autocomplete="off" class="form-control">
                         </div>
                         <div class="form-group login-submit">
-                            <a id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</a>
+                            <a id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</a><br /><br />
+                            <a class="btn btn-danger btn-xl" id="cancelBtn2">Cancel</a>
                         </div>
                     </div>
                 </div>
