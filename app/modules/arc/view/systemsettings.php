@@ -522,5 +522,5 @@
 </div>
 
 <div class="text-right">
-    <a class="btn btn-primary" onclick="saveSystem()"><i class="fa fa-save"></i> Save</a>
+    <a id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
 </div>

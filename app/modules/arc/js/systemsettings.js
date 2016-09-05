@@ -1,4 +1,4 @@
-function saveSystem() {
+$("#btnSaveSettings").click(function () {
     arcAjaxRequest("arc/systemsettingsupdate", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
         domain: $("#ldapDomain").val(), base: $("#ldapBase").val(), smtp: $("#useSMTP").val(),
         smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
@@ -7,7 +7,7 @@ function saveSystem() {
         limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val(),
         siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val(),
         company: $("#company").val()}, arcGetStatus);
-}
+});
 
 function updateEmail() {
     if ($("#useSMTP").val() == "false") {
