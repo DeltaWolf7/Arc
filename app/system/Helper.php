@@ -799,7 +799,7 @@ class Helper {
             } elseif (!isset($split[4]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
                 self::arcReturnJSON(["error" => "Invalid API method request"]);
                 \Log::createLog("danger", "API", "Invalid API method request");
-            } elseif (isset($value) && $key->value == $value) {
+            } elseif ($key->value != $_GET["key"]) {
                 self::arcReturnJSON(["error" => "Invalid API key"]);
                 \Log::createLog("danger", "API", "Invalid API key");
             } else {
