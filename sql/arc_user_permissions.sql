@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `arc_user_permissions` (
   `groupid` int(11) NOT NULL,
   `permission` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `arc_user_permissions`
@@ -23,4 +23,5 @@ INSERT INTO `arc_user_permissions` (`id`, `groupid`, `permission`) VALUES
 (8, 1, 'administration/permissions'),
 (9, 1, 'administration/logs'),
 (10, 1, 'administration/settings'),
-(11, 1, 'administration/users');
+(11, 1, 'administration/users'),
+(12, 1, 'administration/media-manager');

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `arc_pages` (
   `hidefrommenu` tinyint(4) NOT NULL,
   `theme` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `arc_pages`
@@ -32,5 +32,6 @@ INSERT INTO `arc_pages` (`id`, `title`, `content`, `seourl`, `metadescription`, 
 (8, 'Page Permissions', '&lt;p&gt;{{module:arc:pagepermissions}}&lt;br&gt;&lt;/p&gt;', 'administration/permissions', '', '', 0, '', 1, 0, 0, 'none'),
 (9, 'System Logs', '&lt;p&gt;{{module:arc:logviewer}}&lt;br&gt;&lt;/p&gt;', 'administration/logs', '', '', 0, '', 1, 0, 0, 'none'),
 (10, 'System Settings', '&lt;p&gt;{{module:arc:systemsettings}}&lt;br&gt;&lt;/p&gt;', 'administration/settings', '', '', 0, '', 1, 0, 0, 'none'),
-(11, 'User Management', '&lt;p&gt;{{module:arc:users}}&lt;br&gt;&lt;/p&gt;', 'administration/users', '', '', 0, '', 1, 0, 0, 'none');
+(11, 'User Management', '&lt;p&gt;{{module:arc:users}}&lt;br&gt;&lt;/p&gt;', 'administration/users', '', '', 0, '', 1, 0, 0, 'none'),
+(12, 'Media Manager', '&lt;p&gt;{{module:arc:mediamanager}}&lt;br&gt;&lt;/p&gt;', 'administration/media-manager', '', '', 0, '', 0, 0, 0, 'blankcanvas');
 
