@@ -6,7 +6,7 @@ $("#btnSaveSettings").click(function () {
         loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
         limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val(),
         siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val(),
-        company: $("#company").val()}, arcGetStatus);
+        company: $("#company").val(), siteTitle: $("#siteTitle").val(), media: $("#mediaManagerURL").val()}, arcGetStatus);
 });
 
 function updateEmail() {
@@ -38,4 +38,8 @@ function updateLDAP() {
 $(document).ready(function () {
     updateEmail();
     updateLDAP();
+});
+
+$("#btnMediaManager").click(function() {
+   $("#mediaManager").modal("show"); 
 });

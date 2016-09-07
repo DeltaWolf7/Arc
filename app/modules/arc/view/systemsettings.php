@@ -35,6 +35,23 @@
         <!-- Style /-->
         <fieldset>
             <legend>Style</legend>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="siteTitle">Site Title</label>
+                        <input id="siteTitle" type="text" class="form-control" placeholder="Arc Project" value="<?php echo $title->value; ?>">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">      
+                        <div class="panel-body">
+                            <i class="fa fa-info-circle"></i> The title used for all site and email branding.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -68,7 +85,10 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="siteLogo">Site Logo</label>
-                        <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
+                        <div class="input-group">
+                            <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
+                            <i class="input-group-addon"><a class="clickable" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></a></i>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -178,6 +198,37 @@
                     <div class="panel panel-default">            
                         <div class="panel-body">
                             <i class="fa fa-info-circle"></i> The formatting of the time based on standard PHP time formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset> 
+
+        <!-- Media Manager /-->
+        <fieldset>
+            <legend>Media Manager</legend>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="mediaManagerURL">Media Manager URL </label>
+                        <select id="mediaManagerURL" class="form-control">
+                            <?php
+                            $pages = Page::getAllPages();
+                            foreach ($pages as $page) {
+                                echo "<option";
+                                if ($media->value == $page->seourl) {
+                                    echo " selected";
+                                }
+                                echo ">{$page->seourl}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">              
+                        <div class="panel-body">
+                            <i class="fa fa-info-circle"></i> The formatting of the date based on standard PHP date formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
                         </div>
                     </div>
                 </div>
@@ -524,3 +575,21 @@
 <div class="text-right">
     <a id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
 </div>
+
+
+<div class="modal fade" id="mediaManager" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Media Manager</h4>
+            </div>
+            <div class="modal-body">
+                <iframe style="width: 100%; height: 500px; border: 0;" src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#contentViewer').html('');">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

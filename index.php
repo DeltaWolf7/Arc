@@ -108,6 +108,8 @@ system\Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48.png");
 system\Helper::arcCheckSettingExists("ARC_DATEFORMAT", "d-m-Y");
 system\Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
 system\Helper::arcCheckSettingExists("ARC_REQUIRECOMPANY", false);
+system\Helper::arcCheckSettingExists("ARC_SITETITLE", "Arc Project");
+system\Helper::arcCheckSettingExists("ARC_MEDIAMANAGERURL", "administration/media-manager");
 
 // Get content
 system\Helper::GetContent();

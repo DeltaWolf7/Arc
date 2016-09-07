@@ -85,7 +85,7 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/arc.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/codemirror/codemirror.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/codemirror/xml.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
@@ -94,7 +94,7 @@ class Helper {
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/arc.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/codemirror/codemirror.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/codemirror/monokai.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
@@ -433,6 +433,10 @@ class Helper {
         // site logo
         $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
         $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
+        
+        // site title
+        $title = \SystemSetting::getByKey("ARC_SITETITLE");
+        $content = str_replace("{{arc:sitetitle}}", $title->value, $content);
 
         // path
         $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);

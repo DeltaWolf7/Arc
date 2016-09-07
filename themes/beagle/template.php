@@ -34,6 +34,7 @@
           {{module:beagle:breadcrumb}}
         </div>
         <div class="main-content">
+            {{arc:impersonate}}
           {{arc:content}}
         </div>
       </div>

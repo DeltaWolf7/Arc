@@ -49,18 +49,51 @@ function createFolder() {
     arcAjaxRequest("arc/mediamanagercreate", {path: path, name: $("#folderName").val()}, uploadComplete, null);
 }
 
-function getLink() {
-    var data = JSON.stringify(marked);
-    arcAjaxRequest("arc/mediamanagergetlink", {items: data}, null, getLinkComplete);
+function copyToClipboard(data) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(data).select();
+    document.execCommand("copy");
+    $temp.remove();
+    var message = {messages: {type: "primary", message: "Link copied to clipboard\n\r" + data}};
+    arcNotification(message);
 }
 
-function getLinkComplete(data) {
-    var jdata = arcGetJson(data);
-    if (typeof (getLinkText) == "function") {
-        getLinkText(jdata.links);
-    } else {
-        $("#linkText").val(jdata.links);
-        $("#getLinkModal").modal('show');
-        console.log("Implement a getLinkText function to capture links.");
+function viewFile(file, type, size, date) {
+    $("#fileViewerModal").modal("show");
+    var data = type.split("/");
+    var header = "<div class=\"panel panel-default\"><div class=\"panel-body\">"
+            + "Path: <a href=\"" + file + "\">" + file + "</a><br />"
+            + "Type: " + type + "<br />"
+            + "Size: " + size + "<br />"
+            + "Date/Time: " + date + "<br />"
+            + "Download: <a href=\"" + file + "\"><i class=\"fa fa-download\"></i></a>"
+            + "</div></div>";
+    var content = "";
+    switch (data[0]) {
+        case "image":
+            content = "<img class='img-responsive' src='" + file + "' />";
+            break;
+        case "text":
+            jQuery.get(file, function (txt) {
+                content = "<textarea class='form-control' rows='20'>" + txt + "</textarea>";
+            });
+            break;
+        case "video":
+            content = "<video controls>"
+                    + "<source src='" + file + "' type='" + type + "'>"
+                    + "Your browser does not support the video tag."
+                    + "</video>";
+            break;
+        case "audio":
+            content = "<audio controls>"
+                    + "<source src='" + file + "' type='" + type + "'>"
+                    + "Your browser does not support the audio tag."
+                    + "</audio>";
+            break;
+        default:
+            content = "<div class=\"alert alert-info\">Unable to display this file type</div>"
+            break;
     }
+    $("#contentViewer").html(content + header);
 }

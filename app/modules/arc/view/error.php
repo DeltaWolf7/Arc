@@ -2,7 +2,7 @@
 <div class="jumbotron">
     <p><i class="fa fa-warning"></i> 
         <?php
-        Log::createLog("danger", "error", "Error (" . system\Helper::arcGetPostData("error") . "): " . system\Helper::arcGetPostData("path"));
+        
 
         switch (system\Helper::arcGetPostData("error")) {
             case "404":

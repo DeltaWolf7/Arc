@@ -58,5 +58,13 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = $_POST["company"];
     $setting->update();
     
+    $setting = SystemSetting::getByKey("ARC_SITETITLE");
+    $setting->value = $_POST["siteTitle"];
+    $setting->update();
+    
+    $setting = SystemSetting::getByKey("ARC_MEDIAMANAGERURL");
+    $setting->value = $_POST["media"];
+    $setting->update();
+    
     system\Helper::arcAddMessage("success", "System settings saved.");
 }

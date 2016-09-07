@@ -1,7 +1,17 @@
 function arcNotification(data) {
-    var title = "Success";
-    if (data.messages.type == "danger") {
-        title = "Error";
+    switch (data.messages.type) {
+        case "danger":
+            title = "Error";
+            break;
+        case "primary":
+            title = "Information";
+            break;
+        case "warning":
+            title = "Warning";
+            break;
+        default:
+            title = "Success";
+            break;
     }
 
     $.gritter.add({

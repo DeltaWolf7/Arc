@@ -17,7 +17,7 @@ canvas {
 .navbar-fixed-top .navbar-collapse,
 .pre-scrollable {
     max-height: 340px
-}
+}i
 
 .invisible,
 .modal-container {
@@ -5513,7 +5513,7 @@ a.thumbnail:hover {
 .alert-info {
     background-color: #d9edf7;
     border-color: #bce8f1;
-    color: #fff
+    color: #000
 }
 
 .alert-info hr {
@@ -11849,7 +11849,8 @@ li.L9 {
     font-weight: 700;
     line-height: 240px;
     margin-bottom: 30px;
-    max-height: 240px
+    max-height: 240px;
+    background: url("../images/404-bg.png") no-repeat center center;
 }
 
 .be-error .error-number:after {
@@ -19798,4 +19799,9 @@ fieldset[disabled] .full-calendar .fc-button:hover {
     .lg-mb-0 {
         margin-bottom: 0!important
     }
+}
+
+/* file manager display fix */
+#contentViewer {
+    margin-bottom: -40px;
 }
