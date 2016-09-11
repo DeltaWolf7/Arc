@@ -20,7 +20,7 @@
                         <div class="col-md-4">
                             <!-- Logo section -->
                             <div class="logo">
-                                <h1><a href="{{arc:path}}"><img src="{{arc:sitelogo}}" alt=""></a> Arc project</h1>
+                                <h1><a href="{{arc:path}}"><img src="{{arc:sitelogo}}" alt=""></a></h1>
                             </div>
                         </div>
                         <div class="col-md-8">

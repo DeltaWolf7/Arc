@@ -104,7 +104,7 @@ system\Helper::arcCheckSettingExists("ARC_APIKEY", md5(microtime() . rand()));
 system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
                 . "Your new password is '{password}'."));
 system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
-system\Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48.png");
+system\Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48-dark.png");
 system\Helper::arcCheckSettingExists("ARC_DATEFORMAT", "d-m-Y");
 system\Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
 system\Helper::arcCheckSettingExists("ARC_REQUIRECOMPANY", false);
