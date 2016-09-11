@@ -9,5 +9,8 @@ CREATE TABLE IF NOT EXISTS `arc_system_settings` (
   `userid` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `skey` (`skey`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+INSERT INTO `arc_system_settings` (`id`, `skey`, `svalue`, `userid`) VALUES
+(1, 'ARC_KEEP_LOGS', '31', 0);
 
