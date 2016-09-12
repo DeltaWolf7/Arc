@@ -552,22 +552,53 @@
         <!-- API Key /-->
         <fieldset>
             <legend>API</legend>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="apiKey">Key</label>
-                        <input id="apiKey" type="text" class="form-control" value="<?php echo $apikey->value ?>" disabled>
-                    </div>
+
+            <div class="panel panel-default">     
+                <div class="panel-body">
+                    <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing 3rd party access to the API’s provided by Arc and its modules.<br />
+                    RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
                 </div>
-                <div class="col-md-8">
-                    <div class="panel panel-default">     
-                        <div class="panel-body">
-                            <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing 3rd party access to the API’s provided by Arc and its modules.<br />
-                            RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
-                        </div>
+            </div>
+
+            <div class="panel panel-default">     
+                <div class="panel-body">
+                    <div class="table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr><th>User</th><th>Key</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="apiKeys">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
+
+            <div class="panel panel-default">     
+                <div class="panel-body">
+                    <label for="apiuser">Add user</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <select class="form-control" id="apiuser">
+                                <?php
+                                $users = User::getAllUsers();
+                                foreach ($users as $user) {
+                                    $apikey = SystemSetting::getByKey("APIKEY", $user->id);
+                                    if ($apikey->id == 0) {
+                                        echo "<option value=\"{$user->id}\">{$user->getFullname()} ({$user->email})</option>";
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn btn-default btn-block" id="createAPI"><i class="fa fa-plus"></i> Create API key</a>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
         </fieldset>        
     </div>
 </div>

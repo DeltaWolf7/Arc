@@ -38,8 +38,26 @@ function updateLDAP() {
 $(document).ready(function () {
     updateEmail();
     updateLDAP();
+    getApikeys();
 });
 
-$("#btnMediaManager").click(function() {
-   $("#mediaManager").modal("show"); 
+$("#btnMediaManager").click(function () {
+    $("#mediaManager").modal("show");
+});
+
+function getApikeys() {
+    arcAjaxRequest("arc/systemsettingsgetapi", {}, null, displayKeys);
+}
+
+function displayKeys(data) {
+    var jdata = arcGetJson(data);
+    $("#apiKeys").html(jdata.html);
+}
+
+function removeApiKey(userid) {
+    arcAjaxRequest("arc/systemsettingsremoveapi", {userid: userid}, getApikeys);
+}
+
+$("#createAPI").click(function() {
+    arcAjaxRequest("arc/systemsettingscreateapi", {userid: $("#apiuser").val()}, getApikeys);
 });
