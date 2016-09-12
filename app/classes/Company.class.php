@@ -43,31 +43,36 @@ class Company extends DataProvider {
         $this->map = ["id" => "id", "name" => "name"];
         $this->columns = ["id", "name"];
     }
-    
+
     public static function getByName($name) {
         $company = new Company();
         $company->get(["name" => $name]);
         return $company;
     }
-    
+
     public static function getByID($id) {
         $company = new Company();
         $company->get(["id" => $id]);
         return $company;
     }
-    
-    public static function getByUser($id) {
-        $setting = SystemSetting::getByKey("ARC_COMPANY", $id);
-        $company = null;
-        if ($setting->id > 0) {
-            $company = new Company();
-            $company->getByID($setting->value);
+
+    public function getUsers() {
+        $users = User::getAllUsers();
+        $found = [];
+        foreach ($users as $user) {
+            $companies = $user->getCompanies();
+            foreach ($companies as $company) {
+                if ($company->id == $this->id) {
+                    $found[] = $user;
+                }
+            }
         }
-        return $company;
+        return $found;
     }
-    
+
     public static function getAll() {
         $company = new Company();
         return $company->getCollection(["ORDER" => ['name' => 'ASC']]);
     }
+
 }

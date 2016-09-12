@@ -7,7 +7,6 @@ if (!empty($profileImage->value)) {
     $image = "<img class=\"img-responsive img-thumbnail\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
 $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
-$comp = Company::getByUser($user->id);
 ?>
 
 <div class="panel panel-default">
@@ -24,17 +23,16 @@ $comp = Company::getByUser($user->id);
                         <input type="lastname" class="form-control" name="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
                     </div>
                     <?php if ($company->value == "true") { ?>
-                        <label for="company">Company</label>
+                        <label for="company">Company Association(s)</label>
                         <div class="form-group">
-                            <input maxlength="50" type="text" class="form-control" name="company" placeholder="" <?php
-                            if ($company->value == false) {
-                                echo "readonly=\"true\"";
-                            }
-                            ?> value="<?php
-                                   if ($comp != null) {
-                                       echo $comp->name;
-                                   }
-                                   ?>">
+                            <ul class="list-group">
+                            <?php
+                                $companies = $user->getCompanies();
+                                foreach ($companies as $company) {
+                                    echo "<li class=\"list-group-item\">{$company->name}</li>";
+                                }
+                            ?>
+                            </ul>
                         </div>
                     <?php } ?>
                     <div class="form-group">

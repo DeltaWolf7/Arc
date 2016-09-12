@@ -42,9 +42,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             $comp->update();
         }
         
-        $compsetting = SystemSetting::getByKey("ARC_COMPANY", $user->id);
-        $compsetting->value = $comp->id;
-        $compsetting->update();
+        $user->addToCompany($comp->id);
     }
 
     if ($_POST["enabled"] == "true") {

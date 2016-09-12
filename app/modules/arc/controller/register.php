@@ -51,6 +51,8 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
     $user->setPassword($_POST["passwordr"]);
+    
+    // save user
     $user->update();
     
     $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
@@ -62,11 +64,9 @@ if (system\Helper::arcIsAjaxRequest()) {
             $comp->update();
         }
         
-        $compsetting = SystemSetting::getByKey("ARC_COMPANY", $user->id);
-        $compsetting->value = $comp->id;
-        $compsetting->update();
+        $user->addToCompany($comp->id);
     }
-
+    
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Your details have been registered");
 

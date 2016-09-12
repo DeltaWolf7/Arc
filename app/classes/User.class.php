@@ -38,6 +38,7 @@ class User extends DataProvider {
     public $created;
     public $enabled;
     public $groups;
+    public $company;
 
     /**
      * User constructor
@@ -50,13 +51,14 @@ class User extends DataProvider {
         $this->enabled = true;
         $this->passwordhash = "";
         $this->groups = "[\"Users\"]";
+        $this->company = "[\"\"]";
         $this->created = date("y-m-d H:i:s");
         $this->table = ARCDBPREFIX . "users";
         $this->map = ["id" => "id", "firstname" => "firstname", "lastname" => "lastname",
             "email" => "email", "passwordhash" => "passwordhash", "created" => "created",
-            "enabled" => "enabled", "groups" => "groups"];
+            "enabled" => "enabled", "groups" => "groups", "company" => "company"];
         $this->columns = ["id", "firstname", "lastname", "email", "passwordhash", "created",
-            "enabled", "groups"];
+            "enabled", "groups", "company"];
     }
 
     /**
@@ -175,5 +177,37 @@ class User extends DataProvider {
     public function getFullname() {
         return $this->firstname . " " . $this->lastname;
     }
+    
+    public function getCompanies() {
+        $companies = json_decode($this->company);
+        $comp = [];
+        foreach ($companies as $company) {
+            $comp[] = Company::getByID($company);
+        }
+        return $comp;
+    }
+    
+    public function addToCompany($id) {
+        $companies = json_decode($this->company);
+        foreach ($companies as $company) {
+            if ($company == $id) {
+                return;
+            }
+        }
+        $companies[] = $id;
+        $this->company = json_encode($companies);
+        $this->update();
+    }
 
+    public function removeFromCompany($id) {
+        $companies = json_decode($this->company);
+        $newComps = [];
+        for ($i = 0; $i < count($companies); $i++) {
+            if ($companies[$i] != $id) {
+                $newComps[] = $companies[$i];
+            }
+        }
+        $this->company = json_encode($newComps);
+        $this->update();
+    }
 }
