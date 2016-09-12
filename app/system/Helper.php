@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.8";
+        self::$arc["version"] = "0.4.0.10";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
