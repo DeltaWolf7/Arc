@@ -9,8 +9,12 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "</div>";
 
     $count = Log::count();
+    $pageNo = 0;
+    if (isset($_POST["page"])) {
+        $pageNo = $_POST["page"];
+    }
     $noPages = $count / 50;
-    $logs = Log::getPagination(50, $_POST["page"] * 50);
+    $logs = Log::getPagination(50, $pageNo * 50);
 
     foreach ($logs as $log) {
         $html .= "<div class=\"row\">"
@@ -38,13 +42,13 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $html .= "<nav aria-label=\"...\">"
             . "<ul class=\"pager\">";
-    if ($_POST["page"] != 0) {
-        $lastPage = $_POST['page'] - 1;
+    if ($pageNo != 0) {
+        $lastPage = $pageNo - 1;
         $html .= "<li><a onclick=\"getLogs({$lastPage})\">Previous</a></li>";
     }
 
-    if ($_POST["page"] < $noPages - 1) {
-        $nextPage = $_POST["page"] + 1;
+    if ($pageNo < $noPages - 1) {
+        $nextPage = $pageNo + 1;
         $html .= "<li><a onclick=\"getLogs({$nextPage})\">Next</a></li>";
     }
     $html .= "</ul>"
