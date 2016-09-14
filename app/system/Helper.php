@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.10";
+        self::$arc["version"] = "0.4.0.11";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -86,19 +86,11 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/codemirror/codemirror.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/codemirror/xml.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/summernote.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-datetimepicker.min.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/codemirror/codemirror.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/codemirror/monokai.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/summernote.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-datetimepicker.min.css");
 
         // Get POST data
         self::$arc["post"] = [];
