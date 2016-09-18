@@ -85,11 +85,14 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-tagsinput.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/awesome-bootstrap-checkbox.css");
+        self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-tagsinput.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 
         // Get POST data

@@ -10,3 +10,7 @@ Datepicker                      4.17.42             https://eonasdan.github.io/b
 Moment                          2.14.1              http://momentjs.com/
 PHPMailer                       5.2.16              https://github.com/PHPMailer/PHPMailer
 CodeMirror                      5.18.2              http://codemirror.net/
+Awesome Bootstrap Checkbox      1.0.0 alpha         https://github.com/flatlogic/awesome-bootstrap-checkbox
+    - applied replace abc- with null to force overwrite of Bootstrap
+Bootstrap Tags Input            0.8.0               http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
+    - changed css for styling and js to insert form-control

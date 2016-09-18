@@ -4,17 +4,17 @@
 
 CREATE TABLE IF NOT EXISTS `arc_pages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(200) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `seourl` varchar(100) NOT NULL,
-  `metadescription` varchar(160) NOT NULL,
-  `metakeywords` varchar(69) NOT NULL,
+  `seourl` varchar(255) NOT NULL,
+  `metadescription` varchar(255) NOT NULL,
+  `metakeywords` varchar(255) NOT NULL,
   `sortorder` int(11) NOT NULL,
-  `iconclass` varchar(20) NOT NULL,
+  `iconclass` varchar(50) NOT NULL,
   `showtitle` tinyint(4) NOT NULL,
   `hideonlogin` tinyint(4) NOT NULL,
   `hidefrommenu` tinyint(4) NOT NULL,
-  `theme` varchar(50) NOT NULL,
+  `theme` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
