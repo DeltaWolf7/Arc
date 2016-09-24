@@ -1,12 +1,11 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<div class=\"row\">"
-            . "<div class=\"col-md-1\"><strong>Type</strong></div>"
-            . "<div class=\"col-md-1\"><strong>Module</strong></div>"
-            . "<div class=\"col-md-2\"><strong>When</strong></div>"
-            . "<div class=\"col-md-8\"><strong>Message</strong></div>"
-            . "</div>";
+    $html = "<table class=\"table table-responsive table-striped\">"
+            . "<thead><tr><th>Type</th>"
+            . "<th>Module</th>"
+            . "<th>When</th>"
+            . "<th>Message</th></tr></thead><tbody>";
 
     $count = Log::count();
     $pageNo = 0;
@@ -17,8 +16,8 @@ if (system\Helper::arcIsAjaxRequest()) {
     $logs = Log::getPagination(50, $pageNo * 50);
 
     foreach ($logs as $log) {
-        $html .= "<div class=\"row\">"
-                . "<div class=\"col-md-1\">";
+        $html .= "<tr>"
+                . "<td>";
         switch ($log->type) {
             case "success":
                 $html .= "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Success<span>";
@@ -33,12 +32,13 @@ if (system\Helper::arcIsAjaxRequest()) {
                 $html .= "<span class=\"label label-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
                 break;
         }
-        $html .= "</div>"
-                . "<div class=\"col-md-1\">{$log->module}</div>"
-                . "<div class=\"col-md-2\">" . system\Helper::arcConvertDateTime($log->event) . "</div>"
-                . "<div class=\"col-md-8\">{$log->message}</div>"
-                . "</div>";
+        $html .= "</td>"
+                . "<td>{$log->module}</td>"
+                . "<td>" . system\Helper::arcConvertDateTime($log->event) . "</td>"
+                . "<td>{$log->message}</td>"
+                . "</tr>";
     }
+    $html .= "</tbody></table>";
 
     $html .= "<nav aria-label=\"...\">"
             . "<ul class=\"pager\">";

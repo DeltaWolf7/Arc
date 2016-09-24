@@ -28,7 +28,7 @@ html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
-    font-size: 10px;
+    font-size: 16px;
     -webkit-tap-highlight-color: transparent
 }
 
@@ -1346,9 +1346,9 @@ th {
 
 body {
     font-family: Roboto, Arial, sans-serif;
-    font-size: 13px;
     line-height: 1.42857143;
-    color: #404040
+    color: #404040;
+        font-size: 16px;
 }
 
 button,
@@ -9093,7 +9093,6 @@ canvas {
     padding: 16px 10px;
     color: #404040;
     font-weight: 300;
-    font-size: 14px
 }
 
 .be-left-sidebar .left-sidebar-toggle:before {
@@ -9126,7 +9125,6 @@ canvas {
     line-height: 30px;
     font-weight: 600;
     text-transform: uppercase;
-    font-size: 11px
 }
 
 .be-left-sidebar .sidebar-elements>li {
@@ -9137,7 +9135,6 @@ canvas {
     display: block;
     padding: 0 20px;
     color: #646464;
-    font-size: 14px;
     line-height: 38px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -9194,7 +9191,6 @@ canvas {
 .be-left-sidebar .sidebar-elements>li ul li>a {
     padding: 8px 15px 8px 49px;
     color: #646464;
-    font-size: 13px;
     display: block;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -10060,7 +10056,6 @@ canvas {
 
 .page-head .breadcrumb>li,
 .page-head-description {
-    font-size: 14px;
     font-weight: 300
 }
 
@@ -10286,7 +10281,6 @@ canvas {
     text-align: center;
     display: block;
     line-height: 20px;
-    font-size: 13px;
     color: #5a5a5a;
     margin-top: 11px;
     padding-bottom: 10px
@@ -16610,7 +16604,6 @@ a.text-danger:hover {
 }
 
 label {
-    font-size: 13px;
     margin-bottom: 8px;
     color: #666
 }
