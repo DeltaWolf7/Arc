@@ -9,6 +9,11 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
     
+    if (empty($_POST["company"])) {
+        system\Helper::arcAddMessage("danger", "Invalid company");
+        return;
+    }
+    
     $user->addToCompany($_POST["company"]);
     
     system\Helper::arcAddMessage("success", "User associated with company");
