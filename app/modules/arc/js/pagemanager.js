@@ -36,7 +36,7 @@ $("#savePageBtn").click(function () {
     arcAjaxRequest("arc/pagemanagersave", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
         html: arcCleanSummernote($('#summernote').summernote('code')), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
-        showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
+        showtitle: $('#showtitle').prop('checked'), hidelogin: $('#hidelogin').prop('checked'), hidemenu: $("#hidemenu").prop('checked'),
         theme: $('#theme').val()}, null, successSave);
 });
 
