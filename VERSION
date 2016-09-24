@@ -13,4 +13,4 @@ CodeMirror                      5.18.2              http://codemirror.net/
 Awesome Bootstrap Checkbox      1.0.0 alpha         https://github.com/flatlogic/awesome-bootstrap-checkbox
     - applied replace abc- with null to force overwrite of Bootstrap
 Bootstrap Tags Input            0.8.0               http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
-    - changed css for styling and js to insert form-control
+    - changed css for styling and js to insert form-control and height of .form-control.bootstrap-tagsinput

@@ -3,6 +3,10 @@
  * 
  */
 
+.form-control.bootstrap-tagsinput {
+    height: auto;
+}
+
 .bootstrap-tagsinput {
   background-color: #fff;
   border: 1px solid #ccc;
@@ -15,7 +19,7 @@
   max-width: 100%;
   line-height: 22px;
   cursor: text;
-  width: 100%
+  width: 100%;
 }
 .bootstrap-tagsinput input {
   border: none;

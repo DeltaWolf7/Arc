@@ -599,6 +599,10 @@
                 </div>
             </div>
 
+            <div class="well">
+                Arc Version: <?php echo system\Helper::arcGetVersion(); ?>
+            </div>
+
         </fieldset>        
     </div>
 </div>
