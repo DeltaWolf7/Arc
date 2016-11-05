@@ -69,12 +69,12 @@ abstract class DataProvider {
         }
         return $collection;
     }
-
+    
     public function getCount($where) {
         $count = system\Helper::arcGetDatabase()->count($this->table, $where);
         return $count;
     }
-
+    
     /**
      * Updates the data of an object in the database
      */
@@ -83,7 +83,7 @@ abstract class DataProvider {
         $properties = get_object_vars($this);
         foreach ($this->map as $property => $column) {
             $dataColumns[$column] = $properties[$property];
-        }
+        }    
         if ($this->id == 0) {
             $this->id = system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
         } else {
@@ -107,9 +107,9 @@ abstract class DataProvider {
     protected function fill($data) {
         if (is_array($data)) {
             foreach ($this->map as $property => $column) {
-                $type = gettype($this->$property);
-                $this->$property = $data[$column];
-                settype($this->$property, $type);
+                if (!empty($data[$column])) {
+                    $this->$property = $data[$column];
+                }
             }
         }
     }

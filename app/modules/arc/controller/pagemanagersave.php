@@ -25,24 +25,9 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         return;
     }
     
-    if ($_POST["showtitle"] == "true") {
-        $page->showtitle = true;
-    } else {
-        $page->showtitle = false;
-    }
-    
-    if ($_POST["hidelogin"] == "true") {
-        $page->hideonlogin = true;
-    } else {
-        $page->hideonlogin = false;
-    }
-    
-    if ($_POST["hidemenu"] == "true") {
-        $page->hidefrommenu = true;
-    } else {
-        $page->hidefrommenu = false;
-    }
-
+    $page->showtitle = $_POST["showtitle"];
+    $page->hideonlogin = $_POST["hidelogin"];
+    $page->hidefrommenu = $_POST["hidemenu"];
     $page->theme = $_POST["theme"];
     $seo = Page::getBySEOURL($_POST["seourl"]);
     if ($seo->id != 0 && $seo->id != $page->id) {
