@@ -39,8 +39,8 @@ if (preg_match('/(?i)msie [1-10]/', $_SERVER['HTTP_USER_AGENT'])) {
 }
 
 // Check that we are using PHP 5.4 or better.
-if (version_compare(phpversion(), "5.4.0", "<") == true) {
-    die("PHP 5.4 or newer required");
+if (version_compare(phpversion(), "5.5.0", "<") == true) {
+    die("PHP 5.5 or newer required");
 }
 
 // Check we have a config file and include

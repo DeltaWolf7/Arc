@@ -123,19 +123,11 @@ class Helper {
                 self::$arc["headerdata"][] = "<title>" . $content . "</title>" . PHP_EOL;
                 break;
             case "description":
-                self::$arc["headerdata"][] = "<meta name=\"description\" content=\"" . $content . "\">" . PHP_EOL;
-                break;
             case "keywords":
-                self::$arc["headerdata"][] = "<meta name=\"keywords\" content=\"" . $content . "\">" . PHP_EOL;
-                break;
             case "author":
-                self::$arc["headerdata"][] = "<meta name=\"author\" content=\"" . $content . "\">" . PHP_EOL;
-                break;
             case "alternate":
-                self::$arc["headerdata"][] = "<link rel=\"alternate\" href=\"" . self::arcGetPath() . $content . "\">" . PHP_EOL;
-                break;
             case "canonical":
-                self::$arc["headerdata"][] = "<link rel=\"canonical\" href=\"" . $content . "\" />" . PHP_EOL;
+                self::$arc["headerdata"][] = "<link rel=\"{$type}\" href=\"{$content}\" />" . PHP_EOL;
                 break;
             case "css":
                 self::$arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
