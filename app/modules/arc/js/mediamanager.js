@@ -55,8 +55,12 @@ function copyToClipboard(data) {
     $temp.val(data).select();
     document.execCommand("copy");
     $temp.remove();
-    var message = {messages: {type: "primary", message: "Link copied to clipboard\n\r" + data}};
-    arcNotification(message);
+    if (typeof (parent.copyToClipboardSuccess) == "function") {
+        parent.copyToClipboardSuccess(data);
+    } else {
+        var message = {messages: {type: "info", message: "Link copied to clipboard\n\r" + data}};
+        arcNotification(message);
+    }
 }
 
 function viewFile(file, type, size, date) {

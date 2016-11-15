@@ -228,7 +228,7 @@
                 <div class="col-md-8">
                     <div class="panel panel-default">              
                         <div class="panel-body">
-                            <i class="fa fa-info-circle"></i> The formatting of the date based on standard PHP date formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
+                            <i class="fa fa-info-circle"></i> The page containing the media manager module</a>.
                         </div>
                     </div>
                 </div>

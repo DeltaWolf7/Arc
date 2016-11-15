@@ -66,8 +66,9 @@ switch (ARCDEBUG) {
 }
 
 // Include and initilise helper class.
+require_once "app/system/Initialiser.php";
 require_once "app/system/Helper.php";
-system\Helper::init();
+system\Helper::Init();
 
 // Check the assets directory exists and create it if not.
 if (!file_exists(system\Helper::arcGetPath(true) . "assets")) {
@@ -89,26 +90,8 @@ spl_autoload_register(function($class) {
     }
 });
 
-// Default system settings
-system\Helper::arcCheckSettingExists("ARC_KEEP_LOGS", "31");
-system\Helper::arcCheckSettingExists("ARC_MAIL", "{\"smtp\":\"false\", \"server\":\"localhost\""
-        . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"Admin <admin@server.local>\"}");
-system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "welcome");
-system\Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
-system\Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
-system\Helper::arcCheckSettingExists("ARC_THEME", "default");
-system\Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
-system\Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","
-        . " \"domain\":\"mydomain\", \"base\":\"dc=mydomain,dc=local\"}");
-system\Helper::arcCheckSettingExists("ARC_PASSWORD_RESET_MESSAGE", htmlentities("You or someone else has requested a password reset.<br />"
-                . "Your new password is '{password}'."));
-system\Helper::arcCheckSettingExists("ARC_ALLOWREG", "true");
-system\Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48-dark.png");
-system\Helper::arcCheckSettingExists("ARC_DATEFORMAT", "d-m-Y");
-system\Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
-system\Helper::arcCheckSettingExists("ARC_REQUIRECOMPANY", false);
-system\Helper::arcCheckSettingExists("ARC_SITETITLE", "Arc Project");
-system\Helper::arcCheckSettingExists("ARC_MEDIAMANAGERURL", "administration/media-manager");
+// Initialiser
+system\Initialiser::Init();
 
 // Get content
 system\Helper::GetContent();

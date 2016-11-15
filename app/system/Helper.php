@@ -39,7 +39,7 @@ class Helper {
      * 
      * Initialise the Helper class
      */
-    public static function init() {
+    public static function Init() {
         // Start session
         session_start();
 
@@ -50,7 +50,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.12";
+        self::$arc["version"] = "0.4.0.13";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -670,6 +670,7 @@ class Helper {
      * Echos out the array.
      */
     public static function arcReturnJSON($array) {
+        header("content-type:application/json");
         echo utf8_encode(json_encode($array));
     }
 

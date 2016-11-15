@@ -61,3 +61,8 @@ function removeApiKey(userid) {
 $("#createAPI").click(function() {
     arcAjaxRequest("arc/systemsettingscreateapi", {userid: $("#apiuser").val()}, getApikeys);
 });
+
+function copyToClipboardSuccess(data) {
+    $("#siteLogo").val(data);
+    $("#mediaManager").modal("hide");
+}
