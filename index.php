@@ -70,17 +70,6 @@ require_once "app/system/Initialiser.php";
 require_once "app/system/Helper.php";
 system\Helper::Init();
 
-// Check the assets directory exists and create it if not.
-if (!file_exists(system\Helper::arcGetPath(true) . "assets")) {
-    echo "<div class=\"alert alert-warning\">Assets directory not found. Arc will try to create it.</div>";
-    try {
-        mkdir(system\Helper::arcGetPath(true) . "assets");
-        echo "<div class=\"alert alert-success\">Assets directory created.</div>";
-    } catch (Exception $ex) {
-        echo "<div class=\"alert alert-danger\">Unable to create assets directory. Error: " . $e->getMessage() . "</div>";
-    }
-}
-
 // Setup autoloader.
 spl_autoload_register(function($class) {
     if (file_exists("app/classes/{$class}.class.php")) {
