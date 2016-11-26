@@ -82,17 +82,17 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddFooter("js", self::arcGetPath() . "js/jquery.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/moment.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/bootstrap-tagsinput.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/jquery/jquery.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
-        self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/awesome-bootstrap-checkbox.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/bootstrap-tagsinput.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 
         // Get POST data
@@ -296,7 +296,7 @@ class Helper {
                 self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
             }
         } else {
-            self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.min.js");
+            self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.js");
         }
 
         // update last activity time stamp
