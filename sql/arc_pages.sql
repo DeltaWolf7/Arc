@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS `arc_pages` (
   `metakeywords` varchar(255) NOT NULL,
   `sortorder` int(11) NOT NULL,
   `iconclass` varchar(50) NOT NULL,
-  `showtitle` tinyint(4) NOT NULL,
-  `hideonlogin` tinyint(4) NOT NULL,
-  `hidefrommenu` tinyint(4) NOT NULL,
+  `showtitle` tinyint(1) NOT NULL,
+  `hideonlogin` tinyint(1) NOT NULL,
+  `hidefrommenu` tinyint(1) NOT NULL,
   `theme` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
