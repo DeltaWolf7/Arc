@@ -10,6 +10,7 @@ foreach ($users as $user) {
     $usr["email"] = $user->email;
     $usr["enabled"] = $user->enabled;
     $usr["groups"] = $user->groups;
+    $usr["companies"] = $user->company;
     $users_json[] = $usr;
 }
 system\Helper::arcReturnJSON(["message" => "OK", "Users" => $users_json]);

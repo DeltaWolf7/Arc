@@ -15,9 +15,9 @@ function successEdit(data) {
     $('#summernote').summernote('code', jdata.html);
     $("#iconclass").val(jdata.iconclass);
     $("#sortorder").val(jdata.sortorder);
-    $("#showtitle").prop('checked', jdata.showtitle);
-    $("#hidelogin").prop('checked', jdata.hidelogin);
-    $("#hidemenu").prop('checked', jdata.hidemenu);
+    $("#showtitle").val(jdata.showtitle);
+    $("#hidelogin").val(jdata.hidelogin);
+    $("#hidemenu").val(jdata.hidemenu);
     $("#theme").val(jdata.theme);
     animate(true);
 }

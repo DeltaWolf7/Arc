@@ -91,7 +91,6 @@ class Helper {
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 

@@ -53,9 +53,11 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             Log::createLog("info", "mediamanager", "File moved to image folder.");
             system\Helper::arcAddMessage("success", "File uploaded");
             Log::createLog("success", "mediamanager", "Upload complete.");
+            system\Helper::arcReturnJSON(["message" => "OK"]);
         } else {
             Log::createLog("danger", "mediamanager", "Upload error " . $_FILES['file']['error']);
             system\Helper::arcAddMessage("danger", "Error occured while uploading file");
+            system\Helper::arcReturnJSON(["message" => "ERROR"]);
         }
     }
 }

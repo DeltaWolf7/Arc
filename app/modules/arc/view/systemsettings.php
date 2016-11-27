@@ -477,12 +477,12 @@
                             if ($ldapData["ldap"] == "true") {
                                 echo " selected";
                             }
-                            ?>>True</option>
+                            ?>>Yes</option>
                             <option value="false"<?php
                             if ($ldapData["ldap"] == "false") {
                                 echo " selected";
                             }
-                            ?>>False</option>
+                            ?>>No</option>
                         </select>
                     </div>
                 </div>
@@ -617,7 +617,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Media Manager</h4>
+                <h2 class="modal-title">Media Manager</h4>
             </div>
             <div class="modal-body">
                 <iframe style="width: 100%; height: 500px; border: 0;" src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>

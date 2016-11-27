@@ -109,32 +109,41 @@
                     </div>    
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="sortorder">Sort Order</label>
                             <input type="number" class="form-control" id="sortorder" placeholder="Sort Order">                                    
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label for="iconclass">Icon Class</label>
                             <input type="text" class="form-control" id="iconclass" placeholder="fa fa-folder" maxlength="50">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                </div>
+                <div class="row">
                         <div class="form-group">
-                            <div class="checkbox">
-                                <input type="checkbox" id="showtitle" class="styled" />
-                                <label for="showtitle">Show Title</label>
+                            <div class="col-md-3">
+                            <label for="showtitle">Show Title</label>
+                            <select id="showtitle" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
                             </div>
-                            <div class="checkbox">
-                                <input type="checkbox" id="hidemenu" class="styled" />
-                                <label for="hidemenu">Hide From Menu</label>
-                            </div>
-                            <div class="checkbox">
-                                <input id="hidelogin" class="styled" type="checkbox" />
-                                <label for="hidelogin">Hide On Login</label>
-                            </div>
+                        <div class="col-md-3">    
+                        <label for="hidelogin">Hide On Login</label>
+                            <select id="hidelogin" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">   
+                            <label for="hidemenu">Hide From Menu</label>
+                            <select id="hidemenu" class="form-control">
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
                         </div>
                     </div>
                 </div>           

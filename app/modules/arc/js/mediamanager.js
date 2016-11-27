@@ -63,6 +63,7 @@ function copyToClipboard(data) {
     }
 }
 
+
 function viewFile(file, type, size, date) {
     $("#fileViewerModal").modal("show");
     var data = type.split("/");
@@ -79,9 +80,12 @@ function viewFile(file, type, size, date) {
             content = "<img class='img-responsive' src='" + file + "' />";
             break;
         case "text":
-            jQuery.get(file, function (txt) {
-                content = "<textarea class='form-control' rows='20'>" + txt + "</textarea>";
-            });
+            var txt = $.ajax({
+                url: file,
+                async: false,
+                cache: false
+            }).responseText;
+            content = "<textarea class='form-control' rows='10'>" + txt + "</textarea>";
             break;
         case "video":
             content = "<video controls>"
