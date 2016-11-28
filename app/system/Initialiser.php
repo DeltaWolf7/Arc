@@ -35,10 +35,10 @@ class Initialiser {
         }
 
         // Check the assets directory exists and create it if not.
-        if (!file_exists(system\Helper::arcGetPath(true) . "assets")) {
+        if (!file_exists(Helper::arcGetPath(true) . "assets")) {
             \Log::createLog("warning", "Arc", "Assets directory not found. Arc will try to create it.");
             try {
-                mkdir(system\Helper::arcGetPath(true) . "assets");
+                mkdir(Helper::arcGetPath(true) . "assets");
                 \Log::createLog("success", "Arc", "Assets directory created.");
             } catch (Exception $ex) {
                 \Log::createLog("error", "Arc", "Unable to create assets directory. Error: " . $e->getMessage());
