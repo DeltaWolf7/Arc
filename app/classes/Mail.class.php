@@ -30,6 +30,8 @@
  * @author Craig Longford
  */
 class Mail {
+    
+    public $port;
 
     public function __construct() {
         // Get settings
