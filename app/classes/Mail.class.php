@@ -43,7 +43,8 @@ class Mail {
             $this->mode = "MAIL";
     }
 
-    public function Mail($mode = "MAIL") {
+    public function Mail($mode = "MAIL", $port = 25) {
+        $this->port = $port;
         // Set mode
         switch (strtoupper(strtoupper($mode))) {
             case "MAIL":
@@ -129,6 +130,7 @@ class Mail {
                 include system\Helper::arcGetPath(true) . "app/classes/PHPMailer/PHPMailerAutoload.php";
                 $mail = new PHPMailer;
                 $mail->isSMTP();
+                $mail->Port = $this->port;
                 $mail->Host = $this->data["server"];
                              
                 if (empty($this->data["username"]) && empty($this->data["password"])) {
