@@ -30,9 +30,7 @@
  * @author Craig Longford
  */
 class Mail {
-
-    public $port;
-    
+   
     public function __construct() {
         // Get settings
         $settings = \SystemSetting::getByKey("ARC_MAIL");
@@ -45,8 +43,7 @@ class Mail {
             $this->mode = "MAIL";
     }
 
-    public function Mail($mode = "MAIL", $port = 0) {
-        $this->port = $port;
+    public function Mail($mode = "MAIL") {
         // Set mode
         switch (strtoupper(strtoupper($mode))) {
             case "MAIL":
@@ -132,11 +129,7 @@ class Mail {
                 include system\Helper::arcGetPath(true) . "app/classes/PHPMailer/PHPMailerAutoload.php";
                 $mail = new PHPMailer;
                 $mail->isSMTP();
-                if ($this->port != 0) {
-                    $mail->Port = $this->port;
-                } else {
-                    $mail->Port = $this->data["port"];
-                }
+                $mail->Port = $this->data["port"];
                 $mail->Host = $this->data["server"];
                              
                 if (empty($this->data["username"]) && empty($this->data["password"])) {
