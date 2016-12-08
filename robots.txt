@@ -2,6 +2,5 @@ User-agent: *
 Disallow: /assets/
 Disallow: /js/
 Disallow: /css/
-Disallow: /fonts/
 Disallow: /app/
 Disallow: /themes/
