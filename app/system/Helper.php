@@ -668,9 +668,20 @@ class Helper {
      * @param type $array Array containing the key value parameters.
      * Echos out the array.
      */
-    public static function arcReturnJSON($array) {
+    public static function arcReturnJSON($array, $status = 200) {
+        header("HTTP/1.1 " . $status . " " . self::arcRequestStatus($status));
         header("content-type:application/json");
         echo utf8_encode(json_encode($array));
+    }
+    
+    public static function arcRequestStatus($code) {
+        $status = array(  
+            200 => 'OK',
+            404 => 'Not Found',   
+            405 => 'Method Not Allowed',
+            500 => 'Internal Server Error',
+        ); 
+        return ($status[$code])?$status[$code]:$status[500]; 
     }
 
     /**
@@ -807,7 +818,11 @@ class Helper {
                         \Log::createLog("danger", "API", "Invalid API method request");
                     } else {
                         include self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
-                        \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Method: {$split[4]}, Key: {$key}");
+                        $classname = $split[4] . "Api";
+                        $apimethod = new $classname;
+                        $apimethod->request = $_SERVER['REQUEST_URI'];
+                        $apimethod->$_SERVER['REQUEST_METHOD']();
+                        \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Command: {$split[4]}, Key: {$key}, Method: {$_SERVER['REQUEST_METHOD']}");
                     }
                 }
             }
