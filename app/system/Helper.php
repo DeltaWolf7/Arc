@@ -2,10 +2,10 @@
 
 namespace system;
 
-/*
+/* 
  * The MIT License
  *
- * Copyright 2015 Craig Longford.
+ * Copyright 2017 Craig Longford (deltawolf7@gmail.com).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,8 @@ namespace system;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-include_once "medoo.php";
+
+use Medoo\Medoo;
 
 class Helper {
 
@@ -50,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.14";
+        self::$arc["version"] = "0.4.0.16";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -60,7 +61,7 @@ class Helper {
         // Create database connection
         try {
             if (ARCDBTYPE != "sqlite") {
-                self::$arc["database"] = new \medoo([
+                self::$arc["database"] = new Medoo([
                     "database_type" => ARCDBTYPE,
                     "database_name" => ARCDBNAME,
                     "server" => ARCDBSERVER,
@@ -72,7 +73,7 @@ class Helper {
                     ]
                 ]);
             } else {
-                self::$arc["database"] = new \medoo([
+                self::$arc["database"] = new Medoo([
                     'database_type' => ARCDBTYPE,
                     'database_file' => ARCDBSERVER
                 ]);
@@ -86,12 +87,14 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/build/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 
         // Get POST data
@@ -673,15 +676,22 @@ class Helper {
         header("content-type:application/json");
         echo utf8_encode(json_encode($array));
     }
-    
-    public static function arcRequestStatus($code) {
-        $status = array(  
+
+    /**
+     * 
+     * @param int $code Status code
+     * @return string Status code
+     */
+    private static function arcRequestStatus($code) {
+        $status = array(
             200 => 'OK',
-            404 => 'Not Found',   
+            404 => 'Not Found',
             405 => 'Method Not Allowed',
             500 => 'Internal Server Error',
-        ); 
-        return ($status[$code])?$status[$code]:$status[500]; 
+            400 => 'Bad Request'
+            
+        );
+        return ($status[$code]) ? $status[$code] : $status[500];
     }
 
     /**

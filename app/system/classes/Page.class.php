@@ -1,0 +1,99 @@
+<?php
+
+/* 
+ * The MIT License
+ *
+ * Copyright 2017 Craig Longford (deltawolf7@gmail.com).
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/**
+ * Description of page
+ *
+ * @author Craig
+ */
+class Page extends DataProvider {
+
+    public $title;
+    public $content;
+    public $seourl;
+    public $metadescription;
+    public $metakeywords;
+    public $sortorder;
+    public $iconclass;
+    public $showtitle;
+    public $hideonlogin;
+    public $hidefrommenu;
+    public $theme;
+
+    /**
+     * Page constructor
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->title = "";
+        $this->content = "";
+        $this->metadescription = "";
+        $this->metakeywords = "";
+        $this->metatitle = "";
+        $this->seourl = "";
+        $this->sortorder = 0;
+        $this->iconclass = "";
+        $this->showtitle = true;
+        $this->hideonlogin = false;
+        $this->hidefrommenu = false;
+        $this->theme = "none";
+        $this->table = ARCDBPREFIX . "pages";
+        $this->map = ["id" => "id", "title" => "title", "content" => "content",
+            "seourl" => "seourl", "metadescription" => "metadescription", "metakeywords" => "metakeywords",
+            "sortorder" => "sortorder", "iconclass" => "iconclass", "showtitle" => "showtitle",
+            "hideonlogin" => "hideonlogin", "hidefrommenu" => "hidefrommenu", "theme" => "theme"];
+        $this->columns = ["id", "title", "content", "seourl", "metadescription",
+            "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
+            "hidefrommenu", "theme"];
+    }
+
+    /**
+     * 
+     * @param string $seourl SEO Url
+     * @return \Page
+     */
+    public static function getBySEOURL($seourl) {
+        $page = new Page();
+        $page->get(["seourl" => $seourl]);
+        return $page;
+    }
+
+    public static function getAllPages() {
+        $page = new Page();
+        return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
+    }
+
+    public function getPermissions() {
+        $permissions = new UserPermission();
+        return $permissions->getCollection(["permission" => $this->seourl]);
+    }
+
+    public static function getByID($id) {
+        $page = new Page();
+        $page->get(["id" => $id]);
+        return $page;
+    }
+}
