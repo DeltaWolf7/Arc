@@ -87,14 +87,14 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/build/bootstrap-datetimepicker.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 
         // Get POST data

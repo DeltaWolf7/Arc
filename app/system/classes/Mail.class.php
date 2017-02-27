@@ -126,8 +126,8 @@ class Mail {
                 Log::createLog("success", "arcmail", "PHP mail sent.");
                 break;
             case "SMTP":
-                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/src/PHPMailer.php";
-                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/src/SMTP.php";
+                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/PHPMailer.php";
+                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/SMTP.php";
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->Port = $this->data["port"];
