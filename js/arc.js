@@ -34,7 +34,7 @@ function arcAjaxRequest(path, data, complete, success, extended) {
                 }
             },
             error: function (xhr, desc, err) {
-                console.log(xhr + "\n" + err);
+                console.log(xhr.responseText + "\n" + err);
             }
         });
     } else {
@@ -56,7 +56,7 @@ function arcAjaxRequest(path, data, complete, success, extended) {
                 }
             },
             error: function (xhr, desc, err) {
-                console.log(xhr + "\n" + err);
+                console.log(xhr.responseText + "\n" + err);
             }
         });
     }
@@ -82,7 +82,7 @@ function arcGetStatus() {
             }
         },
         error: function (xhr, desc, err) {
-            console.log(xhr + "\n" + err);
+            console.log(xhr.responseText + "\n" + err);
         }
     })
 }

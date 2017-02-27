@@ -577,6 +577,7 @@ class Helper {
         } else {
             header("Location: " . $destination);
         }
+        exit();
     }
 
     public static function arcGetMenu() {

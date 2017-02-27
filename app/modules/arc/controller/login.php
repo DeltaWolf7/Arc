@@ -99,7 +99,6 @@ function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "
     if ($bind) {
         $filter = "(sAMAccountName=$username)";
         $result = ldap_search($ldap, $dc, $filter);
-        ldap_sort($ldap, $result, "sn");
         $info = ldap_get_entries($ldap, $result);
 
         if (!isset($info[0]["mail"][0])) {

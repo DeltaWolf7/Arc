@@ -1,1 +1,6 @@
 workflow manager
+
+on time equal
+every x
+on email
+on db item
