@@ -573,9 +573,9 @@ class Helper {
         ob_start();
         ob_clean();
         if (empty($destination)) {
-            header("Location: " . self::arcGetPath());
+            header("Location: " . self::arcGetPath(), true, 301);
         } else {
-            header("Location: " . $destination);
+            header("Location: " . $destination, true, 301);
         }
         exit();
     }
