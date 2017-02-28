@@ -25,17 +25,17 @@
  */
 
 /**
- * Description of userpermissions
- *
- * @author craig
+ * User Permission object
  */
 class UserPermission extends DataProvider {
 
+    // Associated Group ID
     public $groupid;
+    // Permissions
     public $permission;
 
     /**
-     * UserPermission constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -47,10 +47,10 @@ class UserPermission extends DataProvider {
     }
 
     /**
-     * 
-     * @param \UserPermission $permissions Permission collection
-     * @param string $entry Permission to check for
-     * @return boolean True if authorised
+     * Check Group has permission to entity
+     * @param type $groups
+     * @param type $entry
+     * @return boolean
      */
     public static function hasPermission($groups, $entry) {
         if (is_array($groups)) {
@@ -66,9 +66,9 @@ class UserPermission extends DataProvider {
     }
 
     /**
-     * 
-     * @param int $groupid Group ID
-     * @return \UserPermission
+     * Get Permissions by Group ID
+     * @param type $groupid
+     * @return type
      */
     public static function getByGroupID($groupid) {
         $permission = new UserPermission();
@@ -76,14 +76,19 @@ class UserPermission extends DataProvider {
     }
 
     /**
-     * 
-     * @return \UserGroup Gets user's group
+     * Get associated Group
+     * @return type
      */
     public function getGroup() {
         $group = UserGroup::getByID($this->groupid);
         return $group;
     }
     
+    /**
+     * Get Permission by unique identifier
+     * @param type $id
+     * @return \UserPermission
+     */
     public static function getByID($id) {
         $permission = new UserPermission();
         $permission->get(['id' => $id]);

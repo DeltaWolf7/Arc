@@ -25,17 +25,17 @@
  */
 
 /**
- * Description of usergroups
- *
- * @author craig
+ * User Group object
  */
 class UserGroup extends DataProvider {
 
+    // Group name
     public $name;
+    // Group description
     public $description;
 
     /**
-     * UserGroup constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -47,8 +47,8 @@ class UserGroup extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $name Name of the group
+     * Get Group by name from database
+     * @param type $name
      * @return \UserGroup
      */
     public static function getByName($name) {
@@ -58,26 +58,26 @@ class UserGroup extends DataProvider {
     }
 
     /**
-     * 
-     * @return UserPermission Permission of the user of a group
+     * Get Group permissions
+     * @return type
      */
     public function getPermissions() {
         return UserPermission::getByGroupID($this->id);
     }
 
     /**
-     * 
-     * @return UserGroup Returns all groups
+     * Get all groups
+     * @return type
      */
     public static function getAllGroups() {
         $groups = new UserGroup();
         return $groups->getCollection(['ORDER' => ['name' => 'ASC']]);
     }
 
-    /*
-     * Get all users
+    /**
+     * Get all users associated with Group
+     * @return type
      */
-
     public function getUsers() {
         $users = User::getAllUsers();
         $grpUsers = Array();
@@ -89,26 +89,30 @@ class UserGroup extends DataProvider {
         return $grpUsers;
     }
 
+    /**
+     * Get Group by its unique identifier
+     * @param type $id
+     * @return \UserGroup
+     */
     public static function getByID($id) {
         $group = new UserGroup();
         $group->get(["id" => $id]);
         return $group;
     }
 
-    /*
-     * Update group and save it to the database
+    /**
+     * Update/Insert Group in to database
      */
-
     public function update() {
         if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
             parent::update();
         }
     }
 
-    /*
-     * Deleet group from database
+    /**
+     * Delete Group from database
+     * @param type $id
      */
-
     public function delete($id) {
         $group = UserGroup::getByID($id);
         if ($group->name != "Administrators" && $group->name != "Guests" && $group->name != "Users") {
