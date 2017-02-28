@@ -24,6 +24,12 @@
  * THE SOFTWARE.
  */
 
+use PHPMailer\PHPMailer\PHPMailer;
+
+require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/PHPMailer.php";
+require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/SMTP.php";
+require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/Exception.php";
+
 /**
  * Mail object
  */
@@ -130,8 +136,6 @@ class Mail {
                 Log::createLog("success", "arcmail", "PHP mail sent.");
                 break;
             case "SMTP":
-                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/PHPMailer.php";
-                require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/SMTP.php";
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->Port = $this->data["port"];
