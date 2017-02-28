@@ -25,18 +25,19 @@
  */
 
 /**
- * Description of system setting
- *
- * @author Craig Longford
+ * System Setting object
  */
 class SystemSetting extends DataProvider {
 
+    // Unique key used by the setting
     public $key;
+    // The value of the setting
     public $value;
+    // Associated user or 0 for system
     public $userid;
 
     /**
-     * SystemSetting constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -49,10 +50,10 @@ class SystemSetting extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $key Key of the setting
-     * @param int $id User ID of the setting
-     * @return \SystemSetting setting if it exists
+     * Get setting by its Key and User ID, if required
+     * @param type $key
+     * @param type $userid
+     * @return \SystemSetting
      */
     public static function getByKey($key, $userid = 0) {
         $setting = new SystemSetting();
@@ -66,9 +67,10 @@ class SystemSetting extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $key string value as key
-     * @return \SystemSetting
+     * Check is the setting already exists by Key and User ID, if required
+     * @param type $key
+     * @param type $userid
+     * @return boolean
      */
     public static function keyExists($key, $userid = 0) {
         $setting = new SystemSetting();
@@ -80,16 +82,17 @@ class SystemSetting extends DataProvider {
     }
 
     /**
-     * 
-     * @return array Containing the split values
+     * Get the setting value and return JSON
+     * @return type
      */
     public function getArrayFromJson() {
         return json_decode($this->value, true);
     }
 
     /**
-     * 
-     * @return array Collection of system settings
+     * Get all the settings from the database by User ID, if required
+     * @param type $userid
+     * @return type
      */
     public static function getAll($userid = 0) {
         $settings = new SystemSetting();

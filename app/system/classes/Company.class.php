@@ -25,16 +25,16 @@
  */
 
 /**
- * Description of user
+ * Company object
  *
- * @author Craig Longford
  */
 class Company extends DataProvider {
 
+    // Company name
     public $name;
 
     /**
-     * User constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -44,18 +44,32 @@ class Company extends DataProvider {
         $this->columns = ["id", "name"];
     }
 
+    /**
+     * Get Company object by Name
+     * @param type $name
+     * @return \Company
+     */
     public static function getByName($name) {
         $company = new Company();
         $company->get(["name" => $name]);
         return $company;
     }
 
+    /**
+     * Get Company by ID
+     * @param type $id
+     * @return \Company
+     */
     public static function getByID($id) {
         $company = new Company();
         $company->get(["id" => $id]);
         return $company;
     }
 
+    /**
+     * Get Users associated with the Company
+     * @return type
+     */
     public function getUsers() {
         $users = User::getAllUsers();
         $found = [];
@@ -70,6 +84,10 @@ class Company extends DataProvider {
         return $found;
     }
 
+    /**
+     * Get all Companies
+     * @return type
+     */
     public static function getAll() {
         $company = new Company();
         return $company->getCollection(["ORDER" => ['name' => 'ASC']]);

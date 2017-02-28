@@ -25,23 +25,29 @@
  */
 
 /**
- * Description of user
- *
- * @author Craig Longford
+ * User object
  */
 class User extends DataProvider {
 
+    // Firstname
     public $firstname;
+    // Lastname
     public $lastname;
+    // Email address
     public $email;
+    // Password hash (consider making protected)
     public $passwordhash;
+    // Date/Time the user was created
     public $created;
+    // User account enabled?
     public $enabled;
+    // User associated groups
     public $groups;
+    // user associated company
     public $company;
 
     /**
-     * User constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -62,8 +68,8 @@ class User extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $email User's email address
+     * Get User by email address
+     * @param type $email
      * @return \User
      */
     public static function getByEmail($email) {
@@ -72,6 +78,11 @@ class User extends DataProvider {
         return $user;
     }
     
+    /**
+     * Get User by unique identifier
+     * @param type $id
+     * @return \User
+     */
     public static function getByID($id) {
         $user = new User();
         $user->get(["id" => $id]);
@@ -79,14 +90,19 @@ class User extends DataProvider {
     }
 
     /**
-     * 
-     * @return \User collection (All users)
+     * get all users from the database
+     * @return type
      */
     public static function getAllUsers() {
         $user = new User();
         return $user->getCollection(["ORDER" => ['firstname' => 'ASC']]);
     }
 
+    /**
+     * Check is user is in a group
+     * @param type $name
+     * @return boolean
+     */
     public function inGroup($name) {
         $groups = $this->getGroups();
         foreach ($groups as $group) {
@@ -98,8 +114,8 @@ class User extends DataProvider {
     }
 
     /**
-     * 
-     * @return \UserGroup Gets the group of the user
+     * Get groups the User is associated with
+     * @return type
      */
     public function getGroups() {
         $groups = [];
@@ -112,10 +128,11 @@ class User extends DataProvider {
         return $groups;
     }
 
-    /*
-     * Add user to group
+    /**
+     * Add User to a group
+     * @param type $name
+     * @return type
      */
-
     public function addToGroup($name) {
         $groups = json_decode($this->groups);
         foreach ($groups as $group) {
@@ -128,10 +145,10 @@ class User extends DataProvider {
         $this->update();
     }
 
-    /*
-     * Remove user from group
+    /**
+     * Remove the user from a group
+     * @param type $name
      */
-
     public function removeFromGroup($name) {
         $groups = json_decode($this->groups);
         $newGroups = [];
@@ -145,39 +162,43 @@ class User extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $password Password to be set
+     * Set the Users password
+     * @param type $password
      */
     public function setPassword($password) {
         $this->passwordhash = password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
-     * 
-     * @param string $password Password to check against user
-     * @return bool True if password is a match
+     * Check the users password is correct
+     * @param type $password
+     * @return type
      */
     public function verifyPassword($password) {
         return password_verify($password, $this->passwordhash);
     }
 
     /**
-     * 
-     * @param string $key Key of the setting
-     * @return \UserSetting Users setting for the specified key
+     * Get a users setting by its unique key
+     * @param type $key
+     * @return type
      */
     public function getSettingByKey($key) {
         return UserSetting::getByUserID($this->id, $key);
     }
 
-    /*
-     * Get users full name
+    /**
+     * Get the users full name formatted
+     * @return type
      */
-
     public function getFullname() {
         return $this->firstname . " " . $this->lastname;
     }
     
+    /**
+     * Get the companies associated with the user
+     * @return type
+     */
     public function getCompanies() {
         $companies = json_decode($this->company);
         $comp = [];
@@ -187,6 +208,11 @@ class User extends DataProvider {
         return $comp;
     }
     
+    /**
+     * Add User to Company
+     * @param type $id
+     * @return type
+     */
     public function addToCompany($id) {
         $companies = json_decode($this->company);
         foreach ($companies as $company) {
@@ -199,6 +225,10 @@ class User extends DataProvider {
         $this->update();
     }
 
+    /**
+     * Remove User from a Company
+     * @param type $id
+     */
     public function removeFromCompany($id) {
         $companies = json_decode($this->company);
         $newComps = [];

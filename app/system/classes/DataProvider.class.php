@@ -24,15 +24,22 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Abstract DataProvider class
+ */
 abstract class DataProvider {
 
+    // Unique Identifiyer
     public $id;
+    // Database table
     public $table;
+    // Database table columns
     public $columns;
+    // Database table columns to properites map
     public $map;
 
     /**
-     * DataProvider constructor
+     * Default constructor
      */
     public function __construct() {
         $this->id = 0;
@@ -42,9 +49,8 @@ abstract class DataProvider {
     }
 
     /**
-     * 
-     * @param string $where Where array to get data
-     * Fills the object once data has been collected
+     * Get data from database and return filled object
+     * @param type $where
      */
     public function get($where) {
         $data = system\Helper::arcGetDatabase()->get($this->table, $this->columns, $where);
@@ -52,9 +58,9 @@ abstract class DataProvider {
     }
 
     /**
-     * 
-     * @param array $where Array containing the claused to fetch data
-     * @return object collection, filled with data
+     * Get a collection of objects filled from the database
+     * @param type $where
+     * @return \className
      */
     public function getCollection($where) {
         $data = system\Helper::arcGetDatabase()->select($this->table, $this->columns, $where);
@@ -70,13 +76,18 @@ abstract class DataProvider {
         return $collection;
     }
 
+    /**
+     * Count the number of objects returned by query
+     * @param type $where
+     * @return type
+     */
     public function getCount($where) {
         $count = system\Helper::arcGetDatabase()->count($this->table, $where);
         return $count;
     }
 
     /**
-     * Updates the data of an object in the database
+     * Update/Insert data from object in to database using mapped fields
      */
     public function update() {
         $dataColumns = [];
@@ -93,17 +104,16 @@ abstract class DataProvider {
     }
 
     /**
-     * 
-     * @param int $id Removes a database row based on the ID
+     * Delete an object from the database
+     * @param type $id
      */
     public function delete($id) {
         system\Helper::arcGetDatabase()->delete($this->table, ['id' => $id]);
     }
 
     /**
-     * 
-     * @param array $data Data to fill the object with
-     * Matches properties to columns to fill
+     * Fill and object with data from database using mapped fields
+     * @param type $data
      */
     protected function fill($data) {
         if (is_array($data)) {

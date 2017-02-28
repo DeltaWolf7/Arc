@@ -25,12 +25,13 @@
  */
 
 /**
- * Description of Mail
- *
- * @author Craig Longford
+ * Mail object
  */
 class Mail {
    
+    /**
+     * Default constructor
+     */
     public function __construct() {
         // Get settings
         $settings = \SystemSetting::getByKey("ARC_MAIL");
@@ -43,6 +44,10 @@ class Mail {
             $this->mode = "MAIL";
     }
 
+    /**
+     * Instantiate Mail object and set the mail delivery method 
+     * @param type $mode
+     */
     public function Mail($mode = "MAIL") {
         // Set mode
         switch (strtoupper(strtoupper($mode))) {
@@ -56,14 +61,13 @@ class Mail {
     }
 
     /**
-     * 
-     * @param string $from Sender, left null to use system setting.
-     * @param string/array $to To, format as 'Firstname Lastname' <email@address.com> or email address only.
-     * @param string/array $cc CC, format as 'Firstname Lastname' <email@address.com> or email address only.
-     * @param string $subject String message subject.
-     * @param string $message Message body, html or plain text.
-     * @param boolean $html True for html body, false for plain.
-     * @return boolean True/False depending is the operation was completed.
+     * Send email to recipient
+     * @param type $to
+     * @param type $subject
+     * @param type $message
+     * @param type $html
+     * @param type $from
+     * @param type $cc
      */
     public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array()) {
 

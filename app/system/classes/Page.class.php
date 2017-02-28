@@ -25,26 +25,35 @@
  */
 
 /**
- * Description of page
- *
- * @author Craig
+ * Page object
  */
 class Page extends DataProvider {
 
+    // Title of the page
     public $title;
+    // Content of the Page
     public $content;
+    // Search Engine Optomised URL
     public $seourl;
+    // Meta description for search engines
     public $metadescription;
+    // Meta keywords for search engines
     public $metakeywords;
+    // Display sort order
     public $sortorder;
+    // CSS class used for the page icon
     public $iconclass;
+    // Show the page title?
     public $showtitle;
+    // Hide the page after login?
     public $hideonlogin;
+    // Hide the page from the menu?
     public $hidefrommenu;
+    // Theme override for the page
     public $theme;
 
     /**
-     * Page constructor
+     * Default constructor
      */
     public function __construct() {
         parent::__construct();
@@ -71,8 +80,8 @@ class Page extends DataProvider {
     }
 
     /**
-     * 
-     * @param string $seourl SEO Url
+     * Get a page by its unique SEO URL from database
+     * @param type $seourl
      * @return \Page
      */
     public static function getBySEOURL($seourl) {
@@ -81,16 +90,29 @@ class Page extends DataProvider {
         return $page;
     }
 
+    /**
+     * Get all pages from the database
+     * @return type
+     */
     public static function getAllPages() {
         $page = new Page();
         return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
     }
 
+    /**
+     * Get the User group permissions for the page
+     * @return type
+     */
     public function getPermissions() {
         $permissions = new UserPermission();
         return $permissions->getCollection(["permission" => $this->seourl]);
     }
 
+    /**
+     * Get the page from the database by its unique ID
+     * @param type $id
+     * @return \Page
+     */
     public static function getByID($id) {
         $page = new Page();
         $page->get(["id" => $id]);

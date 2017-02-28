@@ -25,17 +25,22 @@
  */
 
 /**
- * Description of system setting
- *
- * @author Craig Longford
+ * Log object
  */
 class Log extends DataProvider {
 
+    // Log message
     public $message;
+    // Log event time/date
     public $event;
+    // Log type (warning, danger, info, success)
     public $type;
+    // Module the log applies to
     public $module;
 
+    /**
+     * Default constructor
+     */
     public function __construct() {
         parent::__construct();
         $this->event = date("y-m-d H:i:s");
@@ -45,21 +50,41 @@ class Log extends DataProvider {
         $this->columns = ['id', 'type', 'module', 'event', 'message'];
     }
 
+    /**
+     * Get all logs from the database
+     * @return type
+     */
     public static function getLogs() {
         $logs = new Log();
         return $logs->getCollection(['ORDER' => ['id' => 'DESC']]);
     }
     
+    /**
+     * Get logs from database as pages, with offset for pagination
+     * @param type $limit
+     * @param type $offset
+     * @return type
+     */
     public static function getPagination($limit = 50, $offset = 0) {
         $logs = new Log();
         return $logs->getCollection(['ORDER' => ['id' => 'DESC'], 'LIMIT' => [$offset, $limit]]);
     }
     
+    /**
+     * Count the number of logs in the database
+     * @return type
+     */
     public static function count() {
         $logs = new Log();
         return $logs->getCount([]);
     }
     
+    /**
+     * Create a log entry, save it to the database and purge old logs based on settings
+     * @param type $type
+     * @param type $module
+     * @param type $message
+     */
     public static function createLog($type, $module, $message) {
         $log = new Log();
         $log->type = $type;

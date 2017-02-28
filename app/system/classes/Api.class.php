@@ -24,29 +24,50 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Abstract API object
+ */
 abstract class Api {
     
+    // Arguments
     public $args = [];
+    
+    // Request
     public $request = "";
     
+    /**
+     * Default constructor
+     */
     public function __construct() {
         header("Access-Control-Allow-Orgin: *");
         header("Access-Control-Allow-Methods: *");
         $this->args = explode('/', rtrim($this->request, '/'));
     }
     
+    /**
+     * GET method, returns not implemented
+     */
     public function GET() {
         system\Helper::arcReturnJSON([], 405);
     }
     
+    /**
+     * POST method, returns not implemented
+     */
     public function POST() {
         system\Helper::arcReturnJSON([], 405);
     }
     
+    /**
+     * DELETE method, returns not implemented
+     */
     public function DELETE() {
         system\Helper::arcReturnJSON([], 405);
     }
     
+    /**
+     * PUT method, returns not implemented
+     */
     public function PUT() {
         system\Helper::arcReturnJSON([], 405);
     }
