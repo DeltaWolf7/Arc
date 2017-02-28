@@ -832,7 +832,20 @@ class Helper {
                         $classname = $split[4] . "Api";
                         $apimethod = new $classname;
                         $apimethod->request = $_SERVER['REQUEST_URI'];
-                        $apimethod->$_SERVER['REQUEST_METHOD']();
+                        switch ($_SERVER['REQUEST_METHOD']) {
+                            case "GET":
+                                $apimethod->GET();
+                                break;
+                            case "POST":
+                                $apimethod->POST();
+                                break;
+                            case "DELETE":
+                                $apimethod->DELETE();
+                                break;
+                            case "PUT":
+                                $apimethod->PUT();
+                                break;
+                        }
                         \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Command: {$split[4]}, Key: {$key}, Method: {$_SERVER['REQUEST_METHOD']}");
                     }
                 }
