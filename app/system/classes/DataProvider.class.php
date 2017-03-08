@@ -95,11 +95,17 @@ abstract class DataProvider {
         foreach ($this->map as $property => $column) {
             $dataColumns[$column] = $properties[$property];
         }
-        if ($this->id == 0) {
-            system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
-            $this->id = system\Helper::arcGetDatabase()->id();
-        } else {
-            system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ['id' => $this->id]);
+        
+        try {
+            if ($this->id == 0) {
+                system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
+                $this->id = system\Helper::arcGetDatabase()->id();
+            } else {
+                system\Helper::arcGetDatabase()->update($this->table, $dataColumns, ['id' => $this->id]);
+            }
+        } catch (PDOException $ex) {
+            die("Error:<br />" . $ex->getMessage() . "<br /><br />Trace:<br />" . $ex->getTraceAsString()
+                    . "<br /><br />Last query:<br />" . system\Helper::arcGetDatabase()->last());
         }
     }
 
