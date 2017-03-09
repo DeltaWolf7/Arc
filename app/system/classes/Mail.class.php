@@ -1,6 +1,6 @@
 <?php
 
-/* 
+/*
  * The MIT License
  *
  * Copyright 2017 Craig Longford (deltawolf7@gmail.com).
@@ -24,17 +24,17 @@
  * THE SOFTWARE.
  */
 
+/**
+ * Mail object
+ */
 use PHPMailer\PHPMailer\PHPMailer;
 
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/PHPMailer.php";
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/SMTP.php";
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/Exception.php";
 
-/**
- * Mail object
- */
 class Mail {
-   
+
     /**
      * Default constructor
      */
@@ -75,16 +75,16 @@ class Mail {
      * @param type $from
      * @param type $cc
      */
-    public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array()) {
+    public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array(), $attachments = array()) {
 
         if ($html == true) {
             $theme = SystemSetting::getByKey("ARC_THEME");
             if (file_exists(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php")) {
                 $content = file_get_contents(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php");
                 $message = system\Helper::arcParseEmail($content, $message);
-            }            
+            }
         }
-        
+
         Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
         // Set from details
@@ -99,7 +99,7 @@ class Mail {
             $to = $list;
         }
 
-        // Build to list
+        // Build cc list
         if (!is_array($cc)) {
             $list = array();
             $list[] = $cc;
@@ -136,19 +136,20 @@ class Mail {
                 Log::createLog("success", "arcmail", "PHP mail sent.");
                 break;
             case "SMTP":
+
                 $mail = new PHPMailer;
                 $mail->isSMTP();
                 $mail->Port = $this->data["port"];
                 $mail->Host = $this->data["server"];
-                             
+
                 if (empty($this->data["username"]) && empty($this->data["password"])) {
                     $mail->SMTPAuth = false;
                 } else {
                     $mail->SMTPAuth = true;
                     $mail->Username = $this->data["username"];
-                    
+
                     $smtp_password = system\Helper::arcDecrypt($this->data["password"]);
-                    
+
                     $mail->Password = $smtp_password;
                 }
                 $mail->setFrom($from);
@@ -161,6 +162,11 @@ class Mail {
                 $mail->isHTML($html);
                 $mail->Subject = $subject;
                 $mail->Body = $message;
+                
+                // file attachments
+                foreach ($attachments as $attachment) {
+                    $mail->addAttachment($attachment);
+                }
 
                 if (!$mail->send()) {
                     Log::createLog("danger", "arcmail", "SMTP: " . $mail->ErrorInfo);
