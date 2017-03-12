@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.17";
+        self::$arc["version"] = "0.4.0.18";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -112,7 +112,7 @@ class Helper {
     public static function arcGetDatabase() {
         return self::$arc["database"];
     }
-
+   
     /**
      * 
      * @global array $arc Arc settings storage
@@ -313,6 +313,7 @@ class Helper {
             if (!empty($page->metadescription)) {
                 self::arcAddHeader("description", $page->metadescription);
             }
+            
             if (!empty($page->metakeywords)) {
                 self::arcAddHeader("keywords", $page->metakeywords);
             }
@@ -421,26 +422,20 @@ class Helper {
 
         // site logo
         $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
-        $content = str_replace("{{arc:sitelogo}}", self::arcGetPath() . $logo->value, $content);
-
         // site title
         $title = \SystemSetting::getByKey("ARC_SITETITLE");
-        $content = str_replace("{{arc:sitetitle}}", $title->value, $content);
-
-        // path
-        $content = str_replace("{{arc:path}}", self::arcGetPath(), $content);
-
-        // themepath
-        $content = str_replace("{{arc:themepath}}", self::arcGetThemePath(), $content);
-
-        // version
-        $content = str_replace("{{arc:version}}", self::arcGetVersion(), $content);
-
-        // meta
-        $content = str_replace("{{arc:header}}", self::arcGetHeader(), $content);
-
-        // footer
-        $content = str_replace("{{arc:footer}}", self::arcGetFooter(), $content);
+        
+        
+        // logo, title, path, themepath, version, header, footer
+        $tags = array("{{arc:sitelogo}}", "{{arc:sitetitle}}", "{{arc:path}}",
+            "{{arc:themepath}}", "{{arc:version}}", "{{arc:header}}", "{{arc:footer}}");
+        // logo, title, path, themepath, version, header, footer
+        $data = array(self::arcGetPath() . $logo->value, $title->value, self::arcGetPath(),
+            self::arcGetThemePath(), self::arcGetVersion(), self::arcGetHeader(),
+            self::arcGetFooter());
+        
+        // do replacement
+        $content = str_replace($tags, $data, $content);
 
         return $content;
     }

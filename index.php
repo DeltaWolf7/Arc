@@ -27,8 +27,6 @@
 // Hide PHP version
 if (function_exists('header_remove')) {
     header_remove('X-Powered-By'); // PHP 5.3+
-} else {
-    @ini_set('expose_php', 'off');
 }
 
 // Check for old versons of Internet Explorer
@@ -38,7 +36,7 @@ if (preg_match('/(?i)msie [1-10]/', $_SERVER['HTTP_USER_AGENT'])) {
     . " Please upgrade to version 11 or newer</div>";
 }
 
-// Check that we are using PHP 5.4 or better.
+// Check that we are using PHP 5.5 or newer.
 if (version_compare(phpversion(), "5.5.0", "<") == true) {
     die("PHP 5.5 or newer required");
 }
