@@ -684,8 +684,10 @@ class Helper {
             404 => 'Not Found',
             405 => 'Method Not Allowed',
             500 => 'Internal Server Error',
-            400 => 'Bad Request'
-            
+            400 => 'Bad Request',
+            403 => 'Forbidden',
+            401 => 'Access denied',
+            401.1 => 'Logon failed'
         );
         return ($status[$code]) ? $status[$code] : $status[500];
     }

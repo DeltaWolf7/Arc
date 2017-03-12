@@ -7,7 +7,7 @@ function login() {
     $("#email").prop("disabled", true);
     $("#password").prop("disabled", true);
     $("#loginBtn").prop("disabled", true);
-    arcAjaxRequest("arc/login", {email: $("#email").val(), password: $("#password").val()}, showMessage, success);
+    arcAjaxRequest("arc/dologin", {email: $("#email").val(), password: $("#password").val()}, showMessage, success);
 }
 
 $("#btnForgot").click(function () {
@@ -39,6 +39,7 @@ $("#sendReset").click(function () {
 });
 
 function success(data) {
+    console.log(data);
     var jdata = arcGetJson(data);
     if (jdata.redirect) {
         window.location = jdata.redirect;
