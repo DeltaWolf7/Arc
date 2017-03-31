@@ -58,18 +58,7 @@ class Log extends DataProvider {
         $logs = new Log();
         return $logs->getCollection(['ORDER' => ['id' => 'DESC']]);
     }
-    
-    /**
-     * Get logs from database as pages, with offset for pagination
-     * @param type $limit
-     * @param type $offset
-     * @return type
-     */
-    public static function getPagination($limit = 50, $offset = 0) {
-        $logs = new Log();
-        return $logs->getCollection(['ORDER' => ['id' => 'DESC'], 'LIMIT' => [$offset, $limit]]);
-    }
-    
+       
     /**
      * Count the number of logs in the database
      * @return type
@@ -101,5 +90,4 @@ class Log extends DataProvider {
         $days = SystemSetting::getByKey("ARC_KEEP_LOGS");    
         system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.event) > " . $days->value);
     }
-
 }

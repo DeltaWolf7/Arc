@@ -1,19 +1,13 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<table class=\"table table-responsive table-striped\">"
+    $html = "<table id=\"logTable\" class=\"table table-responsive table-striped\">"
             . "<thead><tr><th>Type</th>"
             . "<th>Module</th>"
             . "<th>When</th>"
             . "<th>Message</th></tr></thead><tbody>";
 
-    $count = Log::count();
-    $pageNo = 0;
-    if (isset($_POST["page"])) {
-        $pageNo = $_POST["page"];
-    }
-    $noPages = $count / 50;
-    $logs = Log::getPagination(50, $pageNo * 50);
+    $logs = Log::getLogs();
 
     foreach ($logs as $log) {
         $html .= "<tr>"
@@ -39,20 +33,6 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "</tr>";
     }
     $html .= "</tbody></table>";
-
-    $html .= "<nav aria-label=\"...\">"
-            . "<ul class=\"pager\">";
-    if ($pageNo != 0) {
-        $lastPage = $pageNo - 1;
-        $html .= "<li><a onclick=\"getLogs({$lastPage})\">Previous</a></li>";
-    }
-
-    if ($pageNo < $noPages - 1) {
-        $nextPage = $pageNo + 1;
-        $html .= "<li><a onclick=\"getLogs({$nextPage})\">Next</a></li>";
-    }
-    $html .= "</ul>"
-            . "</nav>";
 
     system\Helper::arcReturnJSON(["html" => $html]);
 }

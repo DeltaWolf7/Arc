@@ -26,14 +26,11 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
 
-    session_destroy();
-    $html = "<div class=\"visitor-center visitor-header\">"
-            . "Welcome"
-            . "</div>"
-            . "<div class=\"visitor-center visitor-buttons\">"
-            . "<i onclick=\"vVisitor()\" class=\"btn btn-primary btn-xl vistor-btn\">Visitor</i>"
-            . "<i onclick=\"vContractor()\" class=\"btn btn-primary btn-xl vistor-btn\">Contractor</i>"
-            . "<i onclick=\"vEmployee()\" class=\"btn btn-primary btn-xl vistor-btn\">Employee</i>"
+    $html = "<div class=\"visitor-center visitor-buttons visitor-top-pad\">"
+            . "<textarea class=\"form-control\" rows=\"20\">"
+            . "test"
+            . "</textarea>"
+            . "<i onclick=\"acceptAgreement('visitor')\" class=\"btn btn-success\">Accept</i>"
             . "</div>";
     system\Helper::arcReturnJSON(["html" => $html]);
 }

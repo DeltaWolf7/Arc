@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.18";
+        self::$arc["version"] = "0.4.0.19";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -88,6 +88,7 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/datatables/datatables.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
@@ -95,6 +96,7 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/datatables/datatables.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
 
         // Get POST data

@@ -27,10 +27,24 @@ THE SOFTWARE.
 */
 
 /* bootstrap/theme overrides */
-body {
+html {
     background-image: url("/assets/arcvisitor/background.png");
     background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+
+    /* Preserve aspet ratio */
+    min-width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: transparent;
 }
 
 .btn {
@@ -83,6 +97,10 @@ body {
     padding: 20px;
     width: 100%;
     color: white;
+    margin-top: 50px;
+}
+
+.visitor-top-pad {
     margin-top: 50px;
 }
 

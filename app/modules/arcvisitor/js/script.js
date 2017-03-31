@@ -22,8 +22,19 @@
  * THE SOFTWARE.
  */
 
-$("#vStart").click(function() {
-   arcAjaxRequest("arcvisitor/restart", {}, location.reload(), null);
+$(document).ready(function () {
+    arcAjaxRequest("arcvisitor/restart", {}, null, DisplayPage);
 });
 
+function vStart() {
+    arcAjaxRequest("arcvisitor/restart", {}, null, DisplayPage);
+}
 
+function vVisitor() {
+    arcAjaxRequest("arcvisitor/visitor", {}, null, DisplayPage);
+}
+
+function DisplayPage(data) {
+    var jdata = arcGetJson(data);
+    $("#display").html(jdata.html);
+}

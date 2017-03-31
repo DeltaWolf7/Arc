@@ -12,3 +12,4 @@ CodeMirror                      5.24.2              http://codemirror.net/
     - applied replace abc- with null to force overwrite of Bootstrap
 Bootstrap Tags Input            0.8.0               http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
     - changed css for styling and js to insert form-control and height of .form-control.bootstrap-tagsinput
+DataTables                      1.10.13             https://datatables.net
