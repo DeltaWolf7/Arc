@@ -30,10 +30,10 @@ if (function_exists('header_remove')) {
 }
 
 // Check for old versons of Internet Explorer
-if (preg_match('/(?i)msie [1-10]/', $_SERVER['HTTP_USER_AGENT'])) {
-// if IE<=11
-    echo "<div class=\"alert alert-danger\">Warning! You are using an old unsupported version of Internet Explorer."
-    . " Please upgrade to version 11 or newer</div>";
+if (preg_match('/MSIE\s(?P<v>\d+)/i', @$_SERVER['HTTP_USER_AGENT'], $B) && $B['v'] <= 10) {
+// if IE<=10
+    echo "<div class=\"alert alert-danger\">Warning! You are using an old, unsupported version of Internet Explorer."
+    . " Feature of this application may not work correctly</div>";
 }
 
 // Check that we are using PHP 5.5 or newer.
