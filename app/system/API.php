@@ -56,15 +56,15 @@ class API {
 
                 $split = explode("/", $uri);
 
-                if (!isset($split[3]) || !file_exists(Helper::arcGetPath(true) . "app/modules/{$split[3]}/api")) {
+                if (!isset($split[2]) || !file_exists(Helper::arcGetPath(true) . "app/modules/{$split[2]}/api")) {
                     Helper::arcReturnJSON(["error" => "Invalid API request"]);
                     \Log::createLog("danger", "API", "Invalid API request");
-                } elseif (!isset($split[4]) || !file_exists(Helper::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
+                } elseif (!isset($split[3]) || !file_exists(Helper::arcGetPath(true) . "app/modules/{$split[2]}/api/{$split[3]}.php")) {
                     Helper::arcReturnJSON(["error" => "Invalid API method request"]);
                     \Log::createLog("danger", "API", "Invalid API method request");
                 } else {
-                    include Helper::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
-                    $classname = $split[4] . "Api";
+                    include Helper::arcGetPath(true) . "app/modules/{$split[2]}/api/{$split[3]}.php";
+                    $classname = $split[3] . "Api";
                     $apimethod = new $classname;
                     $apimethod->request = $_SERVER['REQUEST_URI'];
                     switch ($_SERVER['REQUEST_METHOD']) {
@@ -81,7 +81,7 @@ class API {
                             $apimethod->PUT();
                             break;
                     }
-                    \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Command: {$split[4]}, Key: {$key}, Method: {$_SERVER['REQUEST_METHOD']}");
+                    \Log::createLog("success", "API", "OK:: Module: {$split[2]}, Command: {$split[3]}, Key: {$key}, Method: {$_SERVER['REQUEST_METHOD']}");
                 }
             }
         }

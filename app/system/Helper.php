@@ -635,7 +635,7 @@ class Helper {
         $uri = self::arcGetURI();
         
         // check for API request
-        if (strpos($uri, "/api/v1") === false) {
+        if (strpos($uri, "api/v1") === false) {
              // No API, Get regular content
             Render::arcRenderContent($uri);
         } else {
