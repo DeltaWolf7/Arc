@@ -27,23 +27,27 @@
 /**
  * User Permission object
  */
-class UserPermission extends DataProvider {
+class Router extends DataProvider {
 
-    // Associated Group ID
-    public $groupid;
-    // Permissions
-    public $permission;
+    // route
+    public $route;
+    // destination
+    public $destination;
+    // group allowed
+    public $groupallowed;
 
     /**
      * Default constructor
      */
     public function __construct() {
         parent::__construct();
-        $this->groupid = 0;
-        $this->permission = "";
-        $this->table = ARCDBPREFIX . 'user_permissions';
-        $this->map = ["id" => "id", "groupid" => "groupid", "permission" => "permission"];
-        $this->columns = ['id', 'groupid', 'permission'];
+        $this->route = "";
+        $this->destination = "";
+        $this->groupallowed = 0;
+        $this->table = ARCDBPREFIX . 'router';
+        $this->map = ["id" => "id", "route" => "route", "destination" => "destination",
+            "groupallowed" => "groupallowed"];
+        $this->columns = ['id', 'route', 'destination', 'groupallowed'];
     }
 
     /**
@@ -52,11 +56,11 @@ class UserPermission extends DataProvider {
      * @param type $entry
      * @return boolean
      */
-    public static function hasPermission($groups, $entry) {
+    public static function hasPermission($groups, $route) {
         if (is_array($groups)) {
             foreach ($groups as $group) {
                 foreach ($group->getPermissions() as $permission) {
-                    if ($permission->permission == $entry) {
+                    if ($permission->route == $route) {
                         return true;
                     }
                 }
@@ -70,9 +74,9 @@ class UserPermission extends DataProvider {
      * @param type $groupid
      * @return type
      */
-    public static function getByGroupID($groupid) {
-        $permission = new UserPermission();
-        return $permission->getCollection(['groupid' => $groupid]);
+    public static function getByGroupID($groupallowed) {
+        $router = new Router();
+        return $router->getCollection(['groupallowed' => $groupallowed]);
     }
 
     /**
@@ -80,7 +84,7 @@ class UserPermission extends DataProvider {
      * @return type
      */
     public function getGroup() {
-        $group = UserGroup::getByID($this->groupid);
+        $group = UserGroup::getByID($this->groupallowed);
         return $group;
     }
     
@@ -90,8 +94,14 @@ class UserPermission extends DataProvider {
      * @return \UserPermission
      */
     public static function getByID($id) {
-        $permission = new UserPermission();
-        $permission->get(['id' => $id]);
-        return $permission;
+        $route = new Router();
+        $route->get(['id' => $id]);
+        return $route;
+    }
+    
+    public static function getRoute($uri) {
+        $route = new Router();
+        $route->get(['route' => $uri]);
+        return $route;
     }
 }

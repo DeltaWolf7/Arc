@@ -65,6 +65,8 @@ switch (ARCDEBUG) {
 
 // Include and initilise helper class.
 require_once "app/system/Initialiser.php";
+require_once "app/system/API.php";
+require_once "app/system/Render.php";
 require_once "app/system/Helper.php";
 system\Helper::Init();
 
@@ -83,4 +85,4 @@ spl_autoload_register(function($class) {
 system\Initialiser::Init();
 
 // Get content
-system\Helper::GetContent();
+system\Helper::arcGetContent();

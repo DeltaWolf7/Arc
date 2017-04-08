@@ -2,7 +2,7 @@ $("#btnSaveSettings").click(function () {
     arcAjaxRequest("arc/systemsettingsupdate", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
         domain: $("#ldapDomain").val(), base: $("#ldapBase").val(), smtp: $("#useSMTP").val(),
         smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
-        port: $("#smtpPort").val(), sender: $("#smtpSender").val(), defaultPage: $("#defaultPage").val(),
+        port: $("#smtpPort").val(), sender: $("#smtpSender").val(),
         loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
         limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val(),
         siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val(),

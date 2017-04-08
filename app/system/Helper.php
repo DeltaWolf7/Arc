@@ -34,7 +34,7 @@ class Helper {
      * 
      * Array containing all Arc data
      */
-    private static $arc = [];
+    public static $arc = [];
 
     /**
      * 
@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.4.0.19";
+        self::$arc["version"] = "0.5.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -98,12 +98,6 @@ class Helper {
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/datatables/datatables.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
-
-        // Get POST data
-        self::$arc["post"] = [];
-        foreach ($_POST as $key => $value) {
-            self::$arc["post"][$key] = $value;
-        }
     }
 
     /**
@@ -168,12 +162,6 @@ class Helper {
         }
     }
 
-    private static function arcGetPostData($name) {
-        if (isset(self::$arc["post"][$name]))
-            return self::$arc["post"][$name];
-        return null;
-    }
-
     /**
      * 
      * @param bool $filesystem True to return filesystem path, false for web path
@@ -199,7 +187,7 @@ class Helper {
      * @global array $arc Arc settings storage
      * Adds header information to a page from header array
      */
-    private static function arcGetHeader() {
+    public static function arcGetHeader() {
         // output header
         $content = "";
         if (!empty(self::$arc["headerdata"])) {
@@ -215,7 +203,7 @@ class Helper {
      * @global array $arc Arc settings storage
      * Adds footer information to a page from header array
      */
-    private static function arcGetFooter() {
+    public static function arcGetFooter() {
         // output header
         $content = "";
         if (!empty(self::$arc["footerdata"])) {
@@ -236,7 +224,16 @@ class Helper {
         $theme = \SystemSetting::getByKey("ARC_THEME");
         $uri = $_SERVER["REQUEST_URI"];
         $uri = trim($uri, '/');
-        $page = \Page::getBySEOURL($uri);
+        
+        // get route
+        $route = \Router::getRoute($uri);
+        $page = null;
+        if ($route != null && strlen($route->destination) > 0) {
+            $page = \Page::getBySEOURL($route->destination);
+        } else {
+            $page = \Page::getBySEOURL($uri);
+        }
+
         if ($page->id != 0 && $page->theme != "none") {
             $theme->value = $page->theme;
         }
@@ -247,169 +244,6 @@ class Helper {
         return self::arcGetPath() . "themes/" . $theme->value . "/";
     }
 
-    /**
-     * Get the view based on the request
-     */
-    private static function arcGetView() {
-        $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
-        $uri = $uri_parts[0];
-        // set session if it exists.
-        if (self::arcGetPostData("arcsid") != null) {
-            self::arcSetSession(self::arcGetPostData("arcsid"));
-        }
-
-        //stop impersonating user
-        if ($uri == "/arcsiu") {
-            self::arcStopImpersonatingUser();
-            $uri = "/";
-        }
-
-        if (self::arcIsAjaxRequest() == false) {
-            // get page
-            if ($uri == "/") {
-                $defaultPage = \SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-                $uri = $defaultPage->value;
-            }
-            $uri = trim($uri, '/');
-
-            $page = \Page::getBySEOURL($uri);
-            // does page exist
-            if ($page->id == 0) {
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "404";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-            }
-        } else {
-            // new get
-            if (self::arcGetPostData("action") == "getarcstatusmessages") {
-                self::arcGetStatusMessages();
-                return;
-            }
-        }
-
-        // expired session - check for actual user because guests don't need to timeout.
-        if (ARCSESSIONTIMEOUT > 0) {
-            $timeout = ARCSESSIONTIMEOUT * 60;
-            if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
-                session_unset();
-                session_destroy();
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "401";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-            }
-        } else {
-            self::arcAddFooter("js", self::arcGetPath() . "js/arckeepalive.js");
-        }
-
-        // update last activity time stamp
-        $_SESSION["LAST_ACTIVITY"] = time();
-
-        if (self::arcIsAjaxRequest() == false) {
-            // get the current theme
-            $theme = \SystemSetting::getByKey("ARC_THEME");
-
-            // setup page
-            self::arcAddHeader("title", $page->title);
-            if (!empty($page->metadescription)) {
-                self::arcAddHeader("description", $page->metadescription);
-            }
-            
-            if (!empty($page->metakeywords)) {
-                self::arcAddHeader("keywords", $page->metakeywords);
-            }
-
-            // Check the theme in config exists.
-            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                $name = $theme->value;
-                $theme->value = "default";
-                $theme->update();
-                die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
-            }
-
-            // If page has theme set, use it.
-            if ($page->theme != "none") {
-                $theme->value = $page->theme;
-                // If page theme is not present, switch to global theme.
-                if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value)) {
-                    $theme = \SystemSetting::getByKey("ARC_THEME");
-                }
-            }
-
-            // Check if the theme has a controller and include it if it does.
-            if (file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
-                include_once self::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
-            }
-        }
-
-        $groups[] = \UserGroup::getByName("Guests");
-        if (self::arcIsUserLoggedIn() == true) {
-            $groups = array_merge($groups, self::arcGetUser()->getGroups());
-        }
-
-        if (self::arcIsAjaxRequest() == false) {
-            if (!\UserPermission::hasPermission($groups, $page->seourl)) {
-                $page = \Page::getBySEOURL("error");
-                unset(self::$arc["post"]);
-                self::$arc["post"]["error"] = "403";
-                self::$arc["post"]["path"] = $_SERVER["REQUEST_URI"];
-            }
-
-            // template
-            if (!file_exists(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
-                die("Unable to find template.php for theme '" . $theme->value . "'.");
-            }
-
-            $content = file_get_contents(self::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
-
-
-            // custom menu
-            if (file_exists(self::arcGetThemePath(true) . "menu.php")) {
-                ob_start();
-                include self::arcGetThemePath(true) . "menu.php";
-                $newContent = ob_get_contents();
-                ob_end_clean();
-                $content = str_replace("{{arc:menu}}", $newContent, $content);
-            }
-
-            // header
-            if ($page->showtitle == "1") {
-                $content = str_replace("{{arc:title}}", "{$page->title}", $content);
-            } else {
-                $content = str_replace("{{arc:title}}", "", $content);
-            }
-
-            //template modules
-            $content = self::arcProcessModuleTags($content);
-
-            // impersonating
-            if (isset($_SESSION["arc_imposter"])) {
-                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . self::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content);
-            } else {
-                $content = str_replace("{{arc:impersonate}}", "", $content);
-            }
-
-            // body
-            $content = str_replace("{{arc:content}}", self::arcProcessModuleTags(html_entity_decode($page->content)), $content);
-
-            // page icon
-            $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
-
-            $content = self::arcProcessTags($content);
-
-            echo $content;
-        } else {
-            $data = explode("/", $uri);
-            if (isset($data[1]) && isset($data[2])) {
-                include self::arcGetModuleControllerPath($data[1], $data[2], true);
-            } else {
-                \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
-            }
-        }
-
-        self::$arc["modulepath"] = "";
-    }
 
     public static function arcParseEmail($content, $message) {
         $content = self::arcProcessTags($content);
@@ -420,7 +254,7 @@ class Helper {
         return $content;
     }
 
-    private static function arcProcessTags($content) {
+    public static function arcProcessTags($content) {
 
         // site logo
         $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
@@ -554,11 +388,11 @@ class Helper {
         return true;
     }
 
-    private static function arcGetSessionID() {
+    public static function arcGetSessionID() {
         return session_id();
     }
 
-    private static function arcSetSession($id) {
+    public static function arcSetSession($id) {
         session_id($id);
     }
 
@@ -591,7 +425,7 @@ class Helper {
             if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
                 continue;
             }
-            if (\UserPermission::hasPermission($groups, $page->seourl)) {
+            if (\Router::hasPermission($groups, $page->seourl)) {
                 $data = explode("/", $page->seourl);
                 $menu[ucwords($data[0])][$page->title]["name"] = $page->title;
                 $menu[ucwords($data[0])][$page->title]["url"] = $page->seourl;
@@ -680,7 +514,7 @@ class Helper {
      * @param int $code Status code
      * @return string Status code
      */
-    private static function arcRequestStatus($code) {
+    public static function arcRequestStatus($code) {
         $status = array(
             200 => 'OK',
             404 => 'Not Found',
@@ -746,7 +580,7 @@ class Helper {
      * @param string $view View name
      * Includes the module by name and view along with controller if it exists.
      */
-    private static function arcGetModule($name, $view) {
+    public static function arcGetModule($name, $view) {
         if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
             \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
@@ -786,69 +620,27 @@ class Helper {
         return "Arc Version " . self::$arc["version"];
     }
 
-    /**
-     * Used to get Arc to build the content of the page or preform API request.
-     */
-    public static function getContent() {
+    public static function arcGetURI() {
         // Break URL apart and check for API request
         $uri_parts = explode('?', $_SERVER['REQUEST_URI'], 2);
         $uri = $uri_parts[0];
-
+        $uri = ltrim($uri, "/");
+        return $uri;
+    }
+    
+    /**
+     * Used to get Arc to build the content of the page or preform API request.
+     */
+    public static function arcGetContent() {
+        $uri = self::arcGetURI();
+        
+        // check for API request
         if (strpos($uri, "/api/v1") === false) {
-            // No API, Get regular content
-            self::arcGetView();
+             // No API, Get regular content
+            Render::arcRenderContent($uri);
         } else {
-            // Handle API request
-            if (!isset($_GET["key"])) {
-                self::arcReturnJSON(["error" => "API key required to process request"]);
-                \Log::createLog("danger", "API", "API key required to process request");
-            } else {
-
-                $key = null;
-                $users = \User::getAllUsers();
-                foreach ($users as $user) {
-                    $apikey = \SystemSetting::getByKey("APIKEY", $user->id);
-                    if ($apikey->id != 0 && $apikey->value == $_GET["key"]) {
-                        $key = $apikey->value;
-                    }
-                }
-
-                if (empty($key)) {
-                    self::arcReturnJSON(["error" => "Invalid API key"]);
-                    \Log::createLog("danger", "API", "Invalid API key");
-                } else {
-
-                    $split = explode("/", $uri);
-
-                    if (!isset($split[3]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api")) {
-                        self::arcReturnJSON(["error" => "Invalid API request"]);
-                        \Log::createLog("danger", "API", "Invalid API request");
-                    } elseif (!isset($split[4]) || !file_exists(self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php")) {
-                        self::arcReturnJSON(["error" => "Invalid API method request"]);
-                        \Log::createLog("danger", "API", "Invalid API method request");
-                    } else {
-                        include self::arcGetPath(true) . "app/modules/{$split[3]}/api/{$split[4]}.php";
-                        $classname = $split[4] . "Api";
-                        $apimethod = new $classname;
-                        $apimethod->request = $_SERVER['REQUEST_URI'];
-                        switch ($_SERVER['REQUEST_METHOD']) {
-                            case "GET":
-                                $apimethod->GET();
-                                break;
-                            case "POST":
-                                $apimethod->POST();
-                                break;
-                            case "DELETE":
-                                $apimethod->DELETE();
-                                break;
-                            case "PUT":
-                                $apimethod->PUT();
-                                break;
-                        }
-                        \Log::createLog("success", "API", "OK:: Module: {$split[3]}, Command: {$split[4]}, Key: {$key}, Method: {$_SERVER['REQUEST_METHOD']}");
-                    }
-                }
-            }
+            // process uri
+            API::arcGetAPI($uri);
         }
     }
 
@@ -908,4 +700,11 @@ class Helper {
         return $decrypted;
     }
 
+    /**
+     * Return the current URL
+     * @return string
+     */
+    public static function arcGetCurrentUrl() {
+        return (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]/";
+    }
 }

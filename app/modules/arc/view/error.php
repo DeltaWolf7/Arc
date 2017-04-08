@@ -1,14 +1,14 @@
-<h1>Error <?php echo system\Helper::arcGetPostData("error"); ?></h1>
+<h1>Error <?php echo http_response_code(); ?></h1>
 <div class="jumbotron">
     <p><i class="fa fa-warning"></i> 
         <?php
         
 
-        switch (system\Helper::arcGetPostData("error")) {
+        switch (http_response_code()) {
             case "404":
                 ?>
                 The resource you're looking for cannot be found.<br />
-                <br />Request URL: <?php echo system\Helper::arcGetPostData("path"); ?>
+                <br />Request URL: <?php echo system\Helper::arcGetURI(); ?>
                 <?php
                 break;
             case "403":
@@ -27,7 +27,7 @@
                 <?php
                 break;
             default:
-                echo "Unhandled error occured: " . system\Helper::arcGetPostData("error");
+                echo "Unhandled error occured: " . http_response_code() . "<br />";
                 break;
         }
         ?>

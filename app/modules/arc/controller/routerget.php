@@ -3,13 +3,19 @@
 if (system\Helper::arcIsAjaxRequest() == true) {
     $groups = UserGroup::getAllGroups();
     $table = "<table class=\"table table-hover table-condensed\">";
-    $table .= "<thead><tr><th>Module</th><th>Status</th><th></th></tr></thead><tbody>";
+    $table .= "<thead><tr><th>Route</th><th>Destination</th><th>Status</th><th>&nbsp;</th></tr></thead><tbody>";
     foreach ($groups as $group) {
-        $permissions = UserPermission::getByGroupID($group->id);
-        $table .= "<tr class=\"active\"><td colspan=\"2\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> Create</a></td></tr>";
+        $permissions = Router::getByGroupID($group->id);
+        $table .= "<tr class=\"active\"><td colspan=\"3\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><a class=\"btn btn-primary btn-xs\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> Create</a></td></tr>";
         foreach ($permissions as $permission) {
-            $table .= "<tr><td>" . $permission->permission . "</td><td>";
-            $page = Page::getBySEOURL($permission->permission);
+            $table .= "<tr><td>" . $permission->route . "</td><td>";
+            $table .= $permission->destination . "</td><td>";
+            $page = null;
+            if (strlen($permission->destination) > 0) {
+                $page = Page::getBySEOURL($permission->destination);
+            } else {
+                $page = Page::getBySEOURL($permission->route);
+            }
             if ($page->id != 0) {
                 $table .= "<div class=\"label label-success\"><i class=\"fa fa-check\"></i> Valid</div>";
             } else {

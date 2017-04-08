@@ -1,12 +1,12 @@
 <div class="be-error">
     <div class="error-container">
-        <div class="error-number"><?php echo system\Helper::arcGetPostData("error"); ?></div>
+        <div class="error-number"><?php echo http_response_code(); ?></div>
         <div class="error-description">
             <?php
-            switch (system\Helper::arcGetPostData("error")) {
+            switch (http_response_code()) {
                 case "404":
                     echo "The resource you're looking for cannot be found.<br />
-                <br />Request URL:" . system\Helper::arcGetPostData("path");
+                <br />Request URL:" . system\Helper::arcGetURI();
                     break;
                 case "403":
                     echo "You do not have permission to access this resource.";
@@ -18,7 +18,7 @@
                     echo "Your authentication has expired. Please <a href=\"" . system\Helper::arcGetPath() . "login" . "\">login</a>.";
                     break;
                 default:
-                    echo "Unhandled error occured: " . system\Helper::arcGetPostData("error");
+                    echo "Unhandled error occured: " . http_response_code();
                     break;
             }
             ?>

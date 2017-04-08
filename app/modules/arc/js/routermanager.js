@@ -2,8 +2,8 @@ var groupid;
 var pid;
 
 $("#savePermissionsBtn").click(function () {
-    arcAjaxRequest("arc/pagepermissionssave",
-            {id: pid, group: groupid, module: $("#module").val()},
+    arcAjaxRequest("arc/routersave",
+            {id: pid, group: groupid, route: $("#route").val(), destination: $("#destination").val()},
             saveComplete, null);
 });
 
@@ -16,7 +16,7 @@ function saveComplete() {
 function editPermission(group, id) {
     groupid = group;
     pid = id;
-    arcAjaxRequest("arc/pagepermissionsedit", {id: id}, null, successEdit);
+    arcAjaxRequest("arc/routeredit", {id: id}, null, successEdit);
 }
 
 function successEdit(data) {
@@ -26,7 +26,7 @@ function successEdit(data) {
 }
 
 function deletePermission(id) {
-    arcAjaxRequest("arc/pagepermissionsdelete", {id: id}, deleteComplete, null);
+    arcAjaxRequest("arc/routerdelete", {id: id}, deleteComplete, null);
 }
 
 function deleteComplete() {
@@ -35,7 +35,7 @@ function deleteComplete() {
 }
 
 function getData() {
-    arcAjaxRequest("arc/pagepermissionsget", {}, null, successData);
+    arcAjaxRequest("arc/routerget", {}, null, successData);
 }
 
 function successData(data) {

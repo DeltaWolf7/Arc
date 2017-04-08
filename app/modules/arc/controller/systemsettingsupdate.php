@@ -9,11 +9,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->value = "{\"ldap\":\"{$_POST["ldap"]}\", \"server\":\"{$_POST["ldapserver"]}\""
     . ", \"domain\":\"{$_POST["domain"]}\", \"base\":\"{$_POST["base"]}\"}";
     $setting->update();
-    
-    $setting = SystemSetting::getByKey("ARC_DEFAULT_PAGE");
-    $setting->value = $_POST["defaultPage"];
-    $setting->update();
-    
+       
     $setting = SystemSetting::getByKey("ARC_LOGIN_URL");
     $setting->value = $_POST["loginURL"];
     $setting->update();
