@@ -51,6 +51,7 @@ class Render {
             // get route
             $route = \Router::getRoute($uri);
             $page = null;
+            
 
             if ($route->id > 0) {
                 // we have a route
@@ -64,7 +65,7 @@ class Render {
                 }
                 
 
-            } else {
+            } else {              
                 // no route, 404
                 $page = \Page::getBySEOURL("error");
                 http_response_code(404);
@@ -139,7 +140,7 @@ class Render {
         }
 
         if (Helper::arcIsAjaxRequest() == false) {
-            if (!\Router::hasPermission($groups, $uri)) {
+            if (!\Router::hasPermission($groups, $uri) && $page->seourl != "error") {
                 // 403 permission denied
                 $page = \Page::getBySEOURL("error");
                 http_response_code(403);
