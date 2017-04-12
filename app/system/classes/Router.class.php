@@ -35,6 +35,8 @@ class Router extends DataProvider {
     public $destination;
     // group allowed
     public $groupallowed;
+    // visible
+    public $visible;
 
     /**
      * Default constructor
@@ -44,10 +46,11 @@ class Router extends DataProvider {
         $this->route = "";
         $this->destination = "";
         $this->groupallowed = 0;
+        $this->visible = false;
         $this->table = ARCDBPREFIX . 'router';
         $this->map = ["id" => "id", "route" => "route", "destination" => "destination",
-            "groupallowed" => "groupallowed"];
-        $this->columns = ['id', 'route', 'destination', 'groupallowed'];
+            "groupallowed" => "groupallowed", "visible" => "visible"];
+        $this->columns = ['id', 'route', 'destination', 'groupallowed', 'visible'];
     }
 
     /**
@@ -74,9 +77,9 @@ class Router extends DataProvider {
      * @param type $groupid
      * @return type
      */
-    public static function getByGroupID($groupallowed) {
+    public static function getByGroupID($groupallowed, $visible = true) {
         $router = new Router();
-        return $router->getCollection(['groupallowed' => $groupallowed]);
+        return $router->getCollection(['groupallowed' => $groupallowed, "visible" => $visible]);
     }
 
     /**
