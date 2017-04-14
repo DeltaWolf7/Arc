@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<table id=\"logTable\" class=\"table table-responsive table-striped\">"
+    $html = "<table id=\"logTable\" class=\"table table-striped\">"
             . "<thead><tr><th>Type</th>"
             . "<th>Module</th>"
             . "<th>When</th>"
@@ -14,16 +14,16 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<td>";
         switch ($log->type) {
             case "success":
-                $html .= "<span class=\"label label-success\"><i class=\"fa fa-check\"></i> Success<span>";
+                $html .= "<span class=\"badge badge-success\"><i class=\"fa fa-check\"></i> Success<span>";
                 break;
             case "info":
-                $html .= "<span class=\"label label-info\"><i class=\"fa fa-info-circle\"></i> Info<span>";
+                $html .= "<span class=\"badge badge-info\"><i class=\"fa fa-info-circle\"></i> Info<span>";
                 break;
             case "danger":
-                $html .= "<span class=\"label label-danger\"><i class=\"fa fa-exclamation-circle\"></i> Error<span>";
+                $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i> Error<span>";
                 break;
             case "warning":
-                $html .= "<span class=\"label label-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
+                $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
                 break;
         }
         $html .= "</td>"

@@ -3,12 +3,12 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
 ?>
 
 <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#log"> Arc Logs</a></li>
-    <li><a data-toggle="tab" href="#php"> PHP Logs</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#log" class="nav-link active"> Arc Logs</a></li>
+    <li class="nav-item"><a data-toggle="tab" href="#php" class="nav-link"> PHP Logs</a></li>
 </ul>
 
 <div class="tab-content">
-    <div id="log" class="tab-pane fade in active">
+    <div id="log" class="tab-pane active">
         <div class="alert alert-warning">
             <i class="fa fa-exclamation"></i> Logs are purged automatically after <?php echo $days->value; ?> days. This can be adjusted in settings.
         </div>
@@ -23,9 +23,9 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
                 $log = nl2br(file_get_contents($path));
                 $log = str_replace("[", "<mark>[", $log);
                 $log = str_replace("]", "]</mark>", $log);
-                $log = str_replace("PHP Warning:", "<label class=\"label label-warning\">Warning</label><br />", $log);
-                $log = str_replace("PHP Fatal error:", "<label class=\"label label-danger\">Error</label><br />", $log);
-                $log = str_replace("PHP Notice:", "<label class=\"label label-default\">Notice</label><br />", $log);
+                $log = str_replace("PHP Warning:", "<i class=\"badge badge-warning\">Warning</i><br />", $log);
+                $log = str_replace("PHP Fatal error:", "<i class=\"badge badge-danger\">Error</i><br />", $log);
+                $log = str_replace("PHP Notice:", "<i class=\"badge badge-default\">Notice</i><br />", $log);
                 echo $log;
             } else {
                 echo "PHP error log not found or empty.";
@@ -35,4 +35,4 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
     </div>
 </div>
 
-<div class="text-right"><a class="btn btn-primary" onclick="clearLogs();"><i class="fa fa-recycle"></i> Purge Logs</a></div>
+<div class="text-right"><button class="btn btn-primary" onclick="clearLogs();"><i class="fa fa-recycle"></i> Purge Logs</button></div>

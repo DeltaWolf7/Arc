@@ -84,17 +84,17 @@ class Helper {
 
         // Javascript, add required javascript files to header
         self::arcAddFooter("js", self::arcGetPath() . "vendor/jquery/jquery.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/tether/js/tether.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/datatables/js/datatables.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
 
         // CSS, add required css files to header
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/tether/css/tether.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-tagsinput/bootstrap-tagsinput.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap-datetimepicker/bootstrap-datetimepicker.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/datatables/css/datatables.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
     }
 

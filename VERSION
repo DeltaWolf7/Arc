@@ -1,6 +1,6 @@
 Name                            Version             Url
 ----                            -------             ---
-Bootstarp                       3.3.7               http://getbootstrap.com/
+Bootstarp                       4.0.0 alpha 6       https://v4-alpha.getbootstrap.com
 Meedoo                          1.2.1               http://medoo.in/
 jQuery                          3.1.1               https://jquery.com/
 Summernote                      0.8.2               http://summernote.org/
@@ -12,4 +12,5 @@ CodeMirror                      5.24.2              http://codemirror.net/
     - applied replace abc- with null to force overwrite of Bootstrap
 Bootstrap Tags Input            0.8.0               http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
     - changed css for styling and js to insert form-control and height of .form-control.bootstrap-tagsinput
-DataTables                      1.10.13             https://datatables.net
+Tether.io                       1.3.3               http://tether.io/
+Datatables                      1.10.13             https://datatables.net/

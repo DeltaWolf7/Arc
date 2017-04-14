@@ -6,15 +6,15 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<div class=\"panel-body\">";
 
     // buttons
-    $html .= "<table class=\"table table-striped table-responsive\"><tr><td colspan=\"2\">"
-            . "<a class=\"btn btn-default btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</a>"
-            . " <a class=\"btn btn-default btn-sm\" data-toggle=\"popover\" placement=\"top\" title=\"Create Folder\" data-html=\"true\" data-content=\""
+    $html .= "<table class=\"table table-striped\"><tr><td colspan=\"2\">"
+            . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
+            . " <button class=\"btn btn-secondary btn-sm\" data-toggle=\"popover\" placement=\"top\" title=\"Create Folder\" data-html=\"true\" data-content=\""
             . "<form class='form-inline'>"
             . "<input type='text' class='form-control' id='folderName'>"
-            . " <a class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></a>"
+            . " <button class='btn btn-success' onclick='createFolder()'><i class='fa fa-check'></i></button>"
             . "</form>"
-            . "\"><i class=\"fa fa-folder\"></i> New Folder</a>"
-            . " <a class=\"btn btn-default btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</a>";
+            . "\"><i class=\"fa fa-folder\"></i> New Folder</button>"
+            . " <button class=\"btn btn-secondary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
     if ($_POST["path"] != "") {
         $backUrl = "";
         $back = explode("/", $_POST["path"]);
@@ -22,7 +22,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             $backUrl .= $back[$i] . "/";
         }
         $backUrl = rtrim($backUrl, "/");
-        $html .= " <a class=\"btn btn-default btn-sm\" onclick=\"getFolderPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i> Up</a>";
+        $html .= " <button class=\"btn btn-secondary btn-sm\" onclick=\"getFolderPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i> Up</button>";
     }
     $html .= "</td><td class=\"text-right\" colspan=\"4\">";
 

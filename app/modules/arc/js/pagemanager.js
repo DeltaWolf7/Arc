@@ -7,11 +7,10 @@ function editPage(pageid) {
 
 function successEdit(data) {
     var jdata = arcGetJson(data);
-    $("#metakeywords").tagsinput('removeAll');
     $("#title").val(jdata.title);
     $("#seourl").val(jdata.seourl);
     $("#metadescription").val(jdata.metadescription);
-    $("#metakeywords").tagsinput('add', jdata.metakeywords);
+    $("#metakeywords").val(jdata.metakeywords);
     $('#summernote').summernote('code', jdata.html);
     $("#iconclass").val(jdata.iconclass);
     $("#sortorder").val(jdata.sortorder);

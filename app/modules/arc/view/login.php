@@ -39,12 +39,12 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
         </div>
         <div class="row">
             <div class="col-md-5 col-md-offset-1">
-                <a id="loginBtn" class="btn btn-primary btn-block">Login</a>
-                <a class="btn" id="btnForgot">Problems signing in?</a>
+                <button id="loginBtn" class="btn btn-primary btn-block">Login</button>
+                <button class="btn" id="btnForgot">Problems signing in?</button>
             </div>
             <?php if ($reg->value == "true") { ?>
                 <div class="col-md-5">
-                    <a class="btn btn-primary btn-block" onclick="switchView();">Create account</a>
+                    <button class="btn btn-primary btn-block" onclick="switchView();">Create account</button>
                 </div>
             <?php } ?>
         </div>
@@ -76,8 +76,8 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                     <input maxlength="100" type="password" class="form-control" id="passwordr2" placeholder="Retype password" autocomplete="off">
                 </div>
    
-            <a id="registerBtn" class="btn btn-primary btn-block">Register</a>
-            <a class="btn" onclick="switchView();">Already registered? Sign in</a>
+            <button id="registerBtn" class="btn btn-primary btn-block">Register</button>
+            <button class="btn" onclick="switchView();">Already registered? Sign in</button>
         </div>
     </div>
 
@@ -89,8 +89,8 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                     <input maxlength="100" type="email" class="form-control" id="emailf" placeholder="Email address">
                 </div>
            
-            <a id="sendReset" class="btn btn-primary btn-block">Request Reset</a>
-            <a class="btn" id="forgotCancel">Cancel</a>
+            <button id="sendReset" class="btn btn-primary btn-block">Request Reset</button>
+            <button class="btn" id="forgotCancel">Cancel</button>
         </div>
     </div>
 </div>

@@ -1,9 +1,7 @@
 <div id="listDiv" class="panel panel-default">
     <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table table-hover table-condensed table-striped" id="pages">
+            <table class="table table-hover table-sm table-striped" id="pages">
             </table>
-        </div>
     </div>
 </div>
 
@@ -12,8 +10,8 @@
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active"><a href="#pageeditor" aria-controls="pageeditor" role="tab" data-toggle="tab">Page Editor</a></li>
-            <li role="presentation"><a href="#pageproperties" aria-controls="pageproperties" role="tab" data-toggle="tab">Properties</a></li>
+            <li role="presentation" class="nav-item"><a href="#pageeditor" aria-controls="pageeditor" role="tab" data-toggle="tab" class="nav-link active">Page Editor</a></li>
+            <li role="presentation" class="nav-item"><a href="#pageproperties" aria-controls="pageproperties" role="tab" data-toggle="tab" class="nav-link">Properties</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -24,15 +22,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" placeholder="Title"
-                                   maxlength="200" data-toggle="tooltip" data-placement="top" title="Page Title (200 characters max)">
+                            <input type="text" class="form-control" id="title" placeholder="Title" maxlength="200">
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="seourl">SEO Url</label>
-                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="100"
-                                   data-toggle="tooltip" data-placement="top" title="SEO Url (100 characters max)">
+                            <input type="text" class="form-control" id="seourl" placeholder="SEO Url" maxlength="100">
                         </div>
                     </div>
                 </div>
@@ -66,7 +62,7 @@
                                     }
                                     ?>
                                 </select>
-                                <span class="input-group-btn"><a class="btn btn-primary btn-block" id="insertModule">Insert</a></span>
+                                <span class="input-group-btn"><button class="btn btn-primary btn-block" id="insertModule">Insert</button></span>
                             </div>
                         </div>
                     </div>
@@ -104,7 +100,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="metakeywords">META Keywords</label>
-                            <input type="text" id="metakeywords" placeholder="Enter Keywords" data-role="tagsinput">
+                            <input type="text" id="metakeywords" placeholder="Enter Keywords" class="form-control">
                           </div> 
                     </div>    
                 </div>
@@ -123,7 +119,7 @@
                     </div>
                 </div>
                 <div class="row">
-                        <div class="form-group">
+
                             <div class="col-md-3">
                             <label for="showtitle">Show Title</label>
                             <select id="showtitle" class="form-control">
@@ -145,14 +141,13 @@
                                 <option value="1">Yes</option>
                             </select>
                         </div>
-                    </div>
                 </div>           
             </div>
         </div>
 
         <div class="text-right">
-            <a class="btn btn-default" id="closeBtn">Close</a>
-            <a class="btn btn-primary" id="savePageBtn">Save</a>
+            <button class="btn btn-secondary" id="closeBtn">Close</button>
+            <button class="btn btn-primary" id="savePageBtn">Save</button>
         </div>
 
     </div>
@@ -170,8 +165,8 @@
                 Are you sure you want to permanently delete this page?                    
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">No</a>
-                <a class="btn btn-primary" id="doRemoveBtn">Yes</a>
+                <button class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" id="doRemoveBtn">Yes</button>
             </div>
         </div>
     </div>

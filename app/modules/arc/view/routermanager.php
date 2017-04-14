@@ -1,22 +1,22 @@
 <div class="panel panel-default">
     <div class="panel-body">
-        <div id="data" class="table-responsive">
+        <div id="data">
         </div>
     </div>
 </div>
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Permission</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body" id="edit">
 
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="savePermissionsBtn">Save</a>
+                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="savePermissionsBtn">Save</button>
             </div>
         </div>
     </div>

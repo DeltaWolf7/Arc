@@ -4,7 +4,7 @@ $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
 
 $image = "<i class=\"fa fa-user fa-5x\"></i>";
 if (!empty($profileImage->value)) {
-    $image = "<img class=\"img-responsive img-thumbnail\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
+    $image = "<img class=\"img-fluid img-thumbnail\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
 $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 ?>
@@ -58,13 +58,13 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                         <?php echo $image; ?>
                     </div>
                     <div class="panel-footer">
-                        <a id="uploadImage" class="btn btn-primary btn-block btn-file"><input type="file">Change Image</a>
+                        <button id="uploadImage" class="btn btn-primary btn-block btn-file"><input type="file">Change Image</button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="text-right">
-            <a id="saveDetailsBtn" class="btn btn-primary">Update</a>
+            <button id="saveDetailsBtn" class="btn btn-primary">Update</button>
         </div>
     </div>
 </div>

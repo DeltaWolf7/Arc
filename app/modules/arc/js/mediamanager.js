@@ -77,7 +77,7 @@ function viewFile(file, type, size, date) {
     var content = "";
     switch (data[0]) {
         case "image":
-            content = "<img class='img-responsive' src='" + file + "' />";
+            content = "<img class='img-fluid' src='" + file + "' />";
             break;
         case "text":
             var txt = $.ajax({

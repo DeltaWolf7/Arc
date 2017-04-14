@@ -1,28 +1,28 @@
 <div role="tabpanel" id="mainPanel">
     <ul class="nav nav-tabs" role="tablist">
-        <li id="tabUsers" role="presentation"><a onclick="get('users');"><i class="fa fa-user"></i> Users</a></li>
-        <li id="tabGroups" role="presentation"><a onclick="get('groups');"><i class="fa fa-group"></i> Groups</a></li>
-        <li id="tabCompanies" role="presentation"><a onclick="get('companies');"><i class="fa fa-building"></i> Companies</a></li>
+        <li id="tabUsers" role="presentation" class="nav-item"><a onclick="get('users');" class="nav-link active"><i class="fa fa-user"></i> Users</a></li>
+        <li id="tabGroups" role="presentation" class="nav-item"><a onclick="get('groups');" class="nav-link"><i class="fa fa-group"></i> Groups</a></li>
+        <li id="tabCompanies" role="presentation" class="nav-item"><a onclick="get('companies');" class="nav-link"><i class="fa fa-building"></i> Companies</a></li>
     </ul>
     <div class="tab-content">
-        <div role="tabpanel" class="tab-pane active table-responsive" id="data">
+        <div role="tabpanel" class="tab-pane active" id="data">
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="removeUserModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="removeUserModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Remove User</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently remove this user?
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">No</a>
-                <a class="btn btn-primary" id="removeUserBtn">Yes</a>
+                <button class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" id="removeUserBtn">Yes</button>
             </div>
         </div>
     </div>
@@ -76,7 +76,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <a class="btn btn-default btn-block" id="addGroupBtn"><i class="fa fa-plus"></i> Add</a>
+                    <button class="btn btn-secondary btn-block" id="addGroupBtn"><i class="fa fa-plus"></i> Add</button>
                 </div>
 
 
@@ -100,7 +100,7 @@
                 </div>
 
                 <div class="form-group">
-                    <a class="btn btn-default btn-block" id="addCompanyBtn"><i class="fa fa-plus"></i> Add</a>
+                    <button class="btn btn-secondary btn-block" id="addCompanyBtn"><i class="fa fa-plus"></i> Add</button>
                 </div>
 
 
@@ -113,36 +113,36 @@
             </div>
         </div>
         <div class="panel-footer">
-            <a class="btn btn-default" id="closeUserBtn">Close</a>
-            <a class="btn btn-primary" id="saveUserbtn">Save</a>
+            <button class="btn btn-secondary" id="closeUserBtn">Close</button>
+            <button class="btn btn-primary" id="saveUserbtn">Save</button>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="removeGroupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="removeGroupModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Remove Group</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to permanently remove this group?</p>
                 <small>Built in system groups 'Administrators', 'Users' and 'Guests' cannot be removed.</small>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">No</a>
-                <a class="btn btn-primary" id="removeGroupDoBtn">Yes</a>
+                <button class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" id="removeGroupDoBtn">Yes</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="editGroupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editGroupModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Group</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -157,37 +157,37 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="saveGroupBtn">Save</a>
+                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="saveGroupBtn">Save</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="removeCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="removeCompanyModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Remove Company</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 <p>Are you sure you want to permanently remove this company?</p>
                 <small>You cannot remove companies with associated users.</small>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">No</a>
-                <a class="btn btn-primary" id="removeCompanyDoBtn">Yes</a>
+                <button class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" id="removeCompanyDoBtn">Yes</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="editCompanyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="editCompanyModal">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h4 class="modal-title" id="myModalLabel">Edit Company</h4>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -196,8 +196,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="saveCompanyBtn">Save</a>
+                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="saveCompanyBtn">Save</button>
             </div>
         </div>
     </div>

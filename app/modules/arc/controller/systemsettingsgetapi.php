@@ -7,7 +7,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         $apikey = SystemSetting::getByKey("APIKEY", $user->id);
         
         if ($apikey->id != 0) {
-            $html .= "<tr><td>{$user->getFullname()} ({$user->email})</td><td>{$apikey->value}</td><td><a class=\"btn btn-danger btn-sm\" onclick=\"removeApiKey({$user->id})\"><i class=\"fa fa-close\"></i></a></td></tr>";
+            $html .= "<tr><td>{$user->getFullname()} ({$user->email})</td><td>{$apikey->value}</td><td><button class=\"btn btn-danger btn-sm\" onclick=\"removeApiKey({$user->id})\"><i class=\"fa fa-close\"></i></button></td></tr>";
         }
     }
 

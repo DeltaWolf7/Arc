@@ -1,10 +1,10 @@
 <!-- Nav tabs -->
 <ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" class="active"><a href="#system" aria-controls="system" role="tab" data-toggle="tab">System</a></li>
-    <li role="presentation"><a href="#login" aria-controls="login" role="tab" data-toggle="tab">Login</a></li>
-    <li role="presentation"><a href="#smtp" aria-controls="smtp" role="tab" data-toggle="tab">SMTP</a></li>
-    <li role="presentation"><a href="#ldap" aria-controls="ldap" role="tab" data-toggle="tab">LDAP</a></li>
-    <li role="presentation"><a href="#api" aria-controls="api" role="tab" data-toggle="tab">API</a></li>
+    <li role="presentation" class="nav-item"><a href="#system" aria-controls="system" role="tab" data-toggle="tab" class="nav-link active">System</a></li>
+    <li role="presentation" class="nav-item"><a href="#login" aria-controls="login" role="tab" data-toggle="tab" class="nav-link">Login</a></li>
+    <li role="presentation" class="nav-item"><a href="#smtp" aria-controls="smtp" role="tab" data-toggle="tab" class="nav-link">SMTP</a></li>
+    <li role="presentation" class="nav-item"><a href="#ldap" aria-controls="ldap" role="tab" data-toggle="tab" class="nav-link">LDAP</a></li>
+    <li role="presentation" class="nav-item"><a href="#api" aria-controls="api" role="tab" data-toggle="tab" class="nav-link">API</a></li>
 </ul>
 
 <!-- Tab panes -->
@@ -87,7 +87,7 @@
                         <label for="siteLogo">Site Logo</label>
                         <div class="input-group">
                             <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
-                            <i class="input-group-addon"><a class="clickable" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></a></i>
+                            <i class="input-group-addon"><button class="clickable" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></button></i>
                         </div>
                     </div>
                 </div>
@@ -562,7 +562,7 @@
                             </select>
                         </div>
                         <div class="col-md-4">
-                            <a class="btn btn-default btn-block" id="createAPI"><i class="fa fa-plus"></i> Create API key</a>
+                            <button class="btn btn-secondary btn-block" id="createAPI"><i class="fa fa-plus"></i> Create API key</button>
                         </div>
                     </div> 
                 </div>
@@ -577,7 +577,7 @@
 </div>
 
 <div class="text-right">
-    <a id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</a>
+    <button id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
 </div>
 
 
@@ -592,7 +592,7 @@
                 <iframe style="width: 100%; height: 500px; border: 0;" src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="$('#contentViewer').html('');">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#contentViewer').html('');">Close</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
