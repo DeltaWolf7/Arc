@@ -182,13 +182,13 @@
                         <label for="mediaManagerURL">Media Manager URL </label>
                         <select id="mediaManagerURL" class="form-control">
                             <?php
-                            $pages = Page::getAllPages();
-                            foreach ($pages as $page) {
+                                $routes = Router::getCurrentRoutes();
+                            foreach ($routes as $route) {
                                 echo "<option";
-                                if ($media->value == $page->seourl) {
+                                if ($media->value == $route->route) {
                                     echo " selected";
                                 }
-                                echo ">{$page->seourl}</option>";
+                                echo ">{$route->route}</option>";
                             }
                             ?>
                         </select>
@@ -208,7 +208,7 @@
     <!-- Login /-->
     <div role="tabpanel" class="tab-pane" id="login">
 
-        <!-- Log Retention /-->
+        <!-- Login Actions /-->
         <fieldset>
             <legend>Login Actions</legend>
             <div class="row">
@@ -216,15 +216,15 @@
                     <div class="form-group">
                         <label for="loginURL">Successful Login Destination</label>
                         <select id="loginURL" class="form-control">
-                            <?php
-                            $pages = Page::getAllPages();
-                            foreach ($pages as $page) {
-                                echo "<option";
-                                if ($login_url->value == $page->seourl) {
-                                    echo " selected";
+                                <?php
+                                $routes = Router::getCurrentRoutes();
+                                foreach ($routes as $route) {
+                                    echo "<option";
+                                    if ($media->value == $route->route) {
+                                        echo " selected";
+                                    }
+                                    echo ">{$route->route}</option>";
                                 }
-                                echo ">{$page->seourl}</option>";
-                            }
                             ?>
                         </select>
                     </div>

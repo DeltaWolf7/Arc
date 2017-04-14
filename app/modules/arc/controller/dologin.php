@@ -80,7 +80,8 @@ if (system\Helper::arcIsAjaxRequest()) {
     system\Helper::arcReturnJSON([], 401.1);
 }
 
-function doLogin($user) {
+function doLogin($user)
+{
     system\Helper::arcSetUser($user);
     Log::createLog("success", "user", "User logged in: " . $user->email);
     system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
@@ -88,10 +89,15 @@ function doLogin($user) {
     $url = SystemSetting::getByKey("ARC_LOGIN_URL");
 
     system\Helper::arcAddMessage("success", "Login successful.");
-    system\Helper::arcReturnJSON(["redirect" => $url->value]);
+    if (empty($url->value)) {
+        system\Helper::arcReturnJSON(["redirect" => "/"]);
+    } else {
+        system\Helper::arcReturnJSON(["redirect" => $url->value]);
+    }
 }
 
-function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local") {
+function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local")
+{
 // https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
     $ldap = ldap_connect("ldap://{$server}");
     $ldaprdn = "{$domain}\\{$username}";

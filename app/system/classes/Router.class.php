@@ -27,7 +27,8 @@
 /**
  * User Permission object
  */
-class Router extends DataProvider {
+class Router extends DataProvider
+{
 
     // route
     public $route;
@@ -41,12 +42,13 @@ class Router extends DataProvider {
     /**
      * Default constructor
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->route = "";
         $this->destination = "";
         $this->groupallowed = 0;
-        $this->visible = false;
+        $this->visible = true;
         $this->table = ARCDBPREFIX . 'router';
         $this->map = ["id" => "id", "route" => "route", "destination" => "destination",
             "groupallowed" => "groupallowed", "visible" => "visible"];
@@ -59,7 +61,8 @@ class Router extends DataProvider {
      * @param type $entry
      * @return boolean
      */
-    public static function hasPermission($groups, $route) {
+    public static function hasPermission($groups, $route)
+    {
         if (is_array($groups)) {
             foreach ($groups as $group) {
                 foreach ($group->getPermissions() as $permission) {
@@ -77,7 +80,8 @@ class Router extends DataProvider {
      * @param type $groupid
      * @return type
      */
-    public static function getByGroupID($groupallowed, $visible = true) {
+    public static function getByGroupID($groupallowed, $visible = true)
+    {
         $router = new Router();
         return $router->getCollection(['groupallowed' => $groupallowed, "visible" => $visible]);
     }
@@ -86,7 +90,8 @@ class Router extends DataProvider {
      * Get associated Group
      * @return type
      */
-    public function getGroup() {
+    public function getGroup()
+    {
         $group = UserGroup::getByID($this->groupallowed);
         return $group;
     }
@@ -96,15 +101,34 @@ class Router extends DataProvider {
      * @param type $id
      * @return \UserPermission
      */
-    public static function getByID($id) {
+    public static function getByID($id)
+    {
         $route = new Router();
         $route->get(['id' => $id]);
         return $route;
     }
     
-    public static function getRoute($uri) {
+    public static function getRoute($uri)
+    {
         $route = new Router();
         $route->get(['route' => $uri]);
         return $route;
+    }
+
+
+    /**
+     * Return an array of currently available routes
+     *
+     * @param boolean $showHidden show hidden routes (system routes)
+     * @return array of routes
+     */
+    public static function getCurrentRoutes($showHidden = false)
+    {
+        $routes = new Router();
+        if ($showHidden) {
+            return $routes->getCollection(["ORDER" => ['route' => 'ASC']]);
+        } else {
+            return $routes->getCollection(["ORDER" => ['route' => 'ASC'], "visible" => true]);
+        }
     }
 }
