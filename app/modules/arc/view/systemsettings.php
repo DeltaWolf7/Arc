@@ -87,7 +87,7 @@
                         <label for="siteLogo">Site Logo</label>
                         <div class="input-group">
                             <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
-                            <i class="input-group-addon"><button class="clickable" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></button></i>
+                            <i class="input-group-addon"><button class="btn btn-sm" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></button></i>
                         </div>
                     </div>
                 </div>
@@ -585,8 +585,8 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h2 class="modal-title">Media Manager</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
                 <iframe style="width: 100%; height: 500px; border: 0;" src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
