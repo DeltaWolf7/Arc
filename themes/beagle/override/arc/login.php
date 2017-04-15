@@ -23,7 +23,7 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input id="password" type="password" placeholder="Password" class="form-control">
                         </div>
                         <div class="form-group login-submit">
-                            <a id="loginBtn" class="btn btn-primary btn-xl">Sign me in</a>
+                            <button id="loginBtn" class="btn btn-primary btn-xl">Sign me in</button>
                         </div>
                     </div>
                     <div class="panel-body" id="registerDiv" style="display: none;">
@@ -48,9 +48,9 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input maxlength="100" type="password" class="form-control" id="passwordr2" placeholder="Retype password" autocomplete="off">
                         </div>
                         <div class="form-group">
-                            <a id="registerBtn" class="btn btn-primary btn-xl">Register</a>
+                            <button id="registerBtn" class="btn btn-primary btn-xl">Register</button>
                             <br /><br />
-                            <a class="btn btn-danger btn-xl" id="cancelBtn">Cancel</a>
+                            <button class="btn btn-danger btn-xl" id="cancelBtn">Cancel</button>
                         </div>
                     </div>
                     <div class="panel-body" id="forgotDiv" style="display: none;">
@@ -58,16 +58,16 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input id="emailf" type="text" placeholder="Email Address" autocomplete="off" class="form-control">
                         </div>
                         <div class="form-group login-submit">
-                            <a id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</a><br /><br />
-                            <a class="btn btn-danger btn-xl" id="cancelBtn2">Cancel</a>
+                            <button id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</button><br /><br />
+                            <button class="btn btn-danger btn-xl" id="cancelBtn2">Cancel</button>
                         </div>
                     </div>
                 </div>
                 <div class="splash-footer">
                     <?php if ($reg->value == "true") { ?>
-                        <a id="btnRegsiter">Sign Up</a> / 
+                        <button id="btnRegsiter">Sign Up</button> / 
                     <?php } ?>
-                    <a id="btnForgot">Forgot Password?</a>
+                    <button id="btnForgot">Forgot Password?</button>
                 </div>
             </div>
         </div>

@@ -114,9 +114,9 @@ class Render {
             // Check the theme in config exists.
             if (!file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value)) {
                 $name = $theme->value;
-                $theme->value = "default";
+                $theme->value = "beagle";
                 $theme->update();
-                die("Unable to find theme '" . $name . "'. Selected theme reset to 'default'.");
+                die("Unable to find theme '" . $name . "'. Selected theme reset to 'beagle'.");
             }
 
             // If page has theme set, use it.
