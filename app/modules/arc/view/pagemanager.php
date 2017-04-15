@@ -62,7 +62,9 @@
                                     }
                                     ?>
                                 </select>
-                                <span class="input-group-btn"><button class="btn btn-primary btn-block" id="insertModule">Insert</button></span>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" id="insertModule">Insert</button>
+                                </span>
                             </div>
                         </div>
                     </div>
