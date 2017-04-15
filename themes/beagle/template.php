@@ -8,14 +8,12 @@
   <body>
     <div class="be-wrapper">
       <nav class="navbar navbar-default navbar-fixed-top be-top-header">
-        <div class="container-fluid">
             <div class="navbar-header"><a href="{{arc:path}}" class="navbar-brand"><img style="max-height: 55px; padding-top: 5px;" src="{{arc:sitelogo}}"></a></div>
             <div class="be-right-navbar">
                 <ul class="nav navbar-nav navbar-right be-user-nav">
                     <li><a href="{{arc:path}}"><img class="img-responsive" style="padding-top: 5px;" src="{{arc:sitelogo}}"></a><li>
                 </ul>
             </div>
-        </div>
       </nav>
       <div class="be-left-sidebar">
         <div class="left-sidebar-wrapper"><a href="#" class="left-sidebar-toggle">Navigation</a>
