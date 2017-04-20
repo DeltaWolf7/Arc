@@ -7,7 +7,7 @@ $(document).ready(function () {
     $(".page-head").hide();
 });
 
-$("#btnRegsiter").click(function () {
+$("#btnRegister").click(function () {
     $("#loginDiv").hide();
     $("#forgotDiv").hide();
     $("#registerDiv").show();
@@ -25,12 +25,14 @@ function resetLogin() {
     $("#loginDiv").show();
     $("#forgotDiv").hide();
     $("#registerDiv").hide();
+    $("#btnForgot").show();
 }
 
 $("#btnForgot").click(function () {
     $("#loginDiv").hide();
     $("#forgotDiv").show();
     $("#registerDiv").hide();
+    $("#btnForgot").hide();
 });
 
 $("#sendReset").click(function () {

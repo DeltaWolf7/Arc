@@ -161,7 +161,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
-                <h4 class="modal-title" id="myModalLabel">Delete Page</h4>
+                <h5 class="modal-title" id="myModalLabel">Delete Page</h5>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this page?                    

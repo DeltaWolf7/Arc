@@ -65,9 +65,9 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                 </div>
                 <div class="splash-footer">
                     <?php if ($reg->value == "true") { ?>
-                        <button id="btnRegsiter">Sign Up</button> / 
+                        <button id="btnRegister">Sign Up</button> / 
                     <?php } ?>
-                    <button id="btnForgot">Forgot Password?</button>
+                    <a href="#" id="btnForgot">Forgot Password?</a>
                 </div>
             </div>
         </div>

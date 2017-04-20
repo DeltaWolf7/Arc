@@ -14,7 +14,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Remove User</h4>
+                <h5 class="modal-title" id="myModalLabel">Remove User</h5>
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
@@ -123,7 +123,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Remove Group</h4>
+                <h5 class="modal-title" id="myModalLabel">Remove Group</h5>
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
@@ -141,7 +141,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Edit Group</h4>
+                <h5 class="modal-title" id="myModalLabel">Edit Group</h5>
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
@@ -168,7 +168,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Remove Company</h4>
+                <h5 class="modal-title" id="myModalLabel">Remove Company</h5>
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
@@ -186,7 +186,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Edit Company</h4>
+                <h5 class="modal-title" id="myModalLabel">Edit Company</h5>
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
