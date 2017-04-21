@@ -54,7 +54,7 @@ class User extends DataProvider {
         $this->firstname = "";
         $this->lastname = "";
         $this->email = "";
-        $this->enabled = true;
+        $this->enabled = 1;
         $this->passwordhash = "";
         $this->groups = "[\"Users\"]";
         $this->company = "[]";

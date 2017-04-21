@@ -112,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="panel-footer">
+        <div class="panel-footer text-right">
             <button class="btn btn-secondary" id="closeUserBtn">Close</button>
             <button class="btn btn-primary" id="saveUserbtn">Save</button>
         </div>

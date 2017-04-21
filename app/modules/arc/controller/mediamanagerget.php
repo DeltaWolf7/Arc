@@ -6,7 +6,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<div class=\"panel-body\">";
 
     // buttons
-    $html .= "<table class=\"table table-striped\"><tr><td colspan=\"2\">"
+    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"
             . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
             . " <button class=\"btn btn-secondary btn-sm\" data-toggle=\"popover\" placement=\"top\" title=\"Create Folder\" data-html=\"true\" data-content=\""
             . "<form class='form-inline'>"

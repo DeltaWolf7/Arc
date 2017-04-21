@@ -13,4 +13,4 @@ CodeMirror                      5.24.2              http://codemirror.net/
 Bootstrap Tags Input            0.8.0               http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/
     - changed css for styling and js to insert form-control and height of .form-control.bootstrap-tagsinput
 Tether.io                       1.3.3               http://tether.io/
-Datatables                      1.10.13             https://datatables.net/
+Datatables                      1.10.15             https://datatables.net/

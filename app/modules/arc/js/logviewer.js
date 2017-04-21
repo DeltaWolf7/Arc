@@ -18,5 +18,10 @@ function getLogs() {
 function updateView(data) {
     var jdata = arcGetJson(data);
     $("#logs").html(jdata.html);
-    $("#logTable").DataTable();
+    $("#logTable").DataTable({
+        "pageLength": 50,
+        "targets": 'no-sort',
+        "bSort": false,
+        "order": []
+    });
 }

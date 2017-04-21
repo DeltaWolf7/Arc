@@ -24,7 +24,7 @@
             ?>
         </div>
         <div class="error-goback-text">Would you like to go home?</div>
-        <div class="error-goback-button"><a id="btnHome" class="btn btn-xl btn-primary">Let's go home</a></div>
+        <div class="error-goback-button"><button id="btnHome" class="btn btn-xl btn-primary">Let's go home</button></div>
         <div class="footer">{{arc:sitetitle}}</div>
     </div>
 </div>

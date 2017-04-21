@@ -19,7 +19,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
         <p class="small">
             <?php
             $path = system\Helper::arcGetPath(true) . ini_get('error_log');
-            if (file_exists($path)) {
+            if (!empty(ini_get('error_log')) && file_exists($path)) {
                 $log = nl2br(file_get_contents($path));
                 $log = str_replace("[", "<mark>[", $log);
                 $log = str_replace("]", "]</mark>", $log);
@@ -28,7 +28,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
                 $log = str_replace("PHP Notice:", "<i class=\"badge badge-default\">Notice</i><br />", $log);
                 echo $log;
             } else {
-                echo "PHP error log not found or empty.";
+                echo "<div class=\"alert alert-warning\">PHP error log not found or empty.</div>";
             }
             ?>
         </p>

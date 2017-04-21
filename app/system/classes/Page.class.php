@@ -65,9 +65,9 @@ class Page extends DataProvider {
         $this->seourl = "";
         $this->sortorder = 0;
         $this->iconclass = "";
-        $this->showtitle = true;
-        $this->hideonlogin = false;
-        $this->hidefrommenu = false;
+        $this->showtitle = 1;
+        $this->hideonlogin = 0;
+        $this->hidefrommenu = 0;
         $this->theme = "none";
         $this->table = ARCDBPREFIX . "pages";
         $this->map = ["id" => "id", "title" => "title", "content" => "content",
