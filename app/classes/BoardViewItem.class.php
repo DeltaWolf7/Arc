@@ -12,6 +12,7 @@ class BoardViewItem extends DataProvider
     public $extended;
     public $created;
     public $expired;
+    public $group;
 
     public function __construct()
     {
@@ -25,12 +26,13 @@ class BoardViewItem extends DataProvider
         $this->extended = "";
         $this->created = new DateTime("NOW");
         $this->expired = false;
+        $this->group = "";
         $this->table = "arcboard_items";
         $this->columns = ["id", "image", "title", "subtitle", "description", "links", "lifespan", "extended",
-                            "created", "expired"];
+                            "created", "expired", "groupname"];
         $this->map = ["id" => "id", "image" => "image", "title" => "title", "subtitle" => "subtitle",
                         "description" => "description", "links" => "links", "lifespan" => "lifespan",
-                        "extended" => "extended", "created" => "created", "expired" => "expired"];
+                        "extended" => "extended", "created" => "created", "expired" => "expired", "group" => "groupname"];
     }
 
     public static function getByID($id)

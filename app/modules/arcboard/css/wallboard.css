@@ -1,0 +1,22 @@
+body {
+    padding-left: 15px;
+    padding-right: 15px;
+    background: url('/assets/space.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.wallboard-menu {
+    background-color: #585450;
+    color: #FFFFFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    padding: 11px;
+}
+
+h1 {
+    padding-top: 50px;
+    color: #FFFFFF;
+}
