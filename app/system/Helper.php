@@ -350,7 +350,7 @@ class Helper {
     /**
      * 
      * Check if logged in user is in a group
-     * @param string/array $groups Group name
+     * @param array $groups Group name
      * @return boolean true if they are
      */
     public static function arcIsUserInGroup($groups = []) {
