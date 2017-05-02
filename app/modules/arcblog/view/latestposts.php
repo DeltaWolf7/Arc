@@ -43,7 +43,7 @@ function buildBlog($blogs, $limit = 0)
                         <span>
                             <?php
                                 foreach ($categories as $category) {
-                                    echo $category->name . " ";
+                                    echo $category->name . " "; 
                                 }
                             ?>
                         </span>
