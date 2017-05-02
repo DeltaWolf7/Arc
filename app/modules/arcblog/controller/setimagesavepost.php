@@ -1,8 +1,5 @@
 <?php
 
-if (system\Helper::arcGetURLData("action") == null) {
-    system\Helper::arcOverrideView("default", true);
-}
 
 if (system\Helper::arcIsAjaxRequest() == true) {  
     if ($_POST["action"] == "setimage") {
@@ -17,15 +14,6 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         }
         $post->update();
     } elseif ($_POST["action"] == "savepost") {
-        $post = new Blog();
-        $post->getByID($_POST['id']);
-        $post->categoryid = $_POST['categoryid'];
-        $post->content = $_POST['editor'];
-        $post->posterid = $_POST['poster'];
-        $post->seourl = $_POST['seourl'];
-        $post->tags = $_POST['tags'];
-        $post->title = $_POST['title'];
-        $post->update();
-        echo "success|Post saved";
+        
     }
 }

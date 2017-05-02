@@ -1,5 +1,0 @@
-.blogImage { height: 250px; overflow: hidden; }
-@media screen and (max-width: 768px) {
-    .blogImage { height: 100px; }
-}
-.blogImage > img { width: 100%; display: block; }

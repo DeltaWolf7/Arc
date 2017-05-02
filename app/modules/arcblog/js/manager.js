@@ -1,8 +1,9 @@
 var catID;
+var postid;
 
 function catBtn(id) {
     catID = id;
-    arcAjaxRequest("arcblog/cat", {action: "getcategory", id: id}, success, null);
+    arcAjaxRequest("arcblog/cat", { id: id }, success, null);
 }
 
 function success(data) {
@@ -13,174 +14,121 @@ function success(data) {
 }
 
 function catDelete(id) {
-    arcAjaxRequest("arcblog/deletecategory", {action: "deletecategory", id: id}, deleteSuccess, null);
+    arcAjaxRequest("arcblog/deletecategory", { id: id }, deleteSuccess, null);
 }
 
 function deleteSuccess(data) {
-    var jdata = arcGetJson(data);
-    get("categories");
-    updateStatus("status");
+    getCategories();
+    arcGetStatus();
 }
 
 $("#catSave").click(function () {
-    $.ajax({
-        url: "<?php system\Helper::arcGetDispatch(); ?>",
-        dataType: "json",
-        type: "post",
-        contentType: "application/x-www-form-urlencoded",
-        data: {action: "saveCategory", id: catID, name: $("#cattitle").val(), seourl: $("#catseourl").val()},
-        complete: function (data) {
-            $("#categoryModal").modal('hide');
-            get("categories");
-            updateStatus("status");
-        }
-    });
+    arcAjaxRequest("arcblog/savecategory", { id: catID, name: $("#cattitle").val(), seourl: $("#catseourl").val() }, saveComplete, null);
 });
 
-var postid;
+
 function editPost(id) {
     postid = id;
-    $.ajax({
-        url: "<?php system\Helper::arcGetDispatch(); ?>",
-        dataType: "json",
-        type: "post",
-        contentType: "application/x-www-form-urlencoded",
-        data: {action: "getpost", id: id},
-        success: function (data) {
-            var jdata = jQuery.parseJSON(JSON.stringify(data));
+    arcAjaxRequest("arcblog/editpost", { id: id }, null, editComplete);
+}
+
+function editComplete(data) {
+    var jdata = arcGetJson(data);
             $("#title").val(jdata.title);
             $("#tags").val(jdata.tags);
             $("#seourl").val(jdata.seourl);
-            $('.summernote').code(jdata.content);
+            $('#summernote').summernote('code', jdata.content);
             $('#dateData').val(jdata.date);
             $('#selected').html(jdata.sel);
             $('#image').html(jdata.img);
-            $("#postModal").modal('show');
-        }
-    });
+            $("#postEditor").show();
+            $("#tabs").hide();
 }
 
 $("#postSaveBtn").click(function () {
-    $.ajax({
-        url: "<?php system\Helper::arcGetDispatch(); ?>",
-        dataType: "json",
-        type: "post",
-        contentType: "application/x-www-form-urlencoded",
-        data: {action: "savePost", id: postid, title: $("#title").val(), tags: $("#tags").val(), seourl: $("#seourl").val(),
-                            content: $(".summernote").code(), date: $("#dateDate").val(), posterid: <?php echo system\Helper::arcGetUser()->id; ?>},
-complete: function (data) {
-                                    $("#categoryModal").modal('hide');
-                            get("categories");
-                            updateStatus("status");
+     arcAjaxRequest("arcblog/savepost", {
+            id: postid, title: $("#title").val(), tags: $("#tags").val(), seourl: $("#seourl").val(),
+            content: $("#summernote").code(), date: $("#dateDate").val(), posterid: "posterid"
+        }, saveComplete, null);
+});
+
+function saveComplete() {
+    $("#categoryModal").modal('hide');
+    getCategories();
+    arcGetStatus();
 }
-});
-});
 
-$("#posts").click(function () {
-                            get("posts");
-});
 
-$("#categories").click(function () {
-                            get("categories");
-});
 
 $("#addPostCat").click(function () {
-                            if ($('#cat').val() != null) {
-                                $.ajax({
-                                    url: "<?php system\Helper::arcGetDispatch(); ?>",
-                                    dataType: "json",
-                                    type: "post",
-                                    contentType: "application/x-www-form-urlencoded",
-                                    data: {action: "addpostcat", id: postid, catname: $('#cat').val()},
-complete: function (data) {
-                                                        editPost(postid);
-                                                get("posts");
-                                                updateStatus("status");
-}
-});
-}
+   arcAjaxRequest("arcblog/addpostcategory", {id: postid, catname: $('#cat').val()}, catCompete, null);
 });
 
 $("#remPostCat").click(function () {
-                                                if ($('#sel').val() != null) {
-                                                    $.ajax({
-                                                        url: "<?php system\Helper::arcGetDispatch(); ?>",
-                                                        dataType: "json",
-                                                        type: "post",
-                                                        contentType: "application/x-www-form-urlencoded",
-                                                        data: {
-                                                                    action: "rempostcat", id: postid, catname: $('#sel').val()},
-complete: function (data) {
-                                                                            editPost(postid);
-                                                                    get("posts");
-                                                                    updateStatus("status");
-}
-});
-}
+    arcAjaxRequest("arcblog/removepostcategory", {id: postid, catname: $('#sel').val()}, catCompete, null);
 });
 
-function get(action) {
-                                                                    if (action == "posts") {
-                                                                                $("#posts").attr("class", "active");
-                                                                                $("#categories").removeClass("active");
-} else {
-                                                                                        $("#posts").removeClass("active");
-                                                                                $("#categories").attr("class", "active");
+function catCompete() {
+    getPosts();
+    arcGetStatus();
 }
-$.ajax({
-                                                                                url: "<?php system\Helper::arcGetDispatch(); ?>",
-                                                                                dataType: "json",
-                                                                                type: "post",
-                                                                                contentType: "application/x-www-form-urlencoded",
-                                                                                data: {action: action},
-success: function (data) {
-                                                                                                    var jdata = jQuery.parseJSON(JSON.stringify(data));
-                                                                                            $('#data').html(jdata.html);
-}
+
+$("#posts").click(function () {
+    getPosts();
 });
+
+$("#categories").click(function () {
+    getCategories();
+});
+
+function getCategories() {
+    $("#posts").removeClass("active");
+    $("#categories").attr("class", "active");
+    arcAjaxRequest("arcblog/getcategories", {}, null, getComplete);
 }
+
+function getPosts() {
+    $("#posts").attr("class", "active");
+    $("#categories").removeClass("active");
+    arcAjaxRequest("arcblog/getposts", {}, null, getComplete);
+}
+
+function getComplete(data) {
+    var jdata = arcGetJson(data);
+    $('#data').html(jdata.html);
+}
+
 
 $(document).ready(function () {
-                                                                                            get("posts");
-                                                                                            $('.summernote').summernote({height: 250,
-                                                                                                toolbar: [
-                                                                                                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                                                                                                    ['insert', ['superscript', 'subscript']],
-                                                                                                    ['color', ['color']],
-                                                                                                    ['para', ['ul', 'ol']],
-                                                                                                    ['height', ['height']],
-                                                                                                    ['table', ['table']],
-                                                                                                    ['link', ['link', 'picture']],
-                                                                                                    ['source', ['codeview']]
-                                                                                                ],
-                                                                                                onImageUpload: function (files, editor, welEditable) {
-                                                                                                        sendFile(files[0], editor, welEditable);
-}
+    $('#summernote').summernote({
+        height: 300,
+        codemirror: {// codemirror options
+            theme: 'monokai'
+        },
+        toolbar: [
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+            ['insert', ['superscript', 'subscript']],
+            ['font', ['strikethrough']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['link', ['link', 'picture', 'video', 'hr']],
+            ['misc', ['fullscreen']],
+            ['source', ['undo', 'redo', 'codeview']]
+        ],
+        callbacks: {
+            onImageUpload: function (files) {
+                arcAjaxRequest("arc/imageupload", files[0], null, uploadComplete);
+            }
+        }
+    });
+
+    getPosts();
 });
-function sendFile(file, editor, welEditable) {
-                                                                                                        data = new FormData();
-                                                                                                        data.append("file", file);
-                                                                                                        $.ajax({
-                                                                                                            data: data,
-                                                                                                            url: "<?php system\Helper::arcGetDispatch(); ?>",
-                                                                                                            cache: false,
-                                                                                                            type: "post",
-                                                                                                            contentType: false,
-                                                                                                            processData: false,
-                                                                                                            dataType: "json",
-                                                                                                            success: function (data) {
-                                                                                                                var jdata = jQuery.parseJSON(JSON.stringify(data));
-                                                                                                                if (jdata.status == "success") {
-                                                                                                                            editor.insertImage(welEditable, jdata.data);
-} else {
-                                                                                                                                    updateStatus("status");
-}
-$("body").removeClass();
-$("body").addClass("modal-open");
-}
-});
-}
-$('#date').datetimepicker({
-                                                                                                                            pickTime: true
-});
+
+$("#cancelPost").click(function() {
+    $("#postEditor").hide();
+            $("#tabs").show();
 });

@@ -1,4 +1,4 @@
-<div role="tabpanel">
+<div role="tabpanel" id="tabs">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#" aria-controls="posts" role="tab" data-toggle="tab" id="posts">Posts</a></li>
@@ -11,32 +11,28 @@
     </div>
 </div>
 
-<div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
-                <h4 class="modal-title" id="myModalLabel">Edit Post</h4>
-            </div>
-            <div class="modal-body">
+<div class="panel panel-default" id="postEditor" style="display: none;">
+<div class="panel-body">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label>Title</label>
+                            <label for="title">Title</label>
                             <input type="text" class="form-control" id="title" maxlength="100" />
                         </div>
+                        
                         <div class="form-group">
-                            <label>SEO Url</label>
-                            <input type="text" class="form-control" id="seourl" maxlength="100" />
-                        </div>
-                        <div class="form-group">
-                            <label>Tags</label>
+                            <label for="tags">Tags</label>
                             <input type="text" class="form-control" id="tags" />
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-6">
+
                         <div class="form-group">
-                            <label>Date</label>
+                            <label for="seourl">SEO Url</label>
+                            <input type="text" class="form-control" id="seourl" maxlength="100" />
+                        </div>
+                         <div class="form-group">
+                            <label for="date">Date</label>
                             <div class='input-group date' id='date'>
                                 <input id='dateData' type='text' class="form-control" data-date-format="DD/MM/YYYY"/>
                                 <span class="input-group-addon">
@@ -49,12 +45,12 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="summernote"></div>
+                    <div id="summernote"></div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>Categories</label>
+                            <label for="cat">Categories</label>
                             <select class="form-control" id="cat" size="5">"
                                 <?php
                                 $categories = BlogCategory::getAllCategories();
@@ -65,7 +61,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-default" id="addPostCat"><i class="fa fa-edit"></i> Add To Category</a>
+                            <button class="btn btn-default" id="addPostCat"><i class="fa fa-edit"></i> Add To Category</button>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -73,18 +69,17 @@
                             <label>Selected Categories</label>
                         </div>
                         <div class="form-group">
-                            <a class="btn btn-default" id="remPostCat"><i class="fa fa-remove"></i> Remove From Category</a>
+                            <button class="btn btn-default" id="remPostCat"><i class="fa fa-remove"></i> Remove From Category</button>
                         </div>
                     </div>
                 </div>
+                <button class="btn btn-default" id="cancelPost">Cancel</button>
+                <button class="btn btn-primary" id="postSaveBtn">Save</button>
+                </div>
             </div>
-            <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="postSaveBtn">Save</a>
-            </div>
-        </div>
-    </div>
-</div>
+         
+                
+
 
 <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -108,8 +103,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a class="btn btn-default" data-dismiss="modal">Close</a>
-                <a class="btn btn-primary" id="catSave">Save</a>
+                <button class="btn btn-default" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" id="catSave">Save</button>
             </div>
         </div>
     </div>

@@ -27,6 +27,12 @@ class Blog extends DataProvider {
             "tags" => "tags", "poster" => "poster", "category" => "category", "seourl" => "seourl"];
     }
 
+    public static function getByID($id) {
+        $blog = new Blog();
+        $blog->get(["id" => $id]);
+        return $blog;
+    }
+
     public static function getAllBlogs() {
         $blogs = new Blog();
         return $blogs->getCollection(["ORDER" => ["date" => "DESC"]]);
