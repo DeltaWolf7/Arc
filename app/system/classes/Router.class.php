@@ -83,7 +83,8 @@ class Router extends DataProvider
     public static function getByGroupID($groupallowed, $visible = true)
     {
         $router = new Router();
-        return $router->getCollection(['groupallowed' => $groupallowed, "visible" => $visible]);
+        return $router->getCollection(['groupallowed' => $groupallowed,
+             "visible" => $visible]);
     }
 
     /**

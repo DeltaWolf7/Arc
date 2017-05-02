@@ -1,4 +1,3 @@
-<p class="text-right"><a class="btn btn-default btn-xs" id="clearCache"><i class="fa fa-trash-o"></i> Clear Cache</a></p>
 <div role="tabpanel">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">

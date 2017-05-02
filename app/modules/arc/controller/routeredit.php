@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
         $permission = Router::getByID($_POST["id"]);
-        $pages = Page::getAllPages();
+        $pages = Page::getAllPages(true);
         
         // route
         $data = "<div class=\"form-group\"><label for=\"route\">Route</label>"

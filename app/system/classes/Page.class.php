@@ -94,9 +94,12 @@ class Page extends DataProvider {
      * Get all pages from the database
      * @return type
      */
-    public static function getAllPages() {
+    public static function getAllPages($ignoreSortOrder = false) {
         $page = new Page();
-        return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
+        if ($ignoreSortOrder == false) {
+            return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
+        }
+        return $page->getCollection(["ORDER" => ['seourl' => 'ASC']]);
     }
 
     /**

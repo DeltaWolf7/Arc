@@ -37,19 +37,6 @@ $("#catSave").click(function () {
     });
 });
 
-$("#clearCache").click(function () {
-    $.ajax({
-        url: "<?php system\Helper::arcGetDispatch(); ?>",
-        dataType: "json",
-        type: "post",
-        contentType: "application/x-www-form-urlencoded",
-        data: {action: "clearcache"},
-        complete: function (data) {
-            updateStatus("status");
-        }
-    });
-});
-
 var postid;
 function editPost(id) {
     postid = id;

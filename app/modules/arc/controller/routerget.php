@@ -22,7 +22,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
                 $table .= "<div class=\"badge badge-danger\"><i class=\"fa fa-close\"></i> Invalid</div>";
             }
             $table .= "</td>"
-                    . "<td class=\"text-right\"><div class=\"btn-group\"><button class=\"btn btn-success btn-sm\" onclick=\"editPermission({$group->id},{$permission->id});\"><i class=\"fa fa-pencil\"></i> Edit</button><button onclick=\"deletePermission({$permission->id});\" class=\"btn btn-danger btn-sm\"><i class=\"fa fa-remove\"></i> Remove</button></div></td>"
+                    . "<td class=\"text-right\"><div class=\"btn-group\">"
+                    . "<button class=\"btn btn-success btn-sm\" onclick=\"editPermission({$group->id},{$permission->id});\">"
+                    . "<i class=\"fa fa-pencil\"></i> Edit</button><button onclick=\"deletePermission({$permission->id});\" class=\"btn btn-danger btn-sm\">"
+                    . "<i class=\"fa fa-remove\"></i> Remove</button></div></td>"
                     . "</tr>";
         }
     }

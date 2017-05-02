@@ -1,3 +1,4 @@
+
 <?php
 
 $latest = SystemSetting::getByKey("ARC_BLOG_NOLATEST");
@@ -6,7 +7,8 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
 buildBlog($blogs, $charCount->value);
 
 
-function buildBlog($blogs, $limit = 0) {
+function buildBlog($blogs, $limit = 0)
+{
     if (count($blogs) == 0) {
         echo "No posts found in this category.";
     } else {
@@ -18,41 +20,36 @@ function buildBlog($blogs, $limit = 0) {
             $categories = $blog->getCategories();
             ?>
 
-            <div class="media">
-                <?php
-                if (!empty($blog->image)) {
-                    ?>
-                    <a class="media-left" href="<?php echo $actual_link . "{$blog->seourl}"; ?>">
-                        <img class="img-rounded" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
-                    </a>
-                    <?php
-                }
-                ?>
-                <div class="media-body">
-                    <a href="<?php echo $actual_link . "{$blog->seourl}"; ?>">
-                        <h4 class="media-heading"><?php echo $blog->title ?></h4>
-                    </a>
+
+            <div class="card">
+                <?php if (!empty($blog->image)) { ?>
+                <img class="card-img-top" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
+                <?php } ?>
+                <div class="card-block border-b-1">
+                    <h6><?php echo $blog->title; ?></h6>
+                    <p class="mb-0">
                     <?php echo $content; ?>
+                    </p>
+                    <div class="mt-4">
+                        <a href="<?php echo $actual_link . "{$blog->seourl}"; ?>" class="btn btn-secondary text-muted">Read More</a>
+                    </div>
                 </div>
-                <hr />
-                <div class="text-right">
-                    <?php if (isset($tags)) { ?> 
-                        <i class="fa fa-tags"></i> <?php echo $tags; ?>
-                    <?php } ?>
-                    <i class="fa fa-folder"></i> Posted in 
-                    <?php
-                    $count = count($categories);
-                    for ($i = 0; $i < $count; $i++) {
-                        if ($i != $count - 1) {
-                            echo "<a href=\"" . $actual_link . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>, ";
-                        } else {
-                            echo "<a href=\"" . $actual_link . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>";
-                        }
-                    }
-                    ?>
-                    on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
-                    by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
+
+                <div class="d-flex px-4 py-3">
+                    <div>
+                        <button class="btn btn-icon btn-lg circle mr-1 bg-faded text-gray">
+                        <i class="fa fa-folder-o"></i>
+                        </button> 
+                        <span>
+                            <?php
+                                foreach ($categories as $category) {
+                                    echo $category->name . " ";
+                                }
+                            ?>
+                        </span>
+                    </div>
                 </div>
+
             </div>
 
             <?php
@@ -60,7 +57,8 @@ function buildBlog($blogs, $limit = 0) {
     }
 }
 
-function truncate($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false) {
+function truncate($text, $length = 100, $ending = '...', $exact = true, $considerHtml = false)
+{
     if ($considerHtml) {
         // if the plain text is shorter than the maximum length, return the whole text
         if (strlen(preg_replace('/<.*?>/', '', $text)) <= $length) {
@@ -81,14 +79,14 @@ function truncate($text, $length = 100, $ending = '...', $exact = true, $conside
                 if (preg_match('/^<(\s*.+?\/\s*|\s*(img|br|input|hr|area|base|basefont|col|frame|isindex|link|meta|param)(\s.+?)?)>$/is', $line_matchings[1])) {
                     // do nothing
                     // if tag is a closing tag (f.e.)
-                } else if (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
+                } elseif (preg_match('/^<\s*\/([^\s]+?)\s*>$/s', $line_matchings[1], $tag_matchings)) {
                     // delete tag from $open_tags list
                     $pos = array_search($tag_matchings[1], $open_tags);
                     if ($pos !== false) {
                         unset($open_tags[$pos]);
                     }
                     // if tag is an opening tag (f.e. )
-                } else if (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings)) {
+                } elseif (preg_match('/^<\s*([^\s>!]+).*?>$/s', $line_matchings[1], $tag_matchings)) {
                     // add tag to the beginning of $open_tags list
                     array_unshift($open_tags, strtolower($tag_matchings[1]));
                 }
