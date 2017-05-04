@@ -80,11 +80,13 @@ class Router extends DataProvider
      * @param type $groupid
      * @return type
      */
-    public static function getByGroupID($groupallowed, $visible = true)
+    public static function getByGroupID($groupallowed, $visibleOnly = true)
     {
         $router = new Router();
-        return $router->getCollection(['groupallowed' => $groupallowed,
-             "visible" => $visible]);
+        if ($visibleOnly == true) {
+            return $router->getCollection(['groupallowed' => $groupallowed, "visible" => true]);
+        }
+        return $router->getCollection(['groupallowed' => $groupallowed]);
     }
 
     /**
@@ -113,6 +115,9 @@ class Router extends DataProvider
     {
         $route = new Router();
         $route->get(['route' => $uri]);
+        if ($route->id == 0) {
+            $route->get(['destination' => $uri]);
+        }
         return $route;
     }
 

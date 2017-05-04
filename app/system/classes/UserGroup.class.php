@@ -62,7 +62,7 @@ class UserGroup extends DataProvider {
      * @return type
      */
     public function getPermissions() {
-        return Router::getByGroupID($this->id);
+        return Router::getByGroupID($this->id, false);
     }
 
     /**

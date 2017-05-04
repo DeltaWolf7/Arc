@@ -1,7 +1,7 @@
 <?php
 
-system\Helper::arcCheckSettingExists("ARC_BLOG_NOLATEST", "20");
-system\Helper::arcCheckSettingExists("ARC_BLOG_CHAR_LIMIT", "150");
+system\Helper::arcCheckSettingExists("ARC_BLOG_NOLATEST", "10");
+system\Helper::arcCheckSettingExists("ARC_BLOG_CHAR_LIMIT", "400");
 
 system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/manager.js");
 

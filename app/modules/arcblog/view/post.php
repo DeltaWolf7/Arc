@@ -5,41 +5,29 @@ $blog = Blog::getBySEOUrl($data[count($data) - 1]);
 $content = html_entity_decode($blog->content);
 $actual_link = system\Helper::arcGetCurrentUrl();
 $categories = $blog->getCategories();
+$poster = $blog->getPoster();
+$profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $poster->id);
 ?>
 
-<div class="media">
+<div class="card mb-5 bg-faded p-2 widget-blog-post">
+    <div class="cover">
     <?php
-    if (!empty($blog->image)) {
-        ?>
-        <a class="media-left" href="<?php echo $actual_link . "{$blog->seourl}"; ?>">
-            <img class="img-rounded" src="<?php echo system\Helper::arcGetThumbImage($blog->image); ?>" alt="<?php echo $blog->title; ?>">
-        </a>
-        <?php
-    }
-    ?>
-    <div class="media-body">
-        <a href="<?php echo $actual_link . "{$blog->seourl}"; ?>">
-            <h1 class="media-heading"><?php echo $blog->title ?></h1>
-        </a>
-        <?php echo $content; ?>
-    </div>
-    <hr />
-    <div class="text-right">
-        <?php if (isset($tags)) { ?> 
-            <i class="fa fa-tags"></i> <?php echo $tags; ?>
-        <?php } ?>
-        <i class="fa fa-folder"></i> Posted in 
-        <?php
-        $count = count($categories);
-        for ($i = 0; $i < $count; $i++) {
-            if ($i != $count - 1) {
-                echo "<a href=\"" . $actual_link . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>, ";
-            } else {
-                echo "<a href=\"" . $actual_link . "category/{$categories[$i]->seourl}\">{$categories[$i]->name}</a>";
-            }
+        if (!empty($blog->image)) {
+            ?>
+            
+            <img class="card-img-top" src="<?php echo system\Helper::arcGetPath() . "assets/arcblog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
+            
+            <?php
         }
-        ?>
-        on <i class="fa fa-clock-o"></i> <?php echo $blog->date ?>
-        by <i class="fa fa-user"></i> <?php echo $blog->poster; ?>
+    ?>
+        <div class="cover-overlay">
+            <img class="avatar-floating-left avatar avatar-circle avatar-xl" src="<?php echo system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value; ?>" alt="">
+        </div>
+    </div>
+
+    <div class="card-block mt-4">
+        <h5 class="mb-4"><?php echo $blog->title ?></h5>
+        <!-- P CLASS: card-text /-->
+        <?php echo $content; ?>
     </div>
 </div>

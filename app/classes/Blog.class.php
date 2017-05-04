@@ -18,7 +18,7 @@ class Blog extends DataProvider {
         $this->content = "";
         $this->image = "";
         $this->tags = "";
-        $this->poster = "";
+        $this->poster = 0;
         $this->category = "[\"\"]";
         $this->seourl = "";
         $this->table = ARCDBPREFIX . "blog";
@@ -117,6 +117,10 @@ class Blog extends DataProvider {
         }
         $this->category = json_encode($newGroups);
         $this->update();
+    }
+
+    public function getPoster() {
+        return User::getByID($this->poster);
     }
 
 }
