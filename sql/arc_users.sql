@@ -20,6 +20,6 @@ CREATE TABLE IF NOT EXISTS `arc_users` (
 -- PASSWORD IS: password
 --
 
-INSERT INTO `arc_users` (`id`, `firstname`, `lastname`, `email`, `passwordhash`, `created`, `enabled`, `groups`) VALUES
-(1, 'Admin', 'Admin', 'admin@server.local', '$2y$10$V0uMtpafD9AniqZCdFp3xeGaMcLnQOsx7rqGG99juodlMfntUV/pm', '2015-03-15 10:07:37', 1, '[\"Users\",\"Administrators\"]' , '[]');
+INSERT INTO `arc_users` (`id`, `firstname`, `lastname`, `email`, `passwordhash`, `created`, `enabled`, `groups`, `company`) VALUES
+(1, 'Admin', 'Admin', 'admin@server.local', '$2y$10$V0uMtpafD9AniqZCdFp3xeGaMcLnQOsx7rqGG99juodlMfntUV/pm', '2015-03-15 10:07:37', 1, '[\"Users\",\"Administrators\"]' , '[]', '');
 
