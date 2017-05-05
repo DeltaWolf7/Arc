@@ -1,8 +1,12 @@
+.card {
+    margin-bottom: 10px;
+}
+
 .card-img-top {
     width: 100%;
     border-radius: 0;
     height: auto;
-    max-width: 100%
+    max-width: 100%;
 }
 
 .card-img-overlay {

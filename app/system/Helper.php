@@ -653,12 +653,4 @@ class Helper {
         $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $decrypted;
     }
-
-    /**
-     * Return the current URL
-     * @return string
-     */
-    public static function arcGetCurrentUrl() {
-        return (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]/";
-    }
 }

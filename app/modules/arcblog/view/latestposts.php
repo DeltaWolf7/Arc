@@ -12,7 +12,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
         foreach ($blogs as $blog) {
             $poster = $blog->getPoster();
             $content = html_entity_decode($blog->content);
-            $actual_link = system\Helper::arcGetCurrentUrl();
+            $actual_link = system\Helper::arcGetPath();
 
             $ending = "<div class=\"mt-4 text-right\">"
                         . "<a href=\"" .  $actual_link . $blog->seourl . "\" class=\"btn btn-secondary text-muted\">Read More</a>"

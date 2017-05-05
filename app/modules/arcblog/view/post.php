@@ -1,9 +1,8 @@
 <?php
 $uri = system\Helper::arcGetURI();
-$data = explode("/", $uri);
-$blog = Blog::getBySEOUrl($data[count($data) - 1]);
+$blog = Blog::getBySEOUrl($uri);
 $content = html_entity_decode($blog->content);
-$actual_link = system\Helper::arcGetCurrentUrl();
+$actual_link = system\Helper::arcGetPath();
 $categories = $blog->getCategories();
 $poster = $blog->getPoster();
 $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $poster->id);
@@ -13,16 +12,15 @@ $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $poster->id);
     <div class="cover">
     <?php
         if (!empty($blog->image)) {
-            ?>
-            
-            <img class="card-img-top" src="<?php echo system\Helper::arcGetPath() . "assets/arcblog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
-            
-            <?php
+          echo "<img class=\"card-img-top\" src=\"{$actual_link}assets/arcblog/{$blog->image}\" alt=\"{$blog->title}\">";
         }
-    ?>
-        <div class="cover-overlay">
-            <img class="avatar-floating-left avatar avatar-circle avatar-xl" src="<?php echo system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value; ?>" alt="">
-        </div>
+
+        if (strlen($profileImage->value) > 0) {
+            echo "<div class=\"cover-overlay\">"
+                . "<img class=\"avatar-floating-left avatar avatar-circle avatar-xl\" src=\"{$actual_link}assets/profile/{$profileImage->value}\" alt=\"{$poster->getFullname()}\">"
+            . "</div>";
+        }
+        ?>
     </div>
 
     <div class="card-block mt-4">

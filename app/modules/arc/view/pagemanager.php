@@ -160,8 +160,8 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                 <h5 class="modal-title" id="myModalLabel">Delete Page</h5>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
             </div>
             <div class="modal-body">
                 Are you sure you want to permanently delete this page?                    
