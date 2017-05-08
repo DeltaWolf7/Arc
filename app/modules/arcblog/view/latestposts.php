@@ -15,7 +15,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
             $actual_link = system\Helper::arcGetPath();
 
             $ending = "<div class=\"mt-4 text-right\">"
-                        . "<a href=\"" .  $actual_link . $blog->seourl . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
+                        . "<a href=\"" .  $actual_link . "blog/post/" .  $blog->seourl . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
                     . "</div>";
 
             $content = strtok(wordwrap($content, $charCount->value, "...\n"), "\n") . $ending;

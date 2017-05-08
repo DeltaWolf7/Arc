@@ -116,6 +116,11 @@ class Helper {
     public static function arcAddHeader($type, $content) {
         switch ($type) {
             case "title":
+                for ($i = 0; $i <= count(self::$arc["headerdata"]) - 1; $i++) {
+                    if (substr(self::$arc["headerdata"][$i], 0, 7) === "<title>") {
+                        unset(self::$arc["headerdata"][$i]);
+                    }
+                }
                 self::$arc["headerdata"][] = "<title>" . $content . "</title>" . PHP_EOL;
                 break;
             case "description":

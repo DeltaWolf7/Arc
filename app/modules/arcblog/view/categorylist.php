@@ -10,7 +10,7 @@
             if (count($categories) > 0) {
                 foreach ($categories as $category) {
                     echo "<li class=\"list-item\">"
-                    . "<a href=\"" . system\Helper::arcGetModulePath() . "category/{$category->seourl}\">"
+                    . "<a href=\"" . system\Helper::arcGetPath() . "blog/category/" . $category->seourl . "\">"
                     . "<i class=\"fa fa-folder\"></i> {$category->name}</a>"
                     . "</li>";
                 }
