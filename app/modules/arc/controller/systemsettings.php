@@ -5,7 +5,6 @@ system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/system
 $logs = SystemSetting::getByKey("ARC_KEEP_LOGS");
 $file_size = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
 $theme_setting = SystemSetting::getByKey("ARC_THEME");
-$thumb = SystemSetting::getByKey("ARC_THUMB_WIDTH");
 $login_url = SystemSetting::getByKey("ARC_LOGIN_URL");
 $mail = SystemSetting::getByKey("ARC_MAIL");
 $ldap = SystemSetting::getByKey("ARC_LDAP");

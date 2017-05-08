@@ -25,11 +25,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_THEME");
     $setting->value = $_POST["theme"];
     $setting->update();
-    
-    $setting = SystemSetting::getByKey("ARC_THUMB_WIDTH");
-    $setting->value = $_POST["width"];
-    $setting->update();
-    
+       
     $setting = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
     $setting->value = $_POST["limit"];
     $setting->update();

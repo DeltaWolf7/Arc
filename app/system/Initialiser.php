@@ -55,7 +55,6 @@ class Initialiser {
                 . ", \"username\":\"\", \"password\":\"\", \"port\":\"25\", \"sender\":\"Admin <admin@server.local>\"}");
         Helper::arcCheckSettingExists("ARC_LOGIN_URL", "welcome");
         Helper::arcCheckSettingExists("ARC_FILE_UPLOAD_SIZE_BYTES", "2000000");
-        Helper::arcCheckSettingExists("ARC_THUMB_WIDTH", "80");
         Helper::arcCheckSettingExists("ARC_THEME", "beagle");
         Helper::arcCheckSettingExists("ARC_DEFAULT_PAGE", "welcome");
         Helper::arcCheckSettingExists("ARC_LDAP", "{\"ldap\":\"false\", \"server\":\"localhost\","

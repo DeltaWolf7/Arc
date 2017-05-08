@@ -119,22 +119,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="thumbWidth">Thumbnail Width (Pixels) </label>
-                        <input id="thumbWidth" type="number" class="form-control" placeholder="80" value="<?php echo $thumb->value; ?>">
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="panel panel-default">       
-                        <div class="panel-body">
-                            <i class="fa fa-info-circle"></i> The width applied to thumbnails created by Arc. Height will automatically adjust based on the width to maintain aspect ratio.
-                        </div>
-                    </div>
-                </div>
-            </div>
         </fieldset>   
 
         <!-- Time/Date /-->
@@ -220,7 +204,7 @@
                                 $routes = Router::getCurrentRoutes();
                                 foreach ($routes as $route) {
                                     echo "<option";
-                                    if ($media->value == $route->route) {
+                                    if ($login_url->value == $route->route) {
                                         echo " selected";
                                     }
                                     echo ">{$route->route}</option>";
