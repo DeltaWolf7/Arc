@@ -3,7 +3,7 @@ var postid;
 
 function catBtn(id) {
     catID = id;
-    arcAjaxRequest("arcblog/cat", { id: id }, success, null);
+    arcAjaxRequest("arcblog/getcategory", { id: id }, null , success);
 }
 
 function success(data) {
@@ -23,7 +23,8 @@ function deleteSuccess(data) {
 }
 
 $("#catSave").click(function () {
-    arcAjaxRequest("arcblog/savecategory", { id: catID, name: $("#cattitle").val(), seourl: $("#catseourl").val() }, saveComplete, null);
+    arcAjaxRequest("arcblog/savecategory", { id: catID, name: $("#cattitle").val(),
+     seourl: $("#catseourl").val() }, saveComplete, null);
 });
 
 
@@ -53,6 +54,10 @@ $("#postSaveBtn").click(function () {
 });
 
 function saveComplete() {
+    var jdata = arcGetJson(data);
+    if (jdata.error) {
+        return;
+    }
     $("#categoryModal").modal('hide');
     getCategories();
     arcGetStatus();

@@ -15,6 +15,12 @@ class BlogCategory extends DataProvider {
         $this->map = ["id" => "id", "name" => "name", "seourl" => "seourl"];
     }
 
+     public static function getByID($id) {
+        $category = new BlogCategory();
+        $category->get(["id" => $id]);
+        return $category;
+    }
+
     public static function getAllCategories() {
         $categories = new BlogCategory();
         return $categories->getCollection(["ORDER" => ["name" => "ASC"]]);

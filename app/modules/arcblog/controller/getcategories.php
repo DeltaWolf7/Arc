@@ -1,6 +1,5 @@
 <?php
 
-
 if (system\Helper::arcIsAjaxRequest()) {
      $data = "<table class=\"table table-hover table-striped\">";
         $data .= "<thead><tr><th>Name</th><th class=\"text-right\"><button class=\"btn btn-primary btn-xs\" onclick=\"catBtn(0)\"><i class=\"fa fa-plus\"></i> New Category</button></th></tr></thead><tbody>";

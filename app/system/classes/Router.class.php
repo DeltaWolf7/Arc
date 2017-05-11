@@ -47,7 +47,7 @@ class Router extends DataProvider
         parent::__construct();
         $this->route = "";
         $this->destination = "";
-        $this->groupallowed = 0;
+        $this->groupallowed = 3;
         $this->visible = true;
         $this->table = ARCDBPREFIX . 'router';
         $this->map = ["id" => "id", "route" => "route", "destination" => "destination",
