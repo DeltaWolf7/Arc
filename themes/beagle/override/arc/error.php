@@ -6,7 +6,7 @@
             switch (http_response_code()) {
                 case "404":
                     echo "The resource you're looking for cannot be found.<br />
-                <br />Request URL:" . system\Helper::arcGetURI();
+                <br />Request URL: " . system\Helper::arcGetURI();
                     break;
                 case "403":
                     echo "You do not have permission to access this resource.";
