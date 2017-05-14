@@ -58,7 +58,7 @@ class User extends DataProvider {
         $this->passwordhash = "";
         $this->groups = "[\"Users\"]";
         $this->company = "[]";
-        $this->created = new DateTime("NOW");
+        $this->created = date("y-m-d H:i:s");
         $this->table = ARCDBPREFIX . "users";
         $this->map = ["id" => "id", "firstname" => "firstname", "lastname" => "lastname",
             "email" => "email", "passwordhash" => "passwordhash", "created" => "created",

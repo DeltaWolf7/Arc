@@ -1,5 +1,5 @@
 // Login
-$("#loginBtn").click(function () {
+$("#loginBtn").click(function() {
     login();
 });
 
@@ -7,16 +7,16 @@ function login() {
     $("#email").prop("disabled", true);
     $("#password").prop("disabled", true);
     $("#loginBtn").prop("disabled", true);
-    arcAjaxRequest("arc/dologin", {email: $("#email").val(), password: $("#password").val()}, showMessage, success);
+    arcAjaxRequest("arc/dologin", { email: $("#email").val(), password: $("#password").val() }, showMessage, success);
 }
 
-$("#btnForgot").click(function () {
+$("#btnForgot").click(function() {
     $('#collapseA').collapse('hide');
     $('#collapseB').collapse('hide');
     $('#collapseC').collapse('show');
 });
 
-$("#forgotCancel").click(function () {
+$("#forgotCancel").click(function() {
     cancelForgot();
 });
 
@@ -33,13 +33,12 @@ function cancelForgot() {
     $('#collapseC').collapse('hide');
 }
 
-$("#sendReset").click(function () {
-    arcAjaxRequest("arc/reset", {emailf: $("#emailf").val()}, arcGetStatus);
+$("#sendReset").click(function() {
+    arcAjaxRequest("arc/reset", { emailf: $("#emailf").val() }, arcGetStatus);
     cancelForgot();
 });
 
 function success(data) {
-    console.log(data);
     var jdata = arcGetJson(data);
     if (jdata.redirect) {
         window.location = jdata.redirect;
@@ -48,6 +47,7 @@ function success(data) {
 
 // Login effects
 var sview = false;
+
 function switchView() {
     if (sview == false) {
         sview = true;
@@ -62,13 +62,18 @@ function switchView() {
 
 
 // Register
-$("#registerBtn").click(function () {
-    arcAjaxRequest("arc/register", {firstname: $("#firstname").val(), lastname: $("#lastname").val(),
-        company: $("#company").val(), emailr: $("#emailr").val(), passwordr: $("#passwordr").val(),
-    passwordr2: $("#passwordr2").val()}, arcGetStatus, success);
+$("#registerBtn").click(function() {
+    arcAjaxRequest("arc/register", {
+        firstname: $("#firstname").val(),
+        lastname: $("#lastname").val(),
+        company: $("#company").val(),
+        emailr: $("#emailr").val(),
+        passwordr: $("#passwordr").val(),
+        passwordr2: $("#passwordr2").val()
+    }, arcGetStatus, success);
 });
 
-$("#password").keypress(function (e) {
+$("#password").keypress(function(e) {
     if (e.keyCode == 13) {
         login();
     }
