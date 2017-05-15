@@ -34,7 +34,7 @@ class ChatSession extends DataProvider {
     public static function getSessionsByStatus($status = "Active")
     {
         $session = new ChatSession();
-        return $session->getCollection(["ORDER" => "id", "status" => $status]);
+        return $session->getCollection(["status" => $status, "ORDER" => "id"]);
     }
 
     public function getAgents() {

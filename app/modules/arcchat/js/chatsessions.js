@@ -30,3 +30,7 @@ $("#closeChat").click(function() {
     arcAjaxRequest("arcchat/closesession", {}, null, null);
     sessionid = 0;
 });
+
+function endChat(id) {
+    arcAjaxRequest("arcchat/endchat", { sessionid: id }, arcGetStatus, null);
+}

@@ -25,4 +25,9 @@ function updateMessages() {
 function updateDisplay(data) {
     var jdata = arcGetJson(data);
     $("#chatSession").html($("#chatSession").html() + jdata.html);
+    console.log(jdata.status);
+    if (jdata.status == "Closed") {
+        $("#message").prop("disabled", true);
+        $("#chatSend").prop("disabled", true);
+    }
 }

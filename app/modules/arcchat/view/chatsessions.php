@@ -25,6 +25,7 @@
          . $session->status
          . "</td><td>"
          . "<button class=\"btn btn-success\" onclick=\"joinChat(" . $session->id . ")\">Join</button>"
+         . "<button class=\"btn btn-success\" onclick=\"endChat(" . $session->id . ")\">End</button>"
          . "</td></tr>";
     }
 

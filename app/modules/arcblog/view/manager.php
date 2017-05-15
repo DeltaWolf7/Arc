@@ -1,8 +1,8 @@
 <div role="tabpanel" id="tabs">
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#" aria-controls="posts" role="tab" data-toggle="tab" id="posts">Posts</a></li>
-        <li role="presentation"><a href="#" aria-controls="categories" role="tab" data-toggle="tab" id="categories">Categories</a></li>
+        <li role="presentation" class="nav-item"><a href="#" aria-controls="posts" role="tab" data-toggle="tab" id="posts">Posts</a></li>
+        <li role="presentation" class="nav-item"><a href="#" aria-controls="categories" role="tab" data-toggle="tab" id="categories">Categories</a></li>
     </ul>
     <!-- Tab panes -->
     <div class="tab-content">
@@ -11,8 +11,7 @@
     </div>
 </div>
 
-<div class="panel panel-default" id="postEditor" style="display: none;">
-<div class="panel-body">
+<div id="postEditor" style="display: none;">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -75,7 +74,6 @@
                 </div>
                 <button class="btn btn-default" id="cancelPost">Cancel</button>
                 <button class="btn btn-primary" id="postSaveBtn">Save</button>
-                </div>
             </div>
          
                 
