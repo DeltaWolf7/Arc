@@ -12,7 +12,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
         <div class="alert alert-warning">
             <i class="fa fa-exclamation"></i> Logs are purged automatically after <?php echo $days->value; ?> days. This can be adjusted in settings.
         </div>
-        <div id="logs" class="small">
+        <div id="logs">
         </div>
     </div>
     <div id="php" class="tab-pane fade">

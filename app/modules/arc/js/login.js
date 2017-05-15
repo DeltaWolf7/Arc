@@ -63,7 +63,7 @@ function switchView() {
 
 // Register
 $("#registerBtn").click(function() {
-    arcAjaxRequest("arc/register", {
+    arcAjaxRequest("arc/doregister", {
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
         company: $("#company").val(),
