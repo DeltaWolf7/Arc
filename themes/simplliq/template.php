@@ -33,7 +33,7 @@
             <div class="container-fluid pt-2">
 
                 <div class="page-head">
-                    <h2 class="page-head-title">{{arc:title}}</h2>
+                    <h1 class="page-head-title">{{arc:title}}</h1>
                 </div>
                 <div class="main-content">
                         {{arc:impersonate}}

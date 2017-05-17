@@ -49,7 +49,6 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                         </div>
                         <div class="form-group">
                             <button id="registerBtn" class="btn btn-primary btn-xl">Register</button>
-                            <br /><br />
                             <button class="btn btn-danger btn-xl" id="cancelBtn">Cancel</button>
                         </div>
                     </div>
@@ -58,14 +57,14 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                             <input id="emailf" type="text" placeholder="Email Address" autocomplete="off" class="form-control">
                         </div>
                         <div class="form-group login-submit">
-                            <button id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</button><br /><br />
+                            <button id="sendReset" class="btn btn-primary btn-xl">Send Reset Link</button>
                             <button class="btn btn-danger btn-xl" id="cancelBtn2">Cancel</button>
                         </div>
                     </div>
                 </div>
                 <div class="splash-footer">
                     <?php if ($reg->value == "true") { ?>
-                        <button id="btnRegister">Sign Up</button> / 
+                        <a href="#" id="btnRegister">Sign Up</a> / 
                     <?php } ?>
                     <a href="#" id="btnForgot">Forgot Password?</a>
                 </div>

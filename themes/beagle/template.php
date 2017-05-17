@@ -28,7 +28,7 @@
       </div>
       <div class="be-content">
         <div class="page-head">
-          <h2 class="page-head-title">{{arc:title}}</h2>
+          <h1 class="page-head-title">{{arc:title}}</h1>
           {{module:arc:breadcrumb}}
         </div>
         <div class="main-content">
