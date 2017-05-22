@@ -3276,7 +3276,6 @@ input[type="button"].btn-block {
 .fc button .badge {
     position: absolute;
     top: 2px;
-    right: 6px;
     font-size: 9px;
 }
 
@@ -5613,7 +5612,7 @@ header.navbar .dropdown-item {
 .btn .badge,
 .fc button .badge {
     position: relative;
-    top: -1px;
+    top: -3px;
 }
 
 a.badge:focus,
