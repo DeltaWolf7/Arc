@@ -11,7 +11,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         $seen = $_SESSION["chat_seenids"];
     }
 
-        $messages = $session->getItems();
+    $messages = $session->getItems();
 
     foreach ($messages as $message) {
         $found = false;

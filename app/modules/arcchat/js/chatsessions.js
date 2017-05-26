@@ -13,12 +13,25 @@ function updateMessages() {
 function updateDisplay(data) {
     var jdata = arcGetJson(data);
     $("#chatSession").html($("#chatSession").html() + jdata.html);
+    $('#chatSession').animate({
+        scrollTop: $('#chatSession').get(0).scrollHeight
+    }, 1500);
 }
 
+$("#message").keypress(function (e) {
+  if (e.which == 13) {
+    sendMessage();
+  }
+});
+
 $("#chatSend").click(function() {
+    sendMessage();
+});
+
+function sendMessage() {
     arcAjaxRequest("arcchat/sendmessage", { sessionid: sessionid, message: $("#message").val() }, null, null);
     $("#message").val("");
-});
+}
 
 function joinChat(id) {
     $("#chatDialog").modal("show");
@@ -28,9 +41,9 @@ function joinChat(id) {
 
 $("#closeChat").click(function() {
     arcAjaxRequest("arcchat/closesession", {}, null, null);
-    sessionid = 0;
 });
 
 function endChat(id) {
     arcAjaxRequest("arcchat/endchat", { sessionid: id }, arcGetStatus, null);
+    location.reload();
 }
