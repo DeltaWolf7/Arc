@@ -1,16 +1,32 @@
-$("#btnSaveSettings").click(function () {
-    arcAjaxRequest("arc/systemsettingsupdate", {ldap: $("#useLDAP").val(), ldapserver: $("#ldapServer").val(),
-        domain: $("#ldapDomain").val(), base: $("#ldapBase").val(), smtp: $("#useSMTP").val(),
-        smtpserver: $("#smtpServer").val(), username: $("#smtpUser").val(), password: $("#smtpPass").val(),
-        port: $("#smtpPort").val(), sender: $("#smtpSender").val(),
-        loginURL: $("#loginURL").val(), width: $("#thumbWidth").val(), theme: $("#theme").val(),
-        limit: $("#uploadLimit").val(), days: $("#keepLogsDays").val(), allowReg: $("#allowReg").val(),
-        siteLogo: $("#siteLogo").val(), dateFormat: $("#dateFormat").val(), timeFormat: $("#timeFormat").val(),
-        company: $("#company").val(), siteTitle: $("#siteTitle").val(), media: $("#mediaManagerURL").val()}, arcGetStatus);
+$("#btnSaveSettings").click(function() {
+    arcAjaxRequest("arc/systemsettingsupdate", {
+        ldap: $("#useLDAP").val(),
+        ldapserver: $("#ldapServer").val(),
+        domain: $("#ldapDomain").val(),
+        base: $("#ldapBase").val(),
+        smtp: $("#useSMTP").val(),
+        smtpserver: $("#smtpServer").val(),
+        username: $("#smtpUser").val(),
+        password: $("#smtpPass").val(),
+        port: $("#smtpPort").val(),
+        sender: $("#smtpSender").val(),
+        loginURL: $("#loginURL").val(),
+        width: $("#thumbWidth").val(),
+        theme: $("#theme").val(),
+        limit: $("#uploadLimit").val(),
+        days: $("#keepLogsDays").val(),
+        allowReg: $("#allowReg").val(),
+        siteLogo: $("#siteLogo").val(),
+        dateFormat: $("#dateFormat").val(),
+        timeFormat: $("#timeFormat").val(),
+        company: $("#company").val(),
+        siteTitle: $("#siteTitle").val(),
+        media: $("#mediaManagerURL").val()
+    }, arcGetStatus);
 });
 
 function updateEmail() {
-    if ($("#useSMTP").val() == "false") {
+    if ($("#useSMTP").val() == "0") {
         $("#smtpServer").prop("readonly", true);
         $("#smtpUser").prop("readonly", true);
         $("#smtpPass").prop("readonly", true);
@@ -24,7 +40,7 @@ function updateEmail() {
 }
 
 function updateLDAP() {
-    if ($("#useLDAP").val() == "false") {
+    if ($("#useLDAP").val() == "0") {
         $("#ldapServer").prop("readonly", true);
         $("#ldapDomain").prop("readonly", true);
         $("#ldapBase").prop("readonly", true);
@@ -35,13 +51,13 @@ function updateLDAP() {
     }
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
     updateEmail();
     updateLDAP();
     getApikeys();
 });
 
-$("#btnMediaManager").click(function () {
+$("#btnMediaManager").click(function() {
     $("#mediaManager").modal("show");
 });
 
@@ -55,11 +71,11 @@ function displayKeys(data) {
 }
 
 function removeApiKey(userid) {
-    arcAjaxRequest("arc/systemsettingsremoveapi", {userid: userid}, getApikeys);
+    arcAjaxRequest("arc/systemsettingsremoveapi", { userid: userid }, getApikeys);
 }
 
 $("#createAPI").click(function() {
-    arcAjaxRequest("arc/systemsettingscreateapi", {userid: $("#apiuser").val()}, getApikeys);
+    arcAjaxRequest("arc/systemsettingscreateapi", { userid: $("#apiuser").val() }, getApikeys);
 });
 
 function copyToClipboardSuccess(data) {

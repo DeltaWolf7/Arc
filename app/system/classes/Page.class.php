@@ -57,68 +57,92 @@ class Page extends DataProvider {
      */
     public function __construct() {
         parent::__construct();
+        // Initilise title
         $this->title = "";
+        // Initilise content
         $this->content = "";
+        // Initilise meta description
         $this->metadescription = "";
+        // Initilise meta keywords
         $this->metakeywords = "";
+        // Initilise meta title
         $this->metatitle = "";
+        // Initilise seo url
         $this->seourl = "";
+        // Initilise sort order
         $this->sortorder = 0;
+        // Initilise icon class
         $this->iconclass = "";
+        // Initilise show title
         $this->showtitle = 1;
+        // Initilise hide login
         $this->hideonlogin = 0;
+        // Initilise hide from menu
         $this->hidefrommenu = 0;
+        // Initilise theme
         $this->theme = "none";
+        // Set table used by object
         $this->table = ARCDBPREFIX . "pages";
+        // Set the property to column mapping
         $this->map = ["id" => "id", "title" => "title", "content" => "content",
             "seourl" => "seourl", "metadescription" => "metadescription", "metakeywords" => "metakeywords",
             "sortorder" => "sortorder", "iconclass" => "iconclass", "showtitle" => "showtitle",
             "hideonlogin" => "hideonlogin", "hidefrommenu" => "hidefrommenu", "theme" => "theme"];
-        $this->columns = ["id", "title", "content", "seourl", "metadescription",
-            "metakeywords", "sortorder", "iconclass", "showtitle", "hideonlogin",
-            "hidefrommenu", "theme"];
     }
 
     /**
      * Get a page by its unique SEO URL from database
-     * @param type $seourl
-     * @return \Page
+     * @param string $seourl SEO url
+     * @return \Page Page object
      */
     public static function getBySEOURL($seourl) {
+        // Create a new page class
         $page = new Page();
+        // Get page data from database
         $page->get(["seourl" => $seourl]);
+        // Return page
         return $page;
     }
 
     /**
      * Get all pages from the database
-     * @return type
+     * @param bool $ignoreSortOrder Ignore sort order of pages
+     * @return array Collection of page objects
      */
     public static function getAllPages($ignoreSortOrder = false) {
+        // Create new page class
         $page = new Page();
+        // Check if we need to sort the pages
         if ($ignoreSortOrder == false) {
+            // Return sorted pages
             return $page->getCollection(["ORDER" => ['sortorder' => 'ASC']]);
         }
+        // Return unsorted pages
         return $page->getCollection(["ORDER" => ['seourl' => 'ASC']]);
     }
 
     /**
      * Get the User group permissions for the page
-     * @return type
+     * @return \UserPermission User permission object
      */
     public function getPermissions() {
+        // Create new permission class
         $permissions = new UserPermission();
+        // Get data from database
         return $permissions->getCollection(["permission" => $this->seourl]);
     }
 
     /**
      * Get the page from the database by its unique ID
-     * @param type $id
-     * @return \Page
+     * @param int $id ID of the page to get
+     * @return \Page Page object
      */
     public static function getByID($id) {
+        // Create a new page class
         $page = new Page();
+        // Get data from database
         $page->get(["id" => $id]);
+        // Return page object
         return $page;
     }
 }

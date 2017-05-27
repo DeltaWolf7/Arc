@@ -7,7 +7,7 @@ function update() {
     arcGetStatus();
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
     getLogs();
 });
 
@@ -18,10 +18,4 @@ function getLogs() {
 function updateView(data) {
     var jdata = arcGetJson(data);
     $("#logs").html(jdata.html);
-    $("#logTable").DataTable({
-        "pageLength": 50,
-        "targets": 'no-sort',
-        "bSort": false,
-        "order": []
-    });
 }

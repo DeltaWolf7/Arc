@@ -51,193 +51,213 @@ class User extends DataProvider {
      */
     public function __construct() {
         parent::__construct();
+        // Initilise firstname
         $this->firstname = "";
+        // Initilise lastname
         $this->lastname = "";
+        // Initilise email
         $this->email = "";
-        $this->enabled = 1;
+        // Initilise account enabled
+        $this->enabled = true;
+        // Initilise password hash
         $this->passwordhash = "";
-        $this->groups = "[\"Users\"]";
-        $this->company = "[]";
+        // Initilise groups array
+        $this->groups = ["Users"];
+        // Initilise company array
+        $this->company = [];
+        // Initilise created date to now
         $this->created = date("y-m-d H:i:s");
+        // Set the table used by this object
         $this->table = ARCDBPREFIX . "users";
+        // Set the property to column mapping
         $this->map = ["id" => "id", "firstname" => "firstname", "lastname" => "lastname",
             "email" => "email", "passwordhash" => "passwordhash", "created" => "created",
-            "enabled" => "enabled", "groups" => "groups", "company" => "company"];
-        $this->columns = ["id", "firstname", "lastname", "email", "passwordhash", "created",
-            "enabled", "groups", "company"];
+            "enabled" => "enabled", "groups" => "groups [JSON]",
+            "company" => "company [JSON]"];
     }
 
     /**
      * Get User by email address
-     * @param type $email
-     * @return \User
+     * @param string $email Email address of the user
+     * @return \User User object
      */
     public static function getByEmail($email) {
+        // Create a new user object
         $user = new User();
+        // Get the user data from database by email address
         $user->get(["email" => $email]);
+        // Return the user object
         return $user;
     }
     
     /**
      * Get User by unique identifier
-     * @param type $id
-     * @return \User
+     * @param int $id Unique ID for the user
+     * @return \User User object
      */
     public static function getByID($id) {
+        // Create a new user object
         $user = new User();
+        // Get the data from the database for the user by ID
         $user->get(["id" => $id]);
+        // return the user object
         return $user;
     }
 
     /**
-     * get all users from the database
-     * @return type
+     * Get all users from the database
+     * @return array Collection of user objects
      */
     public static function getAllUsers() {
+        // Create a User object
         $user = new User();
+        // Return an array of user objects from the database, ordered by firstname
         return $user->getCollection(["ORDER" => ['firstname' => 'ASC']]);
     }
 
     /**
      * Check is user is in a group
-     * @param type $name
-     * @return boolean
+     * @param string $name Group name
+     * @return boolean If the user belongs to the group or not
      */
     public function inGroup($name) {
-        $groups = $this->getGroups();
-        foreach ($groups as $group) {
-            if ($group->name == $name) {
-                return true;
-            }
+        // Check if the user belongs to the group
+        if (in_array($name, $this->groups)) {
+            // If then do, return true
+            return true;
         }
+        // User doesn't belong to group, return false
         return false;
     }
 
     /**
      * Get groups the User is associated with
-     * @return type
+     * @return array Collection of groups
      */
     public function getGroups() {
+        // Array to hold the group objects
         $groups = [];
-        foreach (json_decode($this->groups) as $group) {
+        // Loop through each of the groups the user belongs to
+        foreach ($this->groups as $group) {
+            // Get the group from the database
             $grp = UserGroup::getByName($group);
+            // If the group has a valid ID (not 0 or less)
             if ($grp->id != 0) {
+                // Add the group to the array
                 $groups[] = $grp;
             }
         }
+        // Return the groups array
         return $groups;
     }
 
     /**
      * Add User to a group
-     * @param type $name
-     * @return type
+     * @param string $name Group name to ass the user too
      */
     public function addToGroup($name) {
-        $groups = json_decode($this->groups);
-        foreach ($groups as $group) {
-            if ($group == $name) {
-                return;
-            }
+        // Check if the user belongs to the group
+        if (!in_array($name, $this->groups)) {
+            // If not, then we add them to the group
+            $this->groups[] = $name;
+            // Update the object in the database
+            $this->update();
         }
-        $groups[] = $name;
-        $this->groups = json_encode($groups);
-        $this->update();
     }
 
     /**
      * Remove the user from a group
-     * @param type $name
+     * @param string $name Group name to remove the user from
      */
     public function removeFromGroup($name) {
-        $groups = json_decode($this->groups);
-        $newGroups = [];
-        for ($i = 0; $i < count($groups); $i++) {
-            if ($groups[$i] != $name) {
-                $newGroups[] = $groups[$i];
-            }
+        // Check is the user belongs to the group
+        if (($key = array_search($name, $this->groups)) !== false) {
+            // If they do, then we remove them
+            unset($this->groups[$key]);
+            // Update the object in the database
+            $this->update();
         }
-        $this->groups = json_encode($newGroups);
-        $this->update();
     }
 
     /**
-     * Set the Users password
-     * @param type $password
+     * Set the password hash of the user
+     * @param string $password Plain text password to be hashed
      */
     public function setPassword($password) {
+        // Hash the password and set it on the user object
         $this->passwordhash = password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
      * Check the users password is correct
-     * @param type $password
-     * @return type
+     * @param string $password The users password
+     * @return bool true if the password is correct and false if not
      */
     public function verifyPassword($password) {
+        // Check the users password is correct
         return password_verify($password, $this->passwordhash);
     }
 
     /**
-     * Get a users setting by its unique key
-     * @param type $key
-     * @return type
+     * Get a setting of the user by its key
+     * @param string $key The unique key for the setting
+     * @return object UserSetting object
      */
     public function getSettingByKey($key) {
+        // Return the user setting found by the key
         return UserSetting::getByUserID($this->id, $key);
     }
 
     /**
-     * Get the users full name formatted
-     * @return type
+     * Get the full name of the user
+     * @return string Users name formatted as "{firstname} {lastname}"
      */
     public function getFullname() {
-        return $this->firstname . " " . $this->lastname;
+        // Return the formatted name of the user
+        return "{$this->firstname} {$this->lastname}";
     }
     
     /**
      * Get the companies associated with the user
-     * @return type
+     * @return array Collection of company objects as array
      */
     public function getCompanies() {
-        $companies = json_decode($this->company);
-        $comp = [];
-        foreach ($companies as $company) {
-            $comp[] = Company::getByID($company);
+        // Create array to hold the company objects
+        $companies = [];
+        // Get each company ID from the user and load it from the database
+        foreach ($this->company as $company) {
+            // Add the company object to the array
+            $companies[] = Company::getByID($company);
         }
-        return $comp;
+        // Return an array of company objects
+        return $companies;
     }
     
     /**
-     * Add User to Company
-     * @param type $id
-     * @return type
+     * Add company ID to user
+     * @param int $id Company ID to add to the user
      */
     public function addToCompany($id) {
-        $companies = json_decode($this->company);
-        foreach ($companies as $company) {
-            if ($company == $id) {
-                return;
-            }
+        // Does the ID already exists for this user?
+        if (!in_array($id, $this->company)) {
+            // If not add the ID.
+            $this->company[] = $id;
+            // Update the object in the database
+            $this->update();
         }
-        $companies[] = $id;
-        $this->company = json_encode($companies);
-        $this->update();
     }
 
     /**
-     * Remove User from a Company
-     * @param type $id
+     * Remove company id from user
+     * @param int $id Company ID to remove from the user
      */
     public function removeFromCompany($id) {
-        $companies = json_decode($this->company);
-        $newComps = [];
-        for ($i = 0; $i < count($companies); $i++) {
-            if ($companies[$i] != $id) {
-                $newComps[] = $companies[$i];
-            }
-        }
-        $this->company = json_encode($newComps);
-        $this->update();
+        // Does the ID exists for this user?
+        if (($key = array_search($id, $this->company)) !== false) {
+            // The ID exists, so we remove it
+            unset($this->company[$key]);
+            // Update the object in the database
+            $this->update();
+        } 
     }
 }

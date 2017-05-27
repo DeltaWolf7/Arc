@@ -43,51 +43,67 @@ class Log extends DataProvider {
      */
     public function __construct() {
         parent::__construct();
+        // Initilise event datetime to now
         $this->event = date("y-m-d H:i:s");
+        // Initilise message
         $this->message = "";
+        // Set the table used by the object
         $this->table = ARCDBPREFIX . 'logs';
+        // Set the property to column mapping
         $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event", "message" => "message"];
-        $this->columns = ['id', 'type', 'module', 'event', 'message'];
     }
 
     /**
      * Get all logs from the database
-     * @return type
+     * @return array Collection of log objects
      */
     public static function getLogs() {
+        // Create a new log class
         $logs = new Log();
+        // Return collection of log objects
         return $logs->getCollection(['ORDER' => ['id' => 'DESC']]);
     }
        
     /**
      * Count the number of logs in the database
-     * @return type
+     * @return int Log count
      */
     public static function count() {
+        // Create a new log class
         $logs = new Log();
+        // Return the number of logs
         return $logs->getCount([]);
     }
     
     /**
      * Create a log entry, save it to the database and purge old logs based on settings
-     * @param type $type
-     * @param type $module
-     * @param type $message
+     * @param string $type Values: success, warning, error
+     * @param string $module Module name (source of the log)
+     * @param string $message Log entry/message
      */
     public static function createLog($type, $module, $message) {
+        // Create a new log class
         $log = new Log();
+        // Set the type
         $log->type = $type;
+        // Set the module
         $log->module = $module;
+        // set the message
         $log->message = $message;
-        
-        
+
+        // Check if the current user is impersonated    
         if (system\Helper::arcIsImpersonator()) {
+            // User is impersonated, log activity
             $log->message = "Impersonated (" . system\Helper::arcGetImpersonator()->getFullname() . "): " . $log->message;
         }
+        // Update log in database
         $log->update();
         
-        // get days
-        $days = SystemSetting::getByKey("ARC_KEEP_LOGS");    
-        system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.event) > " . $days->value);
+        // Get number of days to keep setting
+        $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
+        // Delete logs older than the number of kept days    
+        if ($days->value != "") {
+            system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.event) > " . $days->value);
+        }
     }
 }

@@ -294,15 +294,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="useSMTP">Enable SMTP</label>
-                        <?php $smtpData = $mail->getArrayFromJson(); ?>
                         <select id="useSMTP" class="form-control" onchange="updateEmail()">
-                            <option value="true"<?php
-                            if ($smtpData["smtp"] == "true") {
+                            <option value="1"<?php
+                            if ($smtpEnabled->value == "1") {
                                 echo " selected";
                             }
                             ?>>Yes</option>
-                            <option value="false"<?php
-                            if ($smtpData["smtp"] == "false") {
+                            <option value="0"<?php
+                            if ($smtpEnabled->value == "0") {
                                 echo " selected";
                             }
                             ?>>No</option>
@@ -322,7 +321,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpServer">SMTP Server</label>
-                        <input id="smtpServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $smtpData["server"]; ?>">
+                        <input id="smtpServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $smtpServer->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -338,7 +337,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpUser">Username</label>
-                        <input id="smtpUser" type="text" class="form-control" value="<?php echo $smtpData["username"]; ?>">
+                        <input id="smtpUser" type="text" class="form-control" value="<?php echo $smtpUsername->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -354,7 +353,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpPass">Password</label>
-                        <input id="smtpPass" type="password" class="form-control" value="<?php echo system\Helper::arcDecrypt($smtpData["password"]); ?>">
+                        <input id="smtpPass" type="password" class="form-control" value="<?php echo system\Helper::arcDecrypt($smtpPassword->value); ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -370,7 +369,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpPort">Port</label>
-                        <input id="smtpPort" type="number" class="form-control" placeholder="21" value="<?php echo $smtpData["port"]; ?>">
+                        <input id="smtpPort" type="number" class="form-control" placeholder="21" value="<?php echo $smtpPort->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -386,7 +385,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="smtpSender">Sender</label>
-                        <input id="smtpSender" type="text" class="form-control" value="<?php echo $smtpData["sender"]; ?>">
+                        <input id="smtpSender" type="text" class="form-control" value="<?php echo $smtpSender->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -420,19 +419,18 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="useLDAP">Enable LDAP</label>
-                        <?php $ldapData = $ldap->getArrayFromJson(); ?>
                         <select id="useLDAP" class="form-control" onchange="updateLDAP()" <?php
                         if (!function_exists("ldap_connect")) {
                             echo "disabled";
                         }
                         ?>>
-                            <option value="true"<?php
-                            if ($ldapData["ldap"] == "true") {
+                            <option value="1"<?php
+                            if ($ldapEnabled->value == "1") {
                                 echo " selected";
                             }
                             ?>>Yes</option>
-                            <option value="false"<?php
-                            if ($ldapData["ldap"] == "false") {
+                            <option value="0"<?php
+                            if ($ldapEnabled->value == "0") {
                                 echo " selected";
                             }
                             ?>>No</option>
@@ -452,7 +450,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ldapServer">Server</label>
-                        <input id="ldapServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $ldapData["server"]; ?>">
+                        <input id="ldapServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $ldapServer->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -468,7 +466,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ldapDomain">Domain</label>
-                        <input id="ldapDomain" type="text" class="form-control" placeholder="mydomain" value="<?php echo $ldapData["domain"]; ?>">
+                        <input id="ldapDomain" type="text" class="form-control" placeholder="mydomain" value="<?php echo $ldapDomain->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">
@@ -484,7 +482,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="ldapBase">Search Base</label>
-                        <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local" value="<?php echo $ldapData["base"]; ?>">
+                        <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local" value="<?php echo $ldapBase->value; ?>">
                     </div>
                 </div>
                 <div class="col-md-8">

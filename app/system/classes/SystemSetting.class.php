@@ -82,14 +82,6 @@ class SystemSetting extends DataProvider {
     }
 
     /**
-     * Get the setting value and return JSON
-     * @return type
-     */
-    public function getArrayFromJson() {
-        return json_decode($this->value, true);
-    }
-
-    /**
      * Get all the settings from the database by User ID, if required
      * @param type $userid
      * @return type

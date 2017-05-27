@@ -31,7 +31,6 @@ abstract class Api {
     
     // Arguments
     public $args = [];
-    
     // Request
     public $request = "";
     
@@ -39,8 +38,11 @@ abstract class Api {
      * Default constructor
      */
     public function __construct() {
-        header("Access-Control-Allow-Orgin: *");
+        // Allow from anywhere
+        header("Access-Control-Allow-Origin: *");
+        // Allow any method
         header("Access-Control-Allow-Methods: *");
+        // Get arguments from url
         $this->args = explode('/', rtrim($this->request, '/'));
     }
     

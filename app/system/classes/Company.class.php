@@ -38,58 +38,71 @@ class Company extends DataProvider {
      */
     public function __construct() {
         parent::__construct();
+        // Initilise name
         $this->name = "";
+        // Set the table used by the object
         $this->table = ARCDBPREFIX . "companies";
+        // Set the property to column mapping
         $this->map = ["id" => "id", "name" => "name"];
-        $this->columns = ["id", "name"];
     }
 
     /**
      * Get Company object by Name
-     * @param type $name
-     * @return \Company
+     * @param string $name Name of the company
+     * @return \Company company object
      */
     public static function getByName($name) {
+        // Create a new company class
         $company = new Company();
+        // Get the object data from the database
         $company->get(["name" => $name]);
+        // Return the company object
         return $company;
     }
 
     /**
      * Get Company by ID
-     * @param type $id
-     * @return \Company
+     * @param int $id Unique ID
+     * @return \Company company object
      */
     public static function getByID($id) {
+        // Create a new company class
         $company = new Company();
+        // Get the object data from the database
         $company->get(["id" => $id]);
+        // Return the company object
         return $company;
     }
 
     /**
      * Get Users associated with the Company
-     * @return type
+     * @return array Collection of user objects
      */
     public function getUsers() {
+        // Get all users from database
         $users = User::getAllUsers();
+        // Create array to hold found users
         $found = [];
+        // Go through each user and check if the belong to this company
         foreach ($users as $user) {
-            $companies = $user->getCompanies();
-            foreach ($companies as $company) {
-                if ($company->id == $this->id) {
-                    $found[] = $user;
-                }
+            // Does user belong to company?
+            if (in_array($this->id, $user->company)) {
+                // User belongs to company, add to array
+                $found[] = $user;
             }
         }
+        // Return found users
         return $found;
     }
 
     /**
      * Get all Companies
-     * @return type
+     * @return array Collection of company objects
      */
     public static function getAll() {
+        // Create new company class
         $company = new Company();
+        // Return array of company objects
         return $company->getCollection(["ORDER" => ['name' => 'ASC']]);
     }
 

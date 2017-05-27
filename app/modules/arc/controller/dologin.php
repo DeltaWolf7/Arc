@@ -14,12 +14,14 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
     
     // start ldap
-    $ldap = SystemSetting::getByKey("ARC_LDAP");
-    $ldapData = $ldap->getArrayFromJson();
+    $ldapEnabled = SystemSetting::getByKey("ARC_LDAP_ENABLED");
+    $ldapServer = SystemSetting::getByKey("ARC_LDAP_SERVER");
+    $ldapDomain = SystemSetting::getByKey("ARC_LDAP_DOMAIN");
+    $ldapBase = SystemSetting::getByKey("ARC_LDAP_BASE");
 
-    if ($ldapData["ldap"] == "true") {
+    if ($ldapEnabled->value == "1") {
         Log::createLog("warning", "ldap", "LDAP lookup: " . $_POST["email"]);
-        $result = LDAPLogin($ldapData["server"], $_POST["email"], $_POST["password"], $ldapData["domain"], $ldapData["base"]);
+        $result = LDAPLogin($ldapServer->value, $_POST["email"], $_POST["password"], $ldapDomain->value, $ldapBase->value);
         $user = \User::getByEmail($result["email"]);
 
         if (is_array($result)) {

@@ -1,8 +1,7 @@
 <?php
-$ldap = SystemSetting::getByKey("ARC_LDAP");
-$ldapData = $ldap->getArrayFromJson();
+$ldap = SystemSetting::getByKey("ARC_LDAP_ENABLED");
 $login = "Email Address";
-if ($ldapData["ldap"] == "true") {
+if ($ldap->value == "1") {
     $login = "Username";
 }
 $reg = SystemSetting::getByKey("ARC_ALLOWREG");

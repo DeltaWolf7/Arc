@@ -24,43 +24,48 @@
  * THE SOFTWARE.
  */
 
-/**
- * Mail object
- */
-use PHPMailer\PHPMailer\PHPMailer;
 
+// Include required PHPMailer classes
+use PHPMailer\PHPMailer\PHPMailer;
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/PHPMailer.php";
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/SMTP.php";
 require_once system\Helper::arcGetPath(true) . "vendor/phpmailer/Exception.php";
 
+/**
+ * Mail object
+ */
 class Mail {
 
     /**
      * Default constructor
      */
     public function __construct() {
-        // Get settings
-        $settings = \SystemSetting::getByKey("ARC_MAIL");
-        $this->data = $settings->getArrayFromJson();
+        // Get mail settings
+        $mode = \SystemSetting::getByKey("ARC_MAIL_USESMTP");
 
-        // Set default mode
-        if ($this->data["smtp"] == "true")
+        // Check which mode we are using (SMTP vs MAIL)
+        if ($mode->value== "1") {
+            // Set SMTP mode
             $this->mode = "SMTP";
-        else
+        } else {
+            // Set MAIL mode
             $this->mode = "MAIL";
+        }
     }
 
     /**
      * Instantiate Mail object and set the mail delivery method 
-     * @param type $mode
+     * @param string $mode Values: MAIL or SMTP
      */
     public function Mail($mode = "MAIL") {
-        // Set mode
-        switch (strtoupper(strtoupper($mode))) {
+        // Select mode
+        switch (strtoupper($mode)) {
             case "MAIL":
+                // Set MAIL mode
                 $this->mode = "MAIL";
                 break;
             case "SMTP":
+                // Set SMTP mode
                 $this->mode = "SMTP";
                 break;
         }
@@ -68,31 +73,40 @@ class Mail {
 
     /**
      * Send email to recipient
-     * @param type $to
-     * @param type $subject
-     * @param type $message
-     * @param type $html
-     * @param type $from
-     * @param type $cc
+     * @param array $to Recipient
+     * @param string $subject Subject
+     * @param string $message Message
+     * @param bool $html Is email HTML?
+     * @param string $from Sender
+     * @param array $cc Carbon Copy
+     * @param array $attachments Attachments
      */
     public function Send($to = array(), $subject, $message, $html = true, $from = null, $cc = array(), $attachments = array()) {
 
+        // Check if this is a HTML email
         if ($html == true) {
+            // Get current theme settings
             $theme = SystemSetting::getByKey("ARC_THEME");
+            // Check if the theme has an email template
             if (file_exists(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php")) {
+                // We have found and email template, so get the content
                 $content = file_get_contents(system\Helper::arcGetPath(true) . "themes/" . $theme->value . "/email.php");
+                // Parse the template content and add the message
                 $message = system\Helper::arcParseEmail($content, $message);
             }
         }
 
+        // Log the email activity
         Log::createLog("info", "arcmail", "Send email request, mode: " . $this->mode);
 
+        
         // Set from details
         if ($from == null) {
-            $from = $this->data["sender"];
+            $fromSetting = \SystemSetting::getByKey("ARC_MAIL_SENDER");
+            $from = $fromSetting->value;
         }
 
-        // Build to list
+        // Build recipient list
         if (!is_array($to)) {
             $list = array();
             $list[] = $to;
@@ -116,6 +130,7 @@ class Mail {
             $headers .= "Content-Type: text/plain;\r\n";
         }
 
+        // Log the activity
         Log::createLog("info", "arcmail", "Mail headers built");
 
         switch ($this->mode) {
@@ -139,16 +154,21 @@ class Mail {
 
                 $mail = new PHPMailer;
                 $mail->isSMTP();
-                $mail->Port = $this->data["port"];
-                $mail->Host = $this->data["server"];
+                $portSetting = \SystemSetting::getByKey("ARC_MAIL_PORT");
+                $mail->Port = $portSetting->value;
 
-                if (empty($this->data["username"]) && empty($this->data["password"])) {
+                $serverSetting = \SystemSetting::getByKey("ARC_MAIL_SERVER");
+                $mail->Host = $serverSetting->value;
+
+                $userSetting = \SystemSetting::getByKey("ARC_MAIL_USERNAME");
+                $passwordSetting = \SystemSetting::getByKey("ARC_MAIL_PASSWORD");
+                if (empty($userSetting->value) && empty($passwordSetting->value)) {
                     $mail->SMTPAuth = false;
                 } else {
                     $mail->SMTPAuth = true;
-                    $mail->Username = $this->data["username"];
+                    $mail->Username = $userSetting->value;
 
-                    $smtp_password = system\Helper::arcDecrypt($this->data["password"]);
+                    $smtp_password = system\Helper::arcDecrypt($passwordSetting->value);
 
                     $mail->Password = $smtp_password;
                 }
