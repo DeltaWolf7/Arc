@@ -42,36 +42,45 @@ class Router extends DataProvider
     /**
      * Default constructor
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
+        // Initilise route
         $this->route = "";
+        // Initilise destination
         $this->destination = "";
+        // Initilise group allowed
         $this->groupallowed = 3;
+        // Initilise visible
         $this->visible = true;
+        // Set table used by class
         $this->table = ARCDBPREFIX . 'router';
+        // Set object mapping
         $this->map = ["id" => "id", "route" => "route", "destination" => "destination",
             "groupallowed" => "groupallowed", "visible" => "visible"];
-        $this->columns = ['id', 'route', 'destination', 'groupallowed', 'visible'];
     }
 
     /**
      * Check Group has permission to entity
-     * @param type $groups
-     * @param type $entry
-     * @return boolean
+     * @param \UserGroup $groups User Groups
+     * @param string $route Url destination
+     * @return boolean True if allowed, false if not
      */
-    public static function hasPermission($groups, $route)
-    {
+    public static function hasPermission($groups, $route) {
+        // Check we have a valid array of groups
         if (is_array($groups)) {
+            // Check each group
             foreach ($groups as $group) {
+                // Check each permission
                 foreach ($group->getPermissions() as $permission) {
+                    // Check the permission matched the route
                     if ($permission->route == $route) {
+                        // Matched, allowed
                         return true;
                     }
                 }
             }
         }
+        // Not found, not allowed
         return false;
     }
 

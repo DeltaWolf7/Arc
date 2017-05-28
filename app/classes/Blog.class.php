@@ -8,7 +8,7 @@ class Blog extends DataProvider {
     public $image;
     public $tags;
     public $poster;
-    public $category;
+    public $categoryid;
     public $seourl;
 
     public function __construct() {
@@ -19,12 +19,11 @@ class Blog extends DataProvider {
         $this->image = "";
         $this->tags = "";
         $this->poster = 0;
-        $this->category = "[\"\"]";
+        $this->categoryid = 0;
         $this->seourl = "";
         $this->table = ARCDBPREFIX . "blog";
-        $this->columns = ["id", "date", "title", "content", "image", "tags", "poster", "category", "seourl"];
         $this->map = ["id" => "id", "date" => "date", "title" => "title", "content" => "content", "image" => "image",
-            "tags" => "tags", "poster" => "poster", "category" => "category", "seourl" => "seourl"];
+            "tags" => "tags", "poster" => "poster", "categoryid" => "categoryid", "seourl" => "seourl"];
     }
 
     public static function getByID($id) {
@@ -38,27 +37,11 @@ class Blog extends DataProvider {
         return $blogs->getCollection(["ORDER" => ["date" => "DESC"]]);
     }
 
-    public static function getAllByCategory($name) {
-        $blogs = Blog::getAllBlogs();
-        $grpUsers = Array();
-        foreach ($blogs as $blog) {
-            if ($blog->inCategory($name)) {
-                $grpUsers[] = $blog;
-            }
-        }
-        return $grpUsers;
+    public static function getAllByCategoryID($id) {
+        $blogs = new Blog();
+        return $blogs->getCollection(["id" => $id, "ORDER" => ["date" => "DESC"]]);
     }
     
-    public function inCategory($name) {
-        $groups = $this->getCategories();
-        foreach ($groups as $group) {
-            if ($group->name == $name) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public static function getLatest($count = 10) {
         $blogs = new Blog();
         return $blogs->getCollection(["ORDER" => ["date" => "DESC"], "LIMIT" => $count]);
@@ -70,55 +53,10 @@ class Blog extends DataProvider {
         return $blog;
     }
 
-    /**
-     * 
-     * @return \Blog Gets the group of the user
-     */
-    public function getCategories() {
-        $groups = [];
-        $cats = json_decode($this->category);
-        foreach ($cats as $group) {
-            $grp = BlogCategory::getByName($group);
-            if ($grp->id != 0) {
-                $groups[] = $grp;
-            }
-        }
-        return $groups;
+    public function getCategory() {
+        return BlogCategory::getByID($this->categoryid);
     }
-
-    /*
-     * Add blog to group
-     */
-
-    public function addToCategory($name) {
-        $groups = json_decode($this->category);
-        foreach ($groups as $group) {
-            if ($group == $name) {
-                return;
-            }
-        }
-        $groups[] = $name;
-        $this->category = json_encode($groups);
-        $this->update();
-        echo $this->category;
-    }
-
-    /*
-     * Remove blog from group
-     */
-
-    public function removeFromCategory($name) {
-        $groups = json_decode($this->category);
-        $newGroups = [];
-        for ($i = 0; $i < count($groups); $i++) {
-            if ($groups[$i] != $name) {
-                $newGroups[] = $groups[$i];
-            }
-        }
-        $this->category = json_encode($newGroups);
-        $this->update();
-    }
-
+  
     public function getPoster() {
         return User::getByID($this->poster);
     }

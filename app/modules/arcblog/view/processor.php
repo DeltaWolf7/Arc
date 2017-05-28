@@ -30,7 +30,7 @@
     } elseif ($data[1] == "category") {
         echo "<h1>" . $category->name . "</h1>";
 
-        $blogs = Blog::getAllByCategory($category->name);
+        $blogs = Blog::getAllByCategoryID($category->id);
         $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
 
 
@@ -48,7 +48,7 @@
 
                 $content = strtok(wordwrap($content, $charCount->value, "...\n"), "\n") . $ending;
                 
-                $categories = $blog->getCategories();
+                $category = $blog->getCategory();
                 ?>
 
 
@@ -66,11 +66,7 @@
                         <div>
                             <i class="fa fa-folder-o"></i>
                             <span>
-                                <?php
-                                foreach ($categories as $category) {
-                                    echo $category->name . " ";
-                                }
-                                ?>
+                                <?php echo $category->name; ?>
                             </span>
                         </div>
                         <!-- Poster /-->

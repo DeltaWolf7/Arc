@@ -11,7 +11,6 @@ class BlogCategory extends DataProvider {
         $this->name = "";
         $this->seourl = "";
         $this->table = ARCDBPREFIX . "blog_categories";
-        $this->columns = ["id", "name", "seourl"];
         $this->map = ["id" => "id", "name" => "name", "seourl" => "seourl"];
     }
 

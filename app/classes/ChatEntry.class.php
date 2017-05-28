@@ -14,7 +14,6 @@ class ChatEntry extends DataProvider {
         $this->sessionid = 0;
         $this->message = "";
         $this->table = ARCDBPREFIX . "chat_entries";
-        $this->columns = ["id", "sessionid", "userid", "event", "message"];
         $this->map = ["id" => "id", "sessionid" => "sessionid",
             "userid" => "userid", "event" => "event", "message" => "message"];
     }

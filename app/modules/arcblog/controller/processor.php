@@ -10,7 +10,7 @@
         if ($data[1] == "post") {
             $blog = Blog::getBySEOUrl($data[2]);
             $content = html_entity_decode($blog->content);
-            $categories = $blog->getCategories();
+            $category = $blog->getCategory();
             $poster = $blog->getPoster();
 
             system\Helper::arcAddHeader("title", $blog->title);

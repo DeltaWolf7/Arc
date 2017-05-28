@@ -46,7 +46,6 @@ class SystemSetting extends DataProvider {
         $this->userid = 0;
         $this->table = ARCDBPREFIX . "system_settings";
         $this->map = ["id" => "id", "key" => "skey", "value" => "svalue", "userid" => "userid"];
-        $this->columns = ["id", "skey", "svalue", "userid"];
     }
 
     /**

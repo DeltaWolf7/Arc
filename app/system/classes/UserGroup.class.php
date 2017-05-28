@@ -43,7 +43,6 @@ class UserGroup extends DataProvider {
         $this->description = "";
         $this->table = ARCDBPREFIX . 'user_groups';
         $this->map = ["id" => "id", "name" => "name", "description" => "description"];
-        $this->columns = ['id', 'name', 'description'];
     }
 
     /**

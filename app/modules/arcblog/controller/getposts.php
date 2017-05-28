@@ -7,9 +7,11 @@ if (system\Helper::arcIsAjaxRequest()) {
         $blogs = Blog::getAllBlogs();
         foreach ($blogs as $blog) {
             $data .= "<tr><td>{$blog->title}</td><td>";
-            $categories = $blog->getCategories();
-            foreach ($categories as $category) {
-                $data .= "<i class=\"label label-default\">{$category->name}</i> ";
+            $category = $blog->getCategory();
+            if ($category->id > 0) {
+                $data .= "<i class=\"badge badge-default\">{$category->name}</i> ";
+            } else {
+                $data .= "<i class=\"badge badge-danger\">Category Missing</i> ";
             }
             $data .= "</td><td>{$blog->date}</td><td class=\"text-right\"><button class=\"btn btn-default btn-xs\" href=\"#\" onclick=\"editPost({$blog->id});\"><i class=\"fa fa-pencil\"></i> Edit</button> <button class=\"btn btn-default btn-xs\"><i class=\"fa fa-remove\"></i> Delete</button></td></tr>";
         }

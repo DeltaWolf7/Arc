@@ -14,7 +14,6 @@ class ChatSession extends DataProvider {
         $this->guestid = 0;
         $this->status = "Active";
         $this->table = ARCDBPREFIX . "chat_sessions";
-        $this->columns = ["id", "agentids", "guestid", "event", "status"];
         $this->map = ["id" => "id", "agentids" => "agentids",
              "guestid" => "guestid", "event" => "event", "status" => "status"];
     }

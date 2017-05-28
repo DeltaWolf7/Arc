@@ -12,6 +12,8 @@
 </div>
 
 <div id="postEditor" style="display: none;">
+<div class="card">
+<div class="card-block">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
@@ -74,6 +76,8 @@
                 </div>
                 <button class="btn btn-default" id="cancelPost">Cancel</button>
                 <button class="btn btn-primary" id="postSaveBtn">Save</button>
+            </div>
+            </div>
             </div>
          
                 

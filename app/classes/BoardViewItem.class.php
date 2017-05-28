@@ -28,8 +28,6 @@ class BoardViewItem extends DataProvider
         $this->expired = false;
         $this->group = "";
         $this->table = "arcboard_items";
-        $this->columns = ["id", "image", "title", "subtitle", "description", "links", "lifespan", "extended",
-                            "created", "expired", "groupname"];
         $this->map = ["id" => "id", "image" => "image", "title" => "title", "subtitle" => "subtitle",
                         "description" => "description", "links" => "links", "lifespan" => "lifespan",
                         "extended" => "extended", "created" => "created", "expired" => "expired", "group" => "groupname"];

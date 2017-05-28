@@ -23,7 +23,10 @@ if (system\Helper::arcIsAjaxRequest()) {
 
         $currentRoute = Router::getRoute("blog/category/" . $category->seourl);
 
+        // check  if the name has changed.
+
         $category->name = $_POST["name"];
+        
         if (preg_match('`^[a-zA-Z0-9_]{1,}$`', $_POST["seourl"])) {
             $category->seourl = strtolower($_POST["seourl"]);
             $currentRoute->delete($currentRoute->id);

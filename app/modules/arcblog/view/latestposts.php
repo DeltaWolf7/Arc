@@ -20,7 +20,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
 
             $content = strtok(wordwrap($content, $charCount->value, "...\n"), "\n") . $ending;
             
-            $categories = $blog->getCategories();
+            $category = $blog->getCategory();
             ?>
 
 
@@ -38,11 +38,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
                     <div>
                         <i class="fa fa-folder-o"></i>
                         <span>
-                            <?php
-                            foreach ($categories as $category) {
-                                echo $category->name . " ";
-                            }
-                            ?>
+                            <?php echo $category->name; ?>
                         </span>
                     </div>
                     <!-- Poster /-->
