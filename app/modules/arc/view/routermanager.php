@@ -1,5 +1,5 @@
-<div class="panel panel-default">
-    <div class="panel-body">
+<div class="card">
+    <div class="card-block">
         <div id="data">
         </div>
     </div>

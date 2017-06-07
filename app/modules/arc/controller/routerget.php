@@ -3,10 +3,10 @@
 if (system\Helper::arcIsAjaxRequest() == true) {
     $groups = UserGroup::getAllGroups();
     $table = "<table class=\"table table-hover table-sm\">";
-    $table .= "<thead><tr><th>Route</th><th>Destination</th><th>Status</th><th>&nbsp;</th></tr></thead><tbody>";
+    $table .= "<thead class=\"thead-default\"><tr><th>Route</th><th>Destination</th><th>Status</th><th>&nbsp;</th></tr></thead><tbody>";
     foreach ($groups as $group) {
         $permissions = Router::getByGroupID($group->id);
-        $table .= "<tr class=\"active\"><td colspan=\"3\"><strong>" . $group->name . "</strong></td><td class=\"text-right\"><button class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> Create</button></td></tr>";
+        $table .= "<thead class=\"thead-default\"><tr><th colspan=\"3\">" . $group->name . "</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
         foreach ($permissions as $permission) {
             $table .= "<tr><td>" . $permission->route . "</td><td>";
             $table .= $permission->destination . "</td><td>";
