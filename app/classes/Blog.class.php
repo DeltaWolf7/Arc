@@ -39,7 +39,7 @@ class Blog extends DataProvider {
 
     public static function getAllByCategoryID($id) {
         $blogs = new Blog();
-        return $blogs->getCollection(["id" => $id, "ORDER" => ["date" => "DESC"]]);
+        return $blogs->getCollection(["categoryid" => $id, "ORDER" => ["date" => "DESC"]]);
     }
     
     public static function getLatest($count = 10) {
@@ -61,4 +61,14 @@ class Blog extends DataProvider {
         return User::getByID($this->poster);
     }
 
+    public function getImage() {
+        if (!empty($this->image)) {
+            return system\Helper::arcGetPath() . "assets/arcblog/" . $this->image;
+        }
+        return system\Helper::arcGetPath() . "assets/arcblog/placeholder.png";
+    }
+
+    public function getUrl() {
+        return system\Helper::arcGetPath() . "blog/post/" .  $this->seourl;
+    }
 }

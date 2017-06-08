@@ -12,10 +12,8 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
         foreach ($blogs as $blog) {
             $poster = $blog->getPoster();
             $content = html_entity_decode($blog->content);
-            $actual_link = system\Helper::arcGetPath();
-
             $ending = "<div class=\"mt-4 text-right\">"
-                        . "<a href=\"" .  $actual_link . "blog/post/" .  $blog->seourl . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
+                        . "<a href=\"" .  $blog->getUrl() . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
                     . "</div>";
 
             $content = strtok(wordwrap($content, $charCount->value, "...\n"), "\n") . $ending;
@@ -26,7 +24,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
 
             <div class="card">
                 <?php if (!empty($blog->image)) { ?>
-                <img class="card-img-top" src="<?php echo system\Helper::arcGetPath() . "assets/arcblog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
+                <img class="card-img-top" src="<?php echo $blog->getImage(); ?>" alt="<?php echo $blog->title; ?>">
                 <?php } ?>
                 <div class="card-block border-b-1">
                     <h5><?php echo $blog->title; ?></h5>
@@ -38,7 +36,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
                     <div>
                         <i class="fa fa-folder-o"></i>
                         <span>
-                            <?php echo $category->name; ?>
+                            <a href="<?php echo $category->getUrl(); ?>"><?php echo $category->name; ?></a>
                         </span>
                     </div>
                     <!-- Poster /-->
@@ -50,6 +48,15 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
                             ?>
                         </span>
                     </div>
+                     <!-- Datetime /-->
+                        <div style="margin-left: 10px;">
+                            <i class="fa fa-clock-o"></i>
+                            <span>
+                                <?php
+                                    echo system\Helper::arcConvertDateTime($blog->date);
+                                ?>
+                            </span>
+                        </div>
                 </div>
 
             </div>

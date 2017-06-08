@@ -51,7 +51,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             Log::createLog("success", "user", "Upload complete.");
         } else {
             Log::createLog("danger", "user", "Upload error " . $_FILES['file']['error']);
-            system\Helper::arcAddMessage("danger", "Error occured while uploading file");
+            system\Helper::arcAddMessage("danger", "Error occurred while uploading file");
         }
     }
 }

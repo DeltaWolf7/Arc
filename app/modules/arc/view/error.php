@@ -1,14 +1,13 @@
-<h1>Error <?php echo http_response_code(); ?></h1>
-<div class="jumbotron">
-    <p><i class="fa fa-warning"></i> 
+<div class="card">
+    <div class="card-block">
+        <h4 class="card-title">Error <?php echo http_response_code(); ?></h4>
+        <p class="card-text"><br /><i class="fa fa-warning"></i>
         <?php
-        
-
         switch (http_response_code()) {
             case "404":
                 ?>
                 The resource you're looking for cannot be found.<br />
-                <br />Request URL: <?php echo system\Helper::arcGetURI(); ?>
+                <br />Requested Url: <?php echo system\Helper::arcGetURI(); ?>
                 <?php
                 break;
             case "403":
@@ -27,12 +26,14 @@
                 <?php
                 break;
             default:
-                echo "Unhandled error occured: " . http_response_code() . "<br />";
+                echo "Unhandled error occurred: " . http_response_code() . "<br />";
                 break;
         }
         ?>
-    </p>
+        </p>
+    </div>
 </div>
+
 
 
 

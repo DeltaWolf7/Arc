@@ -3,12 +3,13 @@
         // profile image
         $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $poster->id);
 ?>
-        <div class="card mb-5 bg-faded p-2 widget-blog-post">
+
+    <h1><?php echo $blog->title ?></h1>
+
+        <div class="card mb-5 p-2 widget-blog-post">
             <div class="cover">
             <?php
-                if (!empty($blog->image)) {
-                echo "<img class=\"card-img-top\" src=\"" . system\Helper::arcGetPath() . "assets/arcblog/{$blog->image}\" alt=\"{$blog->title}\">";
-                }
+                echo "<img class=\"card-img-top\" src=\"" . $blog->getImage() . "\" alt=\"{$blog->title}\">";
 
                 if (strlen($profileImage->value) > 0) {
                     echo "<div class=\"cover-overlay\">"
@@ -20,10 +21,37 @@
             </div>
 
             <div class="card-block mt-4">
-                <h5 class="mb-4"><?php echo $blog->title ?></h5>
                 <!-- P CLASS: card-text /-->
                 <?php echo $content; ?>
             </div>
+
+            <div class="d-flex px-4 py-3">
+                    <!-- Category /-->
+                    <div>
+                        <i class="fa fa-folder-o"></i>
+                        <span>
+                            <a href="<?php echo $category->getUrl(); ?>"><?php echo $category->name; ?></a>
+                        </span>
+                    </div>
+                    <!-- Poster /-->
+                     <div style="margin-left: 10px;">
+                        <i class="fa fa-user-o"></i>
+                        <span>
+                            <?php
+                            echo $poster->getFullname();
+                            ?>
+                        </span>
+                    </div>
+                     <!-- Datetime /-->
+                        <div style="margin-left: 10px;">
+                            <i class="fa fa-clock-o"></i>
+                            <span>
+                                <?php
+                                    echo system\Helper::arcConvertDateTime($blog->date);
+                                ?>
+                            </span>
+                        </div>
+                </div>
         </div>
 
        <?php
@@ -40,10 +68,8 @@
             foreach ($blogs as $blog) {
                 $poster = $blog->getPoster();
                 $content = html_entity_decode($blog->content);
-                $actual_link = system\Helper::arcGetPath();
-
                 $ending = "<div class=\"mt-4 text-right\">"
-                            . "<a href=\"" .  $actual_link . "blog/post/" .  $blog->seourl . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
+                            . "<a href=\"" .  $blog->getUrl() . "\" class=\"btn btn-secondary text-muted\">Read More</a>"
                         . "</div>";
 
                 $content = strtok(wordwrap($content, $charCount->value, "...\n"), "\n") . $ending;
@@ -53,9 +79,7 @@
 
 
                 <div class="card">
-                    <?php if (!empty($blog->image)) { ?>
-                    <img class="card-img-top" src="<?php echo system\Helper::arcGetPath() . "assets/arcblog/" . $blog->image; ?>" alt="<?php echo $blog->title; ?>">
-                    <?php } ?>
+                    <img class="card-img-top" src="<?php echo $blog->getImage(); ?>" alt="<?php echo $blog->title; ?>">
                     <div class="card-block border-b-1">
                         <h5><?php echo $blog->title; ?></h5>
                         <?php echo $content; ?>
@@ -66,7 +90,7 @@
                         <div>
                             <i class="fa fa-folder-o"></i>
                             <span>
-                                <?php echo $category->name; ?>
+                                <a href="<?php echo $category->getUrl(); ?>"><?php echo $category->name; ?></a>
                             </span>
                         </div>
                         <!-- Poster /-->
@@ -75,6 +99,15 @@
                             <span>
                                 <?php
                                 echo $poster->getFullname();
+                                ?>
+                            </span>
+                        </div>
+                         <!-- Datetime /-->
+                        <div style="margin-left: 10px;">
+                            <i class="fa fa-clock-o"></i>
+                            <span>
+                                <?php
+                                    echo system\Helper::arcConvertDateTime($blog->date);
                                 ?>
                             </span>
                         </div>

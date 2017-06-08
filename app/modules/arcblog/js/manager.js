@@ -3,7 +3,7 @@ var postid;
 
 function catBtn(id) {
     catID = id;
-    arcAjaxRequest("arcblog/getcategory", { id: id }, null , success);
+    arcAjaxRequest("arcblog/getcategory", { id: id }, null, success);
 }
 
 function success(data) {
@@ -14,17 +14,25 @@ function success(data) {
 }
 
 function catDelete(id) {
-    arcAjaxRequest("arcblog/deletecategory", { id: id }, deleteSuccess, null);
+    arcAjaxRequest("arcblog/deletecategory", { id: id }, deleteCatSuccess, null);
 }
 
 function deleteSuccess(data) {
-    getCategories();
+    arcAjaxRequest("arcblog/getposts", {}, null, getCatComplete);
     arcGetStatus();
 }
 
-$("#catSave").click(function () {
-    arcAjaxRequest("arcblog/savecategory", { id: catID, name: $("#cattitle").val(),
-     seourl: $("#catseourl").val() }, saveComplete, null);
+function deleteCatSuccess(data) {
+    arcAjaxRequest("arcblog/getcategories", {}, null, getCatComplete);
+    arcGetStatus();
+}
+
+$("#catSave").click(function() {
+    arcAjaxRequest("arcblog/savecategory", {
+        id: catID,
+        name: $("#cattitle").val(),
+        seourl: $("#catseourl").val()
+    }, saveCatComplete, null);
 });
 
 
@@ -35,79 +43,75 @@ function editPost(id) {
 
 function editComplete(data) {
     var jdata = arcGetJson(data);
-            $("#title").val(jdata.title);
-            $("#tags").val(jdata.tags);
-            $("#seourl").val(jdata.seourl);
-            $('#summernote').summernote('code', jdata.content);
-            $('#dateData').val(jdata.date);
-            $('#selected').html(jdata.sel);
-            $('#image').html(jdata.img);
-            $("#postEditor").show();
-            $("#tabs").hide();
+    $("#title").val(jdata.title);
+    $("#tags").val(jdata.tags);
+    $("#seourl").val(jdata.seourl);
+    $('#summernote').summernote('code', jdata.content);
+    $('#date').val(jdata.date);
+    $('#cat').html(jdata.sel);
+    $('#image').html(jdata.img);
+    $("#postEditor").show();
+    $("#tabs").hide();
 }
 
-$("#postSaveBtn").click(function () {
-     arcAjaxRequest("arcblog/savepost", {
-            id: postid, title: $("#title").val(), tags: $("#tags").val(), seourl: $("#seourl").val(),
-            content: $("#summernote").code(), date: $("#dateDate").val(), posterid: "posterid"
-        }, saveComplete, null);
+$("#postSaveBtn").click(function() {
+    arcAjaxRequest("arcblog/savepost", {
+        id: postid,
+        title: $("#title").val(),
+        tags: $("#tags").val(),
+        seourl: $("#seourl").val(),
+        content: arcCleanSummernote($('#summernote').summernote('code')),
+        date: $("#date").val(),
+        cat: $("#cat").val()
+    }, null, saveComplete);
 });
 
-function saveComplete() {
+function saveCatComplete() {
+    $("#categoryModal").modal('hide');
+    arcAjaxRequest("arcblog/getcategories", {}, null, getCatComplete);
+    arcGetStatus();
+}
+
+function saveComplete(data) {
     var jdata = arcGetJson(data);
     if (jdata.error) {
+        arcGetStatus();
         return;
     }
-    $("#categoryModal").modal('hide');
-    getCategories();
+    $("#postEditor").hide();
+    $("#tabs").show();
+    arcAjaxRequest("arcblog/getposts", {}, null, getPostsComplete);
     arcGetStatus();
 }
-
-
-
-$("#addPostCat").click(function () {
-   arcAjaxRequest("arcblog/addpostcategory", {id: postid, catname: $('#cat').val()}, catCompete, null);
-});
-
-$("#remPostCat").click(function () {
-    arcAjaxRequest("arcblog/removepostcategory", {id: postid, catname: $('#sel').val()}, catCompete, null);
-});
 
 function catCompete() {
-    getPosts();
+    arcAjaxRequest("arcblog/getcategories", {}, null, getCatComplete);
     arcGetStatus();
 }
 
-$("#posts").click(function () {
-    getPosts();
+$("#tabPosts").click(function() {
+    arcAjaxRequest("arcblog/getposts", {}, null, getPostsComplete);
 });
 
-$("#categories").click(function () {
-    getCategories();
+$("#tabCategories").click(function() {
+    arcAjaxRequest("arcblog/getcategories", {}, null, getCatComplete);
 });
 
-function getCategories() {
-    $("#posts").removeClass("active");
-    $("#categories").attr("class", "active");
-    arcAjaxRequest("arcblog/getcategories", {}, null, getComplete);
-}
-
-function getPosts() {
-    $("#posts").attr("class", "active");
-    $("#categories").removeClass("active");
-    arcAjaxRequest("arcblog/getposts", {}, null, getComplete);
-}
-
-function getComplete(data) {
+function getPostsComplete(data) {
     var jdata = arcGetJson(data);
-    $('#data').html(jdata.html);
+    $('#posts').html(jdata.html);
+}
+
+function getCatComplete(data) {
+    var jdata = arcGetJson(data);
+    $('#categories').html(jdata.html);
 }
 
 
-$(document).ready(function () {
+$(document).ready(function() {
     $('#summernote').summernote({
-        height: 300,
-        codemirror: {// codemirror options
+        height: 400,
+        codemirror: { // codemirror options
             theme: 'monokai'
         },
         toolbar: [
@@ -124,16 +128,45 @@ $(document).ready(function () {
             ['source', ['undo', 'redo', 'codeview']]
         ],
         callbacks: {
-            onImageUpload: function (files) {
+            onImageUpload: function(files) {
                 arcAjaxRequest("arc/imageupload", files[0], null, uploadComplete);
             }
         }
     });
 
-    getPosts();
+    arcAjaxRequest("arcblog/getposts", {}, null, getPostsComplete);
+
+    $("#date").datetimepicker({
+        format: 'dd-mm-yyyy hh:ii:ss',
+        autoclose: true,
+        todayBtn: true
+    });
 });
 
 $("#cancelPost").click(function() {
     $("#postEditor").hide();
-            $("#tabs").show();
+    $("#tabs").show();
+});
+
+function deletePost(id) {
+    arcAjaxRequest("arcblog/deletepost", { id: id }, null, deleteComplete);
+}
+
+function deleteComplete() {
+    arcAjaxRequest("arcblog/getposts", {}, null, getPostsComplete);
+    arcGetStatus();
+}
+
+$("#removeImage").click(function() {
+    arcAjaxRequest("arcblog/removeimage", { id: postid }, null, imageComplete);
+});
+
+function imageComplete(data) {
+    var jdata = arcGetJson(data);
+    $("#image").html(jdata.image);
+    arcGetStatus();
+}
+
+$(document).on('change', '.btn-file :file', function() {
+    arcAjaxRequest("arcblog/uploadimage", $(this)[0].files[0], null, imageComplete, { id: postid });
 });

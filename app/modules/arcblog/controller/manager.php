@@ -5,6 +5,10 @@ system\Helper::arcCheckSettingExists("ARC_BLOG_CHAR_LIMIT", "400");
 
 system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/manager.js");
 
+//http://www.malot.fr/bootstrap-datetimepicker/
+system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "js/bootstrap-datetimepicker.min.js");
+system\Helper::arcAddHeader("css", system\Helper::arcGetModulePath() . "css/bootstrap-datetimepicker.min.css");
+
 
 //summernote
 system\Helper::arcAddFooter("js", system\Helper::arcGetPath() . "vendor/codemirror/codemirror.js");

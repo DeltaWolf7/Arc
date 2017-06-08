@@ -27,7 +27,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
         $category->name = $_POST["name"];
         
-        if (preg_match('`^[a-zA-Z0-9_]{1,}$`', $_POST["seourl"])) {
+        if (Router::isValid($_POST["seourl"])) {
             $category->seourl = strtolower($_POST["seourl"]);
             $currentRoute->delete($currentRoute->id);
             $currentRoute = new Router();

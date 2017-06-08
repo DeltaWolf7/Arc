@@ -42,4 +42,8 @@ class BlogCategory extends DataProvider {
         return $group;
     }
 
+    public function getUrl() {
+        return system\Helper::arcGetPath() . "blog/category/" . $this->seourl;
+    }
+
 }

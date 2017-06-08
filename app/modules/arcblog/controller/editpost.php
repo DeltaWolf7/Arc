@@ -7,22 +7,19 @@ if (system\Helper::arcIsAjaxRequest()) {
         $group = " <label>Selected Category</label><select class=\"form-control\" id=\"sel\" size=\"5\">";
         $categories = BlogCategory::getAllCategories();
         foreach ($categories as $cat) {
-            $group .= "<option value=\"{$cat->name}\"";
+            $group .= "<option value=\"{$cat->id}\"";
             if ($cat->id == $category->id) {
                 $group .= " selected";
             }
             $group .= ">{$cat->name}</option>";
         }
             $group .= "</select>";
-            $img = "<img class=\"img-rounded\" src=\"";
-        if (!empty($blog->image)) {
-            $img .= $blog->image;
-        } else {
-            // no image
-        }
-        $img .= "\" id=\"setImage\" />";
+            $img = "<img class=\"rounded img-fluid\" src=\"";
+            $img .= $blog->getImage();
+            $img .= "\" />";
 
         system\Helper::arcReturnJSON(["title" => $blog->title, "content" => $content, 
-            "tags" => $blog->tags, "seourl" => $blog->seourl, "date" => $blog->date,
+            "tags" => $blog->tags, "seourl" => $blog->seourl,
+            "date" => system\Helper::arcConvertDateTime($blog->date),
             "sel" => $group, "img" => $img]);
 }

@@ -146,4 +146,12 @@ class Router extends DataProvider
             return $routes->getCollection(["ORDER" => ['route' => 'ASC'], "visible" => true]);
         }
     }
+
+    public static function isValid($input) {
+        if (preg_match('`^[a-zA-Z0-9_-]{1,}$`', $input)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

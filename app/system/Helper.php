@@ -638,6 +638,36 @@ class Helper {
 
     /**
      * 
+     * Covert a date in to Sql format compatible with a database
+     * @param string $date to be converted
+     * @return date in Sql format
+     */
+    public static function arcConvertDateToSql($date) {
+        return date('Y-m-d', strtotime($date));
+    }
+
+    /**
+     * 
+     * Covert a time in to Sql format compatible with a database
+     * @param string $time to be converted
+     * @return date in Sql format
+     */
+    public static function arcConvertTimeToSql($time) {
+        return date('H:i:s', strtotime($time));
+    }
+
+    /**
+     * 
+     * Covert a datetime in to Sql format compatible with a database
+     * @param string $datetime to be converted
+     * @return date in Sql format
+     */
+    public static function arcConvertDateTimeToSql($datetime) {
+        return date('Y-m-d H:i:s', strtotime($datetime));
+    }
+
+    /**
+     * 
      * @param string String to encrypt
      * @return string
      */
