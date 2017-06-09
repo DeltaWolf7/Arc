@@ -11,8 +11,7 @@
             $blog = Blog::getBySEOUrl($data[2]);
             $content = html_entity_decode($blog->content);
             $category = $blog->getCategory();
-            $poster = $blog->getPoster();
-
+ 
             system\Helper::arcAddHeader("title", $blog->title);
             system\Helper::arcAddHeader("keywords", $blog->tags);
         }

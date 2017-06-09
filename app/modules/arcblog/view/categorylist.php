@@ -9,7 +9,8 @@
                 foreach ($categories as $category) {
                     echo "<li class=\"list-item\">"
                     . "<a href=\"" . $category->getUrl() . "\">"
-                    . "<i class=\"fa fa-folder\"></i> {$category->name}</a>"
+                    . "<span class=\"badge badge-pill badge-info\">{$category->name}</span>"
+                    . "</a>"
                     . "</li>";
                 }
             } else {

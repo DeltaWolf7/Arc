@@ -29,6 +29,13 @@
                     <h1><a href="{{arc:path}}">{{arc:sitetitle}}</a></h1>
                 </div>
 
+                <form class="search">
+                    <div class="search__inner">
+                        <input type="text" class="search__text" placeholder="Search for people, files, documents...">
+                        <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
+                    </div>
+                </form>
+
                 <ul class="top-nav">
                     <li class="hidden-xl-up"><a href="" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
 

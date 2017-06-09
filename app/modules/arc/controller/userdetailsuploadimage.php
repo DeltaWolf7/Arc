@@ -8,6 +8,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if ($_FILES['file']['size'] > $filesize->value) {
                 system\Helper::arcAddMessage("danger", "File size exceeds limit");
                 Log::createLog("danger", "user", "File exceeds size limit.");
+                system\Helper::arcReturnJSON(["message" => "File size exceeds limit"]);
                 return;
             }
             $file_type = $_FILES['file']['type'];
@@ -17,6 +18,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
                 system\Helper::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
                 Log::createLog("danger", "user", "Invalid image type.");
+                system\Helper::arcReturnJSON(["message" => "Invalid image type, requires JPEG, JPG, GIF or PNG"]);
                 return;
             }
             
@@ -38,6 +40,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if ($size == 0) {
                 system\Helper::arcAddMessage("danger", "Invalid file uploaded");
                 Log::createLog("danger", "user", "Invalid file size.");
+                system\Helper::arcReturnJSON(["message" => "Invalid file uploaded"]);
                 return;
             }
             move_uploaded_file($location, $destination);
@@ -48,10 +51,18 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             $profileImage->update();
 
             system\Helper::arcAddMessage("success", "File uploaded");
+            system\Helper::arcReturnJSON(["message" => "File uploaded"]);
             Log::createLog("success", "user", "Upload complete.");
         } else {
-            Log::createLog("danger", "user", "Upload error " . $_FILES['file']['error']);
-            system\Helper::arcAddMessage("danger", "Error occurred while uploading file");
+            if ($_FILES['file']['error'] == "1") {
+                system\Helper::arcAddMessage("danger", "File size exceeds limit");
+                system\Helper::arcReturnJSON(["message" => "File size exceeds limit"]);
+                Log::createLog("danger", "arcblog", "File exceeds size limit.");
+            } else {
+                Log::createLog("danger", "arcblog", "Upload error " . $_FILES['file']['error']);
+                system\Helper::arcAddMessage("danger", "Upload error " . $_FILES['file']['error']);
+                system\Helper::arcReturnJSON(["message" => "Upload error " . $_FILES['file']['error']]);
+            }
         }
     }
 }

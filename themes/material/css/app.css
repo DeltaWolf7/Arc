@@ -329,7 +329,7 @@ html {
 
 body {
     font-family: "Roboto", sans-serif;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: normal;
     line-height: 1.5;
     color: #707070;
@@ -614,7 +614,7 @@ hr {
 
 small,
 .small {
-    font-size: 80%;
+    font-size: 85%;
     font-weight: normal;
 }
 
@@ -4297,7 +4297,7 @@ tbody.collapse.show {
 
 .card-block {
     flex: 1 1 auto;
-    padding: 2.1rem;
+    padding: 1.5rem;
 }
 
 .card-title {
@@ -4695,11 +4695,11 @@ tbody.collapse.show {
 
 .badge {
     display: inline-block;
-    padding: 0.4rem 0.55rem;
-    font-size: 85%;
+    padding: 0.5rem 0.55rem;
+    font-size: 90%;
     font-weight: 500;
     line-height: 1;
-    color: #FFFFFF;
+    color: #000000;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -4723,13 +4723,13 @@ a.badge:hover {
 }
 
 .badge-pill {
-    padding-right: 0.6em;
-    padding-left: 0.6em;
+    padding-right: 1.2em;
+    padding-left: 1em;
     border-radius: 10rem;
 }
 
 .badge-default {
-    background-color: #636c72;
+    background-color: #EBEBEB;
 }
 
 .badge-default[href]:focus,
@@ -4738,7 +4738,7 @@ a.badge:hover {
 }
 
 .badge-primary {
-    background-color: #2196F3;
+    background-color: #CDEAE7;
 }
 
 .badge-primary[href]:focus,
@@ -4747,7 +4747,7 @@ a.badge:hover {
 }
 
 .badge-success {
-    background-color: #32c787;
+    background-color: #DBEFDC;
 }
 
 .badge-success[href]:focus,
@@ -4756,7 +4756,7 @@ a.badge:hover {
 }
 
 .badge-info {
-    background-color: #00BCD4;
+    background-color: #CDEEFC;
 }
 
 .badge-info[href]:focus,
@@ -4765,7 +4765,7 @@ a.badge:hover {
 }
 
 .badge-warning {
-    background-color: #ffc107;
+    background-color: #fff4d2;
 }
 
 .badge-warning[href]:focus,
@@ -4774,7 +4774,7 @@ a.badge:hover {
 }
 
 .badge-danger {
-    background-color: #ff5652;
+    background-color: #FCDAD7;
 }
 
 .badge-danger[href]:focus,
@@ -8721,6 +8721,15 @@ progress::-webkit-progress-bar {
 .card {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
     margin-bottom: 30px;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.card:hover {
+    -webkit-box-shadow: 0 3px 6px 5px rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 6px 5px rgba(0, 0, 0, 0.12), 0 1px 6px 0 rgba(0, 0, 0, 0.12);
 }
 
 .card:not([class*="card-outline-"]) {
@@ -8732,9 +8741,9 @@ progress::-webkit-progress-bar {
 }
 
 .card-title {
-    font-size: 1.25rem;
-    font-weight: normal;
-    margin-bottom: 0;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 5px;
 }
 
 .card-subtitle {
