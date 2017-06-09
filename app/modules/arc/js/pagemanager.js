@@ -2,10 +2,42 @@ var page;
 
 function editPage(pageid) {
     page = pageid;
-    arcAjaxRequest("arc/pagemanageredit", {id: page}, null, successEdit);
+
+
+    $('#summernote').summernote({
+        height: 600,
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        },
+        toolbar: [
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+            ['insert', ['superscript', 'subscript']],
+            ['font', ['strikethrough']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['link', ['link', 'picture', 'video', 'hr']],
+            ['misc', ['fullscreen']],
+            ['source', ['undo', 'redo', 'codeview']]
+        ],
+        callbacks: {
+            onImageUpload: function(files) {
+                arcAjaxRequest("arc/pagemanagerupload", files[0], null, uploadComplete);
+            }
+        }
+    });
+
+    arcAjaxRequest("arc/pagemanageredit", { id: page }, null, successEdit);
 }
 
 function successEdit(data) {
+
+    if ($('#summernote').summernote('codeview.isActivated')) {
+        $('#summernote').summernote('codeview.deactivate');
+    }
+
     var jdata = arcGetJson(data);
     $("#title").val(jdata.title);
     $("#seourl").val(jdata.seourl);
@@ -31,15 +63,24 @@ function animate(showEditor) {
     }
 }
 
-$("#savePageBtn").click(function () {
-    arcAjaxRequest("arc/pagemanagersave", {id: page, title: $("#title").val(), seourl: $("#seourl").val(),
-        metadescription: $("#metadescription").val(), metakeywords: $("#metakeywords").val(),
-        html: arcCleanSummernote($('#summernote').summernote('code')), iconclass: $("#iconclass").val(), sortorder: $("#sortorder").val(),
-        showtitle: $('#showtitle').val(), hidelogin: $('#hidelogin').val(), hidemenu: $("#hidemenu").val(),
-        theme: $('#theme').val()}, null, successSave);
+$("#savePageBtn").click(function() {
+    arcAjaxRequest("arc/pagemanagersave", {
+        id: page,
+        title: $("#title").val(),
+        seourl: $("#seourl").val(),
+        metadescription: $("#metadescription").val(),
+        metakeywords: $("#metakeywords").val(),
+        html: arcCleanSummernote($('#summernote').summernote('code')),
+        iconclass: $("#iconclass").val(),
+        sortorder: $("#sortorder").val(),
+        showtitle: $('#showtitle').val(),
+        hidelogin: $('#hidelogin').val(),
+        hidemenu: $("#hidemenu").val(),
+        theme: $('#theme').val()
+    }, null, successSave);
 });
 
-$("#closeBtn").click(function () {
+$("#closeBtn").click(function() {
     animate(false);
 });
 
@@ -52,7 +93,7 @@ function successSave(data) {
     arcGetStatus();
 }
 
-$("#insertModule").click(function () {
+$("#insertModule").click(function() {
     $("#summernote").summernote("editor.insertText", $("#imodule").val());
 });
 
@@ -61,8 +102,8 @@ function removePage(pageid) {
     $("#deletePage").modal("show");
 }
 
-$("#doRemoveBtn").click(function () {
-    arcAjaxRequest("arc/pagemanagerremove", {id: page}, completeDo, null);
+$("#doRemoveBtn").click(function() {
+    arcAjaxRequest("arc/pagemanagerremove", { id: page }, completeDo, null);
 });
 
 function completeDo(data) {
@@ -80,33 +121,7 @@ function successGet(data) {
     $('#pages').html(jdata.html);
 }
 
-$(document).ready(function () {
-    $('#summernote').summernote({
-        height: 600,
-        codemirror: {// codemirror options
-            theme: 'monokai'
-        },
-        toolbar: [
-            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-            ['insert', ['superscript', 'subscript']],
-            ['font', ['strikethrough']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['link', ['link', 'picture', 'video', 'hr']],
-            ['misc', ['fullscreen']],
-            ['source', ['undo', 'redo', 'codeview']]
-        ],
-        callbacks: {
-            onImageUpload: function (files) {
-                arcAjaxRequest("arc/pagemanagerupload", files[0], null, uploadComplete);
-            }
-        }
-    });
-
-    
+$(document).ready(function() {
     getPages();
 });
 

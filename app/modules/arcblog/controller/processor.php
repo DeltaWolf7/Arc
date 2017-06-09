@@ -14,6 +14,7 @@
             $poster = $blog->getPoster();
 
             system\Helper::arcAddHeader("title", $blog->title);
+            system\Helper::arcAddHeader("keywords", $blog->tags);
         }
         elseif ($data[1] == "category") {
             $category = BlogCategory::getBySEOUrl($data[2]);        

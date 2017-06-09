@@ -125,6 +125,9 @@ class Helper {
             case "description":
             case "keywords":
             case "author":
+            case "viewport":
+                self::$arc["headerdata"][] = "<meta name=\"{$type}\" content=\"{$content}\" />" . PHP_EOL;
+                break;
             case "alternate":
             case "canonical":
                 self::$arc["headerdata"][] = "<link rel=\"{$type}\" href=\"{$content}\" />" . PHP_EOL;

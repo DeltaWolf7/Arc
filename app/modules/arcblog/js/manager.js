@@ -38,10 +38,40 @@ $("#catSave").click(function() {
 
 function editPost(id) {
     postid = id;
+
+    $('#summernote').summernote({
+        height: 400,
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        },
+        toolbar: [
+            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+            ['insert', ['superscript', 'subscript']],
+            ['font', ['strikethrough']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['table', ['table']],
+            ['link', ['link', 'picture', 'video', 'hr']],
+            ['misc', ['fullscreen']],
+            ['source', ['undo', 'redo', 'codeview']]
+        ],
+        callbacks: {
+            onImageUpload: function(files) {
+                arcAjaxRequest("arc/imageupload", files[0], null, uploadComplete);
+            }
+        }
+    });
+
     arcAjaxRequest("arcblog/editpost", { id: id }, null, editComplete);
 }
 
 function editComplete(data) {
+    if ($('#summernote').summernote('codeview.isActivated')) {
+        $('#summernote').summernote('codeview.deactivate');
+    }
+
     var jdata = arcGetJson(data);
     $("#title").val(jdata.title);
     $("#tags").val(jdata.tags);
@@ -109,30 +139,6 @@ function getCatComplete(data) {
 
 
 $(document).ready(function() {
-    $('#summernote').summernote({
-        height: 400,
-        codemirror: { // codemirror options
-            theme: 'monokai'
-        },
-        toolbar: [
-            ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-            ['insert', ['superscript', 'subscript']],
-            ['font', ['strikethrough']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['height', ['height']],
-            ['table', ['table']],
-            ['link', ['link', 'picture', 'video', 'hr']],
-            ['misc', ['fullscreen']],
-            ['source', ['undo', 'redo', 'codeview']]
-        ],
-        callbacks: {
-            onImageUpload: function(files) {
-                arcAjaxRequest("arc/imageupload", files[0], null, uploadComplete);
-            }
-        }
-    });
 
     arcAjaxRequest("arcblog/getposts", {}, null, getPostsComplete);
 
@@ -168,5 +174,9 @@ function imageComplete(data) {
 }
 
 $(document).on('change', '.btn-file :file', function() {
+    if (postid == "0") {
+        arcNotification({ messages: { message: "Please save the post before setting the image.", type: "danger" } });
+        return;
+    }
     arcAjaxRequest("arcblog/uploadimage", $(this)[0].files[0], null, imageComplete, { id: postid });
 });

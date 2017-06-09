@@ -4,7 +4,20 @@ if (system\Helper::arcIsAjaxRequest()) {
         $blog = Blog::getByID($_POST["id"]);  
         $blog->content = $_POST["content"];
         $blog->date = system\Helper::arcConvertDateTimeToSql($_POST["date"]);
+
+        if (empty($_POST["title"])) {
+            system\Helper::arcAddMessage("danger", "Please provide a post title");
+            system\Helper::arcReturnJSON(["error" => "Please provide a post title"]);
+            return;
+        }
+
         $blog->title = $_POST["title"];
+
+        if (empty($_POST["seourl"])) {
+            system\Helper::arcAddMessage("danger", "Please provide post SEO Url");
+            system\Helper::arcReturnJSON(["error" => "Please provide post SEO Url"]);
+            return;
+        }
 
         $currentRoute = Router::getRoute("blog/post/" . $blog->seourl);
 
