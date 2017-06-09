@@ -17,7 +17,7 @@
             </div>
 
             <header class="header">
-                <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+                <div class="navigation-trigger" data-ma-action="aside-open" data-ma-target=".sidebar">
                     <div class="navigation-trigger__inner">
                         <i class="navigation-trigger__line"></i>
                         <i class="navigation-trigger__line"></i>
@@ -28,13 +28,6 @@
                 <div class="header__logo hidden-sm-down">
                     <h1><a href="{{arc:path}}">{{arc:sitetitle}}</a></h1>
                 </div>
-
-                <form class="search">
-                    <div class="search__inner">
-                        <input type="text" class="search__text" placeholder="Search for people, files, documents...">
-                        <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
-                    </div>
-                </form>
 
                 <ul class="top-nav">
                     <li class="hidden-xl-up"><a href="" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
@@ -68,11 +61,11 @@
                 </ul>
             </header>
 
-            <aside class="sidebar">
+            <aside class="sidebar sidebar--hidden">
                 {{arc:menu}}
             </aside>
 
-            <section class="content">
+            <section class="content content--full">
                 <h1>{{arc:title}}</h1>
 
                 {{arc:impersonate}}

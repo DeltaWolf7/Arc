@@ -14,5 +14,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
 
 
-    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname, "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled), "company" => $company]);
+    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname,
+         "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled),
+          "company" => $company]);
 }

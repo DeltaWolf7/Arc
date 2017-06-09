@@ -2,9 +2,9 @@
 $user = system\Helper::arcGetUser();
 $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
 
-$image = "<i class=\"fa fa-user fa-5x\"></i>";
+$image = "<div class=\"card-block\">No profile image</div>";
 if (!empty($profileImage->value)) {
-    $image = "<img class=\"card-img-top\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
+    $image = "<img class=\"card-img-top text-center\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
 $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 ?>
