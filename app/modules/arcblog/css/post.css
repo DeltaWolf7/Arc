@@ -1,3 +1,8 @@
 .card-bottom-border {
     border-bottom: 1px solid #EDEDED;
 }
+
+.card-img-top{
+  width: 100%;
+  height: auto;
+}
