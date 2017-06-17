@@ -6,7 +6,6 @@ $image = "<div class=\"card-block\">No profile image</div>";
 if (!empty($profileImage->value)) {
     $image = "<img class=\"card-img-top text-center\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
-$company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 ?>
 
         <div class="row">
@@ -22,19 +21,6 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                                 <label for="lastname">Lastname</label>
                                 <input type="lastname" class="form-control" name="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
                             </div>
-                            <?php if ($company->value == "true") { ?>
-                                <label for="company">Company Association(s)</label>
-                                <div class="form-group">
-                                    <ul class="list-group">
-                                    <?php
-                                        $companies = $user->getCompanies();
-                                    foreach ($companies as $company) {
-                                        echo "<li class=\"list-group-item\">{$company->name}</li>";
-                                    }
-                                    ?>
-                                    </ul>
-                                </div>
-                            <?php } ?>
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input type="email" class="form-control" name="email" maxlength="100" placeholder="Email" value="<?php echo $user->email; ?>" disabled="true">

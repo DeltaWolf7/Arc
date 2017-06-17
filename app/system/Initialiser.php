@@ -71,7 +71,6 @@ class Initialiser {
         Helper::arcCheckSettingExists("ARC_LOGO_PATH", "assets/logo-200x48-dark.png");
         Helper::arcCheckSettingExists("ARC_DATEFORMAT", "d-m-Y");
         Helper::arcCheckSettingExists("ARC_TIMEFORMAT", "H:i:s");
-        Helper::arcCheckSettingExists("ARC_REQUIRECOMPANY", false);
         Helper::arcCheckSettingExists("ARC_SITETITLE", "Arc Project");
         Helper::arcCheckSettingExists("ARC_MEDIAMANAGERURL", "administration/media-manager");
 

@@ -18,7 +18,6 @@ class getusersApi extends Api {
             $usr["email"] = $user->email;
             $usr["enabled"] = $user->enabled;
             $usr["groups"] = $user->groups;
-            $usr["companies"] = $user->company;
             $users_json[] = $usr;
         }
         

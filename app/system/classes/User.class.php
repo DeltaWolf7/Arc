@@ -43,8 +43,6 @@ class User extends DataProvider {
     public $enabled;
     // User associated groups
     public $groups;
-    // user associated company
-    public $company;
 
     /**
      * Default constructor
@@ -63,8 +61,6 @@ class User extends DataProvider {
         $this->passwordhash = "";
         // Initilise groups array
         $this->groups = ["Users"];
-        // Initilise company array
-        $this->company = [];
         // Initilise created date to now
         $this->created = date("y-m-d H:i:s");
         // Set the table used by this object
@@ -72,8 +68,7 @@ class User extends DataProvider {
         // Set the property to column mapping
         $this->map = ["id" => "id", "firstname" => "firstname", "lastname" => "lastname",
             "email" => "email", "passwordhash" => "passwordhash", "created" => "created",
-            "enabled" => "enabled", "groups" => "groups [JSON]",
-            "company" => "company [JSON]"];
+            "enabled" => "enabled", "groups" => "groups [JSON]"];
     }
 
     /**
@@ -215,49 +210,5 @@ class User extends DataProvider {
     public function getFullname() {
         // Return the formatted name of the user
         return "{$this->firstname} {$this->lastname}";
-    }
-    
-    /**
-     * Get the companies associated with the user
-     * @return array Collection of company objects as array
-     */
-    public function getCompanies() {
-        // Create array to hold the company objects
-        $companies = [];
-        // Get each company ID from the user and load it from the database
-        foreach ($this->company as $company) {
-            // Add the company object to the array
-            $companies[] = Company::getByID($company);
-        }
-        // Return an array of company objects
-        return $companies;
-    }
-    
-    /**
-     * Add company ID to user
-     * @param int $id Company ID to add to the user
-     */
-    public function addToCompany($id) {
-        // Does the ID already exists for this user?
-        if (!in_array($id, $this->company)) {
-            // If not add the ID.
-            $this->company[] = $id;
-            // Update the object in the database
-            $this->update();
-        }
-    }
-
-    /**
-     * Remove company id from user
-     * @param int $id Company ID to remove from the user
-     */
-    public function removeFromCompany($id) {
-        // Does the ID exists for this user?
-        if (($key = array_search($id, $this->company)) !== false) {
-            // The ID exists, so we remove it
-            unset($this->company[$key]);
-            // Update the object in the database
-            $this->update();
-        } 
     }
 }

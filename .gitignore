@@ -1,2 +1,14 @@
 /app/system/Config.php
 .vscode/
+/app/modules/erudio/
+/app/classes/Group.class.php
+/app/classes/Multistage.class.php
+/app/classes/MultistageResult.class.php
+/app/classes/OddOneOutResult.class.php
+/app/classes/Question.class.php
+/app/classes/Result.class.php
+/app/classes/Sentence.class.php
+/app/classes/ShuffledResult.class.php
+/app/classes/Word.class.php
+/app/classes/WordGroup.class.php
+/assets/erudio/

@@ -23,6 +23,5 @@ $reg = \SystemSetting::getByKey("ARC_ALLOWREG");
 $logo = \SystemSetting::getByKey("ARC_LOGO_PATH");
 $dateformat = \SystemSetting::getByKey("ARC_DATEFORMAT");
 $timeformat = \SystemSetting::getByKey("ARC_TIMEFORMAT");
-$company = \SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 $title = \SystemSetting::getByKey("ARC_SITETITLE");
 $media = \SystemSetting::getByKey("ARC_MEDIAMANAGERURL");

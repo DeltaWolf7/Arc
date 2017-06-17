@@ -66,7 +66,6 @@ $("#registerBtn").click(function() {
     arcAjaxRequest("arc/doregister", {
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
-        company: $("#company").val(),
         emailr: $("#emailr").val(),
         passwordr: $("#passwordr").val(),
         passwordr2: $("#passwordr2").val()

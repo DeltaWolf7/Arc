@@ -80,11 +80,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_TIMEFORMAT");
     $setting->value = $_POST["timeFormat"];
     $setting->update();
-    
-    $setting = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
-    $setting->value = $_POST["company"];
-    $setting->update();
-    
+       
     $setting = SystemSetting::getByKey("ARC_SITETITLE");
     $setting->value = $_POST["siteTitle"];
     $setting->update();

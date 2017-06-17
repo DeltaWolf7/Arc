@@ -1,6 +1,6 @@
 // Details
     $("#saveDetailsBtn").click(function () {
-        arcAjaxRequest("arc/userdetails", $("#detailsForm").serialize(), detailsComplete, null);
+        arcAjaxRequest("arc/usersavedetails", $("#detailsForm").serialize(), detailsComplete, null);
     });
     
 

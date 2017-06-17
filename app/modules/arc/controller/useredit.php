@@ -2,19 +2,38 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
-    $data = "";
-    foreach ($user->getGroups() as $group) {
-        $data .= "<li class=\"list-group-item\"><button class=\"btn btn-danger btn-sm\" onclick=\"removeFromGroupBtn('{$group->name}')\"><i class=\"fa fa-close\"></i></button> {$group->name}</li>";
-    }
+    $userGroups = UserGroup::getAllGroups();
 
-    $companies = $user->getCompanies();
-    $company = "";
-    foreach ($companies as $comp) {
-        $company .= "<li class=\"list-group-item\"><button class=\"btn btn-danger btn-sm\" onclick=\"removeCompanyUser({$comp->id})\"><i class=\"fa fa-close\"></i></button> {$comp->name}</li>";
-    }
+    $groups = "<h3>Groups</h3><table class=\"table\">"
+        . "<thead><tr class=\"thead-default\">";
 
+    // header
+    foreach ($userGroups as $group) { 
+        $groups .= "<th>{$group->name}</th>";
+    }
+        
+    $groups .= "</tr></thead>";
+
+    // body
+    $groups .= "<tr>";
+    foreach ($userGroups as $group) { 
+        $groups .= "<td>"
+        . "<label class=\"custom-control custom-checkbox\">"
+        . "<input type=\"checkbox\" class=\"custom-control-input\"";
+        
+        if ($user->inGroup($group->name)) {
+            $groups .= " checked";
+        }
+
+        $groups .= " onclick=\"addUserToGroup({$user->id},'{$group->name}')\">"
+        . "<span class=\"custom-control-indicator\"></span>"
+        . "</label>"
+        . "</td>";
+    }
+    $groups .= "</tr>";
+
+    $groups .= "</table>";
 
     system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname,
-         "email" => $user->email, "group" => $data, "enabled" => boolval($user->enabled),
-          "company" => $company]);
+         "email" => $user->email, "groups" => $groups, "enabled" => $user->enabled]);
 }

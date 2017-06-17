@@ -86,7 +86,7 @@ dfn {
 }
 
 mark {
-    background-color: #ff0;
+    background-color: #fff4d2;
     color: #000;
 }
 
@@ -4829,7 +4829,7 @@ a.badge:hover {
 }
 
 .alert-success {
-    background-color: #57d59f;
+    background-color: #47d197;
     border-color: #57d59f;
     color: #FFFFFF;
 }
@@ -4843,9 +4843,9 @@ a.badge:hover {
 }
 
 .alert-info {
-    background-color: #2ebcfc;
+    background-color: #03a9f4;
     border-color: #2ebcfc;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .alert-info hr {
@@ -4857,9 +4857,9 @@ a.badge:hover {
 }
 
 .alert-warning {
-    background-color: #ffc721;
+    background-color: #fff4d2;
     border-color: #ffc721;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .alert-warning hr {
@@ -4871,9 +4871,9 @@ a.badge:hover {
 }
 
 .alert-danger {
-    background-color: #ff6f6c;
+    background-color: #f44336;
     border-color: #ff6f6c;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 .alert-danger hr {

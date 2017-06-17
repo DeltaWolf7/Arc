@@ -5,7 +5,6 @@ if ($ldap->value == "1") {
     $login = "Username";
 }
 $reg = SystemSetting::getByKey("ARC_ALLOWREG");
-$company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
 ?>
 
 <div class="container">
@@ -72,13 +71,6 @@ $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
                                 </span>
                                     <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Lastname">
                                 </div>
-                                <?php if ($company->value == "true") { ?>
-                                    <div class="input-group mb-1">
-                                <span class="input-group-addon"><i class="icon-map"></i>
-                                </span>
-                                        <input maxlength="50" type="text" class="form-control" id="company" placeholder="Company">
-                                    </div>
-                                <?php } ?>
                                 <div class="input-group mb-1">
                                 <span class="input-group-addon"><i class="icon-envelope-open"></i>
                                 </span>

@@ -34,22 +34,9 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
     
-    if (!empty($_POST["company"])) {
-        $comp = Company::getByName(ucwords($_POST["company"]));
-        if ($comp->id == 0) {
-            $comp = new Company();
-            $comp->name = ucwords($_POST["company"]);
-            $comp->update();
-        }
-        
-        $user->addToCompany($comp->id);
-    }
 
-    if ($_POST["enabled"] == "true") {
-        $user->enabled = 1;
-    } else {
-        $user->enabled = 0;
-    }
+    $user->enabled = $_POST["enabled"]''
+  
 
     $user->email = strtolower($_POST["email"]);
     $user->update();

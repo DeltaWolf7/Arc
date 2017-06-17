@@ -19,7 +19,6 @@ $("#btnSaveSettings").click(function() {
         siteLogo: $("#siteLogo").val(),
         dateFormat: $("#dateFormat").val(),
         timeFormat: $("#timeFormat").val(),
-        company: $("#company").val(),
         siteTitle: $("#siteTitle").val(),
         media: $("#mediaManagerURL").val()
     }, arcGetStatus);

@@ -257,32 +257,6 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="company">Show Company Field</label>
-                                <select id="company" class="form-control">
-                                    <option value="true"<?php
-                                    if ($company->value == "1") {
-                                        echo " selected";
-                                    }
-                                    ?>>Yes</option>
-                                    <option value="false"<?php
-                                    if ($company->value == "0") {
-                                        echo " selected";
-                                    }
-                                    ?>>No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="panel panel-default">  
-                                <div class="panel-body">
-                                    <i class="fa fa-info-circle"></i> Shows the company field on the registration form and on the user profile page. Allowing users to associate themselves with a company.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </fieldset>
 
             </div>

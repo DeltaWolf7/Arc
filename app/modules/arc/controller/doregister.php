@@ -63,19 +63,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     
     // save user
     $user->update();
-    
-    $company = SystemSetting::getByKey("ARC_REQUIRECOMPANY");
-    if (!empty($_POST["company"]) && $company->value == "true") {
-        $comp = Company::getByName(ucwords($_POST["company"]));
-        if ($comp->id == 0) {
-            $comp = new Company();
-            $comp->name = ucwords($_POST["company"]);
-            $comp->update();
-        }
-        
-        $user->addToCompany($comp->id);
-    }
-    
+       
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Your details have been registered");
     $url = SystemSetting::getByKey("ARC_LOGIN_URL");
