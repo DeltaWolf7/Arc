@@ -35,10 +35,11 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
     
 
-    $user->enabled = $_POST["enabled"]''
+    $user->enabled = $_POST["enabled"];
   
 
     $user->email = strtolower($_POST["email"]);
     $user->update();
     system\Helper::arcAddMessage("success", "Changes saved");
+    system\Helper::arcReturnJSON([]);
 }
