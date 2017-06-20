@@ -322,27 +322,6 @@ class Helper {
         $_SESSION["arc_user"] = serialize($user);
     }
 
-    public static function arcImpersonateUser($user) {
-        $_SESSION["arc_imposter"] = serialize($user);
-    }
-
-    public static function arcIsImpersonator() {
-        if (isset($_SESSION["arc_imposter"])) {
-            return true;
-        }
-        return false;
-    }
-
-    public static function arcGetImpersonator() {
-        return unserialize($_SESSION["arc_user"]);
-    }
-
-    public static function arcStopImpersonatingUser() {
-        if (isset($_SESSION["arc_imposter"])) {
-            unset($_SESSION["arc_imposter"]);
-        }
-    }
-
     /**
      * Check if user is logged in
      * @return boolean true if they are

@@ -24,7 +24,6 @@ if (system\Helper::arcIsAjaxRequest()) {
         $table .= "</td>"
                 . "<td class=\"text-right\">"
                 . "<div class=\"btn-group\" role=\"group\">"
-                . "<button class=\"btn btn-primary btn-sm\" onclick=\"impersonateUser(" . $user->id . ")\"><i class=\"fa fa-user-secret\"></i> Impersonate</button>"
                 . "<button class=\"btn btn-success btn-sm\" onclick=\"editUser(" . $user->id . ")\"><i class=\"fa fa-pencil\"></i> Edit</button>"
                 . "<button class=\"btn btn-danger btn-sm\" onclick=\"removeUser(" . $user->id . ")\"><i class=\"fa fa-remove\"></i> Remove</button>"
                 . "</div>"

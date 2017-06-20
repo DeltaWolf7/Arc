@@ -146,15 +146,3 @@ function saveGroupComplete() {
     $("#editGroupModal").modal("hide");
     arcGetStatus();
 }
-
-function impersonateUser(userid) {
-    arcAjaxRequest("arc/userimpersonateUser", { id: userid }, null, impersonateSuccess);
-}
-
-function impersonateSuccess(data) {
-    var jdata = arcGetJson(data);
-    arcGetStatus();
-    if (jdata.status == "success") {
-        window.location.href = "/";
-    }
-}

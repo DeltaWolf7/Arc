@@ -40,12 +40,6 @@ class Render {
             Helper::arcSetSession($_POST["arcsid"]);
         }
 
-        //stop impersonating user
-        if ($uri == "/arcsiu") {
-            Helper::arcStopImpersonatingUser();
-            $uri = "/";
-        }
-
         if (Helper::arcIsAjaxRequest() == false) {
 
             // get route
