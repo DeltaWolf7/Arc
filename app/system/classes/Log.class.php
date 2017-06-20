@@ -91,11 +91,6 @@ class Log extends DataProvider {
         // set the message
         $log->message = $message;
 
-        // Check if the current user is impersonated    
-        if (system\Helper::arcIsImpersonator()) {
-            // User is impersonated, log activity
-            $log->message = "Impersonated (" . system\Helper::arcGetImpersonator()->getFullname() . "): " . $log->message;
-        }
         // Update log in database
         $log->update();
         
