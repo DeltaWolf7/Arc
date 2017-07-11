@@ -57,9 +57,9 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if ($_FILES['file']['error'] == "1") {
                 system\Helper::arcAddMessage("danger", "File size exceeds limit");
                 system\Helper::arcReturnJSON(["message" => "File size exceeds limit"]);
-                Log::createLog("danger", "arcblog", "File exceeds size limit.");
+                Log::createLog("danger", "user", "File exceeds size limit.");
             } else {
-                Log::createLog("danger", "arcblog", "Upload error " . $_FILES['file']['error']);
+                Log::createLog("danger", "user", "Upload error " . $_FILES['file']['error']);
                 system\Helper::arcAddMessage("danger", "Upload error " . $_FILES['file']['error']);
                 system\Helper::arcReturnJSON(["message" => "Upload error " . $_FILES['file']['error']]);
             }

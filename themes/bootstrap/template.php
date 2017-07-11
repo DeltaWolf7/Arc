@@ -19,7 +19,6 @@
         </nav>
         <main class="col-md-10 offset-md-2 pt-3">
          <h1>{{arc:title}}</h1>
-           {{arc:impersonate}}
           {{arc:content}}
         </main>
       </div>

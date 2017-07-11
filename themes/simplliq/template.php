@@ -36,7 +36,6 @@
                     <h1 class="page-head-title">{{arc:title}}</h1>
                 </div>
                 <div class="main-content">
-                        {{arc:impersonate}}
                     {{arc:content}}
                 </div>
 

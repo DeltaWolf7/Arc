@@ -32,7 +32,6 @@
           {{module:arc:breadcrumb}}
         </div>
         <div class="main-content">
-            {{arc:impersonate}}
           {{arc:content}}
         </div>
       </div>

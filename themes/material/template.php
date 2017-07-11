@@ -74,10 +74,7 @@
 
             <section class="content content--full">
                 <h1>{{arc:title}}</h1>
-
-                {{arc:impersonate}}
                 {{arc:content}}        
-
                 <footer class="text-right footer hidden-xs-down">
                     <p>{{arc:version}}</p>
                 </footer>
