@@ -100,30 +100,35 @@ function doLogin($user)
 
 function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local")
 {
-// https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
+    // https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
     $ldap = ldap_connect("ldap://{$server}");
     $ldaprdn = "{$domain}\\{$username}";
     ldap_set_option($ldap, LDAP_OPT_PROTOCOL_VERSION, 3);
     ldap_set_option($ldap, LDAP_OPT_REFERRALS, 0);
     $bind = @ldap_bind($ldap, $ldaprdn, $password);
     if ($bind) {
+        
         $filter = "(sAMAccountName=$username)";
         $result = ldap_search($ldap, $dc, $filter);
-        $info = ldap_get_entries($ldap, $result);
+        if ($result) {
 
-        if (!isset($info[0]["mail"][0])) {
-            Log::createLog("danger", "ldap", "Unable to query LDAP, check base settings.");
-            return null;
+            $info = ldap_get_entries($ldap, $result);
+            if (!isset($info[0]["mail"][0])) {
+                // user has no email address
+                Log::createLog("danger", "ldap", "Unable to login user that has no email address");
+                return null;
+            }
+
+            $data = array();
+            $data["email"] = $info[0]["mail"][0];
+            $data["lastname"] = $info[0]["sn"][0];
+            $data["firstname"] = $info[0]["givenname"][0];
+            @ldap_close($ldap);
+            return $data;
         }
-
-        $data = array();
-        $data["email"] = $info[0]["mail"][0];
-        $data["lastname"] = $info[0]["sn"][0];
-        $data["firstname"] = $info[0]["givenname"][0];
-        @ldap_close($ldap);
-        return $data;
-    } else {
-        Log::createLog("danger", "ldap", "Error: " . ldap_error($ldap));
     }
+
+    // something has gone wrong
+    Log::createLog("danger", "ldap", "Error: " . ldap_error($ldap));
     return null;
 }
