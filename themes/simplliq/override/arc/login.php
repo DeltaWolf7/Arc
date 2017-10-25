@@ -12,7 +12,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <div class="col-md-8">
                 <div class="card-group mb-0">
                     <div class="card p-2">
-                        <div class="card-block">
+                        <div class="card-body">
                             <h1>Login</h1>
                             <div id="loginDiv">
                             <p class="text-muted">Sign In to your account</p>
@@ -57,7 +57,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                         </div>
                     </div>
                     <div class="card card-inverse card-primary py-3 hidden-md-down" style="width:44%">
-                        <div class="card-block text-center">
+                        <div class="card-body text-center">
                             <div>
                                 <h2>Sign up</h2>
                                 <?php if ($reg->value == "true") { ?>

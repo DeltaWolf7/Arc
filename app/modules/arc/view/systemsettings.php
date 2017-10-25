@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-block">
+    <div class="card-body">
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">

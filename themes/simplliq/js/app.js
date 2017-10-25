@@ -113,7 +113,7 @@ $(document).on('click', '.card-actions a', function(e) {
     if ($(this).hasClass('btn-close')) {
         $(this).parent().parent().parent().fadeOut();
     } else if ($(this).hasClass('btn-minimize')) {
-        var $target = $(this).parent().parent().next('.card-block');
+        var $target = $(this).parent().parent().next('.card-body');
         if (!$(this).hasClass('collapsed')) {
             $('i', $(this)).removeClass($.panelIconOpened).addClass($.panelIconClosed);
         } else {

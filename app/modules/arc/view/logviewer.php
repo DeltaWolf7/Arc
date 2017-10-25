@@ -3,7 +3,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
 ?>
 
 <div class="card">
-    <div class="card-block">
+    <div class="card-body">
         <ul class="nav nav-tabs">
             <li class="nav-item"><a data-toggle="tab" href="#log" class="nav-link active"> Arc Logs</a></li>
             <li class="nav-item"><a data-toggle="tab" href="#php" class="nav-link"> PHP Logs</a></li>

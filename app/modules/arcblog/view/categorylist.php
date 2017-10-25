@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-block">
+    <div class="card-body">
         <h3 class="card-title">Categories</h3>
         <ul class="list-unstyled">
             <?php 
@@ -9,7 +9,7 @@
                 foreach ($categories as $category) {
                     echo "<li class=\"list-item\">"
                     . "<a href=\"" . $category->getUrl() . "\">"
-                    . "<span class=\"badge badge-pill badge-info\">{$category->name}</span>"
+                    . "{$category->name}"
                     . "</a>"
                     . "</li>";
                 }

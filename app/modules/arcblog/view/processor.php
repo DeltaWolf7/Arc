@@ -5,7 +5,7 @@
                 <?php if (!empty($blog->image)) { ?>
                 <img class="card-img-top" src="<?php echo $blog->getImage(); ?>" alt="<?php echo $blog->title; ?>">
                 <?php } ?>
-                <div class="card-block card-bottom-border">
+                <div class="card-body card-bottom-border">
                     <div class="row">
                         <div class="col-md-6">
                             <p class="card-text">
@@ -25,7 +25,7 @@
                     </div>
                     
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <h1 class="card-title"><?php echo $blog->title; ?></h1>
                     <?php echo $content; ?>
                 </div>
@@ -52,7 +52,7 @@
                 <?php if (!empty($blog->image)) { ?>
                 <img class="card-img-top" src="<?php echo $blog->getImage(); ?>" alt="<?php echo $blog->title; ?>">
                 <?php } ?>
-                <div class="card-block card-bottom-border">
+                <div class="card-body card-bottom-border">
                     <div class="row">
                         <div class="col-md-6">
                             <p class="card-text">
@@ -72,11 +72,11 @@
                     </div>
                     
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <h2 class="card-title"><?php echo $blog->title; ?></h2>
                     <?php echo $content; ?>
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <p class="card-text">
                         <strong><a href="<?php echo $blog->getUrl(); ?>">READ MORE</a></strong>
                     </p>

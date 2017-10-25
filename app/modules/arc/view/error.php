@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-block">
+    <div class="card-body">
         <h4 class="card-title">Error <?php echo http_response_code(); ?></h4>
         <p class="card-text"><br /><i class="fa fa-warning"></i>
         <?php

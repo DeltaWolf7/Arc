@@ -10,11 +10,13 @@ class BlogCategory extends DataProvider {
         parent::__construct();
         $this->name = "";
         $this->seourl = "";
+        $this->allowpost = true;
         $this->table = ARCDBPREFIX . "blog_categories";
-        $this->map = ["id" => "id", "name" => "name", "seourl" => "seourl"];
+        $this->map = ["id" => "id", "name" => "name",
+             "seourl" => "seourl"];
     }
 
-     public static function getByID($id) {
+    public static function getByID($id) {
         $category = new BlogCategory();
         $category->get(["id" => $id]);
         return $category;

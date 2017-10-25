@@ -4190,7 +4190,7 @@ tbody.collapse.show {
     padding: 1rem 1rem;
 }
 
-.card-block .tab-content {
+.card-body .tab-content {
     margin-top: 0;
     border: 0;
 }
@@ -4733,7 +4733,7 @@ header.navbar .dropdown-item {
     border-radius: 0.25rem;
 }
 
-.card-block {
+.card-body {
     flex: 1 1 auto;
     padding: 1.25rem;
 }
@@ -4895,14 +4895,14 @@ header.navbar .dropdown-item {
 .card-inverse .card-header,
 .card-inverse .card-footer,
 .card-inverse .card-title,
-.card-inverse .card-blockquote {
+.card-inverse .card-bodyquote {
     color: #fff;
 }
 
 .card-inverse .card-link,
 .card-inverse .card-text,
 .card-inverse .card-subtitle,
-.card-inverse .card-blockquote .blockquote-footer {
+.card-inverse .card-bodyquote .blockquote-footer {
     color: rgba(255, 255, 255, 0.65);
 }
 
@@ -4911,7 +4911,7 @@ header.navbar .dropdown-item {
     color: #fff;
 }
 
-.card-blockquote {
+.card-bodyquote {
     padding: 0;
     margin-bottom: 0;
     border-left: 0;
@@ -5219,7 +5219,7 @@ header.navbar .dropdown-item {
     color: rgba(255, 255, 255, 0.6) !important;
 }
 
-[class*="card-outline-"] .card-block {
+[class*="card-outline-"] .card-body {
     background: #fff !important;
 }
 

@@ -59,7 +59,7 @@ function editPost(id) {
         ],
         callbacks: {
             onImageUpload: function(files) {
-                arcAjaxRequest("arc/imageupload", files[0], null, uploadComplete);
+                arcAjaxRequest("arcblog/imageupload", files[0], null, uploadComplete);
             }
         }
     });

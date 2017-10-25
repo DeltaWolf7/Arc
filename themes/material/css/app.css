@@ -4295,7 +4295,7 @@ tbody.collapse.show {
     border-radius: 2px;
 }
 
-.card-block {
+.card-body {
     flex: 1 1 auto;
     padding: 1.5rem;
 }
@@ -4457,14 +4457,14 @@ tbody.collapse.show {
 .card-inverse .card-header,
 .card-inverse .card-footer,
 .card-inverse .card-title,
-.card-inverse .card-blockquote {
+.card-inverse .card-bodyquote {
     color: #fff;
 }
 
 .card-inverse .card-link,
 .card-inverse .card-text,
 .card-inverse .card-subtitle,
-.card-inverse .card-blockquote .blockquote-footer {
+.card-inverse .card-bodyquote .blockquote-footer {
     color: rgba(255, 255, 255, 0.65);
 }
 
@@ -4473,7 +4473,7 @@ tbody.collapse.show {
     color: #FFFFFF;
 }
 
-.card-blockquote {
+.card-bodyquote {
     padding: 0;
     margin-bottom: 0;
     border-left: 0;
@@ -8757,7 +8757,7 @@ progress::-webkit-progress-bar {
     position: relative;
 }
 
-.card-header+.card-block {
+.card-header+.card-body {
     padding-top: 0;
 }
 
@@ -8782,7 +8782,7 @@ progress::-webkit-progress-bar {
 .card-inverse .card-link,
 .card-inverse .card-text,
 .card-inverse .card-subtitle,
-.card-inverse .card-blockquote .blockquote-footer {
+.card-inverse .card-bodyquote .blockquote-footer {
     color: rgba(255, 255, 255, 0.85);
 }
 
@@ -8810,11 +8810,11 @@ progress::-webkit-progress-bar {
     background-color: #f9f9f9;
 }
 
-.card-block p:only-child {
+.card-body p:only-child {
     margin-bottom: 0;
 }
 
-.card-block__title {
+.card-body__title {
     font-size: 1.1rem;
     color: #333;
     margin-bottom: 0.6rem;
@@ -8832,24 +8832,24 @@ progress::-webkit-progress-bar {
     overflow: auto;
 }
 
-.card-block__nav {
+.card-body__nav {
     margin-bottom: 1.8rem;
     padding: 0 1px;
 }
 
-.card-block__nav>a {
+.card-body__nav>a {
     font-weight: 500;
     text-transform: uppercase;
     color: #b0b0b0;
     transition: color 300ms;
 }
 
-.card-block__nav>a+a {
+.card-body__nav>a+a {
     padding-left: 1rem;
 }
 
-.card-block__nav>a.active,
-.card-block__nav>a:hover {
+.card-body__nav>a.active,
+.card-body__nav>a:hover {
     color: #707070;
 }
 
@@ -9597,7 +9597,7 @@ select::-ms-expand {
     display: block;
 }
 
-.accordion .card-block {
+.accordion .card-body {
     padding: 1.5rem 0;
 }
 
@@ -10224,7 +10224,7 @@ textarea {
     transform: rotate(-360deg);
 }
 
-.card-block .view-more {
+.card-body .view-more {
     padding: 1rem 0 0;
 }
 

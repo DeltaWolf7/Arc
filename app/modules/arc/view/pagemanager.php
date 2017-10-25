@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-block">
+    <div class="card-body">
         <div id="listDiv" class="panel panel-default">
             <div class="panel-body">
                     <table class="table table-hover table-sm table-striped" id="pages">

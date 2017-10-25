@@ -86,6 +86,7 @@ class Helper {
         // Javascript, add required javascript files to header
         self::arcAddFooter("js", self::arcGetPath() . "vendor/jquery/jquery.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/tether/js/tether.min.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/popper/popper.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");

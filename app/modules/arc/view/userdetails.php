@@ -2,7 +2,7 @@
 $user = system\Helper::arcGetUser();
 $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
 
-$image = "<div class=\"card-block\">No profile image</div>";
+$image = "<div class=\"card-body\">No profile image</div>";
 if (!empty($profileImage->value)) {
     $image = "<img class=\"card-img-top text-center\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
 }
@@ -11,7 +11,7 @@ if (!empty($profileImage->value)) {
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-body">
                         <form id="detailsForm">
                             <div class="form-group">
                                 <label for="firstname">Firstname</label>

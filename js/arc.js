@@ -90,7 +90,7 @@ function arcCleanSummernote(code) {
         .end()
         .find('img')
         .removeAttr('style')
-        .wrap('<div class="flexPhoto"/>')
+        .addClass('img-fluid')
         .end()
         .find('span')
         .filter("[style*='underline']")

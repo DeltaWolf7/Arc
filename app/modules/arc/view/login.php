@@ -11,7 +11,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
         <div class="row">
                 <div class="col-md-6 col-md-offset-1">
                     <div class="card">
-                        <div class="card-block">
+                        <div class="card-body">
                             <h3>Sign in</h3>
                             <div class="form-group">
                                  <input maxlength="100" type="text" class="form-control" id="email" placeholder="<?php echo $login; ?>">
@@ -28,7 +28,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                 </div>
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-block">
+                        <div class="card-body">
                             <?php if ($reg->value == "true") { ?>
 
                                 <h3>New user? Sign up!</h3>
@@ -54,7 +54,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <div class="col-md-3"></div>
             <div class="col-md-6 col-md-offset-1">
             <div class="card">
-                <div class="card-block">
+                <div class="card-body">
                     <h3>New user registration</h3>  
                     <div class="form-group">
                         <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="Firstname">
@@ -85,7 +85,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <div class="col-md-3"></div>
             <div class="col-md-6 col-md-offset-1">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-body">
                         <h3>Forgot Password</h3>
                     
                             <div class="form-group">

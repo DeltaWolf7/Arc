@@ -1,5 +1,5 @@
 <div class="card" id="mainPanel">
-    <div class="card-block">
+    <div class="card-body">
         <div role="tabpanel">
             <ul class="nav nav-tabs" role="tablist">
                 <li id="tabUsers" role="presentation" class="nav-item"><a href="#users" class="nav-link active" role="tab" data-toggle="tab"><i class="fa fa-user"></i> Users</a></li>
@@ -33,7 +33,7 @@
 
         <div id="editUserPanel" style="display: none;">
             <div class="card">
-                <div class="card-block">
+                <div class="card-body">
                     <h4 class="card-title">Edit User</h4>
                     <div class="row">
                         <div class="col-md-6">
@@ -73,13 +73,13 @@
 
 
                             <div class="card">
-                                <div class="card-block" id="usrgroups">
+                                <div class="card-body" id="usrgroups">
                                 </div>
 
                             </div>
                                             
                   <div class="card">
-                                <div class="card-block text-right">
+                                <div class="card-body text-right">
                                  <button class="btn btn-secondary" id="closeUserBtn">Close</button>
                         <button class="btn btn-primary" id="saveUserbtn">Save</button>
                                 </div>
