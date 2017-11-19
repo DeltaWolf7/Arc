@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.6.0.0";
+        self::$arc["version"] = "0.7.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -89,13 +89,13 @@ class Helper {
         self::arcAddFooter("js", self::arcGetPath() . "vendor/popper/popper.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "js/arc.js");
+        self::arcAddFooter("js", self::arcGetPath() . "vendor/arc/js/arc.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/tether/css/tether.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "css/arc.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/arc/css/arc.css");
     }
 
     /**

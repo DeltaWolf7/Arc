@@ -85,7 +85,7 @@ class Render {
                 \Log::createLog("warning", "arc", "401: " . $uri);
             }
         } else {
-            Helper::arcAddFooter("js", Helper::arcGetPath() . "js/arckeepalive.js");
+            Helper::arcAddFooter("js", Helper::arcGetPath() . "vendor/arc/js/arckeepalive.js");
         }
 
         // update last activity time stamp
