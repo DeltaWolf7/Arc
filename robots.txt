@@ -1,7 +1,5 @@
 User-agent: *
 Disallow: /assets/
-Disallow: /js/
-Disallow: /css/
 Disallow: /app/
 Disallow: /themes/
 Disallow: /vendor/
