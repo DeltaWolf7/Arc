@@ -1,7 +1,8 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-    $permission = new Router();
-    $permission->delete($_POST["id"]);
+    $permission = Router::getByID($_POST["id"]);
+    $permission->delete();
     system\Helper::arcAddMessage("success", "Route deleted");
+    system\Helper::arcReturnJSON();
 }

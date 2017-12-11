@@ -29,7 +29,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         
         if (Router::isValid($_POST["seourl"])) {
             $category->seourl = strtolower($_POST["seourl"]);
-            $currentRoute->delete($currentRoute->id);
+            $currentRoute->delete();
             $currentRoute = new Router();
             $currentRoute->route = "blog/category/" . $category->seourl;
             $currentRoute->destination = "blog-processor";

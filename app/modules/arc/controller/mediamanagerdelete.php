@@ -21,4 +21,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
 
     system\Helper::arcAddMessage("success", "Selected " . ngettext("item", "items", count($marked)) . " deleted");
+    system\Helper::arcReturnJSON();
 }

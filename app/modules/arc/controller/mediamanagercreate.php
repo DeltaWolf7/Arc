@@ -15,4 +15,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
     
     system\Helper::arcAddMessage("success", "Folder Created");
+    system\Helper::arcReturnJSON();
 }

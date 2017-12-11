@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.7.0.0";
+        self::$arc["version"] = "0.8.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -444,7 +444,7 @@ class Helper {
      * @param type $array Array containing the key value parameters.
      * Echos out the array.
      */
-    public static function arcReturnJSON($array, $status = 200) {
+    public static function arcReturnJSON($array = [], $status = 200) {
         header("HTTP/1.1 " . $status . " " . self::arcRequestStatus($status));
         header("content-type:application/json");
         echo utf8_encode(json_encode($array));

@@ -151,9 +151,11 @@ abstract class DataProvider {
      * Delete an object from the database
      * @param int $id ID of the object to remove from database
      */
-    public function delete($id) {
-        // Execute query against database
-        system\Helper::arcGetDatabase()->delete($this->table, ['id' => $id]);
+    public function delete() {
+        // Execute query against database, if we have an ID
+        if ($this->id > 0) {
+            system\Helper::arcGetDatabase()->delete($this->table, ['id' => $this->id]);
+        }
     }
 
     /**

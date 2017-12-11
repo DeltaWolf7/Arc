@@ -1,10 +1,11 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $user = new User();
-    $user->delete($_POST["id"]);
+    $user = User::getByID($_POST["id"]);
+    $user->delete();
     $settings = SystemSetting::getAll($_POST["id"]);
     foreach ($settings as $setting) {
-        $setting->delete($_POST["id"]);
+        $setting->delete();
     }
+    system\Helper::arcReturnJSON();
 }

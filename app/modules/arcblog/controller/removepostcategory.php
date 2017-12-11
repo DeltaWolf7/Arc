@@ -12,4 +12,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         }
         
         system\Helper::arcAddMessage("danger", "New blog entries must be saved before removing categories");
+        system\Helper::arcReturnJSON([]);
 }

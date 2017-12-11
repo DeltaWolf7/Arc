@@ -108,14 +108,9 @@ class UserGroup extends DataProvider {
         }
     }
 
-    /**
-     * Delete Group from database
-     * @param type $id
-     */
-    public function delete($id) {
-        $group = UserGroup::getByID($id);
-        if ($group->name != "Administrators" && $group->name != "Guests" && $group->name != "Users") {
-            parent::delete($id);
+    public function delete() {
+        if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
+            parent::delete();
         }
     }
 

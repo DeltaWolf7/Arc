@@ -8,5 +8,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     $category->parentid = $_POST["parentid"];
     $category->update();
     
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 }

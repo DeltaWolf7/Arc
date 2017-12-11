@@ -6,6 +6,6 @@ if (system\Helper::arcIsAjaxRequest()) {
     $category->allowpost = $_POST["allow"];
     $category->update();
 
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 
 }

@@ -30,7 +30,7 @@ if (system\Helper::arcIsAjaxRequest()) {
        
         if (Router::isValid($_POST["seourl"])) {
             $blog->seourl = strtolower($_POST["seourl"]);
-            $currentRoute->delete($currentRoute->id);
+            $currentRoute->delete();
             $currentRoute = new Router();
             $currentRoute->route = "blog/post/" . $blog->seourl;
             $currentRoute->destination = "blog-processor";
@@ -50,5 +50,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         $blog->update();
 
         system\Helper::arcAddMessage("success", "Blog post saved");
-        system\Helper::arcReturnJSON(["message" => "OK"]);
+        system\Helper::arcReturnJSON([]);
 }

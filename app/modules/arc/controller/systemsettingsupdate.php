@@ -90,5 +90,5 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting->update();
     
     system\Helper::arcAddMessage("success", "System settings saved.");
-    system\Helper::arcReturnJSON(["message" => "OK"]);
+    system\Helper::arcReturnJSON([]);
 }

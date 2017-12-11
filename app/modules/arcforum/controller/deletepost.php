@@ -3,12 +3,12 @@
 if (system\Helper::arcIsAjaxRequest()) {
 
     $post = ForumPost::getByID($_POST["post"]);
-    $post->delete($_POST["post"]);
+    $post->delete();
 
     $posts = ForumPost::getReplies($_POST["post"]);
     foreach ($posts as $p) {
-        $p->delete($p->id);
+        $p->delete();
     }
 
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 }

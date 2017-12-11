@@ -17,5 +17,5 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "</td></tr>";
     }
     $table .= "</tbody></table>";
-    echo json_encode(["html" => $table]);
+    system\Helper::arcReturnJSON(["html" => $table]);
 }

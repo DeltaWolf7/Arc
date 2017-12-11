@@ -10,11 +10,11 @@ if (system\Helper::arcIsAjaxRequest()) {
                 return;
         }
 
-        $category->delete($_POST["id"]);
+        $category->delete();
 
         $currentRoute = Router::getRoute("blog/category/" . $category->seourl);
-        $currentRoute->delete($currentRoute->id);
+        $currentRoute->delete();
 
         system\Helper::arcAddMessage("success", "Blog category deleted");
-        system\Helper::arcReturnJSON([]);
+        system\Helper::arcReturnJSON();
 }

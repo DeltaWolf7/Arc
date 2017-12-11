@@ -7,5 +7,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         $apikey->value = md5(microtime() . rand());
         $apikey->update();
     }
-    
+
+    //system\Helper::arcAddMessage("success", "User API key created");
+    system\Helper::arcReturnJSON();
 }

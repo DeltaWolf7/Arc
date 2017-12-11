@@ -59,6 +59,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
         } else {
             Log::createLog("danger", "arcforum", "Upload error " . $_FILES['file']['error']);
             system\Helper::arcAddMessage("danger", "Error occured while uploading image");
+            system\Helper::arcReturnJSON([]);
         }
     }
 }

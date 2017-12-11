@@ -10,6 +10,6 @@ if (system\Helper::arcIsAjaxRequest()) {
     $post->parentid = $_POST["parent"];
     $post->update();
 
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 
 }

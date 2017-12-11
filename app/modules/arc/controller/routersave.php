@@ -19,4 +19,5 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         
         
         system\Helper::arcAddMessage("success", "Route saved");
+        system\Helper::arcReturnJSON();
     }

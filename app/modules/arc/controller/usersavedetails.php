@@ -19,5 +19,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Changes saved");
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 }

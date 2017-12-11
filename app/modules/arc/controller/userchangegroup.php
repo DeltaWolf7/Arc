@@ -5,7 +5,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     if ($user->id == 0) {
         system\Helper::arcAddMessage("danger", "User must be saved before group can be modified.");
-        system\Helper::arcReturnJSON(["message" => "OK"]);
+        system\Helper::arcReturnJSON([]);
         return;
     }
 
@@ -17,5 +17,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("success", "User added to {$_POST["group"]}");
     }
     
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 }

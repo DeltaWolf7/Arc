@@ -2,7 +2,8 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $apikey = SystemSetting::getByKey("APIKEY", $_POST["userid"]);
-    $apikey->delete($apikey->id);
+    $apikey->delete();
     
     //system\Helper::arcAddMessage("success", "User API key removed");
+    system\Helper::arcReturnJSON();
 }

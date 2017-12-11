@@ -9,6 +9,6 @@ if (system\Helper::arcIsAjaxRequest()) {
     $post->posterid = system\Helper::arcGetUser()->id;
     $post->update();
 
-    system\Helper::arcReturnJSON([]);
+    system\Helper::arcReturnJSON();
 
 }
