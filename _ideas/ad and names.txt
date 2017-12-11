@@ -1,2 +1,0 @@
-ad groups for permissions
-name casing from ad, breaks names like David McSomething, end up being David Mcsomthing
