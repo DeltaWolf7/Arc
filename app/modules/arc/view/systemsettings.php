@@ -90,8 +90,8 @@
                                 <label for="siteLogo">Site Logo</label>
                                 <div class="input-group">
                                     <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
-                                    <i class="input-group-addon"><button class="btn btn-sm" id="btnMediaManager"><i class="fa fa-folder-open-o"></i></button></i>
                                 </div>
+                                <button class="btn btn-sm" id="btnMediaManager"><i class="fa fa-folder-open-o"></i> Browse</button>
                             </div>
                         </div>
                         <div class="col-md-8">

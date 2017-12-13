@@ -1,10 +1,10 @@
 <?php
 $user = system\Helper::arcGetUser();
-$profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
+$profileImage = $user->getProfileImage();
 
 $image = "<div class=\"card-body\">No profile image</div>";
-if (!empty($profileImage->value)) {
-    $image = "<img class=\"card-img-top text-center\" src=\"" . system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value . "\" />";
+if (!empty($profileImage)) {
+    $image = "<img class=\"card-img-top text-center\" src=\"" . $profileImage . "\" />";
 }
 ?>
 

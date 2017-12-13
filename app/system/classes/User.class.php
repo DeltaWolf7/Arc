@@ -211,4 +211,16 @@ class User extends DataProvider {
         // Return the formatted name of the user
         return "{$this->firstname} {$this->lastname}";
     }
+
+    /**
+     * Return the profile image of the user or placeholder if none.
+     * @return string profile path
+     */
+    public function getProfileImage() {
+        $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $this->id);
+        if (!empty($profileImage->value)) {
+           return system\Helper::arcGetPath() . "assets/profile/" . $profileImage->value;
+        }
+        return system\Helper::arcGetPath() . "assets/profile/placeholder.png";
+    }
 }

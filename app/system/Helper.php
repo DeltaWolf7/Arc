@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.0.0";
+        self::$arc["version"] = "0.8.0.1";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -396,7 +396,7 @@ class Helper {
         exit();
     }
 
-    public static function arcGetMenu() {
+    public static function arcGetMenu($exclude = []) {
         $menu = [];
         $pages = \Page::getAllPages();
 
@@ -411,6 +411,13 @@ class Helper {
                 continue;
             }
             if (\Router::hasPermission($groups, $page->seourl)) {
+
+                // check exclude list
+                if (\in_array($page->seourl, $exclude)) {
+                    // skip item if in the exclude list.
+                    continue;
+                }
+
                 $data = explode("/", $page->seourl);
                 $menu[ucwords($data[0])][$page->title]["name"] = $page->title;
                 $menu[ucwords($data[0])][$page->title]["url"] = $page->seourl;
