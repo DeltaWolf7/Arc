@@ -26,11 +26,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> How many days should logs be kept? When a log is older than the specified period it will be purged.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset>
@@ -47,11 +45,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">      
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The title used for all site and email branding.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -76,11 +72,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default"> 
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The default theme applied to all pages where no override has been specified.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -95,11 +89,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">      
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The logo used for all site and email branding.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset> 
@@ -115,11 +107,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">  
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The maximum file size allowed for uploads.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset>   
@@ -135,11 +125,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">              
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The formatting of the date based on standard PHP date formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -151,11 +139,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">            
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The formatting of the time based on standard PHP time formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset> 
@@ -182,11 +168,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">              
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The page containing the media manager module</a>.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset> 
@@ -217,12 +201,10 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">       
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> After a successful login the user will be redirected to the specified page. A failed login does not redirect the user.<br />
                                     Note, the authenticated user must also have permission to access the destination. If not, the user will receive a 403 error – Permission Denied.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset>
@@ -249,11 +231,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">   
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> Are guests allowed to register for an account?
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -286,11 +266,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">        
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> Use SMTP to send email over the built in PHP mailer function?
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -302,11 +280,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">        
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The domain name or IP of the SMTP server.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -318,11 +294,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">        
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> If required, the username to authenticate the SMTP session.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -334,11 +308,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">            
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> If required, the password to authenticate the SMTP session.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -350,11 +322,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">  
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> Port of the SMTP server.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -366,12 +336,10 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">              
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The sender of the email's sent by Arc. Can be a email address or name and email address.<br />
                                     John Smith &lt;johnsmith@emailserver.com&gt;
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset> 
@@ -415,11 +383,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">     
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The Lightweight Directory Access Protocol allows 3rd party authentication to be performed by integrating with products supporting LDAP such as Microsoft Active Directory. Arc supports failover in the event LDAP becomes unavailable.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -431,11 +397,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">    
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> LDAP servers's Domain Name or IP address.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -447,11 +411,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">    
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> The domain to authenticate against.
-                                </div>
-                            </div>
+
                         </div>
                     </div>
 
@@ -463,11 +425,9 @@
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="panel panel-default">   
-                                <div class="panel-body">
+
                                     <i class="fa fa-info-circle"></i> LDAP search parameters (DC, OU, CN). Explanation can be found <a href="https://technet.microsoft.com/en-gb/library/cc978021.aspx" target="_new">here</a>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </fieldset> 
@@ -481,15 +441,12 @@
                 <fieldset>
                     <legend>API</legend>
 
-                    <div class="panel panel-default">     
-                        <div class="panel-body">
+
                             <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing 3rd party access to the API’s provided by Arc and its modules.<br />
                             RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
-                        </div>
-                    </div>
 
-                    <div class="panel panel-default">     
-                        <div class="panel-body">
+
+          
                             <div class="table">
                                 <table class="table table-striped">
                                     <thead>
@@ -499,12 +456,10 @@
 
                                     </tbody>
                                 </table>
-                            </div>
-                        </div>
+
                     </div>
 
-                    <div class="panel panel-default">     
-                        <div class="panel-body">
+
                             <label for="apiuser">Add user</label>
                             <div class="row">
                                 <div class="col-md-8">
@@ -523,8 +478,7 @@
                                 <div class="col-md-4">
                                     <button class="btn btn-secondary btn-block" id="createAPI"><i class="fa fa-plus"></i> Create API key</button>
                                 </div>
-                            </div> 
-                        </div>
+
                     </div>
 
                     <div class="well">
