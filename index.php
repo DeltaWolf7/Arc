@@ -63,6 +63,12 @@ switch (ARCDEBUG) {
         break;
 }
 
+if($_SERVER["HTTPS"] != "on" && ARCALWAYSSSL == true)
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
+
 // Include and initilise helper class.
 require_once "app/system/Initialiser.php";
 require_once "app/system/API.php";
