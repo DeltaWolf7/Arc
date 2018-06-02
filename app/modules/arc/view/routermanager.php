@@ -4,7 +4,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="editModal">
+<div class="modal" id="editModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

@@ -13,7 +13,7 @@
     </div>
 </div>
 
-        <div class="modal fade" id="removeUserModal">
+        <div class="modal" id="removeUserModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -89,7 +89,7 @@
                
         </div>
 
-        <div class="modal fade" id="removeGroupModal">
+        <div class="modal" id="removeGroupModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="editGroupModal">
+        <div class="modal" id="editGroupModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

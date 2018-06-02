@@ -1,6 +1,6 @@
 <div id="managerView"></div>
 
-<div class="modal fade" id="fileViewerModal" tabindex="-1" role="dialog">
+<div class="modal" id="fileViewerModal" tabindex="-1" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -17,7 +17,7 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
                 <div id="logs">
                 </div>
             </div>
-            <div id="php" class="tab-pane fade">
+            <div id="php" class="tab-pane">
                 <p class="small">
                     <?php
                     $path = system\Helper::arcGetPath(true) . ini_get('error_log');

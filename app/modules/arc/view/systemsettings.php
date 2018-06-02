@@ -83,9 +83,12 @@
                             <div class="form-group">
                                 <label for="siteLogo">Site Logo</label>
                                 <div class="input-group">
-                                    <input id="siteLogo" type="text" class="form-control" placeholder="" value="<?php echo $logo->value; ?>">
+                                    <input id="siteLogo" type="text" class="form-control" placeholder="" aria-label="Site Logo" aria-describedby="basic-addon2" value="<?php echo $logo->value; ?>">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary btn-xl" id="btnMediaManager"><i class="fa fa-folder-open-o" type="button"></i> Browse</button>
+                                    </div>
                                 </div>
-                                <button class="btn btn-sm" id="btnMediaManager"><i class="fa fa-folder-open-o"></i> Browse</button>
+                                
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -494,8 +497,8 @@
         </div>
 
 
-        <div class="modal fade" id="mediaManager" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg">
+        <div class="modal" id="mediaManagerMD" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Media Manager</h5>

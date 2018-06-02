@@ -57,7 +57,7 @@ $(document).ready(function() {
 });
 
 $("#btnMediaManager").click(function() {
-    $("#mediaManager").modal("show");
+    $("#mediaManagerMD").modal("show");
 });
 
 function getApikeys() {
@@ -79,5 +79,5 @@ $("#createAPI").click(function() {
 
 function copyToClipboardSuccess(data) {
     $("#siteLogo").val(data);
-    $("#mediaManager").modal("hide");
+    $("#mediaManagerMD").modal("hide");
 }
