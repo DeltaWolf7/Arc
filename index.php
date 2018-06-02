@@ -63,7 +63,7 @@ switch (ARCDEBUG) {
         break;
 }
 
-if($_SERVER["HTTPS"] != "on" && ARCALWAYSSSL == true)
+if (array_key_exists('HTTPS', $_SERVER) && $_SERVER["HTTPS"] != "on" && ARCALWAYSSSL == true)
 {
     header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
     exit();
