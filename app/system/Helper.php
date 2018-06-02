@@ -94,7 +94,7 @@ class Helper {
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/tether/css/tether.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/font-awesome.min.css");
+        self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/fontawesome-all.min.css");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/arc/css/arc.css");
     }
 
