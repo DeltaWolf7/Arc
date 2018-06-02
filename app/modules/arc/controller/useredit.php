@@ -18,8 +18,8 @@ if (system\Helper::arcIsAjaxRequest()) {
     $groups .= "<tr>";
     foreach ($userGroups as $group) { 
         $groups .= "<td>"
-        . "<label class=\"custom-control custom-checkbox\">"
-        . "<input type=\"checkbox\" class=\"custom-control-input\"";
+        . "<label class=\"form-check-label\">"
+        . "<input type=\"checkbox\" class=\"form-check-input\"";
         
         if ($user->inGroup($group->name)) {
             $groups .= " checked";
