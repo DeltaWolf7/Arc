@@ -148,7 +148,6 @@ class Render {
 
             $content = file_get_contents(Helper::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
 
-
             // custom menu
             if (file_exists(Helper::arcGetThemePath(true) . "menu.php")) {
                 ob_start();
@@ -170,7 +169,7 @@ class Render {
 
             // body
             $content = str_replace("{{arc:content}}", Helper::arcProcessModuleTags(html_entity_decode($page->content)), $content);
-
+            
             // page icon
             $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
 

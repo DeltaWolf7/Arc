@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {{arc:header}}
+  </head>
+  <body>
+
 <?php
 $ldap = SystemSetting::getByKey("ARC_LDAP_ENABLED");
 $login = "Email Address";
@@ -65,3 +74,6 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
         </div>
     </div>
 </div>
+{{arc:footer}}
+  </body>
+</html>
