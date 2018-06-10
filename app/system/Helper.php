@@ -410,6 +410,7 @@ class Helper {
             if ($page->hidefrommenu == true || ($page->hideonlogin == true && self::arcIsUserLoggedIn() == true)) {
                 continue;
             }
+
             if (\Router::hasPermission($groups, $page->seourl)) {
 
                 // check exclude list

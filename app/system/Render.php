@@ -168,13 +168,6 @@ class Render {
             //template modules
             $content = Helper::arcProcessModuleTags($content);
 
-            // impersonating
-            if (isset($_SESSION["arc_imposter"])) {
-                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . Helper::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content);
-            } else {
-                $content = str_replace("{{arc:impersonate}}", "", $content);
-            }
-
             // body
             $content = str_replace("{{arc:content}}", Helper::arcProcessModuleTags(html_entity_decode($page->content)), $content);
 

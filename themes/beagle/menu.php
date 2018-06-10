@@ -5,6 +5,7 @@ $path = system\Helper::arcGetPath();
 
 
 $html = "<ul class=\"sidebar-elements\"><li class=\"divider\">Menu</li>";
+
 foreach ($menus as $grandfather => $parent) {
     if (count($parent) == 1) {
         // only one item in this menu.
