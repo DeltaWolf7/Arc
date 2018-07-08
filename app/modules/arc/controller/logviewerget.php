@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $html = "<table class=\"table table-striped table-sm\">"
+    $html = "<table class=\"table table-striped\">"
             . "<thead class=\"thead-default\"><tr><th>Type</th>"
             . "<th>Module</th>"
             . "<th>When</th>"

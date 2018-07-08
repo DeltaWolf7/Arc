@@ -444,10 +444,10 @@
                 <fieldset>
                     <legend>API</legend>
 
-
+                            <p>
                             <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing 3rd party access to the API’s provided by Arc and its modules.<br />
                             RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
-
+                            </p>
 
           
                             <div class="table">

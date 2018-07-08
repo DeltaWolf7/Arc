@@ -63,10 +63,12 @@ switch (ARCDEBUG) {
         break;
 }
 
-if (array_key_exists('HTTPS', $_SERVER) && $_SERVER["HTTPS"] != "on" && ARCALWAYSSSL == true)
+if (ARCALWAYSSSL == true)
 {
-    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
-    exit();
+    if (!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on") {
+        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+        exit();
+    }
 }
 
 // Include and initilise helper class.

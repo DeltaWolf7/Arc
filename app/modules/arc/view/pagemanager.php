@@ -1,14 +1,10 @@
 <div class="card">
-    <div class="card-body">
-        <div id="listDiv" class="panel panel-default">
-            <div class="panel-body">
-                    <table class="table table-hover table-sm table-striped" id="pages">
-                    </table>
-            </div>
-        </div>
+    <div class="card-body" id="listDiv">
+        <table class="table table-striped" id="pages">
+        </table>
+    </div>
 
-        <div class="panel panel-default" id="editorDiv" style="display: none;">
-            <div class="panel-body">
+    <div class="card-body" id="editorDiv" style="display: none;">
 
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs" role="tablist">
@@ -176,4 +172,3 @@
             </div>
         </div>
     </div>
-</div>

@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-     $data = "<table class=\"table table-hover table-striped\">";
+     $data = "<table class=\"table table-striped\">";
      $data .= "<thead class=\"thead-default\">"
      . "<tr>"
      . "<th>Name</th>"
