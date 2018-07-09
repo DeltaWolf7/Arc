@@ -24,8 +24,8 @@
                         <!-- Text Logo -->
                         <!-- Image Logo -->
                         <a href="{{arc:path}}" class="logo">
-                            <img src="{{arc:sitelogo}}" alt="" height="22" class="logo-small">
-                            <img src="{{arc:sitelogo}}" alt="" height="24" class="logo-large">
+                            <img src="{{arc:sitelogo}}" alt="" height="50" class="logo-large">
+                            <img src="{{arc:sitelogo}}" alt="" height="30" class="logo-small">
                         </a>
 
                     </div>
