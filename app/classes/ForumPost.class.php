@@ -18,7 +18,7 @@ class ForumPost extends DataProvider {
         $this->posted = date("y-m-d H:i:s");
         $this->categoryid = 0;
         $this->parentid = 0;
-        $this->table = "arcforum_posts";
+        $this->table = ARCDBPREFIX . "forum_posts";
         $this->map = ["id" => "id", "posterid" => "posterid",
              "subject" => "subject", "content" => "content", "posted" => "posted",
              "categoryid" => "categoryid", "parentid" => "parentid"];

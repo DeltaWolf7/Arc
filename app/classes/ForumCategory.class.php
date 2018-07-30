@@ -13,7 +13,7 @@ class ForumCategory extends DataProvider {
         $this->name = "";
         $this->description = "";
         $this->allowpost = true;
-        $this->table = "arcforum_categories";
+        $this->table = ARCDBPREFIX . "forum_categories";
         $this->map = ["id" => "id", "parentid" => "parentid",
              "name" => "name", "description" => "description",
               "allowpost" => "allowpost"];
