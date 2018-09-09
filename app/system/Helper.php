@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.0.6";
+        self::$arc["version"] = "0.8.0.7";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -510,16 +510,30 @@ class Helper {
      * @return string
      */
     public static function arcProcessModuleTags($content) {
-        preg_match_all('/{{module:([^,]+?):([^,]+?)}}/', $content, $matches);
-        foreach ($matches[1] as $key => $filename) {
-            foreach ($matches[2] as $key2 => $view) {
-                ob_start();
-                self::arcGetModule($filename, $view);
-                $newContent = ob_get_contents();
-                ob_end_clean();
-                $content = str_replace("{{module:" . $filename . ":" . $view . "}}", $newContent, $content);
-            }
+        preg_match_all('/{{module:([^,]+?):([^,]+?)(:([^,]+?))?}}/', $content, $matches);
+
+        $filename = $matches[1][0];
+        $view = $matches[2][0];
+        $values = [];
+
+        // Check if we have values to pass
+        if (isset($matches[4][0])) {
+            $values = explode(",", $matches[4][0]);
         }
+        
+        ob_start();
+        self::arcGetModule($filename, $view, $values);
+        $newContent = ob_get_contents();
+        ob_end_clean();
+
+        if (count($values) == 0) {
+            // No values to pass
+            $content = str_replace("{{module:" . $filename . ":" . $view . "}}", $newContent, $content);
+        } else {
+            // Module has values
+            $content = str_replace("{{module:" . $filename . ":" . $view . $matches[3][0] . "}}", $newContent, $content);
+        }
+
         return $content;
     }
 
@@ -529,7 +543,10 @@ class Helper {
      * @param string $view View name
      * Includes the module by name and view along with controller if it exists.
      */
-    public static function arcGetModule($name, $view) {
+    public static function arcGetModule($name, $view, $values = []) {
+        // Set values of module
+        self::$arc["modulevalues"] = $values;
+
         if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
             \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
             return;
@@ -575,6 +592,14 @@ class Helper {
         $uri = $uri_parts[0];
         $uri = ltrim($uri, "/");
         return $uri;
+    }
+
+    /**
+     * Return module values get by module load
+     */
+    public static function arcGetModuleValues() {
+        // Return module values
+        return self::$arc["modulevalues"];
     }
     
     /**
