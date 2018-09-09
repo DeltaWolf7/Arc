@@ -512,8 +512,14 @@ class Helper {
     public static function arcProcessModuleTags($content) {
         preg_match_all('/{{module:([^,]+?):([^,]+?)(:([^,]+?))?}}/', $content, $matches);
 
-        $filename = $matches[1][0];
-        $view = $matches[2][0];
+        $filename = "";
+        if (isset($matches[1][0])) {
+            $filename = $matches[1][0];
+        }
+        $view = "";
+        if (isset($matches[2][0])) {
+            $view = $matches[2][0];
+        }
         $values = [];
 
         // Check if we have values to pass
