@@ -84,17 +84,17 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/jquery/jquery.min.js");
+        self::arcAddFooter("external", "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js\"></script>");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/tether/js/tether.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/popper/popper.min.js");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/bootstrap/js/bootstrap.min.js");
+        self::arcAddFooter("external", "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js\" integrity=\"sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49\" crossorigin=\"anonymous\"></script>");
+        self::arcAddFooter("external", "<script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js\" integrity=\"sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy\" crossorigin=\"anonymous\"></script>");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/moment/moment.min.js");
         self::arcAddFooter("js", self::arcGetPath() . "vendor/arc/js/arc.js");
 
         // CSS, add required css files to header
         self::arcAddHeader("css", self::arcGetPath() . "vendor/tether/css/tether.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/bootstrap/css/bootstrap.min.css");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/font-awesome/css/fontawesome-all.min.css");
+        self::arcAddHeader("external", "<link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" integrity=\"sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO\" crossorigin=\"anonymous\">");
+        self::arcAddHeader("external", "<link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.3.1/css/all.css\" integrity=\"sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU\" crossorigin=\"anonymous\">");
         self::arcAddHeader("css", self::arcGetPath() . "vendor/arc/css/arc.css");
     }
 

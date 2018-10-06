@@ -25,4 +25,9 @@ class ArcDownload extends DataProvider {
         $download->get(["id" => $id]);
         return $download;
     }
+
+    public static function getAllByDownloads() {
+        $download = new ArcDownload();
+        return $download->getCollection([]);
+    }
 }
