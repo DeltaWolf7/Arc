@@ -23,4 +23,9 @@ class ArcDownloadStat extends DataProvider {
         $download->get(["id" => $id]);
         return $download;
     }
+
+    public static function getAllByDownloadID($id) {
+        $image = new ArcDownloadStat();
+        return $image->getCollection(["downloadid" => $id]);
+    }
 }

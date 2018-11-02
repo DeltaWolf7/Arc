@@ -25,24 +25,10 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $data .= "</select></div>";
         
         //destination
-        $data .= "<div class=\"form-group\"><label for=\"destination\">Destination</label>"
-                . "<select id=\"destination\" class=\"form-control\">"
-                . "<option value=\"\"";
-        
-        if ($permission->route == "/") {
-            $data .= "selected";
-        }
-        
-        $data .= ">No Override</option>";
-        
-        foreach ($pages as $page) {
-            $data .= "<option value=\"" . $page->seourl . "\"";
-            if ($page->seourl == $permission->destination) {
-                $data .= " selected";
-            }
-            $data .= ">" . $page->seourl . "</option>";
-        }
-        $data .= "</select></div>";
+        $data .= "<div class=\"form-group\">"
+            . "<label for=\"destination\">Destination Override</label><input id=\"destination\" class=\"form-control\" value=\""
+            . $permission->destination . "\"></input>"
+            . "</div>";
         
         
         system\Helper::arcReturnJSON(["data" => $data]);
