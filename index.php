@@ -24,6 +24,9 @@
  * THE SOFTWARE.
  */
 
+// Prevent PHP7 bug with memcache
+ini_set("session.lazy_write", 0);
+
 // Hide PHP version
 if (function_exists('header_remove')) {
     header_remove('X-Powered-By'); // PHP 5.3+
