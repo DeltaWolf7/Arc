@@ -10,7 +10,7 @@ if (system\Helper::arcIsAjaxRequest()) {
          .           "<th scope=\"col\">Date</th>"
           .          "<th scope=\"col\">Title</th>"
           .          "<th scope=\"col\">Version</th>"
-          .          "<th scope=\"col\">Actions</th>"
+          .          "<th scope=\"col\" class=\"text-right\"><button class=\"btn btn-success btn-sm\"><i class=\"fa fa-plus\"></i> Add</button></th>"
           .      "<tr>"
            . "</thead>"
             . "<tbody>";
