@@ -63,8 +63,11 @@ if (system\Helper::arcIsAjaxRequest()) {
     
     // save user
     $user->update();
-       
+    
+    if ($user->enabled) {
     system\Helper::arcSetUser($user);
+    }
+
     system\Helper::arcAddMessage("success", "Your details have been registered");
     $url = SystemSetting::getByKey("ARC_LOGIN_URL");
     if (empty($url->value)) {

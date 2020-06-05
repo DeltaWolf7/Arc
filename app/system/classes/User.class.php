@@ -56,7 +56,7 @@ class User extends DataProvider {
         // Initilise email
         $this->email = "";
         // Initilise account enabled
-        $this->enabled = true;
+        $this->enabled = false;
         // Initilise password hash
         $this->passwordhash = "";
         // Initilise groups array

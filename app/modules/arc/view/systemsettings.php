@@ -492,7 +492,7 @@
             </div>
         </div>
 
-        <div class="text-right">
+        <div class="text-right mt-3">
             <button id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
 

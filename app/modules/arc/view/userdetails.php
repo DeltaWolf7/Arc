@@ -14,12 +14,12 @@ if (!empty($profileImage)) {
                     <div class="card-body">
                         <form id="detailsForm">
                             <div class="form-group">
-                                <label for="firstname">Firstname</label>
-                                <input type="firstname" class="form-control" name="firstname" maxlength="50" placeholder="Firstname" value="<?php echo $user->firstname; ?>">
+                                <label for="firstname">First name</label>
+                                <input type="firstname" class="form-control" name="firstname" maxlength="50" placeholder="First name" value="<?php echo $user->firstname; ?>">
                             </div>
                             <div class="form-group">
-                                <label for="lastname">Lastname</label>
-                                <input type="lastname" class="form-control" name="lastname" maxlength="50" placeholder="Lastname" value="<?php echo $user->lastname; ?>">
+                                <label for="lastname">Last name</label>
+                                <input type="lastname" class="form-control" name="lastname" maxlength="50" placeholder="Last name" value="<?php echo $user->lastname; ?>">
                             </div>
                             <div class="form-group">
                                 <label for="email">Email</label>

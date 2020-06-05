@@ -35,10 +35,10 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                     </div>
                     <div class="panel-body" id="registerDiv" style="display: none;">
                         <div class="form-group">
-                            <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="Firstname">
+                            <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="First name">
                         </div>
                         <div class="form-group">
-                            <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Lastname">
+                            <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Last name">
                         </div>
                         <div class="form-group">
                             <input maxlength="100" type="email" class="form-control" id="emailr" placeholder="Email address">

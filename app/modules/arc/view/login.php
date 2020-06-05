@@ -21,7 +21,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                             </div>
                             <div class="text-right">
                                 <button id="loginBtn" class="btn btn-primary btn-block">Login</button><br />
-                                <a id="btnForgot">Problems signing in?</a>
+                                <a href="#" id="btnForgot">Problems signing in?</a>
                             </div>
                         </div>
                     </div>
@@ -57,10 +57,10 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                 <div class="card-body">
                     <h3>New user registration</h3>  
                     <div class="form-group">
-                        <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="Firstname">
+                        <input maxlength="50" type="text" class="form-control" id="firstname" placeholder="First name">
                     </div>
                     <div class="form-group">
-                        <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Lastname">
+                        <input maxlength="50" type="text" class="form-control" id="lastname" placeholder="Last name">
                     </div>
                         <div class="form-group">
                             <input maxlength="100" type="email" class="form-control" id="emailr" placeholder="Email address">

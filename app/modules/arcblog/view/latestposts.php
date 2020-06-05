@@ -15,7 +15,7 @@ $charCount = SystemSetting::getByKey("ARC_BLOG_CHAR_LIMIT");
             $category = $blog->getCategory();
             ?>
 
-            <div class="card">
+            <div class="card mb-2">
                 <?php if (!empty($blog->image)) { ?>
                 <img class="card-img-top" src="<?php echo $blog->getImage(); ?>" alt="<?php echo $blog->title; ?>">
                 <?php } ?>

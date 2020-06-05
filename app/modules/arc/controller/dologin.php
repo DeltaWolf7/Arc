@@ -70,7 +70,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             doLogin($user);
             return;
         } else {
-            system\Helper::arcAddMessage("danger", "Account disabled");
+            system\Helper::arcAddMessage("info", "Account disabled, if you have just registered please waiting for the account to be enabled.");
             Log::createLog("danger", "user", "Attempt to access disabled account: " . $_POST["email"]);
             system\Helper::arcReturnJSON([], 401);
             return;
