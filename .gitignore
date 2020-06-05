@@ -1,13 +1,2 @@
 /app/system/Config.php
 .vscode/
-
-#mrf stuff
-/app/modules/erudio/
-/app/classes/ErudioGroup.class.php
-/app/classes/ErudioQuestion.class.php
-/app/classes/ErudioResult.class.php
-/assets/erudio/
-/assets/resources/
-/themes/beaglemrf/
-
-app/classes/ErudioSkype.class.php
