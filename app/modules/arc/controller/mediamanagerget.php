@@ -129,6 +129,7 @@ function GetFileTypeIcon($file) {
 }
 
 function FileSizeConvert($bytes) {
+    $result = "";
     $bytes = floatval($bytes);
     $arBytes = array(
         0 => array(

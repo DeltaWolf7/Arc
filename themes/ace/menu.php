@@ -1,6 +1,6 @@
 <?php
 
-$menus = system\Helper::arcGetMenu(["login", "account/logout", "account/details"]);
+$menus = system\Helper::arcGetMenu();
 $path = system\Helper::arcGetPath();
 
 
@@ -10,7 +10,7 @@ foreach ($menus as $grandfather => $parent) {
     if (count($parent) == 1) {
         // only one item in this menu.
         foreach ($parent as $child => $data) {
-            $html .= "<li class=\"nav-item\"><a href=\"" . $path . $data["url"] . "\" class=\"nav-link\"><i class=\"{$data["icon"]}\"></i><span class=\"nav-text fadeable\"><span>{$data["name"]}</span></span></a></li>";
+            $html .= "<li class=\"nav-item\"><a href=\"" . $path . $data["url"] . "\" class=\"nav-link\"><i class=\"{$data["icon"]}\"></i>&nbsp;<span class=\"nav-text fadeable\"><span>{$data["name"]}</span></span></a></li>";
         }
     } else {
         // multi items in this menu.
@@ -28,7 +28,7 @@ foreach ($menus as $grandfather => $parent) {
         $html .= "<li class=\"nav-item\">"
                 . "<a href=\"#\" class=\"nav-link dropdown-toggle\">";
         if ($subicon != "") {
-            $html .= "<i class=\"{$subicon}\"></i> ";
+            $html .= "<i class=\"{$subicon}\"></i>&nbsp;";
         }
         $html .= "<span class=\"nav-text fadeable\"><span>{$grandfather}</span></span><b class=\"caret fa fa-angle-left rt-n90\"></b></a>"
             . "<div class=\"hideable submenu collapse\">"    
