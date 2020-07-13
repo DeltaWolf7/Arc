@@ -201,6 +201,7 @@ class Helper {
                 $content .= $line;
             }
         }
+
         return $content;
     }
 

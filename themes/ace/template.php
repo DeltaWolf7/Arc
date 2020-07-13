@@ -30,16 +30,16 @@
 
           <div class="navbar-content">
 
-            <button class="navbar-toggler py-2" type="button" data-toggle="collapse" data-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navbar search">
+          <!-- <button class="navbar-toggler py-2" type="button" data-toggle="collapse" data-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle navbar search">
               <i class="fa fa-search text-white text-90 py-1"></i>
-            </button>
+            </button> 
 
             <div class="navbar-content-section collapse navbar-collapse navbar-backdrop" id="navbarSearch">
               <div class="d-flex align-items-center ml-lg-3">
                 <i class="fa fa-search text-white mr-n1 d-none d-lg-block"></i>
                 <input type="text" class="navbar-search-input px-1 pl-lg-4 ml-lg-n3 w-100 autofocus" placeholder=" SEARCH ..." aria-label="Search" />
               </div>
-            </div>
+            </div>/-->
 
           </div><!-- .navbar-content -->
 

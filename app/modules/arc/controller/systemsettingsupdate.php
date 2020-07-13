@@ -88,6 +88,10 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_MEDIAMANAGERURL");
     $setting->value = $_POST["media"];
     $setting->update();
+
+    $setting = SystemSetting::getByKey("ARC_GADSENSE");
+    $setting->value = $_POST["gAdsense"];
+    $setting->update();
     
     system\Helper::arcAddMessage("success", "System settings saved.");
     system\Helper::arcReturnJSON([]);

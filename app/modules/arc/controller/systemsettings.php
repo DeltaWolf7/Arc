@@ -25,3 +25,5 @@ $dateformat = \SystemSetting::getByKey("ARC_DATEFORMAT");
 $timeformat = \SystemSetting::getByKey("ARC_TIMEFORMAT");
 $title = \SystemSetting::getByKey("ARC_SITETITLE");
 $media = \SystemSetting::getByKey("ARC_MEDIAMANAGERURL");
+
+$gAdsense = \SystemSetting::getByKey("ARC_GADSENSE");

@@ -3,11 +3,16 @@
 
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="nav-item"><a href="#system" aria-controls="system" role="tab" data-toggle="tab" class="nav-link active">System</a></li>
-            <li role="presentation" class="nav-item"><a href="#login" aria-controls="login" role="tab" data-toggle="tab" class="nav-link">Login</a></li>
-            <li role="presentation" class="nav-item"><a href="#smtp" aria-controls="smtp" role="tab" data-toggle="tab" class="nav-link">SMTP</a></li>
-            <li role="presentation" class="nav-item"><a href="#ldap" aria-controls="ldap" role="tab" data-toggle="tab" class="nav-link">LDAP</a></li>
-            <li role="presentation" class="nav-item"><a href="#api" aria-controls="api" role="tab" data-toggle="tab" class="nav-link">API</a></li>
+            <li role="presentation" class="nav-item"><a href="#system" aria-controls="system" role="tab"
+                    data-toggle="tab" class="nav-link active">System</a></li>
+            <li role="presentation" class="nav-item"><a href="#login" aria-controls="login" role="tab" data-toggle="tab"
+                    class="nav-link">Login</a></li>
+            <li role="presentation" class="nav-item"><a href="#smtp" aria-controls="smtp" role="tab" data-toggle="tab"
+                    class="nav-link">SMTP</a></li>
+            <li role="presentation" class="nav-item"><a href="#ldap" aria-controls="ldap" role="tab" data-toggle="tab"
+                    class="nav-link">LDAP</a></li>
+            <li role="presentation" class="nav-item"><a href="#api" aria-controls="api" role="tab" data-toggle="tab"
+                    class="nav-link">API</a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -22,12 +27,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="keepLogsDays">Number of Days</label>
-                                <input id="keepLogsDays" type="number" class="form-control" placeholder="30" value="<?php echo $logs->value; ?>">
+                                <input id="keepLogsDays" type="number" class="form-control" placeholder="30"
+                                    value="<?php echo $logs->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> How many days should logs be kept? When a log is older than the specified period it will be purged.
+                            <i class="fa fa-info-circle"></i> How many days should logs be kept? When a log is older
+                            than the specified period it will be purged.
 
                         </div>
                     </div>
@@ -41,12 +48,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="siteTitle">Site Title</label>
-                                <input id="siteTitle" type="text" class="form-control" placeholder="Arc Project" value="<?php echo $title->value; ?>">
+                                <input id="siteTitle" type="text" class="form-control" placeholder="Arc Project"
+                                    value="<?php echo $title->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The title used for all site and email branding.
+                            <i class="fa fa-info-circle"></i> The title used for all site and email branding.
 
                         </div>
                     </div>
@@ -73,7 +81,8 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The default theme applied to all pages where no override has been specified.
+                            <i class="fa fa-info-circle"></i> The default theme applied to all pages where no override
+                            has been specified.
 
                         </div>
                     </div>
@@ -83,21 +92,24 @@
                             <div class="form-group">
                                 <label for="siteLogo">Site Logo</label>
                                 <div class="input-group">
-                                    <input id="siteLogo" type="text" class="form-control" placeholder="" aria-label="Site Logo" aria-describedby="basic-addon2" value="<?php echo $logo->value; ?>">
+                                    <input id="siteLogo" type="text" class="form-control" placeholder=""
+                                        aria-label="Site Logo" aria-describedby="basic-addon2"
+                                        value="<?php echo $logo->value; ?>">
                                     <div class="input-group-append">
-                                        <button class="btn btn-primary btn-xl" id="btnMediaManager"><i class="fa fa-folder-open-o" type="button"></i> Browse</button>
+                                        <button class="btn btn-primary btn-xl" id="btnMediaManager"><i
+                                                class="fa fa-folder-open-o" type="button"></i> Browse</button>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The logo used for all site and email branding.
+                            <i class="fa fa-info-circle"></i> The logo used for all site and email branding.
 
                         </div>
                     </div>
-                </fieldset> 
+                </fieldset>
 
                 <!-- Upload Limit /-->
                 <fieldset>
@@ -106,16 +118,17 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="uploadLimit">Limit in Megabytes (MB) </label>
-                                <input id="uploadLimit" type="number" class="form-control" placeholder="2" value="<?php echo $file_size->value; ?>">
+                                <input id="uploadLimit" type="number" class="form-control" placeholder="2"
+                                    value="<?php echo $file_size->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The maximum file size allowed for uploads.
+                            <i class="fa fa-info-circle"></i> The maximum file size allowed for uploads.
 
                         </div>
                     </div>
-                </fieldset>   
+                </fieldset>
 
                 <!-- Time/Date /-->
                 <fieldset>
@@ -124,12 +137,15 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="dateFormat">Date Format </label>
-                                <input id="dateFormat" type="text" class="form-control" placeholder="d-m-Y" value="<?php echo $dateformat->value; ?>">
+                                <input id="dateFormat" type="text" class="form-control" placeholder="d-m-Y"
+                                    value="<?php echo $dateformat->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The formatting of the date based on standard PHP date formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
+                            <i class="fa fa-info-circle"></i> The formatting of the date based on standard PHP date
+                            formatting rules. You can view accepted format on the PHP site <a
+                                href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
 
                         </div>
                     </div>
@@ -138,16 +154,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="timeFormat">Time Format </label>
-                                <input id="timeFormat" type="text" class="form-control" placeholder="H:i:s" value="<?php echo $timeformat->value; ?>">
+                                <input id="timeFormat" type="text" class="form-control" placeholder="H:i:s"
+                                    value="<?php echo $timeformat->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The formatting of the time based on standard PHP time formatting rules. You can view accepted format on the PHP site <a href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
+                            <i class="fa fa-info-circle"></i> The formatting of the time based on standard PHP time
+                            formatting rules. You can view accepted format on the PHP site <a
+                                href="http://php.net/manual/en/function.date.php" target="_new">here</a>.
 
                         </div>
                     </div>
-                </fieldset> 
+                </fieldset>
 
                 <!-- Media Manager /-->
                 <fieldset>
@@ -172,11 +191,28 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The page containing the media manager module</a>.
+                            <i class="fa fa-info-circle"></i> The page containing the media manager module</a>.
 
                         </div>
                     </div>
-                </fieldset> 
+                </fieldset>
+
+                <!-- Google AdSense /-->
+                <fieldset>
+                    <legend>Google Adsense</legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gAdsense">Adsense ID </label>
+                                <input id="gAdsense" type="text" class="form-control"
+                                    value="<?php echo $gAdsense->value; ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <i class="fa fa-info-circle"></i> Google Adsense publisher ID.</a>.
+                        </div>
+                    </div>
+                </fieldset>
             </div>
 
             <!-- Login /-->
@@ -190,7 +226,7 @@
                             <div class="form-group">
                                 <label for="loginURL">Successful Login Destination</label>
                                 <select id="loginURL" class="form-control">
-                                        <?php
+                                    <?php
                                         $routes = Router::getCurrentRoutes();
                                         foreach ($routes as $route) {
                                             echo "<option";
@@ -205,8 +241,10 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> After a successful login the user will be redirected to the specified page. A failed login does not redirect the user.<br />
-                                    Note, the authenticated user must also have permission to access the destination. If not, the user will receive a 403 error – Permission Denied.
+                            <i class="fa fa-info-circle"></i> After a successful login the user will be redirected to
+                            the specified page. A failed login does not redirect the user.<br />
+                            Note, the authenticated user must also have permission to access the destination. If not,
+                            the user will receive a 403 error – Permission Denied.
 
                         </div>
                     </div>
@@ -220,12 +258,12 @@
                             <div class="form-group">
                                 <label for="allowReg">Allow Registration</label>
                                 <select id="allowReg" class="form-control">
-                                    <option value="true"<?php
+                                    <option value="true" <?php
                                     if ($reg->value == "true") {
                                         echo " selected";
                                     }
                                     ?>>Yes</option>
-                                    <option value="false"<?php
+                                    <option value="false" <?php
                                     if ($reg->value == "false") {
                                         echo " selected";
                                     }
@@ -235,7 +273,7 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> Are guests allowed to register for an account?
+                            <i class="fa fa-info-circle"></i> Are guests allowed to register for an account?
 
                         </div>
                     </div>
@@ -255,12 +293,12 @@
                             <div class="form-group">
                                 <label for="useSMTP">Enable SMTP</label>
                                 <select id="useSMTP" class="form-control" onchange="updateEmail()">
-                                    <option value="1"<?php
+                                    <option value="1" <?php
                                     if ($smtpEnabled->value == "1") {
                                         echo " selected";
                                     }
                                     ?>>Yes</option>
-                                    <option value="0"<?php
+                                    <option value="0" <?php
                                     if ($smtpEnabled->value == "0") {
                                         echo " selected";
                                     }
@@ -270,7 +308,8 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> Use SMTP to send email over the built in PHP mailer function?
+                            <i class="fa fa-info-circle"></i> Use SMTP to send email over the built in PHP mailer
+                            function?
 
                         </div>
                     </div>
@@ -279,12 +318,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="smtpServer">SMTP Server</label>
-                                <input id="smtpServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $smtpServer->value; ?>">
+                                <input id="smtpServer" type="text" class="form-control" placeholder="localhost"
+                                    value="<?php echo $smtpServer->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The domain name or IP of the SMTP server.
+                            <i class="fa fa-info-circle"></i> The domain name or IP of the SMTP server.
 
                         </div>
                     </div>
@@ -293,12 +333,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="smtpUser">Username</label>
-                                <input id="smtpUser" type="text" class="form-control" value="<?php echo $smtpUsername->value; ?>">
+                                <input id="smtpUser" type="text" class="form-control"
+                                    value="<?php echo $smtpUsername->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> If required, the username to authenticate the SMTP session.
+                            <i class="fa fa-info-circle"></i> If required, the username to authenticate the SMTP
+                            session.
 
                         </div>
                     </div>
@@ -307,12 +349,14 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="smtpPass">Password</label>
-                                <input id="smtpPass" type="password" class="form-control" value="<?php echo system\Helper::arcDecrypt($smtpPassword->value); ?>">
+                                <input id="smtpPass" type="password" class="form-control"
+                                    value="<?php echo system\Helper::arcDecrypt($smtpPassword->value); ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> If required, the password to authenticate the SMTP session.
+                            <i class="fa fa-info-circle"></i> If required, the password to authenticate the SMTP
+                            session.
 
                         </div>
                     </div>
@@ -321,12 +365,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="smtpPort">Port</label>
-                                <input id="smtpPort" type="number" class="form-control" placeholder="21" value="<?php echo $smtpPort->value; ?>">
+                                <input id="smtpPort" type="number" class="form-control" placeholder="21"
+                                    value="<?php echo $smtpPort->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> Port of the SMTP server.
+                            <i class="fa fa-info-circle"></i> Port of the SMTP server.
 
                         </div>
                     </div>
@@ -335,17 +380,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="smtpSender">Sender</label>
-                                <input id="smtpSender" type="text" class="form-control" value="<?php echo $smtpSender->value; ?>">
+                                <input id="smtpSender" type="text" class="form-control"
+                                    value="<?php echo $smtpSender->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The sender of the email's sent by Arc. Can be a email address or name and email address.<br />
-                                    John Smith &lt;johnsmith@emailserver.com&gt;
+                            <i class="fa fa-info-circle"></i> The sender of the email's sent by Arc. Can be a email
+                            address or name and email address.<br />
+                            John Smith &lt;johnsmith@emailserver.com&gt;
 
                         </div>
                     </div>
-                </fieldset> 
+                </fieldset>
 
             </div>
 
@@ -355,8 +402,8 @@
                 <?php
                 if (!function_exists("ldap_connect")) {
                     ?>
-                    <div class="alert alert-warning">PHP LDAP module not loaded. LDAP will not function.</div>
-                    <?php
+                <div class="alert alert-warning">PHP LDAP module not loaded. LDAP will not function.</div>
+                <?php
                 }
                 ?>
 
@@ -372,12 +419,12 @@
                                     echo "disabled";
                                 }
                                 ?>>
-                                    <option value="1"<?php
+                                    <option value="1" <?php
                                     if ($ldapEnabled->value == "1") {
                                         echo " selected";
                                     }
                                     ?>>Yes</option>
-                                    <option value="0"<?php
+                                    <option value="0" <?php
                                     if ($ldapEnabled->value == "0") {
                                         echo " selected";
                                     }
@@ -387,7 +434,9 @@
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The Lightweight Directory Access Protocol allows 3rd party authentication to be performed by integrating with products supporting LDAP such as Microsoft Active Directory. Arc supports failover in the event LDAP becomes unavailable.
+                            <i class="fa fa-info-circle"></i> The Lightweight Directory Access Protocol allows 3rd party
+                            authentication to be performed by integrating with products supporting LDAP such as
+                            Microsoft Active Directory. Arc supports failover in the event LDAP becomes unavailable.
 
                         </div>
                     </div>
@@ -396,12 +445,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="ldapServer">Server</label>
-                                <input id="ldapServer" type="text" class="form-control" placeholder="localhost" value="<?php echo $ldapServer->value; ?>">
+                                <input id="ldapServer" type="text" class="form-control" placeholder="localhost"
+                                    value="<?php echo $ldapServer->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> LDAP servers's Domain Name or IP address.
+                            <i class="fa fa-info-circle"></i> LDAP servers's Domain Name or IP address.
 
                         </div>
                     </div>
@@ -410,12 +460,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="ldapDomain">Domain</label>
-                                <input id="ldapDomain" type="text" class="form-control" placeholder="mydomain" value="<?php echo $ldapDomain->value; ?>">
+                                <input id="ldapDomain" type="text" class="form-control" placeholder="mydomain"
+                                    value="<?php echo $ldapDomain->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> The domain to authenticate against.
+                            <i class="fa fa-info-circle"></i> The domain to authenticate against.
 
                         </div>
                     </div>
@@ -424,16 +475,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="ldapBase">Search Base</label>
-                                <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local" value="<?php echo $ldapBase->value; ?>">
+                                <input id="ldapBase" type="text" class="form-control" placeholder="dc=mydomain,dc=local"
+                                    value="<?php echo $ldapBase->value; ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
 
-                                    <i class="fa fa-info-circle"></i> LDAP search parameters (DC, OU, CN). Explanation can be found <a href="https://technet.microsoft.com/en-gb/library/cc978021.aspx" target="_new">here</a>
+                            <i class="fa fa-info-circle"></i> LDAP search parameters (DC, OU, CN). Explanation can be
+                            found <a href="https://technet.microsoft.com/en-gb/library/cc978021.aspx"
+                                target="_new">here</a>
 
                         </div>
                     </div>
-                </fieldset> 
+                </fieldset>
 
             </div>
 
@@ -444,30 +498,35 @@
                 <fieldset>
                     <legend>API</legend>
 
-                            <p>
-                            <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing 3rd party access to the API’s provided by Arc and its modules.<br />
-                            RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
-                            </p>
+                    <p>
+                        <i class="fa fa-info-circle"></i> Application Programming Interface key required for allowing
+                        3rd party access to the API’s provided by Arc and its modules.<br />
+                        RESTful based API URL: http://{yourdomain}/api/v1/{module}/{method}?key={key}
+                    </p>
 
-          
-                            <div class="table">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr><th>User</th><th>Key</th><th>Actions</th></tr>
-                                    </thead>
-                                    <tbody id="apiKeys">
 
-                                    </tbody>
-                                </table>
+                    <div class="table">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Key</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="apiKeys">
+
+                            </tbody>
+                        </table>
 
                     </div>
 
 
-                            <label for="apiuser">Add user</label>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <select class="form-control" id="apiuser">
-                                        <?php
+                    <label for="apiuser">Add user</label>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <select class="form-control" id="apiuser">
+                                <?php
                                         $users = User::getAllUsers();
                                         foreach ($users as $user) {
                                             $apikey = SystemSetting::getByKey("APIKEY", $user->id);
@@ -476,11 +535,12 @@
                                             }
                                         }
                                         ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <button class="btn btn-secondary btn-block" id="createAPI"><i class="fa fa-plus"></i> Create API key</button>
-                                </div>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-secondary btn-block" id="createAPI"><i class="fa fa-plus"></i> Create
+                                API key</button>
+                        </div>
 
                     </div>
 
@@ -488,7 +548,7 @@
                         Arc Version: <?php echo system\Helper::arcGetVersion(); ?>
                     </div>
 
-                </fieldset>        
+                </fieldset>
             </div>
         </div>
 
@@ -502,13 +562,16 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Media Manager</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <iframe style="width: 100%; height: 500px; border: 0;" src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
+                        <iframe style="width: 100%; height: 500px; border: 0;"
+                            src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#contentViewer').html('');">Close</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                            onclick="$('#contentViewer').html('');">Close</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

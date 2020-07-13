@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $users = User::getAllUsers();
-    $table = "<table class=\"table table-striped\">";
+    $table = "<table class=\"table table-striped table-responsive\">";
     $table .= "<thead><tr><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th></th></tr></thead><tbody>";
     foreach ($users as $user) {
         $table .= "<tr><td>" . $user->getFullname() . "</td><td>";

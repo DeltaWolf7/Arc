@@ -20,7 +20,8 @@ $("#btnSaveSettings").click(function() {
         dateFormat: $("#dateFormat").val(),
         timeFormat: $("#timeFormat").val(),
         siteTitle: $("#siteTitle").val(),
-        media: $("#mediaManagerURL").val()
+        media: $("#mediaManagerURL").val(),
+        gAdsense: $("#gAdsense").val()
     }, arcGetStatus);
 });
 

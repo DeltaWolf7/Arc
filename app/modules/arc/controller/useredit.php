@@ -4,7 +4,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
     $userGroups = UserGroup::getAllGroups();
 
-    $groups = "<h3>Groups</h3><table class=\"table\">"
+    $groups = "<h3>Groups</h3><table class=\"table table-responsive\">"
         . "<thead><tr class=\"thead-default\">";
 
     // header

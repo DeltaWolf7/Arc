@@ -126,6 +126,11 @@ class Render {
             if (file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
                 include_once Helper::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
             }
+
+            $gAdsense = \SystemSetting::getByKey("ARC_GADSENSE");
+            if (strlen($gAdsense->value) > 0) {
+                Helper::arcAddFooter("external", "<script data-ad-client=\"" . $gAdsense->value . "\" async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+            }
         }
 
         $groups[] = \UserGroup::getByName("Guests");
