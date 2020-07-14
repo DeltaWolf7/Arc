@@ -70,7 +70,7 @@ $("#savePageBtn").click(function() {
         seourl: $("#seourl").val(),
         metadescription: $("#metadescription").val(),
         metakeywords: $("#metakeywords").val(),
-        html: arcCleanSummernote($('#summernote').summernote('code')),
+        html: $('#summernote').summernote('code'),
         iconclass: $("#iconclass").val(),
         sortorder: $("#sortorder").val(),
         showtitle: $('#showtitle').val(),

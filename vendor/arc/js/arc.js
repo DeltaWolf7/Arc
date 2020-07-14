@@ -81,35 +81,3 @@ function arcGetStatus() {
 function arcGetJson(data) {
     return jQuery.parseJSON(JSON.stringify(data));
 }
-
-function arcCleanSummernote(code) {
-    //http://stackoverflow.com/questions/25119253/using-javascript-or-jquery-to-clean-wysiwyg-editors-html-output
-    var newCode = $('<div></div>').append(code)
-        .find('iframe')
-        .wrap('<div class="flexVideo"/>')
-        .end()
-        .find('img')
-        .removeAttr('style')
-        .addClass('img-fluid')
-        .end()
-        .find('span')
-        .filter("[style*='underline']")
-        .removeAttr('style')
-        .addClass('underline')
-        .end()
-        .filter("[style*='bold']")
-        .wrapInner('<b></b>')
-        .children()
-        .unwrap()
-        .end()
-        .end()
-        .filter("[style*='italic']")
-        .wrapInner('<i></i>')
-        .children()
-        .unwrap()
-        .end()
-        .end()
-        .end()
-        .html();
-    return newCode;
-}
