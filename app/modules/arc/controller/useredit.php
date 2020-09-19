@@ -4,36 +4,76 @@ if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
     $userGroups = UserGroup::getAllGroups();
 
-    $groups = "<h3>Groups</h3><table class=\"table table-responsive\">"
-        . "<thead><tr class=\"thead-default\">";
+    $html = "<form><div class=\"row\">"
+            . "<div class=\"col-md-6\">"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"firstname\">Firstname</label>"
+                    . "<input type=\"text\" class=\"form-control\" id=\"firstname\" placeholder=\"Firstname\" value=\"" . $user->firstname . "\">"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"lastname\">Lastname</label>"
+                    . "<input type=\"text\" class=\"form-control\" id=\"lastname\" placeholder=\"Lastname\" value=\"" . $user->lastname . "\">"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"email\">Email</label>"
+                    . "<input type=\"text\" class=\"form-control\" id=\"email\" placeholder=\"Email\" value=\"" . $user->email . "\">"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"avGroups\">Available Groups</label>"
+                    . "<select id=\"avGroups\" class=\"form-control\" size=\"5\" ondblclick=\"addUserToGroup(" . $user->id . ")\">";
 
-    // header
-    foreach ($userGroups as $group) { 
-        $groups .= "<th>{$group->name}</th>";
-    }
-        
-    $groups .= "</tr></thead>";
+                    foreach ($userGroups as $group) { 
+                        if ($user->inGroup($group->name) != true) {
+                            $html .= "<option value=\"" . $group->name . "\">" . $group->name . "</option>";
+                        }
+                    }
 
-    // body
-    $groups .= "<tr>";
-    foreach ($userGroups as $group) { 
-        $groups .= "<td>"
-        . "<label class=\"form-check-label\">"
-        . "<input type=\"checkbox\" class=\"form-check-input\"";
-        
-        if ($user->inGroup($group->name)) {
-            $groups .= " checked";
-        }
+    $html           .= "</select>"
+                . "</div>"
+            . "</div>"
+            . "<div class=\"col-md-6\">"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"password\">Password (Leave blank to keep unchanged)</label>"
+                    . "<input type=\"password\" class=\"form-control\" id=\"password\" placeholder=\"Password\" autocomplete=\"off\">"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"retype\">Retype</label>"
+                    . "<input type=\"password\" class=\"form-control\" id=\"retype\" placeholder=\"Retype\" autocomplete=\"off\">"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"enabled\">Account Enabled</label>"
+                    . "<select id=\"enabled\" class=\"form-control\">"
+                        . "<option value=\"1\" ";
+                            
+                        if($user->enabled == "1") $html .= "selected";
+                        
+                        $html .= ">Yes</option>"
+                        . "<option value=\"0\" ";
+                        
+                        if($user->enabled == "0") $html .= "selected";
+                        
+                        $html .= ">No</option>"
+                    . "</select>"
+                . "</div>"
+                . "<div class=\"form-group\">"
+                    . "<label for=\"inGroups\">In Groups</label>"
+                    . "<select id=\"inGroups\" class=\"form-control\" size=\"5\" ondblclick=\"removeUserFromGroup(" . $user->id . ")\">";
 
-        $groups .= " onclick=\"addUserToGroup({$user->id},'{$group->name}')\">"
-        . "<span class=\"custom-control-indicator\"></span>"
-        . "</label>"
-        . "</td>";
-    }
-    $groups .= "</tr>";
+                    foreach ($userGroups as $group) { 
+                        if ($user->inGroup($group->name) == true) {
+                            $html .= "<option value=\"" . $group->name . "\">" . $group->name . "</option>";
+                        }
+                    }
 
-    $groups .= "</table>";
+        $html           .= "</select>"
+                . "</div>"
+            . "</div>"
+        . "</div>";
 
-    system\Helper::arcReturnJSON(["firstname" => $user->firstname, "lastname" => $user->lastname,
-         "email" => $user->email, "groups" => $groups, "enabled" => $user->enabled]);
+        $html .= "<div class=\"text-right\">"
+                    . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
+                    . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
+                . "</div></form>";
+
+    system\Helper::arcReturnJSON(["html" => $html]);
 }

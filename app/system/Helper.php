@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.0.9";
+        self::$arc["version"] = "0.8.0.10";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -377,7 +377,8 @@ class Helper {
     }
 
     public static function arcSetSession($id) {
-        session_id($id);
+        // added @ to prevent warning causing issues.
+        @session_id($id);
     }
 
     /**

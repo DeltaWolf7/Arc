@@ -40,6 +40,6 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $user->email = strtolower($_POST["email"]);
     $user->update();
-    system\Helper::arcAddMessage("success", "Changes saved");
+    system\Helper::arcAddMessage("success", "User updated");
     system\Helper::arcReturnJSON();
 }

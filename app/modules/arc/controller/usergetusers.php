@@ -2,10 +2,11 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $users = User::getAllUsers();
-    $table = "<table class=\"table table-striped table-responsive\">";
-    $table .= "<thead><tr><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th></th></tr></thead><tbody>";
+    $table = "<div class=\"text-right mb-2\"><a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"viewGroups()\">View Groups</a></div>";
+    $table .= "<table class=\"table table-striped\">";
+    $table .= "<thead><tr><th>#</th><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th>Action</th></tr></thead><tbody>";
     foreach ($users as $user) {
-        $table .= "<tr><td>" . $user->getFullname() . "</td><td>";
+        $table .= "<tr><td>" . $user->id . "</td><td><a href=\"#\" onclick=\"editUser(" . $user->id . ")\">" . $user->getFullname() . "</a></td><td>";
         if ($user->enabled == true) {
             $table .= "<div class=\"badge badge-success\"><i class=\"fa fa-check\"></i> Enabled</div>";
         } else {
@@ -22,13 +23,14 @@ if (system\Helper::arcIsAjaxRequest()) {
         }
         
         $table .= "</td>"
-                . "<td class=\"text-right\">"
+                . "<td style=\"width: 10px;\">"
                 . "<div class=\"btn-group\" role=\"group\">"
-                . "<button class=\"btn btn-success btn-sm\" onclick=\"editUser(" . $user->id . ")\"><i class=\"fa fa-pencil\"></i> Edit</button>"
-                . "<button class=\"btn btn-danger btn-sm\" onclick=\"removeUser(" . $user->id . ")\"><i class=\"fa fa-remove\"></i> Remove</button>"
+                . "<button class=\"btn btn-primary btn-sm\" onclick=\"editUser(" . $user->id . ")\"><i class=\"fa fa-pencil\"></i></button>"
+                . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"removeUser(" . $user->id . ")\"><i class=\"fa fa-remove\"></i></button>"
                 . "</div>"
                 . "</td></tr>";
+        
     }
-    $table .= "</tbody></table>";
+    $table .= "</table>";
     system\Helper::arcReturnJSON(["html" => $table]);
 }
