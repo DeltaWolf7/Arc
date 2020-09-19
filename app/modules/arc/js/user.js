@@ -7,7 +7,11 @@ $(document).ready(function() {
 });
 
 function closeUser() {
-    arcAjaxRequest("arc/usergetusers", {}, null, getSuccess);
+    arcAjaxRequest("arc/usergetusers", { search: "" }, null, getSuccess);
+}
+
+function searchUsers(query) {
+    arcAjaxRequest("arc/usergetusers", { search: $("#search").val() }, null, getSuccess);
 }
 
 function addUserToGroup(userid) {

@@ -111,6 +111,17 @@ class User extends DataProvider {
     }
 
     /**
+     * Get all users from the database
+     * @return array Collection of user objects
+     */
+    public static function search($query) {
+        // Create a User object
+        $user = new User();
+        // Return an array of user objects from the database, ordered by firstname
+        return $user->getCollection(["ORDER" => ['firstname' => 'ASC'], "firstname[~]" => $query, "lastname[~]" => $query, "email[~]" => $query]);
+    }
+
+    /**
      * Check is user is in a group
      * @param string $name Group name
      * @return boolean If the user belongs to the group or not
