@@ -3,8 +3,25 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
     $userGroups = UserGroup::getAllGroups();
+    $usercrm = ArcCRMUser::getByUserID($user->id);
+    if ($usercrm->id == 0) {
+        $usercrm = new ArcCRMUser();
+        $usercrm->userid = $user->id;
+    }
 
-    $html = "<form><div class=\"row\">"
+    $html = "<form>"
+        . "<div class=\"row\">"
+            . "<div class=\"col-md-12 text-muted text-right text-small\">"
+            . "<span class=\"badge badge-info\">Created: " . system\Helper::arcConvertDate($user->created) . "</span>&nbsp;"
+            . "<span class=\"badge badge-primary\">ID: " . $user->id . "</span>&nbsp;"
+            . "<span class=\"badge badge-";
+            if ($usercrm->id == 0) { $html .= "danger"; } else { $html .= "success"; }
+    $html .= "\">CRMID: ";
+            if ($usercrm->id == 0) { $html .= "No record"; } else { $html .= $usercrm->id; }
+    $html .= "</span>"
+            . "</div>"
+        . "</div>"
+        . "<div class=\"row mt-3\">"
             . "<div class=\"col-md-6\">"
                 . "<div class=\"form-group\">"
                     . "<label for=\"firstname\">Firstname</label>"
@@ -73,7 +90,95 @@ if (system\Helper::arcIsAjaxRequest()) {
         $html .= "<div class=\"text-right\">"
                     . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
                     . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
-                . "</div></form>";
+                . "</div>";
+
+        $html .= "<div class=\"row mt-3\"><div class=\"col-md-12 border-top border-primary\"></div></div>";
+
+        $html .= "<div class=\"row mt-3\">"
+                    . "<div class=\"col-md-6\">"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"company\">Company</label>"
+                            . "<input maxlength=\"50\" type=\"text\" class=\"form-control\" id=\"company\" placeholder=\"Company\" value=\"" . $usercrm->company . "\">"
+                        . "</div>"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"addresslines\">Address Lines</label>"
+                            . "<textarea class=\"form-control\" id=\"addresslines\" rows=\"5\">" . $usercrm->addresslines . "</textarea>"
+                        . "</div>"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"county\">County</label>"                       
+                            . "<input maxlength=\"50\" type=\"text\" class=\"form-control\" id=\"county\" placeholder=\"County\" value=\"" . $usercrm->county . "\">"
+                        . "</div>"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"postcode\">Postcode</label>"
+                            . "<input maxlength=\"10\" type=\"text\" class=\"form-control\" id=\"postcode\" placeholder=\"Postcode\" value=\"" . $usercrm->postcode . "\">"
+                        . "</div>"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"country\">Country</label>";
+
+                        $html .= system\Helper::arcCreateHTMLSelect(["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","China","Colombia","Comoros","Congo","Congo {Democratic Rep}","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland {Republic}","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar, {Burma}","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"],
+                                    ["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua & Deps","Argentina","Armenia","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina","Burundi","Cambodia","Cameroon","Canada","Cape Verde","Central African Rep","Chad","Chile","China","Colombia","Comoros","Congo","Congo {Democratic Rep}","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt","El Salvador","Equatorial Guinea","Eritrea","Estonia","Ethiopia","Fiji","Finland","France","Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana","Haiti","Honduras","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland {Republic}","Israel","Italy","Ivory Coast","Jamaica","Japan","Jordan","Kazakhstan","Kenya","Kiribati","Korea North","Korea South","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Mauritania","Mauritius","Mexico","Micronesia","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar, {Burma}","Namibia","Nauru","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palau","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russian Federation","Rwanda","St Kitts & Nevis","St Lucia","Saint Vincent & the Grenadines","Samoa","San Marino","Sao Tome & Principe","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Togo","Tonga","Trinidad & Tobago","Tunisia","Turkey","Turkmenistan","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"],
+                                    "form-control", $usercrm->country, "country");
+
+                        $html .= "</div>"
+                    . "</div>"
+                    . "<div class=\"col-md-6\">"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"source\">Source</label>";
+
+                        $html .= system\Helper::arcCreateHTMLSelect(["Direct", "Email", "Google", "Phone", "Word of Mouth", "Advert", "Other"], 
+                            ["Direct", "Email", "Google", "Phone", "Word", "AD", "Other"], "form-control", $usercrm->source, "source");
+
+                        $html .= "</div>"  
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"phone\">Phone</label>"
+                            . "<input maxlength=\"20\" type=\"text\" class=\"form-control\" id=\"phone\" placeholder=\"Phone\" value=\"" . $usercrm->phone . "\">"
+                        . "</div>"
+                        . "<div class=\"form-group\">"
+                            . "<label for=\"notes\">Notes</label>"
+                            . "<textarea class=\"form-control\" id=\"notes\" rows=\"12\">" . $usercrm->notes . "</textarea>"
+                        . "</div>"
+                    . "</div>"
+                . "</div>";
+
+        $html .= "<div class=\"text-right\">"
+                . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
+                . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
+            . "</div>";
+                
+        $html .= "<div class=\"row mt-3\"><div class=\"col-md-12 border-top border-primary\"></div></div>";
+
+        $html .= "<div class=\"row\"><div class=\"col-md-12 text-right\"><button class=\"btn btn-success btn-sm mt-2\" onclick=\"editContact(0)\"><i class=\"fa fa-plus\"></i> Create</button></div></div>";
+
+        $html .= "<div class=\"table-responsive mt-3\">"
+                    . "<table class=\"table table-striped\">"
+                        . "<thead>"
+                            . "<tr><th>ID</th><th>Name</th><th>Title</th><th>Email</th><th>Phone</th><th>Action</th></tr>"
+                        . "</thead>"
+                        . "<tbody>";
+
+        $crmcontacts = ArcCRMUserContact::getAllByUserID($user->id);
+        foreach ($crmcontacts as $contact) {
+            $html .= "<tr><td>" . $contact->id . "</td><td>" . $contact->name . "</td><td>"
+                . $contact->title . "</td><td>" . $contact->email . "</td><td>" . $contact->phone . "</td>"
+                . "<td style=\"width: 10px;\">"
+                    . "<div class=\"btn-group\" role=\"group\">"
+                        . "<button class=\"btn btn-primary btn-sm\" onclick=\"editContact(" . $contact->id . ")\"><i class=\"fa fa-pencil\"></i></button>"
+                        . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"removeContact(" . $contact->id . ")\"><i class=\"fa fa-remove\"></i></button>"
+                    . "</div>"
+                . "</td></tr>";
+        }
+
+
+        $html .=          "</tbody>"
+                    . "</table>"
+                . "</div>";
+
+        $html .= "<div class=\"text-right\">"
+                . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
+                . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
+            . "</div>";
+
+        $html .= "</form>";
 
     system\Helper::arcReturnJSON(["html" => $html]);
 }

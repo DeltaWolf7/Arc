@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.0.10";
+        self::$arc["version"] = "0.8.1.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -708,5 +708,31 @@ class Helper {
         $encryption_key = \SystemSetting::getByKey("ARC_PAIR")->value;
         $decrypted = openssl_decrypt($string, "aes-256-cbc", $encryption_key, 0, ARCIVKEYPAIR);
         return $decrypted;
+    }
+
+    /**
+     * 
+     * Creates and HTML select with items and selection.
+     * @param array Select options
+     * @param array Select values
+     * @param string CSS class
+     * @param string Selected value
+     * @param string Select ID
+     */
+    public static function arcCreateHTMLSelect($options, $values, $class, $selected, $id) {
+        $html = "<select id=\"" . $id . "\" class=\"" . $class . "\">";
+        $count = 0;
+        if (is_array($options) && is_array($values) && count($options) == count($values)) {
+            foreach ($options as $option) {
+                $html .= "<option value=\"" . $values[$count] . "\"";
+                if ($values[$count] == $selected) {
+                    $html .= " selected";
+                }
+                $html .= ">" . $option . "</option>";
+                $count++;
+            }
+        }        
+        $html .= "</select>";
+        return $html;
     }
 }

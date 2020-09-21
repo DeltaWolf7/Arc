@@ -1,6 +1,6 @@
 var userid;
 var groupid;
-var companyid;
+var contactid;
 
 $(document).ready(function() {
     closeUser();
@@ -36,7 +36,15 @@ function saveUser(userid) {
         email: $('#email').val(),
         password: $('#password').val(),
         retype: $('#retype').val(),
-        enabled: $("#enabled").val()
+        enabled: $("#enabled").val(),
+        company: $("#company").val(),
+        source: $("#source").val(),
+        addresslines: $("#addresslines").val(),
+        county: $("#county").val(),
+        postcode: $("#postcode").val(),
+        country: $("#country").val(),
+        phone: $("#phone").val(),
+        notes: $("#notes").val()
     }, saveUserComplete, null);
 }
 
@@ -88,11 +96,11 @@ function removeUser(id) {
 }
 
 function remUserComplete() {
-    arcAjaxRequest("arc/usergetusers", {}, null, getSuccessUsers);
+    closeUser();
+    $("#removeUserModal").modal("hide");
 }
 
 function saveUserComplete() {
-    arcAjaxRequest("arc/usergetusers", {}, null, getSuccessUsers);
     arcGetStatus();
 }
 
@@ -129,4 +137,48 @@ function saveGroupComplete() {
 
 function viewGroups() {
     arcAjaxRequest("arc/usergetgroups", {}, null, getSuccess);
+}
+
+$("#saveContactBtn").click(function() {
+    arcAjaxRequest("arc/usersavecontact", {
+        id: contactid,
+        name: $('#contactname').val(),
+        title: $('#contacttitle').val(),
+        email: $('#contactemail').val(),
+        phone: $('#contactphone').val(),
+        userid: userid
+    }, saveContactComplete);
+});
+
+function saveContactComplete() {
+    editUser(userid);
+    $("#editContactModal").modal("hide");
+    arcGetStatus();
+}
+
+function editContact(id) {
+    contactid = id;
+    arcAjaxRequest("arc/usereditcontact", { id: contactid }, editContactSuccess, completeEditContact);
+}
+
+function editContactSuccess(data) {
+    $("#editContactModal").modal("show");
+}
+
+function completeEditContact(data) {
+    var jdata = arcGetJson(data);
+    $("#contactname").val(jdata.name);
+    $("#contacttitle").val(jdata.title);
+    $("#contactemail").val(jdata.email);
+    $("#contactphone").val(jdata.phone);
+}
+
+function removeContact(id) {
+    contactid = id;
+    arcAjaxRequest("arc/userremovecontact", { id: contactid }, null, removeGrpDoComplete);
+}
+
+function removeGrpDoComplete() {
+    editUser(userid);
+    arcGetStatus();
 }

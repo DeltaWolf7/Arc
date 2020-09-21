@@ -3,7 +3,7 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $users = [];
     
-    if ($_POST["search"] == "") {
+    if (!isset($_POST["search"]) || $_POST["search"] == "") {
         $users = User::getAllUsers();
     } else {
         $users = User::search($_POST["search"]);

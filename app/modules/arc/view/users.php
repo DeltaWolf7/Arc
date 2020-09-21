@@ -4,8 +4,6 @@
      </div>
 </div>
 
-
-
 <div class="modal" id="removeUserModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -44,6 +42,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal" id="editGroupModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -68,6 +67,49 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal">Close</button>
                 <button class="btn btn-success" id="saveGroupBtn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="editContactModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Edit Contact</h5>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
+                        class="sr-only">Close</i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="contactname">Name</label>
+                    <input maxlength="100" type="text" class="form-control" id="contactname" placeholder="Contact Name">
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="contacttitle">Title</label>
+                        <input maxlength="50" type="text" class="form-control" id="contacttitle"
+                            placeholder="Contact Title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="contactemail">Email</label>
+                        <input maxlength="100" type="text" class="form-control" id="contactemail"
+                            placeholder="Contact Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="contactphone">Phone</label>
+                        <input maxlength="20" type="text" class="form-control" id="contactphone"
+                            placeholder="Contact Phone">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" id="saveContactBtn">Save</button>
             </div>
         </div>
     </div>

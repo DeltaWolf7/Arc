@@ -2,6 +2,14 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
+    $usercrm = ArcCRMUser::getByUserID($user->id);
+    if ($usercrm->id == 0) {
+        $usercrm = new ArcCRMUser();
+        $usercrm->userid = $user->id;
+    }
+
+    //// USER
+
     // password settings
     if (!empty($_POST["password"])) {
         if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
@@ -33,13 +41,24 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("danger", "New users must have a password");
         return;
     }
-    
 
     $user->enabled = $_POST["enabled"];
-  
-
     $user->email = strtolower($_POST["email"]);
     $user->update();
+
+    //// USER CRM
+
+    $usercrm->company = ucwords(strtolower($_POST["company"]));
+    $usercrm->source = $_POST["source"];
+    $usercrm->addresslines = ucwords(strtolower($_POST["addresslines"]));
+    $usercrm->county = ucwords(strtolower($_POST["county"]));
+    $usercrm->postcode = strtoupper($_POST["postcode"]);
+    $usercrm->country = ucwords(strtolower($_POST["country"]));
+    $usercrm->phone = $_POST["phone"];
+    $usercrm->notes = $_POST["notes"];
+    $usercrm->userid = $user->id;
+    $usercrm->update();
+
     system\Helper::arcAddMessage("success", "User updated");
     system\Helper::arcReturnJSON();
 }
