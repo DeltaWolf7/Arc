@@ -118,7 +118,7 @@ class User extends DataProvider {
         // Create a User object
         $user = new User();
         // Return an array of user objects from the database, ordered by firstname
-        return $user->getCollection(["ORDER" => ['firstname' => 'ASC'], "firstname[~]" => $query, "lastname[~]" => $query, "email[~]" => $query]);
+        return $user->getCollection(["ORDER" => ['firstname' => 'ASC'], "OR" => ["firstname[~]" => $query, "lastname[~]" => $query, "email[~]" => $query]]);
     }
 
     /**
