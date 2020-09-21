@@ -10,8 +10,18 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
 
 
-    $table = "<div class=\"mb-2 row\"><div class=\"col-md-1 mt-2\">Search</div><div class=\"col-md-8\"><input class=\"form-control\" id=\"search\" placeholder=\"Search..\" /></div>"
-    . "<div class=\"col-md-1 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"searchUsers()\">Search</a></div><div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"viewGroups()\">View Groups</a></div></div></div>";
+    $table = "<div class=\"mb-2 row\">"
+        . "<div class=\"col-md-1 mt-2\">Search</div>"
+        . "<div class=\"col-md-9\">"
+            . "<div class=\"input-group mb-3\">"
+                . "<input class=\"form-control\" id=\"search\" placeholder=\"Search..\" aria-describedby=\"basic-addon2\" />"
+                . "<div class=\"input-group-append\">"
+                  . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"searchUsers()\"><i class=\"fas fa-search\"></i></button>"
+                . "</div>"
+            . "</div>"
+        . "</div>"
+        . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm btn-block\" onclick=\"viewGroups()\"><i class=\"fas fa-list\"></i> View Groups</a></div>"
+        . "</div>";
     $table .= "<table class=\"table table-striped\">";
     $table .= "<thead><tr><th>#</th><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th>Action</th></tr></thead><tbody>";
     foreach ($users as $user) {

@@ -66,8 +66,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" id="saveGroupBtn">Save</button>
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" id="saveGroupBtn">Save</button>
             </div>
         </div>
     </div>

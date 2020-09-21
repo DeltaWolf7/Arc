@@ -3,7 +3,7 @@ var groupid;
 var companyid;
 
 $(document).ready(function() {
-    closeUser()
+    closeUser();
 });
 
 function closeUser() {
