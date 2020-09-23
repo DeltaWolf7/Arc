@@ -1,3 +1,0 @@
-email template
-add notifications to menu and create system for it
-make pages mobile ready
