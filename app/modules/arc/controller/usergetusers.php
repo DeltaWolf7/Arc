@@ -21,7 +21,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "</div>"
         . "</div>"
         . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm btn-block\" onclick=\"viewGroups()\"><i class=\"fas fa-list\"></i> View Groups</a></div>"
-        . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm btn-block\" onclick=\"editUser(0)\"><i class=\"fas fa-plus\"></i> New User</a></div>"
+        . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-success btn-sm btn-block\" onclick=\"editUser(0)\"><i class=\"fas fa-plus\"></i> New User</a></div>"
         . "</div>";
     $table .= "<table class=\"table table-striped\">";
     $table .= "<thead><tr><th>#</th><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th>Action</th></tr></thead><tbody>";

@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body" id="listDiv">
-        <table class="table table-striped" id="pages">
+        <table class="table table-striped table-sm" id="pages">
         </table>
     </div>
 
@@ -42,7 +42,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Modules</span>
+                                        <span class="input-group-addon mt-1">Modules&nbsp;</span>
                                         <select id="imodule" class="form-control">
                                             <?php
                                             $modules = scandir(system\Helper::arcGetPath(true) . "app/modules");
@@ -70,7 +70,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <span class="input-group-addon">Theme</span>
+                                        <span class="input-group-addon mt-1">Theme&nbsp;</span>
                                         <select id="theme" class="form-control">
                                             <option value="none">No Override</option>
                                             <?php
