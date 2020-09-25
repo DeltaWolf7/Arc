@@ -37,6 +37,6 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
             </div>
         </div>
 
-        <div class="text-right"><button class="btn btn-primary" onclick="clearLogs();"><i class="fa fa-recycle"></i> Purge Logs</button></div>
+        <div class="text-right mt-2"><button class="btn btn-primary" onclick="clearLogs();"><i class="fa fa-recycle"></i> Purge Logs</button></div>
     </div>
 </div>

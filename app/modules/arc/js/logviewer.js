@@ -19,3 +19,7 @@ function updateView(data) {
     var jdata = arcGetJson(data);
     $("#logs").html(jdata.html);
 }
+
+function getItem(page) {
+    arcAjaxRequest("arc/logviewerget", { page: page}, null, updateView);
+}

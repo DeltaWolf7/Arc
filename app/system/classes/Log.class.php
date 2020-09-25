@@ -57,11 +57,11 @@ class Log extends DataProvider {
      * Get all logs from the database
      * @return array Collection of log objects
      */
-    public static function getLogs() {
+    public static function getLogs($page, $number) {
         // Create a new log class
         $logs = new Log();
         // Return collection of log objects
-        return $logs->getCollection(['ORDER' => ['id' => 'DESC']]);
+        return $logs->getCollection(['ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
        
     /**
