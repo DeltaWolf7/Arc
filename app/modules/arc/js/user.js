@@ -45,7 +45,7 @@ function saveUser(userid) {
         country: $("#country").val(),
         phone: $("#phone").val(),
         notes: $("#notes").val()
-    }, saveUserComplete, null);
+    }, arcGetStatus, null);
 }
 
 $("#removeGroupDoBtn").click(function() {
@@ -98,10 +98,6 @@ function removeUser(id) {
 function remUserComplete() {
     closeUser();
     $("#removeUserModal").modal("hide");
-}
-
-function saveUserComplete() {
-    arcGetStatus();
 }
 
 function editGroup(id) {

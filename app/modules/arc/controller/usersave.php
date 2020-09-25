@@ -10,55 +10,61 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     //// USER
 
+    $hasError = false;
+
     // password settings
     if (!empty($_POST["password"])) {
         if (strlen($_POST["password"]) > 0 && ($_POST["password"] == $_POST["retype"])) {
             $user->setPassword($_POST["password"]);
         } else {
             system\Helper::arcAddMessage("danger", "Password and retyped password do not match");
-            return;
+            $hasError = true;
         }
     }
+
     $user->firstname = ucwords(strtolower($_POST["firstname"]));
-    if (empty($_POST["firstname"])) {
+    if (empty($_POST["firstname"]) && !$hasError) {
         system\Helper::arcAddMessage("danger", "Firstname cannot be empty");
-        return;
+        $hasError = true;
     }
 
     $user->lastname = ucwords(strtolower($_POST["lastname"]));
-    if (empty($_POST["lastname"])) {
+    if (empty($_POST["lastname"]) && !$hasError) {
         system\Helper::arcAddMessage("danger", "Lastname cannot be empty");
-        return;
+        $hasError = true;
     }
 
     $test = User::getByEmail($_POST["email"]);
-    if ($user->id == 0 && $test->id != 0) {
+    if ($user->id == 0 && $test->id != 0 && !$hasError) {
         system\Helper::arcAddMessage("danger", "User already exists with this email address");
-        return;
+        $hasError = true;
     }
 
-    if ($user->id == 0 && empty($_POST["password"])) {
+    if ($user->id == 0 && empty($_POST["password"]) && !$hasError) {
         system\Helper::arcAddMessage("danger", "New users must have a password");
-        return;
+        $hasError = true;
     }
 
-    $user->enabled = $_POST["enabled"];
-    $user->email = strtolower($_POST["email"]);
-    $user->update();
 
-    //// USER CRM
+    if (!$hasError) {
+        $user->enabled = $_POST["enabled"];
+        $user->email = strtolower($_POST["email"]);
+        $user->update();
 
-    $usercrm->company = ucwords(strtolower($_POST["company"]));
-    $usercrm->source = $_POST["source"];
-    $usercrm->addresslines = ucwords(strtolower($_POST["addresslines"]));
-    $usercrm->county = ucwords(strtolower($_POST["county"]));
-    $usercrm->postcode = strtoupper($_POST["postcode"]);
-    $usercrm->country = ucwords(strtolower($_POST["country"]));
-    $usercrm->phone = $_POST["phone"];
-    $usercrm->notes = $_POST["notes"];
-    $usercrm->userid = $user->id;
-    $usercrm->update();
+        //// USER CRM
 
-    system\Helper::arcAddMessage("success", "User updated");
+        $usercrm->company = ucwords(strtolower($_POST["company"]));
+        $usercrm->source = $_POST["source"];
+        $usercrm->addresslines = ucwords(strtolower($_POST["addresslines"]));
+        $usercrm->county = ucwords(strtolower($_POST["county"]));
+        $usercrm->postcode = strtoupper($_POST["postcode"]);
+        $usercrm->country = ucwords(strtolower($_POST["country"]));
+        $usercrm->phone = $_POST["phone"];
+        $usercrm->notes = $_POST["notes"];
+        $usercrm->userid = $user->id;
+        $usercrm->update();
+
+        system\Helper::arcAddMessage("success", "User updated");
+    }
     system\Helper::arcReturnJSON();
 }

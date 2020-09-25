@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest() == true) {
     $groups = UserGroup::getAllGroups();
-    $table = "<table class=\"table\">";
+    $table = "<table class=\"table table-sm\">";
     $table .= "<thead class=\"thead-default\"><tr><th>Route</th><th>Destination</th><th>Status</th><th>&nbsp;</th></tr></thead><tbody>";
     foreach ($groups as $group) {
         $permissions = Router::getByGroupID($group->id);

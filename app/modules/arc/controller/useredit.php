@@ -2,6 +2,9 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
+    if ($user->id == 0) {
+        $user = new User();
+    }
     $userGroups = UserGroup::getAllGroups();
     $usercrm = ArcCRMUser::getByUserID($user->id);
     if ($usercrm->id == 0) {
