@@ -573,9 +573,11 @@ class Helper {
             }
         } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
             include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
-        } else {
-            echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
-            \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
+        } else {        
+            if ($name != "" && $view != "") {
+                echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
+                \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
+            }
         }
         $newContent = ob_get_contents();
         self::arcProcessTags($newContent);

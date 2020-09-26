@@ -3,10 +3,7 @@
 if (system\Helper::arcIsAjaxRequest()) {
 
     // Arc logs
-    $logs = Log::getLogs();
-    foreach ($logs as $log) {
-        $log->delete();
-    }
+    $logs = Log::clear();
 
     //PHP logs
     $path = system\Helper::arcGetPath(true) . ini_get('error_log');

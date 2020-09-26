@@ -12,6 +12,8 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcReturnJSON([], 401.1);
         return;
     }
+
+    Log::createLog("info", "user", "Agent: " . $_SERVER['HTTP_USER_AGENT'] . ", IP: " . $_SERVER['REMOTE_ADDR']);
     
     // start ldap
     $ldapEnabled = SystemSetting::getByKey("ARC_LDAP_ENABLED");

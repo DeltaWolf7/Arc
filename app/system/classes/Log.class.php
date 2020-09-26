@@ -63,6 +63,14 @@ class Log extends DataProvider {
         // Return collection of log objects
         return $logs->getCollection(['ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
+
+    /**
+     * Clear logs table
+     */
+    public static function clear() {
+        $logs = new Log();
+        $data = system\Helper::arcGetDatabase()->query("TRUNCATE " . $logs->table);
+    }
        
     /**
      * Count the number of logs in the database
@@ -93,12 +101,12 @@ class Log extends DataProvider {
 
         // Update log in database
         $log->update();
-        
+       
         // Get number of days to keep setting
         $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
         // Delete logs older than the number of kept days    
         if ($days->value != "") {
-            system\Helper::arcGetDatabase()->query("delete from arc_logs where datediff(now(), arc_logs.event) > " . $days->value);
+            system\Helper::arcGetDatabase()->query("delete from " . $log->table . " where datediff(now(), " . $log->table . ".event) > " . $days->value);
         }
     }
 }

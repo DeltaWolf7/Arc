@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
 
-    $page = 1;
+    $page = 0;
     $number = 50;
     $count = Log::count();
     $noPages = round($count / $number, 0);
@@ -23,22 +23,22 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<td>";
         switch ($log->type) {
             case "success":
-                $html .= "<span class=\"badge badge-success\"><i class=\"fa fa-check\"></i> Success<span>";
+                $html .= "<span class=\"badge badge-success\"><i class=\"fa fa-check\"></i><span>";
                 break;
             case "info":
-                $html .= "<span class=\"badge badge-info\"><i class=\"fa fa-info-circle\"></i> Info<span>";
+                $html .= "<span class=\"badge badge-info\"><i class=\"fa fa-info-circle\"></i><span>";
                 break;
             case "danger":
-                $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i> Error<span>";
+                $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i><span>";
                 break;
             case "warning":
-                $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i> Warning<span>";
+                $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i><span>";
                 break;
         }
         $html .= "</td>"
-                . "<td>{$log->module}</td>"
-                . "<td>" . system\Helper::arcConvertDateTime($log->event) . "</td>"
-                . "<td>{$log->message}</td>"
+                . "<td class=\"text-sm\">{$log->module}</td>"
+                . "<td class=\"text-sm\" style=\"width: 150px;\">" . system\Helper::arcConvertDateTime($log->event) . "</td>"
+                . "<td class=\"text-sm\">{$log->message}</td>"
                 . "</tr>";
     }
     $html .= "</tbody></table></div>";
@@ -49,7 +49,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $prevPage = $page - 1;
     $nextPage = $page + 1;
 
-    if ($page == 1) {
+    if ($page == 0) {
         $html .= "<li class=\"page-item disabled\"><a class=\"page-link\" href=\"#\">Previous</a></li>";
     } else {
         $html .= "<li class=\"page-item\"><a class=\"page-link\" href=\"#\" onclick=\"getItem(" . $prevPage . ")\">Previous</a></li>";
