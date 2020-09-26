@@ -6,9 +6,9 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user = new User();
     }
     $userGroups = UserGroup::getAllGroups();
-    $usercrm = ArcCRMUser::getByUserID($user->id);
+    $usercrm = CRMUser::getByUserID($user->id);
     if ($usercrm->id == 0) {
-        $usercrm = new ArcCRMUser();
+        $usercrm = new CRMUser();
         $usercrm->userid = $user->id;
     }
 
@@ -145,10 +145,13 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
                 . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
             . "</div>";
-                
+            
+        if ($user->id > 0) {
+            
+    // Contacts
         $html .= "<div class=\"row mt-3\"><div class=\"col-md-12 border-top border-primary\"></div></div>";
 
-        $html .= "<div class=\"row\"><div class=\"col-md-12 text-right\"><button class=\"btn btn-success btn-sm mt-2\" onclick=\"editContact(0)\"><i class=\"fa fa-plus\"></i> Create</button></div></div>";
+        $html .= "<div class=\"row mt-2\"><div class=\"col-md-6\"><h4>Contacts</h4></div><div class=\"col-md-6 text-right\"><button class=\"btn btn-success btn-sm\" onclick=\"editContact(0)\"><i class=\"fa fa-plus\"></i> Create</button></div></div>";
 
         $html .= "<div class=\"table-responsive mt-3\">"
                     . "<table class=\"table table-striped\">"
@@ -157,7 +160,7 @@ if (system\Helper::arcIsAjaxRequest()) {
                         . "</thead>"
                         . "<tbody>";
 
-        $crmcontacts = ArcCRMUserContact::getAllByUserID($user->id);
+        $crmcontacts = CRMUserContact::getAllByUserID($user->id);
         foreach ($crmcontacts as $contact) {
             $html .= "<tr><td>" . $contact->id . "</td><td>" . $contact->name . "</td><td>"
                 . $contact->title . "</td><td>" . $contact->email . "</td><td>" . $contact->phone . "</td>"
@@ -178,6 +181,48 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
                 . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
             . "</div>";
+
+            // Linked accounts
+            $html .= "<div class=\"row mt-3\"><div class=\"col-md-12 border-top border-primary\"></div></div>";
+
+            $html .= "<div class=\"row mt-2\"><div class=\"col-md-6\"><h4>Linked Accounts</h4></div><div class=\"col-md-6 text-right\"><button class=\"btn btn-success btn-sm\" onclick=\"editLink(0)\"><i class=\"fa fa-plus\"></i> Create</button></div></div>";
+
+            $html .= "<div class=\"table-responsive mt-3\">"
+                        . "<table class=\"table table-striped\">"
+                            . "<thead>"
+                                . "<tr><th>ID</th><th>Name</th><th>Direction</th><th>Email</th><th>Action</th></tr>"
+                            . "</thead>"
+                            . "<tbody>";
+    
+            $crmlinks = CRMUserLink::getAllByUserID($user->id);
+            foreach ($crmlinks as $link) {
+                $linkUser = User::getByID($link->linkedid);
+                $html .= "<tr><td>" . $link->id . "</td><td>" . $linkUser->getFullname() . "</td><td>";
+
+                if ($link->userid == $user->id) {
+                    $html .= "<i class=\"fas fa-long-arrow-alt-right text-success\"></i>";
+                } else {
+                    $html .= "<i class=\"fas fa-long-arrow-alt-left text-danger\"></i>";
+                }
+
+                $html .= "</td><td>" . $linkUser->email . "</td>"
+                    . "<td style=\"width: 10px;\">"
+                        . "<div class=\"btn-group\" role=\"group\">"
+                            . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"removeLink(" . $link->id . ")\"><i class=\"fa fa-remove\"></i></button>"
+                        . "</div>"
+                    . "</td></tr>";
+            }
+    
+    
+            $html .=          "</tbody>"
+                        . "</table>"
+                    . "</div>";
+    
+            $html .= "<div class=\"text-right\">"
+                    . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
+                    . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
+                . "</div>";
+        }
 
         $html .= "</form>";
 

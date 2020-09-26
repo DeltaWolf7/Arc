@@ -2,9 +2,9 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
-    $usercrm = ArcCRMUser::getByUserID($user->id);
+    $usercrm = CRMUser::getByUserID($user->id);
     if ($usercrm->id == 0) {
-        $usercrm = new ArcCRMUser();
+        $usercrm = new CRMUser();
         $usercrm->userid = $user->id;
     }
 
@@ -50,7 +50,6 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user->enabled = $_POST["enabled"];
         $user->email = strtolower($_POST["email"]);
         $user->update();
-
         //// USER CRM
 
         $usercrm->company = ucwords(strtolower($_POST["company"]));
@@ -65,6 +64,6 @@ if (system\Helper::arcIsAjaxRequest()) {
         $usercrm->update();
 
         system\Helper::arcAddMessage("success", "User updated");
-    }
-    system\Helper::arcReturnJSON();
+    } 
+    system\Helper::arcReturnJSON(["id" => $user->id]);
 }

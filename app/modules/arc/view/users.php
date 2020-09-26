@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body table-responsive" id="dataTable">
 
-     </div>
+    </div>
 </div>
 
 <div class="modal" id="removeUserModal">
@@ -110,6 +110,35 @@
             <div class="modal-footer">
                 <button class="btn btn-primary" data-dismiss="modal">Close</button>
                 <button class="btn btn-success" id="saveContactBtn">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="editLinkModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Edit Link</h5>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
+                        class="sr-only">Close</i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <input id="linkSearch" type="text" class="form-control" placeholder="Search.."
+                            aria-label="Search" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" onclick="searchLink()"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="linksearchresults">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

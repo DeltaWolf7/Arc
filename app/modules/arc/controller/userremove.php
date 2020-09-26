@@ -7,11 +7,15 @@ if (system\Helper::arcIsAjaxRequest()) {
     foreach ($settings as $setting) {
         $setting->delete();
     }
-    $crmuser = ArcCRMUser::getByUserID($user->id);
+    $crmuser = CRMUser::getByUserID($user->id);
     $crmuser->delete();
-    $contacts =  ArcCRMUserContact::getAllByUserID($user->id);
+    $contacts =  CRMUserContact::getAllByUserID($user->id);
     foreach ($contacts as $contact) {
         $contact->delete();
+    }
+    $links = CRMUserLink::getAllByUserID($user->id);
+    foreach ($links as $link) {
+        $link->delete();
     }
     system\Helper::arcReturnJSON();
 }

@@ -1,6 +1,6 @@
 <?php
 
-class ArcCRMUserContact extends DataProvider {
+class CRMUserContact extends DataProvider {
 
     public $name;
     public $title;
@@ -21,13 +21,13 @@ class ArcCRMUserContact extends DataProvider {
     }
 
     public static function getByID($id) {
-        $crm = new ArcCRMUserContact();
+        $crm = new CRMUserContact();
         $crm->get(["id" => $id]);
         return $crm;
     }
 
     public static function getAllByUserID($id) {
-        $crm = new ArcCRMUserContact();
+        $crm = new CRMUserContact();
         return $crm->getCollection(["userid" => $id]);
     }
 

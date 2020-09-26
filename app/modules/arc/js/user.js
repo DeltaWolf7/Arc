@@ -1,6 +1,7 @@
 var userid;
 var groupid;
 var contactid;
+var linkid;
 
 $(document).ready(function() {
     closeUser();
@@ -45,11 +46,19 @@ function saveUser(userid) {
         country: $("#country").val(),
         phone: $("#phone").val(),
         notes: $("#notes").val()
-    }, arcGetStatus, null);
+    }, null, saveUserComplete);
+}
+
+function saveUserComplete(data) {
+    var jdata = arcGetJson(data);
+    if (userid == 0) {
+        editUser(jdata.id);
+    }
+    arcGetStatus()
 }
 
 $("#removeGroupDoBtn").click(function() {
-    arcAjaxRequest("arc/userremovegroup", { id: groupid }, removeGrpDoComplete, null);
+    arcAjaxRequest("arc/userremovegroup", { id: groupid }, doEditComplete, null);
 });
 
 $("#saveGroupBtn").click(function() {
@@ -120,7 +129,7 @@ function removeGroup(id) {
     $("#removeGroupModal").modal("show");
 }
 
-function removeGrpDoComplete() {
+function doEditComplete() {
     arcAjaxRequest("arc/usergetgroups", {}, null, getSuccess);
     $("#removeGroupModal").modal("hide");
 }
@@ -171,10 +180,32 @@ function completeEditContact(data) {
 
 function removeContact(id) {
     contactid = id;
-    arcAjaxRequest("arc/userremovecontact", { id: contactid }, null, removeGrpDoComplete);
+    arcAjaxRequest("arc/userremovecontact", { id: contactid }, null, doEditComplete);
 }
 
-function removeGrpDoComplete() {
+function doEditComplete() {
     editUser(userid);
     arcGetStatus();
+}
+
+function removeLink(id) {
+    console.log(id);
+    arcAjaxRequest("arc/userremovelink", { id: id }, null, doEditComplete);
+}
+
+function editLink(id) {
+    $("#editLinkModal").modal("show");
+}
+
+function searchLink() {
+    arcAjaxRequest("arc/userlinksearch", { search: $("#linkSearch").val() }, null, completeSearchLink);
+}
+
+function completeSearchLink(data) {
+    var jdata = arcGetJson(data);
+    $("#linksearchresults").html(jdata.html);
+}
+
+function addLink(linkid) {
+    arcAjaxRequest("arc/useraddlink", { userid: userid, linkid: linkid }, null, doEditComplete);
 }
