@@ -42,7 +42,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             $size = filesize($location);
 
-            Log::createLog("info", "mediamanager", "Size: " . $size[0]);
+            Log::createLog("info", "mediamanager", "Size: " . $_FILES['file']['size']);
 
             if ($size == 0) {
                 system\Helper::arcAddMessage("danger", "Invalid file uploaded");
