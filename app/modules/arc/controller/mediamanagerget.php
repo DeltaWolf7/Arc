@@ -2,6 +2,8 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
 
+    $postPath = $_POST["path"];
+
     $html = "<div class=\"panel panel-default\">"
             . "<div class=\"panel-body\">";
 
@@ -15,9 +17,9 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "</form>"
             . "\"><i class=\"fa fa-folder\"></i> New Folder</button>"
             . " <button class=\"btn btn-secondary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
-    if ($_POST["path"] != "") {
+    if ($postPath != "") {
         $backUrl = "";
-        $back = explode("/", $_POST["path"]);
+        $back = explode("/", $postPath);
         for ($i = 0; $i < count($back) - 1; $i++) {
             $backUrl .= $back[$i] . "/";
         }
@@ -28,15 +30,15 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     // path
     $html .= "<i class=\"fa fa-home\"></i> ";
-    if ($_POST["path"] == "") {
+    if ($postPath == "") {
         $html .= "/";
     } else {
-        $html .= $_POST["path"];
+        $html .= $postPath;
     }
     $html .= "</td></tr>";
 
     // get files/folders
-    $html .= GetPath($_POST["path"])
+    $html .= GetPath($postPath)
             . "</table>";
     system\Helper::arcReturnJSON(["html" => $html]);
 }

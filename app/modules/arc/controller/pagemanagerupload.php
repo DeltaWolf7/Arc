@@ -12,6 +12,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if ($_FILES['file']['size'] > $filesize->value) {
                 system\Helper::arcAddMessage("danger", "Image file size exceeds limit");
                 Log::createLog("danger", "arc", "Image exceeds size limit.");
+                system\Helper::arcReturnJSON([]);
                 return;
             }
             $file_type = $_FILES['file']['type'];
@@ -19,6 +20,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if (($file_type != "image/jpeg") && ($file_type != "image/jpg") && ($file_type != "image/gif") && ($file_type != "image/png")) {
                 system\Helper::arcAddMessage("danger", "Invalid image type, requires JPEG, JPG, GIF or PNG");
                 Log::createLog("danger", "arc", "Invalid image type.");
+                system\Helper::arcReturnJSON([]);
                 return;
             }
 
@@ -50,6 +52,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             if ($size == 0) {
                 system\Helper::arcAddMessage("danger", "Invalid image uploaded");
                 Log::createLog("danger", "arc", "Invalid image size.");
+                system\Helper::arcReturnJSON([]);
                 return;
             }
             move_uploaded_file($location, $destination);

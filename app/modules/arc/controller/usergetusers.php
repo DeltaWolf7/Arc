@@ -20,13 +20,19 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "</div>"
             . "</div>"
         . "</div>"
-        . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-primary btn-sm btn-block\" onclick=\"viewGroups()\"><i class=\"fas fa-list\"></i> View Groups</a></div>"
-        . "<div class=\"col-md-2 mt-1\"><a href=\"#\" class=\"btn btn-success btn-sm btn-block\" onclick=\"editUser(0)\"><i class=\"fas fa-plus\"></i> New User</a></div>"
+        . "<div class=\"col-md-4 mt-1 text-right\"><a href=\"#\" class=\"btn btn-secondary btn-sm\" onclick=\"exportUsers()\"><i class=\"fas fa-download\"></i> Export</a>"
+        . "&nbsp;<a href=\"#\" class=\"btn btn-primary btn-sm\" onclick=\"viewGroups()\"><i class=\"fas fa-list\"></i> Groups</a>"
+        . "&nbsp;<a href=\"#\" class=\"btn btn-success btn-sm\" onclick=\"editUser(0)\"><i class=\"fas fa-plus\"></i> New User</a></div>"
         . "</div>";
     $table .= "<table class=\"table table-striped\">";
     $table .= "<thead><tr><th>#</th><th>Name</th><th>Status</th><th>Email</th><th>Auth</th><th>Action</th></tr></thead><tbody>";
     foreach ($users as $user) {
-        $table .= "<tr><td>" . $user->id . "</td><td><a href=\"#\" onclick=\"editUser(" . $user->id . ")\">" . $user->getFullname() . "</a></td><td>";
+        $table .= "<tr><td>" . $user->id . "</td><td>";
+        $isAdmin = $user->inGroup("Administrators");
+        if ($isAdmin == true) {
+            $table .= "<i class=\"fas fa-user-shield text-danger\"></i> ";
+        }
+        $table .= "<a href=\"#\" onclick=\"editUser(" . $user->id . ")\">" . $user->getFullname() . "</a></td><td>";
         if ($user->enabled == true) {
             $table .= "<div class=\"badge badge-success\"><i class=\"fa fa-check\"></i> Enabled</div>";
         } else {
@@ -41,7 +47,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         } else {
             $table .= "<i class=\"fa fa-cloud-download\"></i> LDAP";
         }
-        
+       
         $table .= "</td>"
                 . "<td style=\"width: 10px;\">"
                 . "<div class=\"btn-group\" role=\"group\">"

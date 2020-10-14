@@ -209,3 +209,22 @@ function completeSearchLink(data) {
 function addLink(linkid) {
     arcAjaxRequest("arc/useraddlink", { userid: userid, linkid: linkid }, null, doEditComplete);
 }
+
+function exportUsers() {
+    arcAjaxRequest("arc/userexport", { }, null, completeExport);
+}
+
+function completeExport(data) {
+    var jdata = arcGetJson(data);
+    download("export.csv", jdata.data);
+}
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click(); 
+    document.body.removeChild(element);
+  }
