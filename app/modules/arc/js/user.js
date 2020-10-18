@@ -227,4 +227,12 @@ function download(filename, text) {
     document.body.appendChild(element);
     element.click(); 
     document.body.removeChild(element);
-  }
+}
+
+function toggleEnable(id) {
+    arcAjaxRequest("arc/usertoggle", { id: id }, null, closeUser);
+}
+
+function displayUsers() {
+    arcAjaxRequest("arc/usersdisplay", { }, null, getSuccess);
+}

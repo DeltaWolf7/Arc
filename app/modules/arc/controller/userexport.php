@@ -18,7 +18,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             $grouplist[] = $group->name;
         }
         $grps = implode("|", $grouplist);
-        $data .= $user->id . "," . $user->firstname . "," . $user->lastname . "," . $user->email . "," . $crm->phone . "," . $crm->notes . "," . $grps . "\n";
+        $data .= $user->id . "," . $user->firstname . "," . $user->lastname . "," . $user->email . "," . $crm->phone . ",\"" . $crm->notes . "\"," . $grps . "\n";
     }    
 
     system\Helper::arcReturnJSON(["data" => $data]);
