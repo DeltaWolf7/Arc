@@ -7,6 +7,7 @@
         {{arc:header}}
     </head>
     <body>
+        {{arc:impersonate}}
         {{arc:content}}
         {{arc:footer}}
     </body>

@@ -4,7 +4,7 @@ $menus = system\Helper::arcGetMenu();
 $path = system\Helper::arcGetPath();
 
 
-$html = "<div class=\"sidebar-inner\"><div class=\"ace-scroll flex-grow-1\" ace-scroll><ul class=\"nav has-active-border\" role=\"navigation\" aria-label=\"Main\">";
+$html = "<div class=\"sidebar-inner\"><div class=\"ace-scroll flex-grow-1\" ace-scroll><ul class=\"nav has-active-border mt-3\" role=\"navigation\" aria-label=\"Main\">";
 
 foreach ($menus as $grandfather => $parent) {
     if (count($parent) == 1) {

@@ -12,6 +12,14 @@ function arcNotification(data) {
             title = "Warning";
             type = "warning";
             break;
+        case "wrong":
+            title = "Incorrect";
+            type = "error"
+            break;
+        case "right":
+            title = "Correct";
+            type = "success";
+            break;
         default:
             title = "Success";
             type = "success";

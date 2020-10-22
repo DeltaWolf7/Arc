@@ -236,3 +236,15 @@ function toggleEnable(id) {
 function displayUsers() {
     arcAjaxRequest("arc/usersdisplay", { }, null, getSuccess);
 }
+
+function impersonateUser(userid) {
+    arcAjaxRequest("arc/userimpersonateuser", {id: userid}, null, impersonateSuccess);
+}
+
+function impersonateSuccess(data) {
+    var jdata = arcGetJson(data);
+    arcGetStatus();
+    if (jdata.status == "success") {
+        window.location.href = "/";
+    }
+}

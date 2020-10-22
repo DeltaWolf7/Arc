@@ -57,6 +57,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         $table .= "</td>"
                 . "<td style=\"width: 10px;\">"
                 . "<div class=\"btn-group\" role=\"group\">"
+                . "<button class=\"btn btn-secondary btn-sm\" onclick=\"impersonateUser(" . $user->id . ")\"><i class=\"fas fa-user-secret\"></i></button>"
                 . "<button class=\"btn btn-primary btn-sm\" onclick=\"editUser(" . $user->id . ")\"><i class=\"fa fa-pencil\"></i></button>"
                 . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"removeUser(" . $user->id . ")\"><i class=\"fa fa-remove\"></i></button>"
                 . "</div>"

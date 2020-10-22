@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.1.3";
+        self::$arc["version"] = "0.8.1.4";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -379,6 +379,27 @@ class Helper {
     public static function arcSetSession($id) {
         // added @ to prevent warning causing issues.
         @session_id($id);
+    }
+
+    public static function arcImpersonateUser($user) {
+        $_SESSION["arc_imposter"] = serialize($user);
+    }
+
+    public static function arcIsImpersonator() {
+        if (isset($_SESSION["arc_imposter"])) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function arcGetImpersonator() {
+        return unserialize($_SESSION["arc_user"]);
+    }
+
+    public static function arcStopImpersonatingUser() {
+        if (isset($_SESSION["arc_imposter"])) {
+            unset($_SESSION["arc_imposter"]);
+        }
     }
 
     /**

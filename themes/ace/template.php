@@ -5,6 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 {{arc:header}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css" />
 </head>
    <body>
     <div class="body-container">
@@ -26,16 +27,11 @@
             </button><!-- sidebar toggler button -->
 
           </div><!-- /.navbar-intro -->
-
-          <div class="navbar-content">
-
-          </div><!-- .navbar-content -->
-
         </div><!-- /.navbar-inner -->
       </nav>
       <div class="main-container">
 
-        <div id="sidebar" class="sidebar sidebar-fixed sidebar-default expandable sidebar-hover">
+        <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-default" style="background-color: #f2f2f2;">
 		{{arc:menu}}
         </div><!-- /#sidebar -->
 
@@ -48,7 +44,8 @@
             </div>
 
             <div class="container">
-			{{arc:content}}
+            {{arc:impersonate}}
+			      {{arc:content}}
             </div>
            
           </div><!-- /.page-content -->
