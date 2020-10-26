@@ -45,8 +45,13 @@ function getFolderPath(folderPath) {
     getManager();
 }
 
+function showCreateFolder() {
+    $('#newFolderModel').modal('show');
+}
+
 function createFolder() {
     arcAjaxRequest("arc/mediamanagercreate", {path: path, name: $("#folderName").val()}, uploadComplete, null);
+    $('#newFolderModel').modal('hide');
 }
 
 function copyToClipboard(data) {

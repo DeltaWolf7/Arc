@@ -23,3 +23,7 @@ function updateView(data) {
 function getItem(page) {
     arcAjaxRequest("arc/logviewerget", { page: page}, null, updateView);
 }
+
+function searchLogs() {
+    arcAjaxRequest("arc/logviewersearch", { query: $("#search").val()}, null, updateView);
+}

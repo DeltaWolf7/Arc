@@ -10,12 +10,8 @@ if (system\Helper::arcIsAjaxRequest()) {
     // buttons
     $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"
             . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
-            . " <button class=\"btn btn-secondary btn-sm\" data-toggle=\"popover\" placement=\"top\" title=\"Create Folder\" data-html=\"true\" data-content=\""
-            . "<form class='form-inline'>"
-            . "<input type='text' class='form-control form-control-sm' id='folderName'>"
-            . " <button class='btn btn-success btn-sm' onclick='createFolder()'><i class='fa fa-check'></i></button>"
-            . "</form>"
-            . "\"><i class=\"fa fa-folder\"></i> New Folder</button>"
+            . " <button class=\"btn btn-secondary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
+            . "<i class=\"fa fa-folder\"></i> New Folder</button>"
             . " <button class=\"btn btn-secondary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
     if ($postPath != "") {
         $backUrl = "";

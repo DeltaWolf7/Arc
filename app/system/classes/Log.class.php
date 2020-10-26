@@ -37,7 +37,7 @@ class Log extends DataProvider {
     public $type;
     // Module the log applies to
     public $module;
-
+ 
     /**
      * Default constructor
      */
@@ -64,7 +64,14 @@ class Log extends DataProvider {
         return $logs->getCollection(['ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
 
-    /**
+    public static function search($query) {
+        // Create a new log class
+        $logs = new Log();
+        // Return collection of log objects
+        return $logs->getCollection(["message[~]" => $query, 'ORDER' => ['id' => 'DESC']]);
+    }
+
+        /**
      * Clear logs table
      */
     public static function clear() {
@@ -98,7 +105,6 @@ class Log extends DataProvider {
         $log->module = $module;
         // set the message
         $log->message = $message;
-
         // Update log in database
         $log->update();
        

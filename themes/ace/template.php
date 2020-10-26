@@ -9,7 +9,7 @@
 </head>
    <body>
     <div class="body-container">
-      <nav class="navbar navbar-expand-lg navbar-fixed navbar-default">
+      <nav class="navbar navbar-expand-lg navbar-fixed navbar-blue">
         <div class="navbar-inner">
 
           <div class="navbar-intro justify-content-xl-between">
@@ -29,9 +29,9 @@
           </div><!-- /.navbar-intro -->
         </div><!-- /.navbar-inner -->
       </nav>
-      <div class="main-container">
+      <div class="main-container bgc-white">
 
-        <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-default" style="background-color: #f2f2f2;">
+        <div id="sidebar" class="sidebar sidebar-fixed expandable sidebar-light">
 		{{arc:menu}}
         </div><!-- /#sidebar -->
 
