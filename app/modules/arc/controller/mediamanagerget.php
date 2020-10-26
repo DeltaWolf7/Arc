@@ -12,6 +12,8 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
             . " <button class=\"btn btn-secondary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
             . "<i class=\"fa fa-folder\"></i> New Folder</button>"
+            . " <button class=\"btn btn-secondary btn-sm\" title=\"Move\" onclick=\"move()\">"
+            . "<i class=\"fas fa-file-import\"></i> Move</button>"
             . " <button class=\"btn btn-secondary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
     if ($postPath != "") {
         $backUrl = "";

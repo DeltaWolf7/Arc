@@ -110,3 +110,14 @@ function viewFile(file, type, size, date) {
     }
     $("#contentViewer").html(content + header);
 }
+
+function move() {
+    $('#moveCount').html(marked.length + " selected to move.");
+    $('#moveFolderModel').modal('show');
+}
+
+function doMove() {
+    var data = JSON.stringify(marked);
+    arcAjaxRequest("arc/mediamanagermove", {items: data, path: path, movePath: $("#movePath").val() }, uploadComplete, null);
+    $('#moveFolderModel').modal('hide');
+}
