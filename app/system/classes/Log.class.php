@@ -37,6 +37,8 @@ class Log extends DataProvider {
     public $type;
     // Module the log applies to
     public $module;
+    public $impersonate;
+    public $userid;
  
     /**
      * Default constructor
@@ -47,10 +49,12 @@ class Log extends DataProvider {
         $this->event = date("y-m-d H:i:s");
         // Initilise message
         $this->message = "";
+        $this->impersonate = false;
+        $this->userid = 0;
         // Set the table used by the object
         $this->table = ARCDBPREFIX . 'logs';
         // Set the property to column mapping
-        $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event", "message" => "message"];
+        $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event", "message" => "message", "impersonate" => "impersonate", "userid" => "userid"];
     }
 
     /**
@@ -64,11 +68,18 @@ class Log extends DataProvider {
         return $logs->getCollection(['ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
 
-    public static function search($query) {
+    public static function getByUserID($userid, $page, $number) {
         // Create a new log class
         $logs = new Log();
         // Return collection of log objects
-        return $logs->getCollection(["message[~]" => $query, 'ORDER' => ['id' => 'DESC']]);
+        return $logs->getCollection(['userid' => $userid, 'ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
+    }
+
+    public static function search($query, $page, $number) {
+        // Create a new log class
+        $logs = new Log();
+        // Return collection of log objects
+        return $logs->getCollection(["message[~]" => $query, 'ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
 
         /**
@@ -105,6 +116,12 @@ class Log extends DataProvider {
         $log->module = $module;
         // set the message
         $log->message = $message;
+        // set user details
+        $log->impersonate = system\Helper::arcIsImpersonator();
+        $user = system\Helper::arcGetUser();
+        if ($user != null) {
+            $log->userid = $user->id;
+        }
         // Update log in database
         $log->update();
        

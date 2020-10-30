@@ -117,8 +117,9 @@ abstract class DataProvider {
 
     /**
      * Update/create the data from object in database using mapped fields
+     * If force is true, the function will insert rather then update. Used when needing to insert IDs.
      */
-    public function update() {
+    public function update($force = false) {
         // Create array to hold column to property data
         $dataColumns = [];
         // Get the properties of the object
@@ -131,7 +132,7 @@ abstract class DataProvider {
     
         try {
             // Is this a new object or something already in the database?
-            if ($this->id == 0) {
+            if ($this->id == 0 || $force == true) {
                 // This is a new object, so we insert it
                 system\Helper::arcGetDatabase()->insert($this->table, $dataColumns);
                 // Set the ID of the object

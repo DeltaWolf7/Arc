@@ -102,9 +102,9 @@ class UserGroup extends DataProvider {
     /**
      * Update/Insert Group in to database
      */
-    public function update() {
+    public function update($force = false) {
         if ($this->name != "Administrators" && $this->name != "Guests" && $this->name != "Users") {
-            parent::update();
+            parent::update($force);
         }
     }
 

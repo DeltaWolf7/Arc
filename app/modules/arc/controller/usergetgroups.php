@@ -5,22 +5,26 @@ if (system\Helper::arcIsAjaxRequest()) {
         . "<button onclick=\"editGroup(0);\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-plus\"></i> Create Group</button>&nbsp;"    
         . "<button class=\"btn btn-primary btn-sm\" onclick=\"closeUser()\"><i class=\"fas fa-list\"></i> View Users</button></div>";
     $table .= "<div class=\"table-responsive\"><table class=\"table table-striped\">"
-            . "<thead><tr><th>Name</th><th>Description</th><th>Action</th>"
+            . "<thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Users</th><th>Action</th>"
             . "</tr></thead><tbody>";
     $groups = UserGroup::getAllGroups();
     foreach ($groups as $group) {
-        $table .= "<tr><td>{$group->name}</td>"
+        $userCount = count($group->getUsers());
+
+        $table .= "<tr><td>{$group->id}</td><td>{$group->name}</td>"
                 . "<td>{$group->description}</td>"
+                . "<td>{$userCount}</td>"
                 . "<td style=\"width: 10px;\">";
         
+        $table .= "<div class=\"btn-group\" role=\"group\">"
+                . "<button onclick=\"viewGroup({$group->id});\" class=\"btn btn-secondary btn-sm\"><i class=\"fa fa-users\"></i></button>";
         if ($group->name != "Administrators" && $group->name != "Users" && $group->name != "Guests") {
-            $table .= "<div class=\"btn-group\" role=\"group\">"
-                . "<button onclick=\"editGroup({$group->id});\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></button>"
+            $table .= "<button onclick=\"editGroup({$group->id});\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-pencil\"></i></button>"
                 . "<button style=\"width: 35px;\" onclick=\"removeGroup({$group->id});\" class=\"btn btn-danger btn-sm\"><i class=\"fa fa-remove\"></i></button>"
                 . "</div>";
-        } else {
-            $table .= "<i class=\"text-sm\">Built-in</i>";
         }
+
+        $table .= "</div>";
 
         $table .= "</td></tr>";
     }

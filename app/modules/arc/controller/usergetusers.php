@@ -3,10 +3,12 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $users = [];
     
-    if (!isset($_POST["search"]) || $_POST["search"] == "") {
-        $users = User::getAllUsers();
-    } else {
+    if (isset($_POST["search"]) && $_POST["search"] != "") {
         $users = User::search($_POST["search"]);
+    } else if (isset($_POST["groupid"])) {
+        $users = UserGroup::getByID($_POST["groupid"])->getUsers();
+    } else {
+        $users = User::getAllUsers();
     }
 
     $table = "<div class=\"mb-2 row\">"
@@ -14,7 +16,8 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<div class=\"input-group mb-3\">"
                 . "<input class=\"form-control\" id=\"search\" placeholder=\"Search..\" aria-describedby=\"basic-addon2\" />"
                 . "<div class=\"input-group-append\">"
-                  . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"searchUsers()\"><i class=\"fas fa-search\"></i></button>"
+                    . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"searchUsers()\"><i class=\"fas fa-search\"></i></button>"
+                    . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"clearUsers()\"><i class=\"fas fa-broom\"></i></button>"
                 . "</div>"
             . "</div>"
         . "</div>"

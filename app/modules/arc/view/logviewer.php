@@ -14,7 +14,18 @@ $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
             can be adjusted in settings.
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
+                <select class="form-control" onchange="userSelect()" id="userS">
+                    <option value="0">- User Not Selected -</option>
+                    <?php
+                        $users = User::getAllUsers();
+                        foreach ($users as $user) {
+                            echo "<option value=\"{$user->id}\">" . $user->getFullname() . "</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-9">
             <div class="input-group mb-3">
                 <input class="form-control" id="search" placeholder="Search.." aria-describedby="basic-addon2" />
                 <div class="input-group-append">

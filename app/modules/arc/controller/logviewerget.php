@@ -14,6 +14,8 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<thead class=\"thead-default\"><tr><th>Type</th>"
             . "<th>Module</th>"
             . "<th>When</th>"
+            . "<th>User</th>"
+            . "<th>Imp</th>"
             . "<th>Message</th></tr></thead><tbody>";
 
     $logs = Log::getLogs($page, $number);
@@ -37,8 +39,22 @@ if (system\Helper::arcIsAjaxRequest()) {
         }
         $html .= "</td>"
                 . "<td class=\"text-sm\">{$log->module}</td>"
-                . "<td class=\"text-sm\" style=\"width: 150px;\">" . system\Helper::arcConvertDateTime($log->event) . "</td>"
-                . "<td class=\"text-sm\">{$log->message}</td>"
+                . "<td class=\"text-sm\" style=\"width: 150px;\">" . system\Helper::arcConvertDateTime($log->event) . "</td>";
+
+        if ($log->userid == 0) {
+            $html .= "<td class=\"text-sm\">Guest</td>";
+        } else {
+            $user = User::getByID($log->userid);
+            $html .= "<td class=\"text-sm\">" . $user->getFullname() . "</td>";
+        }
+
+        if ($log->impersonate == 0) {
+            $html .= "<td class=\"text-sm\"><i class=\"fa fa-check text-success\"></i></td>";
+        } else {
+            $html .= "<td class=\"text-sm\"><i class=\"fa fa-cross text-danger\"></i></td>";
+        }
+
+        $html .= "<td class=\"text-sm\">{$log->message}</td>"
                 . "</tr>";
     }
     $html .= "</tbody></table></div>";

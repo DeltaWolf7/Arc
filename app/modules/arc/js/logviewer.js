@@ -24,6 +24,16 @@ function getItem(page) {
     arcAjaxRequest("arc/logviewerget", { page: page}, null, updateView);
 }
 
+function getItemUser(page) {
+    arcAjaxRequest("arc/logviewersearch", { user: $("#userS").val(), page: page}, null, updateView);
+}
+
 function searchLogs() {
     arcAjaxRequest("arc/logviewersearch", { query: $("#search").val()}, null, updateView);
+}
+
+function userSelect() {
+    if ($("#userS").val() != 0) {
+        arcAjaxRequest("arc/logviewersearch", { user: $("#userS").val(), page: 0 }, null, updateView);
+    }
 }

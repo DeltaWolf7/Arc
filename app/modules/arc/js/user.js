@@ -2,17 +2,27 @@ var userid;
 var groupid;
 var contactid;
 var linkid;
+var searchVar = "";
+var groupVar = "";
 
 $(document).ready(function() {
     closeUser();
 });
 
 function closeUser() {
-    arcAjaxRequest("arc/usergetusers", { search: "" }, null, getSuccess);
+    if (searchVar != "") {
+        arcAjaxRequest("arc/usergetusers", { search: searchVar }, null, getSuccess);
+    } else if (groupVar != "") {
+        arcAjaxRequest("arc/usergetusers", { groupid: groupVar }, null, getSuccess);
+    } else {
+        arcAjaxRequest("arc/usergetusers", { search: "" }, null, getSuccess);
+    }
 }
 
 function searchUsers(query) {
-    arcAjaxRequest("arc/usergetusers", { search: $("#search").val() }, null, getSuccess);
+    searchVar = query;
+    groupVar = "";
+    closeUser();
 }
 
 function addUserToGroup(userid) {
@@ -211,7 +221,13 @@ function addLink(linkid) {
 }
 
 function exportUsers() {
-    arcAjaxRequest("arc/userexport", { }, null, completeExport);
+    if (searchVar != "") {
+        arcAjaxRequest("arc/userexport", { search: searchVar }, null, completeExport);
+    } else if (groupVar != "") {
+        arcAjaxRequest("arc/userexport", { groupid: groupVar }, null, completeExport);
+    } else {
+        arcAjaxRequest("arc/userexport", { search: "" }, null, completeExport);
+    }
 }
 
 function completeExport(data) {
@@ -247,4 +263,16 @@ function impersonateSuccess(data) {
     if (jdata.status == "success") {
         window.location.href = "/";
     }
+}
+
+function viewGroup(groupid) {
+    groupVar = groupid;
+    searchVar = "";
+    closeUser();
+}
+
+function clearUsers() {
+    groupVar = "";
+    searchVar = "";
+    closeUser();
 }
