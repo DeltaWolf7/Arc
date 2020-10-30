@@ -48,7 +48,7 @@ if (system\Helper::arcIsAjaxRequest()) {
             $html .= "<td class=\"text-sm\">" . $user->getFullname() . "</td>";
         }
 
-        if ($log->impersonate == 0) {
+        if ($log->impersonate == 1) {
             $html .= "<td class=\"text-sm\"><i class=\"fa fa-check text-success\"></i></td>";
         } else {
             $html .= "<td class=\"text-sm\"><i class=\"fa fa-times text-danger\"></i></td>";
