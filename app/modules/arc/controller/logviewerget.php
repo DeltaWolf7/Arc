@@ -51,7 +51,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         if ($log->impersonate == 0) {
             $html .= "<td class=\"text-sm\"><i class=\"fa fa-check text-success\"></i></td>";
         } else {
-            $html .= "<td class=\"text-sm\"><i class=\"fa fa-cross text-danger\"></i></td>";
+            $html .= "<td class=\"text-sm\"><i class=\"fa fa-times text-danger\"></i></td>";
         }
 
         $html .= "<td class=\"text-sm\">{$log->message}</td>"
