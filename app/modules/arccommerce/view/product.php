@@ -1,23 +1,3 @@
-<?php
-
-$uri = system\Helper::arcGetURI();
-$data = explode("/", $uri);
-
-if (count($data) > 1) {
-    $productdata = explode("-", $data[count($data) - 1]);
-
-    $product = ArcEcomProduct::GetByID($productdata[0]);
-
-    $path = system\Helper::arcGetPath() . "assets/products/";
-    $images = ArcEcomImage::getAllByProductIDAndType($product->id, "IMAGE");
-
-    $sizes = ArcEcomAttribute::getAllByProductIDAndName($product->id, "SIZE");
-    $colours = ArcEcomAttribute::getAllByProductIDAndName($product->id, "COLOUR");
-    $batteries = ArcEcomAttribute::getAllByProductIDAndName($product->id, "BATTERIES");
-    $flavours = ArcEcomAttribute::getAllByProductIDAndName($product->id, "FLAVOUR");
-?>
-
-
 <div class="row">
     <div class="col-md-6">
         <img id="image" class="img-fluid" src="<?php echo $path . $images[0]->filename ?>"
@@ -128,7 +108,3 @@ if (count($data) > 1) {
         <button class="mt-4 btn btn-primary btn-block">Add to cart</button>
     </div>
 </div>
-
-
-<?php
-}

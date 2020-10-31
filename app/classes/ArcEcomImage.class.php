@@ -25,7 +25,7 @@ class ArcEcomImage extends DataProvider {
 
     public static function getByProductIDAndType($productid, $type) {
         $image = new ArcEcomImage();
-        $image->get(["imagetype" => $type, "productid" => $productid]);
+        $image->get(["imagetype" => $type, "productid" => $productid, "LIMIT" => 1]);
         return $image;
     }
 

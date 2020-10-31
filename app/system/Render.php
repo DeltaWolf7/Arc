@@ -51,21 +51,36 @@ class Render {
             // get route
             $route = \Router::getRoute($uri);
             $page = null;
+            $routeProcessor = null;
             
+
+            // check for route processor at root of uri, example "processor/category/product" if we have no route.
+            if ($route->id == 0) {
+                $uriParts = explode("/", $uri);
+                if (count($uriParts) > 1) {
+                    // we have a uri with root. Is it a processor?
+                    // Try to get a route processor and then pass on to normal render to process further.
+                    $route = \Router::getRoute($uriParts[0]);
+                    if ($route->id != 0) {
+                        $routeProcessor = $uriParts[0];
+                    }
+                } 
+            }
 
             if ($route->id > 0) {
                 // we have a route
                 if (strlen($route->destination) > 0) {
-
                     // route has destination
                     $page = \Page::getBySEOURL($route->destination);
                 } else {
                     // route is direct (no destination)
-                    $page = \Page::getBySEOURL($uri);
+                    $uriToRoute = $uri;
+                    if ($routeProcessor != null) {
+                        $uriToRoute = $routeProcessor;
+                    }
+                    $page = \Page::getBySEOURL($uriToRoute);
                 }
-                
-
-            } else {              
+            } else {               
                 // no route, 404
                 $page = \Page::getBySEOURL("error");
                 http_response_code(404);
@@ -145,7 +160,12 @@ class Render {
         }
 
         if (Helper::arcIsAjaxRequest() == false) {
-            if (!\Router::hasPermission($groups, $uri) && $page->seourl != "error") {
+            $uriToCheck = $uri;
+            if ($routeProcessor != null) {
+                $uriToCheck = $routeProcessor;
+            }
+
+            if (!\Router::hasPermission($groups, $uriToCheck) && $page->seourl != "error") {
                 // 403 permission denied
                 $page = \Page::getBySEOURL("error");
                 http_response_code(403);
@@ -175,9 +195,6 @@ class Render {
                 $content = str_replace("{{arc:title}}", "", $content);
             }
 
-            //template modules
-            $content = Helper::arcProcessModuleTags($content);
-
             // impersonating
             if (isset($_SESSION["arc_imposter"])) {
                 $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . Helper::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content);
@@ -191,6 +208,8 @@ class Render {
             // page icon
             $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
 
+            //template modules
+            $content = Helper::arcProcessModuleTags($content);
             $content = Helper::arcProcessTags($content);
 
             echo $content;

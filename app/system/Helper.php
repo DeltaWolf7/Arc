@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.2.0";
+        self::$arc["version"] = "0.8.3.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -114,22 +114,18 @@ class Helper {
     public static function arcAddHeader($type, $content) {
         switch ($type) {
             case "title":
-                for ($i = 0; $i <= count(self::$arc["headerdata"]) - 1; $i++) {
-                    if (substr(self::$arc["headerdata"][$i], 0, 7) === "<title>") {
-                        unset(self::$arc["headerdata"][$i]);
-                    }
-                }
-                self::$arc["headerdata"][] = "<title>" . $content . "</title>" . PHP_EOL;
+                $title = \SystemSetting::getByKey("ARC_SITETITLE");
+                self::$arc["headerdata"][$type] = "<title>" . $content . " - " . $title->value . "</title>" . PHP_EOL;
                 break;
             case "description":
             case "keywords":
             case "author":
             case "viewport":
-                self::$arc["headerdata"][] = "<meta name=\"{$type}\" content=\"{$content}\" />" . PHP_EOL;
+                self::$arc["headerdata"][$type] = "<meta name=\"{$type}\" content=\"{$content}\" />" . PHP_EOL;
                 break;
             case "alternate":
             case "canonical":
-                self::$arc["headerdata"][] = "<link rel=\"{$type}\" href=\"{$content}\" />" . PHP_EOL;
+                self::$arc["headerdata"][$type] = "<link rel=\"{$type}\" href=\"{$content}\" />" . PHP_EOL;
                 break;
             case "css":
                 self::$arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
@@ -138,10 +134,10 @@ class Helper {
                 self::$arc["headerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
                 break;
             case "favicon":
-                self::$arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"icon\">" . PHP_EOL;
+                self::$arc["headerdata"][$type] = "<link href=\"" . $content . "\" rel=\"icon\">" . PHP_EOL;
                 break;
             default:
-                self::$arc["headerdata"][] = $content;
+                self::$arc["headerdata"][] = $content . PHP_EOL;
                 break;
         }
     }
@@ -600,10 +596,6 @@ class Helper {
                 \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
             }
         }
-        $newContent = ob_get_contents();
-        self::arcProcessTags($newContent);
-        ob_end_clean();
-        echo $newContent;
     }
 
     /**
@@ -621,6 +613,13 @@ class Helper {
         $uri = $uri_parts[0];
         $uri = ltrim($uri, "/");
         return $uri;
+    }
+
+    /**
+     * Return Url as array for processing parts individually.
+     */
+    public static function arcGetURIAsArray($uri) {
+        return explode("/", $uri);
     }
 
     /**
