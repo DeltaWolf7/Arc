@@ -43,9 +43,14 @@ class ArcEcomProduct extends DataProvider {
         return $product;
     }
 
-    public static function getAllByCategoryID($categoryid) {
+    public static function getAllByCategoryID($categoryid, $orderby = "name", $direction = "ASC") {
         $products = new ArcEcomProduct();
-        return $products->getCollection(["categoryid" => $categoryid]);
+        return $products->getCollection(["categoryid" => $categoryid, "ORDER" => ["{$orderby}" => "{$direction}"]]);
+    }
+
+    public static function search($query, $orderby = "name", $direction = "ASC") {
+        $products = new ArcEcomProduct();
+        return $products->getCollection(["OR" => ["name[~]" => $query, "description[~]" => $query], "ORDER" => ["{$orderby}" => "{$direction}"]]);
     }
 
     public static function getAll() {
@@ -65,5 +70,26 @@ class ArcEcomProduct extends DataProvider {
         $string = preg_replace("/[^a-z0-9]/u", "$separator", $string);
         $string = preg_replace("/[$separator]+/u", "$separator", $string);
         return rtrim($this->id . $separator . $string, "-");
+    }
+
+    public function checkStock() {
+        $options = ArcEcomAttribute::getAllByProductID($this->id);
+        $foundStock = false;
+        foreach ($options as $option) {
+            $type= ArcEcomAttributeType::getByID($option->typeid);
+            if ($type->isoption) {
+                if ($option->stock > 0) {
+                    $foundStock = true;
+                }
+            }
+        }
+
+        if ($foundStock == false) {
+            if ($this->stock > 0) {
+                $foundStock = true;
+            }
+        }
+
+        return $foundStock;
     }
 }

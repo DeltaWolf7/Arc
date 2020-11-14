@@ -19,8 +19,8 @@ function closeUser() {
     }
 }
 
-function searchUsers(query) {
-    searchVar = query;
+function searchUsers() {
+    searchVar = $("#usearch").val();
     groupVar = "";
     closeUser();
 }
@@ -50,10 +50,6 @@ function saveUser(userid) {
         enabled: $("#enabled").val(),
         company: $("#company").val(),
         source: $("#source").val(),
-        addresslines: $("#addresslines").val(),
-        county: $("#county").val(),
-        postcode: $("#postcode").val(),
-        country: $("#country").val(),
         phone: $("#phone").val(),
         notes: $("#notes").val()
     }, null, saveUserComplete);
@@ -275,4 +271,33 @@ function clearUsers() {
     groupVar = "";
     searchVar = "";
     closeUser();
+}
+
+var addressid;
+
+function editAddress(id) {
+    addressid = id;
+    arcAjaxRequest("arc/usereditaddressdetails", { id: addressid }, null, completeEdit);
+    $("#editAddressModal").modal("show");
+}
+
+function completeEdit(data) {
+    var jdata = arcGetJson(data);
+    $("#addresslines").val(jdata.addresslines);
+    $("#county").val(jdata.county);
+    $("#postcode").val(jdata.postcode);
+    $("#country").val(jdata.country);
+    $("#isbilling").prop('checked', Boolean(Number(jdata.isbilling)));
+    $("#isdelivery").prop('checked', Boolean(Number(jdata.isdelivery)));
+}
+
+function saveAddress() {
+    arcAjaxRequest("arc/usersaveaddressdetails", { id: addressid, addresslines: $("#addresslines").val(),
+        county: $("#county").val(), postcode: $("#postcode").val(), country: $("#country").val(),
+        isbilling: $("#isbilling").prop('checked') ? 1 : 0, isdelivery: $("#isdelivery").prop('checked') ? 1 : 0}, null, doEditComplete);
+        $("#editAddressModal").modal("hide");
+}
+
+function deleteAddress(addressid) {
+    arcAjaxRequest("arc/userdeleteaddressdetails", { id: addressid }, null, doEditComplete);
 }

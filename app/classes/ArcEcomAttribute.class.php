@@ -2,24 +2,22 @@
 
 class ArcEcomAttribute extends DataProvider {
 
-    public $name;
+    public $typeid;
     public $value;
     public $productid;
     public $priceadjust;
-    public $isoption;
     public $stock;
 
     public function __construct() {
         parent::__construct();
-        $this->name = "";
+        $this->typeid = 0;
         $this->value = 0.00;
         $this->productid = 0;
         $this->priceadjust = 0.00;
-        $this->isoption = false;
         $this->stock = 0;
         $this->table = ARCDBPREFIX . "ecom_attributes";
-        $this->map = ["id" => "id", "name" => "name", "value" => "value", "productid" => "productid", 
-            "priceadjust" => "priceadjust", "isoption" => "isoption", "stock" => "stock"];
+        $this->map = ["id" => "id", "typeid" => "typeid", "value" => "value", "productid" => "productid", 
+            "priceadjust" => "priceadjust", "stock" => "stock"];
     }
 
     public static function getByID($id) {
@@ -28,15 +26,15 @@ class ArcEcomAttribute extends DataProvider {
         return $attribute;
     }
 
-    public static function getByProductIDAndNameAndValue($productid, $name, $value) {
+    public static function getByProductIDAndTypeAndValue($productid, $type, $value) {
         $attribute = new ArcEcomAttribute();
-        $attribute->get(["productid" => $productid, "name" => $name, "value" => $value]);
+        $attribute->get(["productid" => $productid, "typeid" => $type, "value" => $value]);
         return $attribute;
     }
 
-    public static function getByProductIDAndName($productid, $name) {
+    public static function getByProductIDAndType($productid, $type) {
         $attribute = new ArcEcomAttribute();
-        $attribute->get(["productid" => $productid, "name" => $name]);
+        $attribute->get(["productid" => $productid, "typeid" => $type]);
         return $attribute;
     }
 
@@ -45,8 +43,13 @@ class ArcEcomAttribute extends DataProvider {
         return $attribute->getCollection(["productid" => $productid]);
     }
 
-    public static function getAllByProductIDAndName($productid, $name) {
+    public static function getAllByProductIDAndType($productid, $type) {
         $attribute = new ArcEcomAttribute();
-        return $attribute->getCollection(["productid" => $productid, "name" => $name]);
+        return $attribute->getCollection(["productid" => $productid, "typeid" => $type]);
+    }
+
+    public static function getAll() {
+        $attribute = new ArcEcomAttribute();
+        return $attribute->getCollection([]);
     }
 }

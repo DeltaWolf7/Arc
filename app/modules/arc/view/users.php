@@ -143,3 +143,51 @@
         </div>
     </div>
 </div>
+
+<div class="modal" id="editAddressModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Adress Editor</h5>
+                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
+                        class="sr-only">Close</i></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="addresslines">Address Lines</label>
+                    <textarea rows="5" class="form-control" id="addresslines"></textarea>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="county">County</label>
+                        <input maxlength="50" type="text" class="form-control" id="county" placeholder="County">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="postcode">Postcode</label>
+                        <input maxlength="10" type="text" class="form-control" id="postcode" placeholder="Postcode">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <?php echo system\Helper::arcCreateHTMLSelect(ArcCountries::getArray(), ArcCountries::getArray(), "form-control", null, "country"); ?>
+                    </div>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="isbilling">
+                    <label class="form-check-label" for="isbilling">Billing?</label>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="isdelivery">
+                    <label class="form-check-label" for="isdelivery">Delivery?</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" onclick="saveAddress()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

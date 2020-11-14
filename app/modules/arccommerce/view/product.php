@@ -1,3 +1,6 @@
+<?php
+    if ($product->id > 0) {
+?>
 <div class="row">
     <div class="col-md-6">
         <img id="image" class="img-fluid" src="<?php echo $path . $images[0]->filename ?>"
@@ -17,94 +20,73 @@
     <div class="col-md-6">
         <h3><?php echo $product->name; ?></h3>
         <h4 class="text-primary">£<?php echo $product->price; ?></h4>
-        <h6 class="text-secondary">RRP £<?php echo $product->rrp; ?></h6>
-        <p class="mt-5"><strong>Availability</strong><br />
-            <?php
-            if (count($sizes) > 0) {
-                echo "<table class=\"table\">";
-                foreach ($sizes as $size) {
-                    if ($size->stock >= 1) {
-                        echo "<tr><td>" . $size->value . "</td><td class=\"text-success\">In stock</td>";
-                    } else {
-                        echo "<tr><td>" . $size->value . "</td><td class=\"text-danger\">Out of stock</span></td>";
+        <h6 class="text-secondary">RRP £<?php echo $product->rrp; ?>, Model: <?php echo $product->model; ?></h6>
+
+        <?php 
+                echo "<p class=\"mt-5\"><strong>Availability</strong>&nbsp;";
+                    if ($product->checkStock()) {
+                            echo "<i class=\"badge badge-success\">In Stock</i>";
+                        } else {
+                            echo "<i class=\"badge badge-danger\">Out of Stock</i>";
+                        }
+                    echo "</p>";
+                ?>
+
+        <p class="mt-4"><?php echo $product->description; ?></p>
+        <p class="mt-5">
+        <form method="POST" action="/cart">
+            <input type="hidden" name="product" value="<?php echo $product->id; ?>" />
+            <?php           
+            if (count($selectable) > 0) {
+                echo "<p><strong>Options</strong></p>";
+                foreach ($selectable as $select => $name) {
+                    echo "<label for=\"" . $select . "\"><i>" . $select . "</i></label>";
+                    echo "<select name=\"" . $select . "\" class=\"form-control\">";
+                    for ($i = 0; $i < count($name); $i++) {
+                        $itemStock = " (Out of Stock)";
+                        if ($name[$i]["stock"] > 0) 
+                        {
+                             $itemStock = " (In Stock)"; 
+                        } else if ($name[$i]["stock"] == -1) {
+                            $itemStock = "";
+                        }
+
+                        $priceAdjust = "";
+                        if ($name[$i]["priceadjust"] > 0) {
+                            $priceAdjust = " (+£" . $name[$i]["priceadjust"] . ")";
+                        }
+                        echo "<option value=\"" . $name[$i]["id"] . "\">" . $name[$i]["value"] . $priceAdjust  . $itemStock . "</option>";
                     }
-                }
-                echo "</table>";
-            } else {
-                if ($product->stock >= 1) {
-                    echo "<span class=\"text-success\">In stock</span>";
-                } else {
-                    echo "<span class=\"text-danger\">Out of stock</span>";
+                    echo "</select>";
                 }
             }
         ?>
+            <button type="submit" class="mt-4 btn btn-primary btn-block">Add to cart</button>
+        </form>
         </p>
-        <p class="mt-4"><?php echo $product->description; ?></p>
-        <?php
-        // Size
-                    if (count($sizes) > 0) {
-                ?>
-        <label for="size">Size</label>
-        <select class="form-control" id="size">
-            <?php
-                                foreach ($sizes as $size) {
-                                    echo "<option value={$size->value}>{$size->value}</option>";
-                                }
-                            ?>
-        </select>
-        <?php
-                    }
-                ?>
-
-        <?php
-// Colour
-                    if (count($colours) > 0) {
-                ?>
-        <label for="colour">Colour</label>
-        <select class="form-control" id="size">
-            <?php
-                                foreach ($colours as $colour) {
-                                    echo "<option value={$colour->value}>{$colour->value}</option>";
-                                }
-                            ?>
-        </select>
-        <?php
-                    }
-                ?>
-
-        <?php
-// Batteries
-                    if (count($batteries) > 0) {
-                ?>
-        <label for="battery">Batteries</label>
-        <select class="form-control" id="size">
-            <?php
-                                foreach ($batteries as $battery) {
-                                    echo "<option value={$battery->value}>{$battery->value} - £+{$battery->priceadjust}</option>";
-                                }
-                            ?>
-        </select>
-        <?php
-                    }
-                ?>
-
-
-<?php
-// Flavour
-                    if (count($flavours) > 0) {
-                ?>
-        <label for="flavour">Flavour</label>
-        <select class="form-control" id="size">
-            <?php
-                                foreach ($flavours as $flavour) {
-                                    echo "<option value={$flavour->value}>{$flavour->value} - £+{$flavour->priceadjust}</option>";
-                                }
-                            ?>
-        </select>
-        <?php
-                    }
-                ?>
-
-        <button class="mt-4 btn btn-primary btn-block">Add to cart</button>
     </div>
 </div>
+
+<?php
+    if (!empty($features)) {
+?>
+<div class="row mt-3">
+    <div class="col-md-12">
+        <h3>Features</h3>
+        <table class="table table-striped">
+            <?php
+                    echo $features;
+                ?>
+        </table>
+    </div>
+</div>
+<?php
+    }
+} else {
+
+    ?>
+
+No product found page.
+
+<?php
+}

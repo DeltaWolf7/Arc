@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.3.0";
+        self::$arc["version"] = "0.8.3.1";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -742,7 +742,7 @@ class Helper {
      * @param string Select ID
      */
     public static function arcCreateHTMLSelect($options, $values, $class, $selected, $id) {
-        $html = "<select id=\"" . $id . "\" class=\"" . $class . "\">";
+        $html = "<select id=\"" . $id . "\" name=\"" . $id . "\" class=\"" . $class . "\">";
         $count = 0;
         if (is_array($options) && is_array($values) && count($options) == count($values)) {
             foreach ($options as $option) {

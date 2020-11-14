@@ -1,36 +1,56 @@
-<?php
-    if (count($categories) > 0) {
-?>
+<div class="row mb-3">
+    <div class="col-md-10">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <?php if (isset($bread)) { echo $bread; } ?>
+            </ol>
+        </nav>
+    </div>
+    <div class="col-md-2">
+        <?php if (count($products) > 0) { ?>
+        <ul class="nav mt-1">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                    aria-expanded="false"><i class="fas fa-sort"></i> Sort By</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" onclick="sort('az')"><i class="fas fa-sort-alpha-down"></i> Name (A to
+                        Z)</a>
+                    <a class="dropdown-item" onclick="sort('za')"><i class="fas fa-sort-alpha-down-alt"></i> Name (Z
+                        to
+                        A)</a>
+                    <a class="dropdown-item" onclick="sort('lh')"><i class="fas fa-sort-numeric-down"></i> Price (Low
+                        to
+                        High)</a>
+                    <a class="dropdown-item" onclick="sort('hl')"><i class="fas fa-sort-numeric-down-alt"></i> Price
+                        (High to Low)</a>
+                </div>
+            </li>
+        </ul>
+        <?php } ?>
+    </div>
+</div>
 
-<div class="card-columns">
-    <?php
-            // Categories
+
+<?php
+    if (count($categories) > 0 || count($products) > 0) {
+        echo "<div class=\"card-columns\">";
+    if (count($categories) > 0) {
+  // Categories
             foreach ($categories as $category) {
         ?>
 
-    <div class="card">
-        <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
-            <img class="card-img-top img-fluid" src="<?php echo $imagePath . $category->image; ?>"
-                alt="<?php echo $category->name; ?>">
-        </a>
-        <div class="card-footer text-muted text-center">
-            <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
-                <h6 class="card-title"><?php echo $category->name ?></h6>
-            </a>
-        </div>
-    </div>
-
-    <?php
-            }
-            ?>
+<div class="card">
+    <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
+        <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
+            alt="<?php echo $category->name; ?>">
+    </a>
 </div>
+
 <?php
+            }
 }
 
 if (count($products) > 0) {
-    ?>
-<div class="row">
-    <?php
         // Products (Shown when category has no children).
         foreach ($products as $product) {
             $image = ArcEcomImage::getByProductIDAndType($product->id, "IMAGE");
@@ -38,27 +58,44 @@ if (count($products) > 0) {
                 $image = ArcEcomImage::getByProductIDAndType($product->id, "THUMB");
             }
             ?>
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="row">
-                <div class="col-md-3">
-                    <a href="/products/<?php echo $product->getSEOUrl(); ?>">
-                        <img class="card-img-top img-fluid" src="<?php echo $imagePath . $image->filename; ?>"
-                            alt="<?php echo $product->name; ?>">
-                    </a>
-                </div>
-                <div class="col-md-9">
-                <a href="/products/<?php echo $product->getSEOUrl(); ?>">
-                    <h4 class="card-title"><?php echo $product->name ?></h4>
-                    <h5 class="text-primary mt-2">£<?php echo $product->price; ?></h5>
-                </a>
-                </div>
+<div class="card">
+    <a href="/products/<?php echo $product->getSEOUrl(); ?>">
+        <img class="card-img-top img-fluid" src="<?php echo $imagePath . $image->filename; ?>"
+            alt="<?php echo $product->name; ?>">
+    </a>
+    <div class="card-body text-sm mt-0 pt-0">
+        <hr />
+        <strong><?php echo $product->name; ?></strong>
+        <div class="row">
+            <div class="col-md-6">
+                £<?php echo $product->price; ?>
+            </div>
+            <div class="col-md-6 text-right">
+                <?php
+                    if ($product->checkStock()) {
+                        echo "<i class=\"badge badge-success\">In Stock</i>";
+                    } else {
+                        echo "<i class=\"badge badge-danger\">Out of Stock</i>";
+                    }
+                ?>
             </div>
         </div>
+        </i>
     </div>
-    <?php
-            }
-            ?>
 </div>
 <?php
+            } 
+            ?>
+
+<?php
+} 
+echo "</div>";
+} else {
+
+    ?>
+
+<h2>Sorry, we didn't find what you were looking for..</h2>
+
+<?php
 }
+?>

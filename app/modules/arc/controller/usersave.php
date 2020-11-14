@@ -54,10 +54,6 @@ if (system\Helper::arcIsAjaxRequest()) {
 
         $usercrm->company = ucwords(strtolower($_POST["company"]));
         $usercrm->source = $_POST["source"];
-        $usercrm->addresslines = ucwords(strtolower($_POST["addresslines"]));
-        $usercrm->county = ucwords(strtolower($_POST["county"]));
-        $usercrm->postcode = strtoupper($_POST["postcode"]);
-        $usercrm->country = ucwords(strtolower($_POST["country"]));
         $usercrm->phone = $_POST["phone"];
         $usercrm->notes = $_POST["notes"];
         $usercrm->userid = $user->id;

@@ -104,36 +104,18 @@ if (system\Helper::arcIsAjaxRequest()) {
                             . "<input maxlength=\"50\" type=\"text\" class=\"form-control\" id=\"company\" placeholder=\"Company\" value=\"" . $usercrm->company . "\">"
                         . "</div>"
                         . "<div class=\"form-group\">"
-                            . "<label for=\"addresslines\">Address Lines</label>"
-                            . "<textarea class=\"form-control\" id=\"addresslines\" rows=\"5\">" . $usercrm->addresslines . "</textarea>"
+                            . "<label for=\"phone\">Phone</label>"
+                            . "<input maxlength=\"20\" type=\"text\" class=\"form-control\" id=\"phone\" placeholder=\"Phone\" value=\"" . $usercrm->phone . "\">"
                         . "</div>"
-                        . "<div class=\"form-group\">"
-                            . "<label for=\"county\">County</label>"                       
-                            . "<input maxlength=\"50\" type=\"text\" class=\"form-control\" id=\"county\" placeholder=\"County\" value=\"" . $usercrm->county . "\">"
-                        . "</div>"
-                        . "<div class=\"form-group\">"
-                            . "<label for=\"postcode\">Postcode</label>"
-                            . "<input maxlength=\"10\" type=\"text\" class=\"form-control\" id=\"postcode\" placeholder=\"Postcode\" value=\"" . $usercrm->postcode . "\">"
-                        . "</div>"
-                        . "<div class=\"form-group\">"
-                            . "<label for=\"country\">Country</label>";
-
-                        $html .= system\Helper::arcCreateHTMLSelect(ArcCountries::getArray(), ArcCountries::getArray(), "form-control", $usercrm->country, "country");
-
-                        $html .= "</div>"
-                    . "</div>"
-                    . "<div class=\"col-md-6\">"
                         . "<div class=\"form-group\">"
                             . "<label for=\"source\">Source</label>";
 
                         $html .= system\Helper::arcCreateHTMLSelect(["Direct", "Email", "Google", "Phone", "Word of Mouth", "Advert", "Other"], 
                             ["Direct", "Email", "Google", "Phone", "Word", "AD", "Other"], "form-control", $usercrm->source, "source");
 
-                        $html .= "</div>"  
-                        . "<div class=\"form-group\">"
-                            . "<label for=\"phone\">Phone</label>"
-                            . "<input maxlength=\"20\" type=\"text\" class=\"form-control\" id=\"phone\" placeholder=\"Phone\" value=\"" . $usercrm->phone . "\">"
-                        . "</div>"
+                        $html .= "</div>"
+                    . "</div>"
+                    . "<div class=\"col-md-6\">"                      
                         . "<div class=\"form-group\">"
                             . "<label for=\"notes\">Notes</label>"
                             . "<textarea class=\"form-control\" id=\"notes\" rows=\"12\">" . $usercrm->notes . "</textarea>"
@@ -168,6 +150,48 @@ if (system\Helper::arcIsAjaxRequest()) {
                     . "<div class=\"btn-group\" role=\"group\">"
                         . "<button class=\"btn btn-primary btn-sm\" onclick=\"editContact(" . $contact->id . ")\"><i class=\"fa fa-pencil\"></i></button>"
                         . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"removeContact(" . $contact->id . ")\"><i class=\"fa fa-remove\"></i></button>"
+                    . "</div>"
+                . "</td></tr>";
+        }
+
+
+        $html .=          "</tbody>"
+                    . "</table>"
+                . "</div>";
+
+        $html .= "<div class=\"text-right\">"
+                . "<button class=\"btn btn-primary\" onclick=\"closeUser()\">Close</button>&nbsp;"
+                . "<button class=\"btn btn-success\" onclick=\"saveUser(" . $user->id . ")\">Save</button>"
+            . "</div>";
+
+             // Addresses
+        $html .= "<div class=\"row mt-3\"><div class=\"col-md-12 border-top border-primary\"></div></div>";
+
+        $html .= "<div class=\"row mt-2\"><div class=\"col-md-6\"><h4>Addresses</h4></div><div class=\"col-md-6 text-right\"><button class=\"btn btn-success btn-sm\" onclick=\"editAddress(0)\"><i class=\"fa fa-plus\"></i> Create</button></div></div>";
+
+        $html .= "<div class=\"table-responsive mt-3\">"
+                    . "<table class=\"table table-striped\">"
+                        . "<thead>"
+                            . "<tr><th>ID</th><th>Address Lines</th><th>County</th><th>Postcode</th><th>Billing</th><th>Delivery</th></tr>"
+                        . "</thead>"
+                        . "<tbody>";
+
+        $crmaddresses = CRMUserAddress::getAllByUserID($user->id);
+        foreach ($crmaddresses as $address) {
+            $del = "No";
+            if ($address->isdelivery == 1) {
+                $del = "Yes";
+            }
+            $bil = "No";
+            if ($address->isbilling == 1) {
+                $bil = "Yes";
+            }
+            $html .= "<tr><td>" . $address->id . "</td><td>" . $address->addresslines . "</td><td>"
+                . $address->county . "</td><td>" . $address->postcode . "</td><td>" . $bil . "</td><td>" . $del . "</td>"
+                . "<td style=\"width: 10px;\">"
+                    . "<div class=\"btn-group\" role=\"group\">"
+                        . "<button class=\"btn btn-primary btn-sm\" onclick=\"editAddress(" . $address->id . ")\"><i class=\"fa fa-pencil\"></i></button>"
+                        . "<button style=\"width: 35px;\" class=\"btn btn-danger btn-sm\" onclick=\"deleteAddress(" . $address->id . ")\"><i class=\"fa fa-remove\"></i></button>"
                     . "</div>"
                 . "</td></tr>";
         }

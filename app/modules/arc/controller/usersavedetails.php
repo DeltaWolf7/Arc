@@ -16,6 +16,14 @@ if (system\Helper::arcIsAjaxRequest()) {
     $user->firstname = ucfirst(strtolower($_POST["firstname"]));
     $user->lastname = ucfirst(strtolower($_POST["lastname"]));
     $user->update();
+
+    $crmuser = CRMUser::getByUserID($user->id);
+    if ($crmuser->id == 0) {
+        $crmuser  = new CRMUser();
+        $crmuser->userid = $user->id;
+    }
+    $crmuser->phone = $_POST["phone"];
+    $crmuser->update();
         
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Changes saved");

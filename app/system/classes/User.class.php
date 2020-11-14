@@ -234,4 +234,12 @@ class User extends DataProvider {
         }
         return system\Helper::arcGetPath() . "assets/profile/placeholder.png";
     }
+
+    public function delete() {
+        $crmuser = CRMUser::getByUserID($this->id);
+        if ($crmuser->id != 0) {
+            $crmuser->delete();
+        }
+        parent::delete();
+    }
 }

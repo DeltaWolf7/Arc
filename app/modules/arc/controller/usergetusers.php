@@ -14,7 +14,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $table = "<div class=\"mb-2 row\">"
         . "<div class=\"col-md-8\">"
             . "<div class=\"input-group mb-3\">"
-                . "<input class=\"form-control\" id=\"search\" placeholder=\"Search..\" aria-describedby=\"basic-addon2\" />"
+                . "<input class=\"form-control\" id=\"usearch\" placeholder=\"Search..\" aria-describedby=\"basic-addon2\" />"
                 . "<div class=\"input-group-append\">"
                     . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"searchUsers()\"><i class=\"fas fa-search\"></i></button>"
                     . "<button class=\"btn btn-outline-secondary\" type=\"button\" onclick=\"clearUsers()\"><i class=\"fas fa-broom\"></i></button>"
