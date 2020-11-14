@@ -1,9 +1,9 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $contact = ArcCRMUserContact::getByID($_POST["id"]);
+    $contact = CRMUserContact::getByID($_POST["id"]);
     if ($contact->id == 0) {
-        $contact = new ArcCRMUserContact();
+        $contact = new CRMUserContact();
         $contact->userid = $_POST["userid"];
     }
     
@@ -19,4 +19,5 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $contact->update();
     system\Helper::arcAddMessage("success", "Contact saved");
+    system\Helper::arcReturnJSON();
 }
