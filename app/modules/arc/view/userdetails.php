@@ -1,7 +1,7 @@
 <?php
 $user = system\Helper::arcGetUser();
 $profileImage = $user->getProfileImage();
-$crmuser = CRMuser::getByUserID($user->id);
+$crmuser = CRMUser::getByUserID($user->id);
 if ($crmuser->id == 0){
     $crmuser = new CRMUser();
 }

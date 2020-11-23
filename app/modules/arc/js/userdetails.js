@@ -1,16 +1,10 @@
 // Details
 $("#saveDetailsBtn").click(function () {
-    console.log($("#country"));
-    arcAjaxRequest("arc/usersavedetails", $("#detailsForm").serialize(), detailsComplete, null);
+    arcAjaxRequest("arc/usersavedetails", $("#detailsForm").serialize(), null, changeComplete);
 });
 
-// Details
-function detailsComplete() {
-    arcGetStatus();
-}
-
 $(document).on('change', '.btn-file :file', function () {
-    arcAjaxRequest("arc/userdetailsuploadimage", $(this)[0].files[0], changeComplete, null);
+    arcAjaxRequest("arc/userdetailsuploadimage", $(this)[0].files[0], null, changeComplete);
 });
 
 function changeComplete() {
