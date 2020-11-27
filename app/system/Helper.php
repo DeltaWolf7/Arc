@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.8.3.1";
+        self::$arc["version"] = "0.9.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -508,6 +508,18 @@ class Helper {
 
     /**
      * 
+     * @param type $filesystem
+     * @return type
+     */
+    public static function arcGetAddonPath($filesystem = false) {
+        if (!$filesystem) {
+            return self::arcGetPath() . self::$arc["addonpath"];
+        }
+        return self::arcGetPath(true) . self::$arc["addonpath"];
+    }
+
+    /**
+     * 
      * @param string $name
      * @param type $controller
      * @param type $filesystem
@@ -518,6 +530,20 @@ class Helper {
             echo self::arcGetPath() . "{$name}/{$controller}";
         }
         return self::arcGetPath(true) . "app/modules/{$name}/controller/{$controller}.php";
+    }
+
+    /**
+     * 
+     * @param string $name
+     * @param type $addon
+     * @param type $filesystem
+     * @return type
+     */
+    public static function arcGetAddonControllerPath($module, $view, $controller, $filesystem = false) {
+        if (!$filesystem) {
+            echo self::arcGetPath() . "app/addons/{$module}/{$view}/controller/{$controller}";
+        }
+        return self::arcGetPath(true) . "app/addons/{$module}/{$view}/controller/{$controller}.php";
     }
 
     /**
@@ -596,6 +622,24 @@ class Helper {
                 \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
             }
         }
+        // addons
+        if (is_dir(self::arcGetPath(true) . "app/addons/{$name}/{$view}/view")) {
+            $addons = scandir(self::arcGetPath(true) . "app/addons/{$name}/{$view}/view");
+            foreach($addons as $addon) {
+                if ($addon != "." && $addon != "..") {
+
+                    self::$arc["addonpath"] = "app/addons/{$name}/{$view}/";
+
+                    // controllers
+                    if (file_exists(self::arcGetPath(true) . "app/addons/{$name}/{$view}/controller/{$addon}")) {
+                        include_once self::arcGetPath(true) . "app/addons/{$name}/{$view}/controller/{$addon}";
+                    }
+
+                    // page addon
+                    include_once self::arcGetPath(true) . "app/addons/{$name}/{$view}/view/" . $addon;
+                }
+            }
+        }
     }
 
     /**
@@ -618,8 +662,16 @@ class Helper {
     /**
      * Return Url as array for processing parts individually.
      */
-    public static function arcGetURIAsArray($uri) {
+    public static function arcGetURIAsArray($uri = null) {
+        if ($uri == null) {
+            return explode("/", self::arcGetURI());
+        }
         return explode("/", $uri);
+    }
+
+    public static function arcGetLastURIItem($uri = null) {
+        $data = self::arcGetURIAsArray($uri);
+        return $data[count($data) - 1];
     }
 
     /**

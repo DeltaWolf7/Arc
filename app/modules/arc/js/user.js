@@ -1,28 +1,5 @@
-var userid;
-var groupid;
-var contactid;
-var linkid;
-var searchVar = "";
-var groupVar = "";
-
-$(document).ready(function() {
-    closeUser();
-});
-
-function closeUser() {
-    if (searchVar != "") {
-        arcAjaxRequest("arc/usergetusers", { search: searchVar }, null, getSuccess);
-    } else if (groupVar != "") {
-        arcAjaxRequest("arc/usergetusers", { groupid: groupVar }, null, getSuccess);
-    } else {
-        arcAjaxRequest("arc/usergetusers", { search: "" }, null, getSuccess);
-    }
-}
-
 function searchUsers() {
-    searchVar = $("#usearch").val();
-    groupVar = "";
-    closeUser();
+    window.location = window.location.href.split('?')[0] + "?search=" + searchVar;
 }
 
 function addUserToGroup(userid) {
@@ -39,28 +16,14 @@ $("#removeUserBtn").click(function() {
     arcAjaxRequest("arc/userremove", { id: userid }, remUserComplete, null);
 });
 
-function saveUser(userid) {
-    arcAjaxRequest("arc/usersave", {
-        id: userid,
-        firstname: $('#firstname').val(),
-        lastname: $('#lastname').val(),
-        email: $('#email').val(),
-        password: $('#password').val(),
-        retype: $('#retype').val(),
-        enabled: $("#enabled").val(),
-        company: $("#company").val(),
-        source: $("#source").val(),
-        phone: $("#phone").val(),
-        notes: $("#notes").val()
-    }, null, saveUserComplete);
-}
+$("#userForm").submit(function(e) {
+    e.preventDefault();
+    arcAjaxRequest("arc/usersave", $(this).serialize(), null, userSaved);
+});
 
-function saveUserComplete(data) {
+function userSaved(data) {
     var jdata = arcGetJson(data);
-    if (userid == 0) {
-        editUser(jdata.id);
-    }
-    arcGetStatus()
+    window.location = window.location.href.split('?')[0] + "/" + jdata.id;
 }
 
 $("#removeGroupDoBtn").click(function() {
@@ -85,28 +48,7 @@ function getSuccessGroups(data) {
     $('#groups').html(jdata.html);
 }
 
-function addGrpComplete() {
-    editUser(userid);
-    arcGetStatus();
-}
-
-function remGrpComplete() {
-    editUser(userid);
-    arcGetStatus();
-}
-
-function editUser(id) {
-    userid = id;
-    arcAjaxRequest("arc/useredit", { id: userid }, null, editUserSuccess);
-}
-
-function editUserSuccess(data) {
-    var jdata = arcGetJson(data);
-    $('#dataTable').html(jdata.html);
-}
-
 function removeUser(id) {
-    userid = id;
     $("#removeUserModal").modal("show");
 }
 
@@ -116,8 +58,7 @@ function remUserComplete() {
 }
 
 function editGroup(id) {
-    groupid = id;
-    arcAjaxRequest("arc/usergroup", { id: groupid }, successEditGroup, completeEditGroup);
+    arcAjaxRequest("arc/usergroup", { id: id }, successEditGroup, completeEditGroup);
 }
 
 function completeEditGroup(data) {
@@ -131,7 +72,6 @@ function successEditGroup() {
 }
 
 function removeGroup(id) {
-    groupid = id;
     $("#removeGroupModal").modal("show");
 }
 
@@ -150,77 +90,14 @@ function viewGroups() {
     arcAjaxRequest("arc/usergetgroups", {}, null, getSuccess);
 }
 
-$("#saveContactBtn").click(function() {
-    arcAjaxRequest("arc/usersavecontact", {
-        id: contactid,
-        name: $('#contactname').val(),
-        title: $('#contacttitle').val(),
-        email: $('#contactemail').val(),
-        phone: $('#contactphone').val(),
-        userid: userid
-    }, saveContactComplete);
-});
-
-function saveContactComplete() {
-    editUser(userid);
-    $("#editContactModal").modal("hide");
-    arcGetStatus();
-}
-
-function editContact(id) {
-    contactid = id;
-    arcAjaxRequest("arc/usereditcontact", { id: contactid }, editContactSuccess, completeEditContact);
-}
-
-function editContactSuccess(data) {
-    $("#editContactModal").modal("show");
-}
-
-function completeEditContact(data) {
-    var jdata = arcGetJson(data);
-    $("#contactname").val(jdata.name);
-    $("#contacttitle").val(jdata.title);
-    $("#contactemail").val(jdata.email);
-    $("#contactphone").val(jdata.phone);
-}
-
-function removeContact(id) {
-    contactid = id;
-    arcAjaxRequest("arc/userremovecontact", { id: contactid }, null, doEditComplete);
-}
-
-function doEditComplete() {
-    editUser(userid);
-    arcGetStatus();
-}
-
-function removeLink(id) {
-    console.log(id);
-    arcAjaxRequest("arc/userremovelink", { id: id }, null, doEditComplete);
-}
-
-function editLink(id) {
-    $("#editLinkModal").modal("show");
-}
-
-function searchLink() {
-    arcAjaxRequest("arc/userlinksearch", { search: $("#linkSearch").val() }, null, completeSearchLink);
-}
-
-function completeSearchLink(data) {
-    var jdata = arcGetJson(data);
-    $("#linksearchresults").html(jdata.html);
-}
-
-function addLink(linkid) {
-    arcAjaxRequest("arc/useraddlink", { userid: userid, linkid: linkid }, null, doEditComplete);
-}
-
 function exportUsers() {
-    if (searchVar != "") {
-        arcAjaxRequest("arc/userexport", { search: searchVar }, null, completeExport);
-    } else if (groupVar != "") {
-        arcAjaxRequest("arc/userexport", { groupid: groupVar }, null, completeExport);
+    var url = new URL(window.location.href);
+    var search = url.searchParams.get("search");
+    var group = url.searchParams.get("groupid");
+    if (search != "") {
+        arcAjaxRequest("arc/userexport", { search: search }, null, completeExport);
+    } else if (group != "") {
+        arcAjaxRequest("arc/userexport", { groupid: group }, null, completeExport);
     } else {
         arcAjaxRequest("arc/userexport", { search: "" }, null, completeExport);
     }
@@ -242,11 +119,7 @@ function download(filename, text) {
 }
 
 function toggleEnable(id) {
-    arcAjaxRequest("arc/usertoggle", { id: id }, null, closeUser);
-}
-
-function displayUsers() {
-    arcAjaxRequest("arc/usersdisplay", { }, null, getSuccess);
+    arcAjaxRequest("arc/usertoggle", { id: id }, null, location.reload());
 }
 
 function impersonateUser(userid) {
@@ -262,42 +135,7 @@ function impersonateSuccess(data) {
 }
 
 function viewGroup(groupid) {
-    groupVar = groupid;
-    searchVar = "";
-    closeUser();
-}
+    //window.location = window.location.href.split('?')[0] + "?groupid=" + groupid;
+console.log(arcGetPath(1));
 
-function clearUsers() {
-    groupVar = "";
-    searchVar = "";
-    closeUser();
-}
-
-var addressid;
-
-function editAddress(id) {
-    addressid = id;
-    arcAjaxRequest("arc/usereditaddressdetails", { id: addressid }, null, completeEdit);
-    $("#editAddressModal").modal("show");
-}
-
-function completeEdit(data) {
-    var jdata = arcGetJson(data);
-    $("#addresslines").val(jdata.addresslines);
-    $("#county").val(jdata.county);
-    $("#postcode").val(jdata.postcode);
-    $("#country").val(jdata.country);
-    $("#isbilling").prop('checked', Boolean(Number(jdata.isbilling)));
-    $("#isdelivery").prop('checked', Boolean(Number(jdata.isdelivery)));
-}
-
-function saveAddress() {
-    arcAjaxRequest("arc/usersaveaddressdetails", { id: addressid, addresslines: $("#addresslines").val(),
-        county: $("#county").val(), postcode: $("#postcode").val(), country: $("#country").val(),
-        isbilling: $("#isbilling").prop('checked') ? 1 : 0, isdelivery: $("#isdelivery").prop('checked') ? 1 : 0}, null, doEditComplete);
-        $("#editAddressModal").modal("hide");
-}
-
-function deleteAddress(addressid) {
-    arcAjaxRequest("arc/userdeleteaddressdetails", { id: addressid }, null, doEditComplete);
 }

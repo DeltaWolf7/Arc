@@ -18,8 +18,8 @@ class CRMUserAddress extends DataProvider {
         $this->postcode = "";
         $this->country = "United Kingdom";
         $this->userid = 0;
-        $this->isbilling = false;
-        $this->isdelivery = false;
+        $this->isbilling = 0;
+        $this->isdelivery = 0;
         $this->table = ARCDBPREFIX . "crmuseraddresses";
         $this->map = ["id" => "id", "addresslines" => "addresslines", "county" => "county", "postcode" => "postcode",
              "country" => "country", "userid" => "userid", "isdelivery" => "isdelivery", "isbilling" => "isbilling"];

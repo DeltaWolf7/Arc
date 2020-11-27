@@ -1,24 +1,26 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $address = CRMUserAddress::getByID($_POST["id"]);
-    $user = system\Helper::arcGetUser();
+    $address = CRMUserAddress::getByID($_POST["addressid"]);
     if ($address->id == 0) {
         $address = new CRMUserAddress();
-        $address->userid = $user->id;
+        $address->userid = $_POST["addressuserid"];
     }
     $address->addresslines = $_POST["addresslines"];
     $address->county = $_POST["county"];
     $address->postcode = $_POST["postcode"];
     $address->country = $_POST["country"];
-    $address->isbilling = $_POST["isbilling"];
-    if ($address->isbilling == 1) {
-        CRMUserAddress::clearBillingByUserID($user->id);
+
+    if (isset($_POST["isbilling"])) {
+        $address->isbilling = 1;
+        CRMUserAddress::clearBillingByUserID($address->userid);
     }
-    $address->isdelivery = $_POST["isdelivery"];
-    if ($address->isdelivery == 1) {
-        CRMUserAddress::clearDeliveryByUserID($user->id);
-    }
+
+    if (isset($_POST["isdelivery"])) {
+        $address->isdelivery = 1;
+        CRMUserAddress::clearDeliveryByUserID($address->userid);
+    }  
+
     $address->update();
     
     system\Helper::arcAddMessage("success", "Address updated");

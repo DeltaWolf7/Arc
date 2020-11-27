@@ -46,6 +46,7 @@ class API {
                 $apikey = \SystemSetting::getByKey("APIKEY", $user->id);
                 if ($apikey->id != 0 && $apikey->value == $_GET["key"]) {
                     $key = $apikey->value;
+                    Helper::arcSetUser($user);
                 }
             }
 

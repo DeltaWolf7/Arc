@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $address = CRMUserAddress::getByID($_POST["id"]);
+    $address = CRMUserAddress::getByID($_POST["addressid"]);
     $address->delete();
       
     system\Helper::arcAddMessage("success", "Address deleted");

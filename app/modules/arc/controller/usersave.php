@@ -2,14 +2,6 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
-    $usercrm = CRMUser::getByUserID($user->id);
-    if ($usercrm->id == 0) {
-        $usercrm = new CRMUser();
-        $usercrm->userid = $user->id;
-    }
-
-    //// USER
-
     $hasError = false;
 
     // password settings
@@ -50,15 +42,7 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user->enabled = $_POST["enabled"];
         $user->email = strtolower($_POST["email"]);
         $user->update();
-        //// USER CRM
-
-        $usercrm->company = ucwords(strtolower($_POST["company"]));
-        $usercrm->source = $_POST["source"];
-        $usercrm->phone = $_POST["phone"];
-        $usercrm->notes = $_POST["notes"];
-        $usercrm->userid = $user->id;
-        $usercrm->update();
-
+   
         system\Helper::arcAddMessage("success", "User updated");
     } 
     system\Helper::arcReturnJSON(["id" => $user->id]);

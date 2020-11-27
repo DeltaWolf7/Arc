@@ -3,7 +3,7 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $table = "<div class=\"text-right mb-2\">"
         . "<button onclick=\"editGroup(0);\" class=\"btn btn-success btn-sm\"><i class=\"fa fa-plus\"></i> Create Group</button>&nbsp;"    
-        . "<button class=\"btn btn-primary btn-sm\" onclick=\"closeUser()\"><i class=\"fas fa-list\"></i> View Users</button></div>";
+        . "<button class=\"btn btn-primary btn-sm\" onclick=\"location.reload()\"><i class=\"fas fa-list\"></i> View Users</button></div>";
     $table .= "<div class=\"table-responsive\"><table class=\"table table-striped\">"
             . "<thead><tr><th>ID</th><th>Name</th><th>Description</th><th>Users</th><th>Action</th>"
             . "</tr></thead><tbody>";

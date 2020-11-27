@@ -36,18 +36,30 @@ function arcAjaxRequest(path, data, complete, success, extended) {
         cache: false,
         contentType: contentType,
         processData: processData,
+        beforeSend: function() {
+            if (typeof (arcShowLoader) == "function") {
+                arcShowLoader();
+            }
+        },
         complete: function (e) {
             if (typeof (complete) == "function") {
                 complete(e);
             }
         },
         success: function (e) {
+            if (typeof (arcHideLoader) == "function") {
+                arcHideLoader();
+            }
             if (typeof (success) == "function") {
                 success(e);
             }
         },
         error: function (xhr, desc, err) {
-            console.log(xhr.responseText + "\n" + err);
+            if (typeof (arcShowError) == "function") {
+                arcShowError(xhr, desc, err);
+            } else {
+                console.log(xhr.responseText + "\n" + err);
+            }
         }
     });
 }
@@ -64,7 +76,7 @@ function arcGetStatus() {
         success: function (e) {
             var jdata = arcGetJson(e);
             if (typeof (arcNotification) == "function") {
-                arcNotification(jdata)
+                arcNotification(jdata);
             } else {
                 alert("arcNotification has not been defined in theme. See console");
                 console.log("You must define a function named 'arcNotification' in your theme.");
@@ -80,4 +92,24 @@ function arcGetStatus() {
 // Convert JSON in to Javascript object
 function arcGetJson(data) {
     return jQuery.parseJSON(JSON.stringify(data));
+}
+
+// Redirect to current url without parameters
+function arcRedirect() {
+    window.location = window.location.href.split('?')[0];
+}
+
+// Reload current page
+function arcRefresh() {
+    location.reload();
+}
+
+// Return url with number of parts removed. example http://mydomain.com/test/1/2 -> http://mydomain.com/test/1
+function arcGetPath(noPartsToRemove = 0) {
+    var pathArray = window.location.pathname.split('/');
+    var newPathname = window.location.protocol + "//" + window.location.host;
+    for (i = 0; i < pathArray.length - noPartsToRemove; i++) {
+        newPathname += pathArray[i] + "/";
+    }
+    return newPathname.substring(0, newPathname.length - 1);;
 }

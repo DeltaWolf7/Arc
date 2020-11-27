@@ -46,6 +46,9 @@ class Render {
             return;
         }
 
+        // uri sections
+        $uriParts = Helper::arcGetURIAsArray($uri);
+
         if (Helper::arcIsAjaxRequest() == false) {
 
             // get route
@@ -56,15 +59,19 @@ class Render {
 
             // check for route processor at root of uri, example "processor/category/product" if we have no route.
             if ($route->id == 0) {
-                $uriParts = explode("/", $uri);
-                if (count($uriParts) > 1) {
-                    // we have a uri with root. Is it a processor?
-                    // Try to get a route processor and then pass on to normal render to process further.
-                    $route = \Router::getRoute($uriParts[0]);
+                $testRoute = "";
+                foreach ($uriParts as $part) {
+                    // try to find a route.
+                    $testRoute .= "/" . $part;
+                    $testRoute = trim($testRoute, "/"); // get rid of slash at the start if we have one.
+                    $route = \Router::getRoute($testRoute);
                     if ($route->id != 0) {
-                        $routeProcessor = $uriParts[0];
+                        // did we find a route? If we did break the loop.
+                        $routeProcessor = $testRoute;
+                        break;
                     }
-                } 
+                    // if not keep trying.
+                }
             }
 
             if ($route->id > 0) {
@@ -214,9 +221,12 @@ class Render {
 
             echo $content;
         } else {
-            $data = explode("/", $uri);
-            if (isset($data[0]) && isset($data[1])) {
-                include Helper::arcGetModuleControllerPath($data[0], $data[1], true);
+            if (count($uriParts) == 2) {
+                // module ajax request
+                include Helper::arcGetModuleControllerPath($uriParts[0], $uriParts[1], true);
+            } else if (count($uriParts) == 4 && $uriParts[0] == "addons") {
+                // addon ajax request
+                include Helper::arcGetAddonControllerPath($uriParts[1], $uriParts[2], $uriParts[3], true);
             } else {
                 \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
             }
