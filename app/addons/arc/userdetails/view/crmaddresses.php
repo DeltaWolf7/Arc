@@ -1,22 +1,10 @@
 <?php
-    if (is_numeric(system\Helper::arcGetLastURIItem())) {
-        $user = User::getByID(system\Helper::arcGetLastURIItem());
+        $user = system\Helper::arcGetUser();
         if ($user->id > 0) {
 ?>
 <h4 class="mt-3">Addresses</h4>
 <div class="row">
     <div class="col-md-12 border-top border-primary">
-    </div>
-</div>
-<div class="row mt-2">
-    <div class="col-md-6">
-    </div>
-    <div class="col-md-6 text-right">
-        <form id="crmnewaddress">
-            <input type="hidden" name="addressid" value="0" />
-            <input type="hidden" name="addressuserid" value="0" />
-            <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-plus"></i> Create</button>
-        </form>
     </div>
 </div>
 <div class="table-responsive mt-3">
@@ -29,6 +17,13 @@
                 <th>Postcode</th>
                 <th>Billing</th>
                 <th>Delivery</th>
+                <th>
+                    <form id="crmnewaddress">
+                        <input type="hidden" name="addressid" value="0" />
+                        <input type="hidden" name="addressuserid" value="0" />
+                        <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-plus"></i> Create</button>
+                    </form>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -70,7 +65,6 @@
 </div>
 <?php
         }
-    }
 ?>
 
 <div class="modal" id="editAddressModal">

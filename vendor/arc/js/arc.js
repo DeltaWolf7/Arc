@@ -1,6 +1,13 @@
 /*! Arc Project | Craig Longford */
 
-// AJAX request
+/**
+ * Make Ajax request
+ * @param  {String}   path     Path to the ajax processor
+ * @param  {Array}    data     (Optional) Array of data, file or form serialised 
+ * @param  {Function} complete (Optional) Function to call on ajax complete
+ * @param  {Function} success  (Optional) Function to call on ajax success
+ * @param  {Array}    extended (Optional) Data array to append to ajax data
+ */
 function arcAjaxRequest(path, data, complete, success, extended) {
     // session data
     data["arcsid"] = arcsid;
@@ -64,7 +71,9 @@ function arcAjaxRequest(path, data, complete, success, extended) {
     });
 }
 
-// Get status message
+/**
+ * Get stored status messages and output via arcNotification.
+ */
 function arcGetStatus() {
     $.ajax({
         url: "/",
@@ -89,27 +98,28 @@ function arcGetStatus() {
     })
 }
 
-// Convert JSON in to Javascript object
+/**
+ * Convert Json to Javascript obbject
+ * @param {JSON} data Json data to convert. 
+ */
 function arcGetJson(data) {
     return jQuery.parseJSON(JSON.stringify(data));
 }
 
-// Redirect to current url without parameters
-function arcRedirect() {
-    window.location = window.location.href.split('?')[0];
-}
-
-// Reload current page
-function arcRefresh() {
-    location.reload();
-}
-
-// Return url with number of parts removed. example http://mydomain.com/test/1/2 -> http://mydomain.com/test/1
-function arcGetPath(noPartsToRemove = 0) {
-    var pathArray = window.location.pathname.split('/');
-    var newPathname = window.location.protocol + "//" + window.location.host;
-    for (i = 0; i < pathArray.length - noPartsToRemove; i++) {
-        newPathname += pathArray[i] + "/";
+/**
+ * Redirect to current URL.
+ */
+function arcRedirect(additions = "", useBase = false) {
+    if (useBase == false) {
+        window.location = window.location.href.split('?')[0] + additions;
+    } else {
+        window.location = window.location.protocol + "//" + window.location.host + additions
     }
-    return newPathname.substring(0, newPathname.length - 1);;
+}
+
+/**
+ * Reload page
+ */
+function arcReload() {
+    location.reload();
 }

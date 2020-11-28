@@ -94,11 +94,15 @@ class Log extends DataProvider {
      * Count the number of logs in the database
      * @return int Log count
      */
-    public static function count() {
+    public static function count($userid = 0) {
         // Create a new log class
         $logs = new Log();
         // Return the number of logs
-        return $logs->getCount([]);
+        if ($userid == 0) {
+            return $logs->getCount([]);
+        } else {
+            return $logs->getCount(["userid" => $userid]);
+        }
     }
     
     /**

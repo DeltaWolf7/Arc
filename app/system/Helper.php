@@ -157,7 +157,7 @@ class Helper {
                 self::$arc["footerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
                 break;
             default:
-                self::$arc["footerdata"][] = $content;
+                self::$arc["footerdata"][] = $content . PHP_EOL;
                 break;
         }
     }
@@ -808,5 +808,9 @@ class Helper {
         }        
         $html .= "</select>";
         return $html;
+    }
+
+    public static function arcGetProcessor() {
+        return "/" . $_SESSION["arc_processor"];
     }
 }

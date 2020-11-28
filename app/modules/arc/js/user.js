@@ -1,5 +1,5 @@
 function searchUsers() {
-    window.location = window.location.href.split('?')[0] + "?search=" + searchVar;
+    arcRedirect("?search=" + $("#usearch").val());
 }
 
 function addUserToGroup(userid) {
@@ -12,10 +12,6 @@ function removeUserFromGroup(userid) {
     $('#inGroups option:selected').remove().appendTo('#avGroups');
 }
 
-$("#removeUserBtn").click(function() {
-    arcAjaxRequest("arc/userremove", { id: userid }, remUserComplete, null);
-});
-
 $("#userForm").submit(function(e) {
     e.preventDefault();
     arcAjaxRequest("arc/usersave", $(this).serialize(), null, userSaved);
@@ -23,19 +19,15 @@ $("#userForm").submit(function(e) {
 
 function userSaved(data) {
     var jdata = arcGetJson(data);
-    window.location = window.location.href.split('?')[0] + "/" + jdata.id;
+    if (!data.error) {
+        arcRedirect(jdata.redirect, true);
+    }
+    arcGetStatus();
 }
 
-$("#removeGroupDoBtn").click(function() {
-    arcAjaxRequest("arc/userremovegroup", { id: groupid }, doEditComplete, null);
-});
-
-$("#saveGroupBtn").click(function() {
-    arcAjaxRequest("arc/usersavegroup", {
-        id: groupid,
-        name: $('#groupname').val(),
-        description: $('#groupdescription').val()
-    }, saveGroupComplete);
+$("#groupForm").submit(function(e) {
+    e.preventDefault();
+    arcAjaxRequest("arc/usersavegroup", $(this).serialize(), saveGroupComplete);
 });
 
 function getSuccess(data) {
@@ -48,13 +40,8 @@ function getSuccessGroups(data) {
     $('#groups').html(jdata.html);
 }
 
-function removeUser(id) {
-    $("#removeUserModal").modal("show");
-}
-
-function remUserComplete() {
-    closeUser();
-    $("#removeUserModal").modal("hide");
+function removeUser(userid) {
+    arcAjaxRequest("arc/userremove", { id: userid }, arcReload(), null);
 }
 
 function editGroup(id) {
@@ -65,19 +52,19 @@ function completeEditGroup(data) {
     var jdata = arcGetJson(data);
     $("#groupname").val(jdata.name);
     $("#groupdescription").val(jdata.description);
+    $("#groupid").val(jdata.id);
 }
 
 function successEditGroup() {
     $("#editGroupModal").modal("show");
 }
 
-function removeGroup(id) {
-    $("#removeGroupModal").modal("show");
+function removeGroup(groupid) {
+    arcAjaxRequest("arc/userremovegroup", { id: groupid }, doEditComplete, null);
 }
 
 function doEditComplete() {
     arcAjaxRequest("arc/usergetgroups", {}, null, getSuccess);
-    $("#removeGroupModal").modal("hide");
 }
 
 function saveGroupComplete() {
@@ -135,7 +122,5 @@ function impersonateSuccess(data) {
 }
 
 function viewGroup(groupid) {
-    //window.location = window.location.href.split('?')[0] + "?groupid=" + groupid;
-console.log(arcGetPath(1));
-
+    arcRedirect("?groupid=" + groupid);
 }

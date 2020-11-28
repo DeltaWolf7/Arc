@@ -42,7 +42,7 @@
     </div>
 
     <div class="text-right">
-        <button class="btn btn-success" type="submit">Save</button>
+        <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Save</button>
     </div>
 </form>
 

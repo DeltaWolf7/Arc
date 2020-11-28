@@ -1,13 +1,14 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest()) {
-    $group = UserGroup::getByID($_POST["id"]);
-    $group->name = ucwords(strtolower($_POST["name"]));
-    if (empty($_POST["name"])) {
+    $group = UserGroup::getByID($_POST["groupid"]);
+    $group->name = ucwords(strtolower($_POST["groupname"]));
+    if (empty($_POST["groupname"])) {
         system\Helper::arcAddMessage("danger", "Group name cannot be empty");
         return;
     }
-    $group->description = $_POST["description"];
+    $group->description = $_POST["groupdescription"];
     $group->update();
     system\Helper::arcAddMessage("success", "Group saved");
+    system\Helper::arcReturnJSON([]);
 }

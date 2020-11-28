@@ -6,15 +6,19 @@
         }
         $userGroups = UserGroup::getAllGroups();
 ?>
-<form id="userForm">
-<input type="hidden" name="id" value="<?php echo $user->id; ?>" />
-    <div class="row">
-        <div class="col-md-12 text-muted text-right text-small">
-            <span class="badge badge-info">Created:
-                <?php echo system\Helper::arcConvertDate($user->created); ?></span>&nbsp;
-            <span class="badge badge-primary">ID: <?php echo $user->id; ?></span>&nbsp;
-        </div>
+<div class="row">
+    <div class="col-md-6">
+        <span class="badge badge-info">Created:
+            <?php echo system\Helper::arcConvertDate($user->created); ?></span>&nbsp;
+        <span class="badge badge-primary">ID: <?php echo $user->id; ?></span>&nbsp;
     </div>
+    <div class="col-md-6 text-right">
+        <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i class="fas fa-times"></i> Close</a>
+    </div>
+</div>
+<form id="userForm">
+    <input type="hidden" name="id" value="<?php echo $user->id; ?>" />
+    <input type="hidden" name="redirect" value="<?php echo system\Helper::arcGetProcessor(); ?>" />
     <div class="row mt-3">
         <div class="col-md-6">
             <div class="form-group">
@@ -84,15 +88,8 @@
         </div>
 
         <div class="text-right">
-                        <?php
-                            $urlparts = system\Helper::arcGetURIAsArray();
-                            $url = "";
-                            for ($i = 0; $i < count($urlparts) - 1; $i++) {
-                                $url .= "/" . $urlparts[$i];
-                            }
-                        ?>
-            <a class="btn btn-primary" href="<?php echo $url; ?>">Close</a>
-            <button class="btn btn-success" onclick="saveUser('<?php echo $user->id; ?>')">Save</button>
+            <button class="btn btn-success" type="submit"><i class="far fa-save"></i>
+                Save</button>
         </div>
 </form>
 <?php
@@ -121,7 +118,7 @@
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="button" onclick="searchUsers()"><i
                                 class="fas fa-search"></i></button>
-                        <button class="btn btn-outline-secondary" type="button" onclick="window.location=window.location.href.split('?')[0]"><i
+                        <button class="btn btn-outline-secondary" type="button" onclick="arcRedirect()"><i
                                 class="fas fa-broom"></i></button>
                     </div>
                 </div>
@@ -130,7 +127,7 @@
                     onclick="exportUsers()"><i class="fas fa-download"></i></a>
                 &nbsp;<button class="btn btn-primary btn-sm" onclick="viewGroups()"><i class="fas fa-list"></i>
                     Groups</button>
-                &nbsp;<button class="btn btn-success btn-sm" onclick="window.location = window.location.href.split('?')[0] + '/0'"><i class="fas fa-plus"></i> New
+                &nbsp;<button class="btn btn-success btn-sm" onclick="arcRedirect('/0')"><i class="fas fa-plus"></i> New
                     User</button></div>
         </div>
         <table class="table table-striped">
@@ -227,45 +224,6 @@
     </div>
 </div>
 
-<div class="modal" id="removeUserModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Remove User</h5>
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
-                        class="sr-only">Close</i></button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to permanently remove this user?
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button class="btn btn-primary" id="removeUserBtn">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="removeGroupModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Remove Group</h5>
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
-                        class="sr-only">Close</i></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to permanently remove this group?</p>
-                <small>Built in system groups 'Administrators', 'Users' and 'Guests' cannot be removed.</small>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-dismiss="modal">No</button>
-                <button class="btn btn-primary" id="removeGroupDoBtn">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="modal" id="editGroupModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -274,23 +232,26 @@
                 <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
                         class="sr-only">Close</i></button>
             </div>
+            <form id="groupForm">
             <div class="modal-body">
+                <input type="hidden" id="groupid" name="groupid" value="0" />
                 <div class="form-group">
                     <label for="groupname">Group Name</label>
-                    <input maxlength="100" type="text" class="form-control" id="groupname" placeholder="Group name">
+                    <input maxlength="100" type="text" class="form-control" id="groupname" name="groupname" placeholder="Group name">
                 </div>
                 <div class="form-group">
                     <div class="form-group">
                         <label for="groupname">Group Description</label>
                         <input maxlength="100" type="text" class="form-control" id="groupdescription"
-                            placeholder="Group description">
+                        name="groupdescription" placeholder="Group description">
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Close</button>
-                <button class="btn btn-success" id="saveGroupBtn">Save</button>
+                <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Save</button>
             </div>
+            </form>
         </div>
     </div>
 </div>

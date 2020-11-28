@@ -13,7 +13,7 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
 
     </div>
     <div class="col-md-6 text-right">
-        <button class="btn btn-success btn-sm" onclick="addLink()"><i class="fa fa-plus"></i> Create</button>
+        <button class="btn btn-primary btn-sm" onclick="addLink()"><i class="fa fa-plus"></i> Create</button>
     </div>
 </div>
 <div class="table-responsive mt-3">
@@ -91,7 +91,7 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
             </div>
         </div>
     </div>

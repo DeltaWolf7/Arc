@@ -21,14 +21,6 @@ if (system\Helper::arcIsAjaxRequest()) {
         return;
     }
     $user->update();
-
-    $crmuser = CRMUser::getByUserID($user->id);
-    if ($crmuser->id == 0) {
-        $crmuser  = new CRMUser();
-        $crmuser->userid = $user->id;
-    }
-    $crmuser->phone = $_POST["phone"];
-    $crmuser->update();
         
     system\Helper::arcSetUser($user);
     system\Helper::arcAddMessage("success", "Changes saved");

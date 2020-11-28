@@ -15,7 +15,7 @@
         <form id="crmnewcontact">
             <input type="hidden" name="contactuserid" value="<?php echo $user->id; ?>" />
             <input type="hidden" name="contactid" value="0" />
-            <button class="btn btn-success btn-sm" type="submit"><i class="fa fa-plus"></i> Create</button>
+            <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-plus"></i> Create</button>
         </form>
     </div>
 </div>
@@ -108,8 +108,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-success" type="submit">Save</button>
+                    <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
+                    <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Save</button>
                 </div>
             </form>
         </div>

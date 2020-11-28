@@ -3,6 +3,7 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
     $hasError = false;
+    $redirect = "";
 
     // password settings
     if (!empty($_POST["password"])) {
@@ -26,6 +27,11 @@ if (system\Helper::arcIsAjaxRequest()) {
         $hasError = true;
     }
 
+    if (!filter_var(strtolower($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+        system\Helper::arcAddMessage("danger", "Invalid email address");
+        $hasError = true;
+    }
+
     $test = User::getByEmail($_POST["email"]);
     if ($user->id == 0 && $test->id != 0 && !$hasError) {
         system\Helper::arcAddMessage("danger", "User already exists with this email address");
@@ -42,8 +48,11 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user->enabled = $_POST["enabled"];
         $user->email = strtolower($_POST["email"]);
         $user->update();
-   
+        
+        $redirect = $_POST["redirect"] . "/" . $user->id;
+
         system\Helper::arcAddMessage("success", "User updated");
     } 
-    system\Helper::arcReturnJSON(["id" => $user->id]);
+
+    system\Helper::arcReturnJSON(["id" => $user->id, "redirect" => $redirect]);
 }
