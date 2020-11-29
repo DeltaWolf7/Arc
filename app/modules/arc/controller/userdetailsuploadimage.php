@@ -23,9 +23,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             }
             
             $name = $_FILES["file"]["name"];
-            $ext = end((explode(".", $name))); # extra () to prevent notice
-
-            $filename = uniqid() . "." .  $ext;
+            $filename = uniqid() . ".png";
             $path = system\Helper::arcGetPath(true) . "assets/profile";
             $destination = $path . "/" . $filename;
 

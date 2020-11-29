@@ -13,7 +13,8 @@
         <span class="badge badge-primary" id="idtag">ID: <?php echo $user->id; ?></span>&nbsp;
     </div>
     <div class="col-md-6 text-right">
-        <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i class="fas fa-times"></i> Close</a>
+        <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i class="fas fa-times"></i>
+            Close</a>
     </div>
 </div>
 <form id="userForm">
@@ -85,10 +86,17 @@
                         </div>
             </div>
         </div>
-
-        <div class="text-right">
-            <button class="btn btn-success" type="submit"><i class="far fa-save"></i>
-                Save</button>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="clearImage" name="clearImage">
+                    <label class="form-check-label" for="clearImage">Reset User Profile Image?</label>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn btn-success" type="submit"><i class="far fa-save"></i>
+                    Save</button>
+            </div>
         </div>
 </form>
 <?php
@@ -124,7 +132,8 @@
             </div>
             <div class="col-md-3">
                 <select class="form-control" id="group" onchange="viewGroup()">
-                <option value="0" <?php if(!isset($_GET["groupid"])) { echo "selected"; } ?>>View Group Users</option>
+                    <option value="0" <?php if(!isset($_GET["groupid"])) { echo "selected"; } ?>>View Group Users
+                    </option>
                     <?php
                         $groups = UserGroup::getAllGroups();
                         foreach ($groups as $group) {
@@ -143,10 +152,10 @@
         <table class="table table-striped">
             <thead>
                 <th>#</th>
+                <th>Img</th>
                 <th>Name (<?php echo count($users); ?>)</th>
                 <th>Active</th>
                 <th>Email</th>
-                <th>CRM</th>
                 <th>Auth</th>
                 <th>Action</th>
                 </tr>
@@ -154,10 +163,15 @@
             <tbody>
                 <?php
     foreach ($users as $user) {
-        $crmuser = CRMUser::getByUserID($user->id);
     ?>
                 <tr>
                     <td class="text-center"><?php echo $user->id; ?></td>
+                    <td>
+                        <?php
+                        $profileImage = $user->getProfileImage();
+                    ?>
+                        <img class="img-fluid" width="30px" src="<?php echo $profileImage; ?>" />
+                    </td>
                     <td>
                         <?php
         $isAdmin = $user->inGroup("Administrators");
@@ -186,19 +200,6 @@
         ?>
                     </td>
                     <td><?php echo $user->email; ?></td>
-                    <td class="text-center">
-                        <?php
-        if ($crmuser->id == 1) {
-            ?>
-                        <i class="fas fa-check text-success"></i>
-                        <?php
-        } else {
-            ?>
-                        <i class="fas fa-times text-danger"></i>
-                        <?php
-        }
-        ?>
-                    </td>
                     <td class="text-center">
                         <?php
         $ad = SystemSetting::getByKey("ARC_USER_AD", $user->id);

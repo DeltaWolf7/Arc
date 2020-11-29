@@ -1,11 +1,6 @@
 <?php
 $user = system\Helper::arcGetUser();
 $profileImage = $user->getProfileImage();
-$crmuser = CRMUser::getByUserID($user->id);
-if ($crmuser->id == 0){
-    $crmuser = new CRMUser();
-}
-
 $image = "No image";
 if (!empty($profileImage)) {
     $image = "<img class=\"img-fluid\" src=\"" . $profileImage . "\" />";

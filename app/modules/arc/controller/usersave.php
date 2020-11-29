@@ -50,5 +50,10 @@ if (system\Helper::arcIsAjaxRequest()) {
         system\Helper::arcAddMessage("success", "User updated");
     } 
 
+    if (isset($_POST["clearImage"])) {
+        $profileImage = SystemSetting::getByKey("ARC_USER_IMAGE", $user->id);
+        $profileImage->delete();
+    }
+
     system\Helper::arcReturnJSON(["id" => $user->id]);
 }
