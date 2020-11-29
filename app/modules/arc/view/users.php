@@ -10,15 +10,14 @@
     <div class="col-md-6">
         <span class="badge badge-info">Created:
             <?php echo system\Helper::arcConvertDate($user->created); ?></span>&nbsp;
-        <span class="badge badge-primary">ID: <?php echo $user->id; ?></span>&nbsp;
+        <span class="badge badge-primary" id="idtag">ID: <?php echo $user->id; ?></span>&nbsp;
     </div>
     <div class="col-md-6 text-right">
         <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i class="fas fa-times"></i> Close</a>
     </div>
 </div>
 <form id="userForm">
-    <input type="hidden" name="id" value="<?php echo $user->id; ?>" />
-    <input type="hidden" name="redirect" value="<?php echo system\Helper::arcGetProcessor(); ?>" />
+    <input type="hidden" name="id" id="id" value="<?php echo $user->id; ?>" />
     <div class="row mt-3">
         <div class="col-md-6">
             <div class="form-group">
@@ -112,7 +111,7 @@
     ?>
 
         <div class="mb-2 row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="input-group mb-3">
                     <input class="form-control" id="usearch" placeholder="Search.." aria-describedby="basic-addon2" />
                     <div class="input-group-append">
@@ -123,10 +122,21 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mt-1 text-right"><a href="#" class="btn btn-secondary btn-sm"
-                    onclick="exportUsers()"><i class="fas fa-download"></i></a>
-                &nbsp;<button class="btn btn-primary btn-sm" onclick="viewGroups()"><i class="fas fa-list"></i>
-                    Groups</button>
+            <div class="col-md-3">
+                <select class="form-control" id="group" onchange="viewGroup()">
+                <option value="0" <?php if(!isset($_GET["groupid"])) { echo "selected"; } ?>>View Group Users</option>
+                    <?php
+                        $groups = UserGroup::getAllGroups();
+                        foreach ($groups as $group) {
+                            echo "<option value=\"{$group->id}\"";
+                            if (isset($_GET["groupid"]) && $_GET["groupid"] == $group->id) { echo " selected"; }
+                            echo ">{$group->name}</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="col-md-3 mt-1 text-right"><a href="#" class="btn btn-secondary btn-sm"
+                    onclick="exportUsers()"><i class="fas fa-download"></i> Export</a>
                 &nbsp;<button class="btn btn-success btn-sm" onclick="arcRedirect('/0')"><i class="fas fa-plus"></i> New
                     User</button></div>
         </div>
@@ -223,39 +233,6 @@
         </table>
     </div>
 </div>
-
-<div class="modal" id="editGroupModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Edit Group</h5>
-                <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i
-                        class="sr-only">Close</i></button>
-            </div>
-            <form id="groupForm">
-            <div class="modal-body">
-                <input type="hidden" id="groupid" name="groupid" value="0" />
-                <div class="form-group">
-                    <label for="groupname">Group Name</label>
-                    <input maxlength="100" type="text" class="form-control" id="groupname" name="groupname" placeholder="Group name">
-                </div>
-                <div class="form-group">
-                    <div class="form-group">
-                        <label for="groupname">Group Description</label>
-                        <input maxlength="100" type="text" class="form-control" id="groupdescription"
-                        name="groupdescription" placeholder="Group description">
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> Close</button>
-                <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Save</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <?php
     }
 ?>

@@ -3,7 +3,6 @@
 if (system\Helper::arcIsAjaxRequest()) {
     $user = User::getByID($_POST["id"]);
     $hasError = false;
-    $redirect = "";
 
     // password settings
     if (!empty($_POST["password"])) {
@@ -48,11 +47,8 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user->enabled = $_POST["enabled"];
         $user->email = strtolower($_POST["email"]);
         $user->update();
-        
-        $redirect = $_POST["redirect"] . "/" . $user->id;
-
         system\Helper::arcAddMessage("success", "User updated");
     } 
 
-    system\Helper::arcReturnJSON(["id" => $user->id, "redirect" => $redirect]);
+    system\Helper::arcReturnJSON(["id" => $user->id]);
 }

@@ -94,7 +94,7 @@ function successSave(data) {
 }
 
 $("#insertModule").click(function() {
-    $("#summernote").summernote("editor.insertText", $("#imodule").val());
+    $("#summernote").summernote("editor.insertText", "{{" + $("#imodule").val() + "}}");
 });
 
 function removePage(pageid) {

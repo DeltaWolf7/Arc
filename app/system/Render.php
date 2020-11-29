@@ -73,7 +73,7 @@ class Render {
                     // if not keep trying.
                 }
                 // set router processor
-                $_SESSION["arc_processor"] = $routeProcessor;
+                Helper::$arc["arc_processor"]= $routeProcessor;
             }
 
             if ($route->id > 0) {

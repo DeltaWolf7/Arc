@@ -5,6 +5,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $group->name = ucwords(strtolower($_POST["groupname"]));
     if (empty($_POST["groupname"])) {
         system\Helper::arcAddMessage("danger", "Group name cannot be empty");
+        system\Helper::arcReturnJSON(["error" => true]);
         return;
     }
     $group->description = $_POST["groupdescription"];

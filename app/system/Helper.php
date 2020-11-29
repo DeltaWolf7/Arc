@@ -811,6 +811,6 @@ class Helper {
     }
 
     public static function arcGetProcessor() {
-        return "/" . $_SESSION["arc_processor"];
+        return "/" . self::$arc["arc_processor"];
     }
 }
