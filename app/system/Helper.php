@@ -176,9 +176,6 @@ class Helper {
             }
             return $path;
         }
-        if (ARCFORCENOSSL == true) {
-            return "http://{$_SERVER['HTTP_HOST']}/";
-        }
         return "http" . (isset($_SERVER['HTTPS']) ? "s" : "") . "://" . "{$_SERVER['HTTP_HOST']}/";
     }
 

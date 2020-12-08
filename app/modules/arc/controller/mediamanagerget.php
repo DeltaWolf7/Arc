@@ -4,8 +4,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $postPath = $_POST["path"];
 
-    $html = "<div class=\"panel panel-default\">"
-            . "<div class=\"panel-body\">";
+    $html = "";
 
     // buttons
     $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"

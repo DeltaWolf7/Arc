@@ -17,5 +17,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     foreach ($links as $link) {
         $link->delete();
     }
+
+    system\Helper::arcAddMessage("success", "User deleted");
     system\Helper::arcReturnJSON();
 }

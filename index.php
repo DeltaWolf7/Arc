@@ -32,13 +32,6 @@ if (function_exists('header_remove')) {
     header_remove('X-Powered-By'); // PHP 5.3+
 }
 
-// Check for old versons of Internet Explorer
-if (preg_match('/MSIE\s(?P<v>\d+)/i', @$_SERVER['HTTP_USER_AGENT'], $B) && $B['v'] <= 10) {
-// if IE<=10
-    echo "<div class=\"alert alert-danger\">Warning! You are using an old, unsupported version of Internet Explorer."
-    . " Feature of this application may not work correctly</div>";
-}
-
 // Check that we are using PHP 5.5 or newer.
 if (version_compare(phpversion(), "5.5.0", "<") == true) {
     die("PHP 5.5 or newer required");
@@ -64,14 +57,6 @@ switch (ARCDEBUG) {
     default:
         die("Unknown debug setting in Config.php");
         break;
-}
-
-if (ARCALWAYSSSL == true)
-{
-    if (!isset($_SERVER["HTTPS"]) || $_SERVER["HTTPS"] != "on") {
-        header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
-        exit();
-    }
 }
 
 // Include and initilise helper class.

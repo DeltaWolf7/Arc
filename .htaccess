@@ -1,3 +1,8 @@
+# uncomment the three lines below and enter your domain name to enable ssl mode.
+#RewriteEngine On 
+#RewriteCond %{HTTPS} !on 
+#RewriteRule ^(.*)$ https://your-domain-here.x.y/$1 [R=301,L]
+
 Options -Indexes
 
 <ifModule mod_gzip.c>

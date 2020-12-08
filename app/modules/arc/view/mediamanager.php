@@ -1,4 +1,10 @@
-<div id="managerView"></div>
+<div id="managerView">
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
 
 <div class="modal" id="fileViewerModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -28,11 +34,11 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-              <label for="folderName">Folder Name</label>
-                <input type='text' class='form-control' id='folderName'>      
+                <label for="folderName">Folder Name</label>
+                <input type='text' class='form-control' id='folderName'>
             </div>
             <div class="modal-footer">
-            <button class='btn btn-success' onclick='createFolder()'>Save</button>&nbsp;
+                <button class='btn btn-success' onclick='createFolder()'>Save</button>&nbsp;
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                     onclick="$('#contentViewer').html('');">Close</button>
             </div>
@@ -49,12 +55,12 @@
                         aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-            <p id="moveCount"></p>
-              <label for="folderName"><?php echo system\Helper::arcGetPath(true); ?>assets/</label>
-                <input type='text' class='form-control' id='movePath' value="folder_name">      
+                <p id="moveCount"></p>
+                <label for="folderName"><?php echo system\Helper::arcGetPath(true); ?>assets/</label>
+                <input type='text' class='form-control' id='movePath' value="folder_name">
             </div>
             <div class="modal-footer">
-            <button class='btn btn-success' onclick='doMove()'>Move</button>&nbsp;
+                <button class='btn btn-success' onclick='doMove()'>Move</button>&nbsp;
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"
                     onclick="$('#contentViewer').html('');">Close</button>
             </div>

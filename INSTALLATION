@@ -1,6 +1,7 @@
 1. Create a database and import the included SQL files.
 2. Rename the config.php.dist file in app/system to config.php
-3. Edit the config.php file:-
+3. Edit the .htaccess file to enable SSL (optional).
+4. Edit the config.php file:-
     a. ARCDBSERVER - database server
     b. ARCDBNAME - database name
     c. ARCDBUSER - database username
@@ -11,4 +12,4 @@
     h. ARCSESSIONTIMEOUT - session timeout
     i. ARCFORCENOSSL - force SSL off
     j. ARCIVKEYPAIR - Encryption key, MUST BE CHANGED
-4. Login to site with 'admin@server.local' and 'password'
+5. Login to site with 'admin@server.local' and 'password'

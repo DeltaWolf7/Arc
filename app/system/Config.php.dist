@@ -59,14 +59,7 @@ class Config {
         if (!date_default_timezone_get()) {
             date_default_timezone_set('Europe/London');
         }
-        
-        // Force SSL off, required for some special applications
-        // Example: PHP desktop
-        define('ARCFORCENOSSL', false);
-
-        // Always switch to SSL
-        define('ARCALWAYSSSL', false);
-        
+               
         // Encryption key, must be 16 characters default.
         define('ARCIVKEYPAIR', "1234567890123456");
     }

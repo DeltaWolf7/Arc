@@ -38,7 +38,7 @@ function getSuccess(data) {
 function removeUser(userid) {
     arcAjaxRequest("arc/userremove", {
         id: userid
-    }, arcReload(), null);
+    }, arcReload(), arcGetStatus());
 }
 
 function exportUsers() {
