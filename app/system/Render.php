@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 Craig Longford (deltawolf7@gmail.com).
+ * Copyright 2021 Craig Longford (deltawolf7@gmail.com).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,14 +35,14 @@ class Render {
 
     public static function arcRenderContent($uri) {
         // set session if it exists.
-        if (isset($_POST["arcsid"])) {
-            Helper::arcSetSession($_POST["arcsid"]);
+        if (isset($_POST['arcsid'])) {
+            Helper::arcSetSession($_POST['arcsid']);
         }
 
         //stop impersonating user
-        if ($uri == "arcsiu") {
+        if ($uri == 'arcsiu') {
             Helper::arcStopImpersonatingUser();
-            Helper::arcRedirect("/");
+            Helper::arcRedirect('/');
             return;
         }
 
@@ -59,11 +59,11 @@ class Render {
 
             // check for route processor at root of uri, example "processor/category/product" if we have no route.
             if ($route->id == 0) {
-                $testRoute = "";
+                $testRoute = '';
                 foreach ($uriParts as $part) {
                     // try to find a route.
-                    $testRoute .= "/" . $part;
-                    $testRoute = trim($testRoute, "/"); // get rid of slash at the start if we have one.
+                    $testRoute .= "/{$part}";
+                    $testRoute = trim($testRoute, '/'); // get rid of slash at the start if we have one.
                     $route = \Router::getRoute($testRoute);
                     if ($route->id != 0) {
                         // did we find a route? If we did break the loop.
@@ -73,7 +73,7 @@ class Render {
                     // if not keep trying.
                 }
                 // set router processor
-                Helper::$arc["arc_processor"]= $routeProcessor;
+                Helper::$arc['arc_processor']= $routeProcessor;
             }
 
             if ($route->id > 0) {
@@ -91,13 +91,13 @@ class Render {
                 }
             } else {               
                 // no route, 404
-                $page = \Page::getBySEOURL("error");
+                $page = \Page::getBySEOURL('error');
                 http_response_code(404);
-                \Log::createLog("warning", "arc", "404: " . $uri);
+                \Log::createLog('warning', 'arc', "404: {$uri}");
             }
         } else {
             // new get
-            if (isset($_POST["action"]) && $_POST["action"] == "getarcstatusmessages") {
+            if (isset($_POST['action']) && $_POST['action'] == 'getarcstatusmessages') {
                 Helper::arcGetStatusMessages();
                 return;
             }
@@ -106,64 +106,64 @@ class Render {
         // expired session - check for actual user because guests don't need to timeout.
         if (ARCSESSIONTIMEOUT > 0) {
             $timeout = ARCSESSIONTIMEOUT * 60;
-            if (isset($_SESSION["LAST_ACTIVITY"]) && (time() - $_SESSION["LAST_ACTIVITY"] > $timeout) && isset($_SESSION["arc_user"])) {
+            if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout) && isset($_SESSION['arc_user'])) {
                 // 401 session timeout
                 session_unset();
                 session_destroy();
-                $page = \Page::getBySEOURL("error");
+                $page = \Page::getBySEOURL('error');
                 http_response_code(401);
-                \Log::createLog("warning", "arc", "401: " . $uri);
+                \Log::createLog('warning', 'arc', "401: {$uri}");
             }
         } else {
-            Helper::arcAddFooter("js", Helper::arcGetPath() . "vendor/arc/js/arckeepalive.js");
+            Helper::arcAddFooter('js', Helper::arcGetPath() . 'vendor/arc/js/arckeepalive.js');
         }
 
         // update last activity time stamp
-        $_SESSION["LAST_ACTIVITY"] = time();
+        $_SESSION['LAST_ACTIVITY'] = time();
        
         if (Helper::arcIsAjaxRequest() == false) {
             // get the current theme
-            $theme = \SystemSetting::getByKey("ARC_THEME");
+            $theme = \SystemSetting::getByKey('ARC_THEME');
 
             // setup page
-            Helper::arcAddHeader("title", $page->title);
+            Helper::arcAddHeader('title', $page->title);
             if (!empty($page->metadescription)) {
-                Helper::arcAddHeader("description", $page->metadescription);
+                Helper::arcAddHeader('description', $page->metadescription);
             }
 
             if (!empty($page->metakeywords)) {
-                Helper::arcAddHeader("keywords", $page->metakeywords);
+                Helper::arcAddHeader('keywords', $page->metakeywords);
             }
 
             // Check the theme in config exists.
-            if (!file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value)) {
+            if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value)) {
                 $name = $theme->value;
-                $theme->value = "beagle";
+                $theme->value = 'beagle';
                 $theme->update();
-                die("Unable to find theme '" . $name . "'. Selected theme reset to 'beagle'.");
+                die("Unable to find theme '{$name}'. Selected theme reset to 'beagle'.");
             }
 
             // If page has theme set, use it.
-            if ($page->theme != "none") {
+            if ($page->theme != 'none') {
                 $theme->value = $page->theme;
                 // If page theme is not present, switch to global theme.
-                if (!file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value)) {
-                    $theme = \SystemSetting::getByKey("ARC_THEME");
+                if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value)) {
+                    $theme = \SystemSetting::getByKey('ARC_THEME');
                 }
             }
 
             // Check if the theme has a controller and include it if it does.
-            if (file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php")) {
-                include_once Helper::arcGetPath(true) . "themes/" . $theme->value . "/controller/controller.php";
+            if (file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/controller/controller.php')) {
+                include_once Helper::arcGetPath(true) . 'themes/' . $theme->value . '/controller/controller.php';
             }
 
-            $gAdsense = \SystemSetting::getByKey("ARC_GADSENSE");
+            $gAdsense = \SystemSetting::getByKey('ARC_GADSENSE');
             if (strlen($gAdsense->value) > 0) {
-                Helper::arcAddFooter("external", "<script data-ad-client=\"" . $gAdsense->value . "\" async src=\"https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js\"></script>");
+                Helper::arcAddFooter('external', '<script data-ad-client="' . $gAdsense->value . '" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>');
             }
         }
 
-        $groups[] = \UserGroup::getByName("Guests");
+        $groups[] = \UserGroup::getByName('Guests');
         if (Helper::arcIsUserLoggedIn() == true) {
             $groups = array_merge($groups, Helper::arcGetUser()->getGroups());
         }
@@ -174,48 +174,48 @@ class Render {
                 $uriToCheck = $routeProcessor;
             }
 
-            if (!\Router::hasPermission($groups, $uriToCheck) && $page->seourl != "error") {
+            if (!\Router::hasPermission($groups, $uriToCheck) && $page->seourl != 'error') {
                 // 403 permission denied
-                $page = \Page::getBySEOURL("error");
+                $page = \Page::getBySEOURL('error');
                 http_response_code(403);
-                \Log::createLog("warning", "arc", "403: " . $uri);
+                \Log::createLog('warning', 'arc', "403: {$uri}");
             }
 
             // template
-            if (!file_exists(Helper::arcGetPath(true) . "themes/" . $theme->value . "/template.php")) {
-                die("Unable to find template.php for theme '" . $theme->value . "'.");
+            if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/template.php')) {
+                die('Unable to find template.php for theme \'' . $theme->value . '\'.');
             }
 
-            $content = file_get_contents(Helper::arcGetPath(true) . "themes/" . $theme->value . "/template.php");
+            $content = file_get_contents(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/template.php');
 
             // custom menu
-            if (file_exists(Helper::arcGetThemePath(true) . "menu.php")) {
+            if (file_exists(Helper::arcGetThemePath(true) . 'menu.php')) {
                 ob_start();
-                include Helper::arcGetThemePath(true) . "menu.php";
+                include Helper::arcGetThemePath(true) . 'menu.php';
                 $newContent = ob_get_contents();
                 ob_end_clean();
-                $content = str_replace("{{arc:menu}}", $newContent, $content);
+                $content = str_replace('{{arc:menu}}', $newContent, $content);
             }
 
             // header
-            if ($page->showtitle == "1") {
-                $content = str_replace("{{arc:title}}", "{$page->title}", $content);
+            if ($page->showtitle == '1') {
+                $content = str_replace('{{arc:title}}', "{$page->title}", $content);
             } else {
-                $content = str_replace("{{arc:title}}", "", $content);
+                $content = str_replace('{{arc:title}}', '', $content);
             }
 
             // impersonating
-            if (isset($_SESSION["arc_imposter"])) {
-                $content = str_replace("{{arc:impersonate}}", "<div class=\"alert alert-info\">Impersonating " . Helper::arcGetUser()->getFullname() . ". <a href=\"/arcsiu\">Stop impersonating user</a></div>", $content);
+            if (isset($_SESSION['arc_imposter'])) {
+                $content = str_replace('{{arc:impersonate}}', '<div class="alert alert-info>Impersonating ' . Helper::arcGetUser()->getFullname() . '. <a href="/arcsiu">Stop impersonating user</a></div>', $content);
             } else {
-                $content = str_replace("{{arc:impersonate}}", "", $content);
+                $content = str_replace('{{arc:impersonate}}', '', $content);
             }
 
             // body
-            $content = str_replace("{{arc:content}}", Helper::arcProcessModuleTags(html_entity_decode($page->content)), $content);
+            $content = str_replace('{{arc:content}}', Helper::arcProcessModuleTags(html_entity_decode($page->content)), $content);
             
             // page icon
-            $content = str_replace("{{arc:pageicon}}", "<i class=\"" . $page->iconclass . "\"></i> ", $content);
+            $content = str_replace('{{arc:pageicon}}', '<i class="' . $page->iconclass . '"></i> ', $content);
 
             //template modules
             $content = Helper::arcProcessModuleTags($content);
@@ -226,11 +226,11 @@ class Render {
             if (count($uriParts) == 2) {
                 // module ajax request
                 include Helper::arcGetModuleControllerPath($uriParts[0], $uriParts[1], true);
-            } else if (count($uriParts) == 4 && $uriParts[0] == "addons") {
+            } else if (count($uriParts) == 4 && $uriParts[0] == 'addons') {
                 // addon ajax request
                 include Helper::arcGetAddonControllerPath($uriParts[1], $uriParts[2], $uriParts[3], true);
             } else {
-                \Log::createLog("danger", "Ajax", "Invalid url: '{$uri}'");
+                \Log::createLog('danger', 'Ajax', "Invalid url: '{$uri}'");
             }
         }
     }

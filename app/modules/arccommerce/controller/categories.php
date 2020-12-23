@@ -48,7 +48,6 @@ if (!empty($search)) {
         . PHP_EOL . "<li class=\"breadcrumb-item\">Search results for '" . $search . "'</li>";
     $categories = [];
 } else {
-    system\Helper::arcAddFooter("js", system\Helper::arcGetModulePath() . "css/categories.css");
     if (count($uri) > 1) {
         $catData = explode("-", $uri[count($uri) - 1]);
         $categories = ArcEcomCategory::getAllCategoriesByParentID($catData[0]);

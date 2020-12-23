@@ -1,7 +1,5 @@
 <?php
 
-namespace system;
-
 /* 
  * The MIT License
  *
@@ -26,41 +24,51 @@ namespace system;
  * THE SOFTWARE.
  */
 
-class Config {
-    
+/**
+ * Email object
+ */
+class Email extends DataProvider {
+
+    // Unique key used by the setting
+    public $key;
+    // Subject
+    public $subject;
+    // Email body
+    public $text;
+    // System required?
+    public $protected;
+
+
+    /**
+     * Default constructor
+     */
     public function __construct() {
-        
-        // Turn on output buffering
-        ob_start();
-        
-        // Database server or file path
-        define('ARCDBSERVER', 'localhost');
-        // Database name
-        define('ARCDBNAME', 'arc');
-        // Database username
-        define('ARCDBUSER', 'username');
-        // Database password
-        define('ARCDBPASSWORD', 'password');
-        // Database type (MySQL, MariaDB, MSSQL, Sybase, PostgreSQL, Oracle, Sqlite)
-        define('ARCDBTYPE', 'mysql');
-        // Database prefix
-        define('ARCDBPREFIX', 'arc_');
-        // Database charset
-        define('ARCCHARSET', 'utf8');
-                
-        // Project debug mode
-        define('ARCDEBUG', true);
-        
-        // Session Timeout (minutes), default 1 hour.
-        // Set to 0 to disable.
-        define('ARCSESSIONTIMEOUT', 60);
-        
-        // Timezone (if not set, default to UK standard)
-        if (!date_default_timezone_get()) {
-            date_default_timezone_set('Europe/London');
-        }
-               
-        // Encryption key, must be 16 characters default.
-        define('ARCIVKEYPAIR', "1234567890123456");
+        parent::__construct();
+        $this->key = "";
+        $this->subject = "";
+        $this->text = "";
+        $this->protected = false;
+        $this->table = ARCDBPREFIX . "emails";
+        $this->map = ["id" => "id", "key" => "key", "subject" => "subject", "text" => "text", "protected" => "protected"];
+    }
+
+    /**
+     * Get email by its Key
+     * @param string $key
+     * @return \Email
+     */
+    public static function getByKey($key) {
+        $setting = new Email();
+        $setting->get(["key" => $key]);
+        return $setting;
+    }
+
+    /**
+     * Get all the emails from the database.
+     * @return Array
+     */
+    public static function getAll() {
+        $settings = new SystemSetting();
+        return $settings->getCollection([]);
     }
 }

@@ -41,8 +41,19 @@
 
 <div class="card">
     <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
-        <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
+<?php
+    $cat_image = system\Helper::arcGetPath(true) . "assets/categories/" . $category->image;
+    if (!file_exists($cat_image)) {
+        $cat_image = "<div style=\"height: 100px;\" class=\"text-center pt-4\"><h3>" . $category->name . "</h3></div>";
+        echo $cat_image;
+    } else {
+        ?>
+    <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
             alt="<?php echo $category->name; ?>">
+        <?php
+    }
+    
+?>
     </a>
 </div>
 

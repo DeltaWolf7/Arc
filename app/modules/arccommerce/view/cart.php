@@ -70,8 +70,10 @@
  $shipping = 0.00;
  if ($del->id > 0) {
      $shipping = $del->price;
-     $order->shipping - $del->price;
+     $order->shippingprice = $del->price;
  }
+
+ $paypal = SystemSetting::getByKey("ECOM_PAYPAL");
 
 ?>
 
@@ -85,7 +87,7 @@
     <div class="row mt-4">
         <div class="col-sm-6">
             <div>
-                <div class="text-100 text-grey-m1 align-middle">
+                <div class="mt-1 mb-2 text-secondary-d1 text-600 text-125">
                     Billing\Delivery:
                 </div>
 
@@ -332,7 +334,7 @@
                 </div>
 
                 <?php 
-    if ($user != null && $order->shippingtypeid != 0) {
+    if ($order->shippingtypeid != 0) {
 ?>
                 <div class="row">
                     <div class="col-12 text-right" id="smart-button-container">
@@ -341,7 +343,7 @@
                         </div>
                     </div>
                     <script
-                        src="https://www.paypal.com/sdk/js?client-id=AcNcpdp4jZH7gK3-8T9i6ppThFXmTHIFr5OEQPiITl6e6eXxOAh1JCiS3icIRbw2v6Hn0f0ZcFacAotj&currency=GBP"
+                        src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal->value; ?>&currency=GBP"
                         data-sdk-integration-source="button-factory"></script>
                     <script>
                     function initPayPalButton() {
@@ -400,7 +402,7 @@
 
                 <?php } else { 
                     if ($user == null) {
-                        echo "<div class=\"alert alert-warning\"><i class=\"fas fa-exclamation-triangle\"></i> Register/Login to checkout</div>"; 
+                        echo "<div class=\"alert alert-warning\"><i class=\"fas fa-exclamation-triangle\"></i> Select a delivery method</div>"; 
                     }
                      }?>
             </div>
@@ -413,7 +415,7 @@
             $order->total = $total;
             $order->subtotal = $subtotal;
             $order->vat = $vat;
-            $order->shipping = $shipping;
+            $order->weight = $weight;
             $order->update();
             $_SESSION["order"] = $order->id;    
             

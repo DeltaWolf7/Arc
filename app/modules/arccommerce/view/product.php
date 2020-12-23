@@ -1,5 +1,5 @@
 <?php
-    if ($product->id > 0) {
+    if (isset($product) && $product->id > 0) {
 ?>
 <div class="row">
     <div class="col-md-6">
@@ -60,8 +60,14 @@
                     echo "</select>";
                 }
             }
+
+            if ($product->stock > 0) {
+                ?>
+                <button type="submit" class="mt-4 btn btn-primary btn-block">Add to cart</button>
+                <?php
+            }
         ?>
-            <button type="submit" class="mt-4 btn btn-primary btn-block">Add to cart</button>
+            
         </form>
         </p>
     </div>
@@ -86,7 +92,49 @@
 
     ?>
 
-No product found page.
+<div class="row justify-content-center pos-rel">
+
+              <div class="pos-rel col-12 col-sm-7 mt-1 mt-sm-3">
+                <div class="py-3 px-1 py-lg-4 px-lg-5">
+
+                  <div class="text-center fa-4x">
+                    <span class="text-100 text-dark-m3 d-sm-none"><!-- smaller text to fit in small devices -->
+                ¯\_(ツ)_/¯
+            </span>
+                    <span class="text-110 text-dark-m3 d-none d-sm-inline">
+                ¯\_(ツ)_/¯
+            </span>
+                  </div>
+
+
+                  <div class="text-center fa-4x text-orange-d2 letter-spacing-4">
+                   Lost?
+                  </div>
+
+
+                  <div class="text-center">
+                    <span class="text-150 text-primary-d2">
+                Sorry, I don't know what product you are trying to find..
+            </span>
+                  </div>
+
+
+                  <div class="text-dark-m2 text-110 text-center mt-45">
+                    Try using the search or browse the categories.
+                  </div>
+
+
+                                    <div class="text-center mt-4">
+                    <a href="/" class="btn btn-bgc-white btn-outline-primary px-35">
+                      <i class="fa fa-home"></i>
+                      Home
+                    </a>
+                  </div>
+
+
+                </div>
+              </div>
+            </div>
 
 <?php
 }

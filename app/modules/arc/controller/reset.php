@@ -10,13 +10,13 @@ if (system\Helper::arcIsAjaxRequest()) {
         $user->setPassword($password);
         $user->update();
 
-        $messageS = SystemSetting::getByKey("ARC_PASSWORD_RESET_MESSAGE");
+        $messageS = Email::getByKey("ARC_PASSWORD_RESET");
 
-        $message = html_entity_decode($messageS->value);
+        $message = html_entity_decode($messageS->text);
         $message = str_replace("{password}", $password, $message);
 
         $mail = new Mail();
-        $mail->Send($user->email, "Password Reset Request", $message, true);
+        $mail->Send($user->email, $messageS->subject, $message, true);
 
         system\Helper::arcAddMessage("success", "Password reset, please check your email.");
         Log::createLog("warning", "user", "Password reset request '" . $_POST["emailf"] . "'.");

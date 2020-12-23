@@ -25,7 +25,7 @@
  */
 
 // Prevent PHP7 bug with memcache
-ini_set("session.lazy_write", 0);
+ini_set('session.lazy_write', 0);
 
 // Hide PHP version
 if (function_exists('header_remove')) {
@@ -33,15 +33,15 @@ if (function_exists('header_remove')) {
 }
 
 // Check that we are using PHP 5.5 or newer.
-if (version_compare(phpversion(), "5.5.0", "<") == true) {
-    die("PHP 5.5 or newer required");
+if (version_compare(phpversion(), '5.5.0', '<') == true) {
+    die('PHP 5.5 or newer required');
 }
 
 // Check we have a config file and include
-if (!is_readable("app/system/Config.php")) {
-    die("No Config.php found, configure and rename Config.php.dist to Config.php in app/system.");
+if (!is_readable('app/system/Config.php')) {
+    die('No Config.php found, configure and rename Config.php.dist to Config.php in app/system.');
 }
-require_once "app/system/Config.php";
+require_once 'app/system/Config.php';
 new system\Config();
 
 // Set debug environment.
@@ -55,15 +55,15 @@ switch (ARCDEBUG) {
         ini_set('display_errors', 0);
         break;
     default:
-        die("Unknown debug setting in Config.php");
+        die('Unknown debug setting in Config.php');
         break;
 }
 
 // Include and initilise helper class.
-require_once "app/system/Initialiser.php";
-require_once "app/system/API.php";
-require_once "app/system/Render.php";
-require_once "app/system/Helper.php";
+require_once 'app/system/Initialiser.php';
+require_once 'app/system/API.php';
+require_once 'app/system/Render.php';
+require_once 'app/system/Helper.php';
 system\Helper::Init();
 
 // Setup autoloader.

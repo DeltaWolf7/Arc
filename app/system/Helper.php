@@ -5,7 +5,7 @@ namespace system;
 /* 
  * The MIT License
  *
- * Copyright 2017 Craig Longford (deltawolf7@gmail.com).
+ * Copyright 2021 Craig Longford (deltawolf7@gmail.com).
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.9.0.0";
+        self::$arc["version"] = "0.9.1.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -589,51 +589,51 @@ class Helper {
      * @param string $view View name
      * Includes the module by name and view along with controller if it exists.
      */
-    public static function arcGetModule($name, $view, $values = []) {
+    public static function arcGetModule($arc_name, $arc_view, $values = []) {
         // Set values of module
         self::$arc["modulevalues"] = $values;
 
-        if (!file_exists(self::arcGetPath(true) . "app/modules/{$name}")) {
-            \Log::createLog("warning", "Modules", "Modules by the name of {$name} was not found.");
+        if (!file_exists(self::arcGetPath(true) . "app/modules/{$arc_name}")) {
+            \Log::createLog("warning", "Modules", "Modules by the name of {$arc_name} was not found.");
             return;
         }
 
-        self::$arc["modulepath"] = "app/modules/{$name}/";
+        self::$arc["modulepath"] = "app/modules/{$arc_name}/";
 
-        if (file_exists(self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php")) {
-            include_once self::arcGetPath(true) . "app/modules/{$name}/controller/{$view}.php";
+        if (file_exists(self::arcGetPath(true) . "app/modules/{$arc_name}/controller/{$arc_view}.php")) {
+            include_once self::arcGetPath(true) . "app/modules/{$arc_name}/controller/{$arc_view}.php";
         }
 
         ob_start();
-        if (file_exists(self::arcGetThemePath(true) . "override/{$name}/{$view}.php")) {
-            include_once self::arcGetThemePath(true) . "override/{$name}/{$view}.php";
+        if (file_exists(self::arcGetThemePath(true) . "override/{$arc_name}/{$arc_view}.php")) {
+            include_once self::arcGetThemePath(true) . "override/{$arc_name}/{$arc_view}.php";
             // allow override on controller
-            if (file_exists(self::arcGetThemePath(true) . "controller/override/{$name}/{$view}.php")) {
-                include_once self::arcGetThemePath(true) . "controller/override/{$name}/{$view}.php";
+            if (file_exists(self::arcGetThemePath(true) . "controller/override/{$arc_name}/{$arc_view}.php")) {
+                include_once self::arcGetThemePath(true) . "controller/override/{$arc_name}/{$arc_view}.php";
             }
-        } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php")) {
-            include_once self::arcGetPath(true) . "app/modules/{$name}/view/{$view}.php";
+        } elseif (file_exists(self::arcGetPath(true) . "app/modules/{$arc_name}/view/{$arc_view}.php")) {
+            include_once self::arcGetPath(true) . "app/modules/{$arc_name}/view/{$arc_view}.php";
         } else {        
-            if ($name != "" && $view != "") {
-                echo "<div class=\"alert alert-danger\">The module '{$name}' has no view named '{$view}'.</div>";
-                \Log::createLog("danger", "Modules", "The module '{$name}' has no view named '{$view}'.");
+            if ($arc_name != "" && $arc_view != "") {
+                echo "<div class=\"alert alert-danger\">The module '{$arc_name}' has no view named '{$arc_view}'.</div>";
+                \Log::createLog("danger", "Modules", "The module '{$arc_name}' has no view named '{$arc_view}'.");
             }
         }
         // addons
-        if (is_dir(self::arcGetPath(true) . "app/addons/{$name}/{$view}/view")) {
-            $addons = scandir(self::arcGetPath(true) . "app/addons/{$name}/{$view}/view");
+        if (is_dir(self::arcGetPath(true) . "app/addons/{$arc_name}/{$arc_view}/view") === true) {
+            $addons = scandir(self::arcGetPath(true) . "app/addons/{$arc_name}/{$arc_view}/view");
             foreach($addons as $addon) {
                 if ($addon != "." && $addon != "..") {
 
-                    self::$arc["addonpath"] = "app/addons/{$name}/{$view}/";
+                    self::$arc["addonpath"] = "app/addons/{$arc_name}/{$arc_view}/";
 
                     // controllers
-                    if (file_exists(self::arcGetPath(true) . "app/addons/{$name}/{$view}/controller/{$addon}")) {
-                        include_once self::arcGetPath(true) . "app/addons/{$name}/{$view}/controller/{$addon}";
+                    if (file_exists(self::arcGetPath(true) . "app/addons/{$arc_name}/{$arc_view}/controller/{$addon}")) {
+                        include_once self::arcGetPath(true) . "app/addons/{$arc_name}/{$arc_view}/controller/{$addon}";
                     }
 
                     // page addon
-                    include_once self::arcGetPath(true) . "app/addons/{$name}/{$view}/view/" . $addon;
+                    include_once self::arcGetPath(true) . "app/addons/{$arc_name}/{$arc_view}/view/" . $addon;
                 }
             }
         }
@@ -645,7 +645,7 @@ class Helper {
      * @return string
      */
     public static function arcGetVersion() {
-        return "Arc Version " . self::$arc["version"];
+        return "Powered Arc";
     }
 
     public static function arcGetURI() {

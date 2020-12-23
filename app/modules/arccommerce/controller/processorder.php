@@ -2,27 +2,39 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
 
-    $user = system\Helper::arcGetUser();
-
     $data = json_decode($_POST["data"]);
     $orderid = $_POST["orderid"];
+    $user = $user = User::getByEmail($data->payer->email_address);
+    if ($user->id == 0) {
+        $user = new User();
+        $user->email = $data->payer->email_address;
+        $password = md5(uniqid($user->email, true));
+        $user->setPassword($password);
+        $user->firstname = $data->payer->name->given_name;
+        $user->lastname = $data->payer->name->surname;
+        $user->enabled = 1;
+        $user->update();
+    }
+
+    $name = $data->payer->name->given_name . " " . $data->payer->name->surname;
 
     $order = ArcEcomOrder::getByID($orderid);
     $order->paymentdata = $data;
+    $order->userid = $user->id;
 
     // https://developer.paypal.com/docs/api/orders/v2/#orders_capture
     switch ($data->status) {
         case "COMPLETED":
-        case "APPROVED":
-            $order->status = 2;
+            $order->status = "PENDING";
             break;
+        case "APPROVED":
         case "CREATED":
         case "SAVED":
         case "PAYER_ACTION_REQUIRED":
-            $order->status = 9;
+            $order->status = "Waiting Payment";
             break;
         case "VOIDED":
-            $order->status = 4;
+            $order->status = "Payment Failure";
             break;
     }
 
@@ -64,11 +76,22 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
 
     // Set order addresses
-    $order->shippingid = $shipto->id;
-    $order->billingid = $shipto->id;
+    $order->shipping = $name . PHP_EOL . $shipping->address_line_1 . PHP_EOL . $shipping->admin_area_2
+         . PHP_EOL . $county = $shipping->admin_area_1 . PHP_EOL . $shipping->postal_code;
+    $order->billing = $name . PHP_EOL . $shipping->address_line_1 . PHP_EOL . $shipping->admin_area_2
+        . PHP_EOL . $county = $shipping->admin_area_1 . PHP_EOL . $shipping->postal_code;
 
     $order->update();
+    
+
+    // send email invoice
+    $password = md5(uniqid($user->email, true));
+    $messageS = SystemSetting::getByKey("ECOM_EMAILINVOICE");
+    $message = html_entity_decode($messageS->value);
+    $message = str_replace("{password}", $password, $message);
+
+    $mail = new Mail();
+    $mail->Send($user->email, "Order " . $order->id, $message, true);
 
     system\Helper::arcReturnJSON(["redirect" => "/ordercomplete"]);
-
 }

@@ -3,7 +3,6 @@
         system\Helper::arcRedirect("/");
     }
     $order = ArcEcomOrder::getByID($_SESSION["order"]);
-    $status = ArcEcomOrderStatus::getByID($order->status);
 ?>
 
 <div class="card">
@@ -13,13 +12,10 @@
             Thank you, we have your order.
         </p>
         <p class="card-text">
-            You can review the process in the order section of your account.
-        </p>
-        <p class="card-text">
             We aim to process orders as soon as possible and will be in touch soon to update you on the progress.
         </p>
         <p class="card-text">
-            Status: <?php echo $status->name; ?>
+            Status: <?php echo $order->status; ?>
         </p>
     </div>
 </div>
