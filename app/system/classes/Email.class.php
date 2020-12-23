@@ -52,6 +52,12 @@ class Email extends DataProvider {
         $this->map = ["id" => "id", "key" => "key", "subject" => "subject", "text" => "text", "protected" => "protected"];
     }
 
+    public static function getByID($id) {
+        $setting = new Email();
+        $setting->get(["id" => $id]);
+        return $setting;
+    }
+
     /**
      * Get email by its Key
      * @param string $key
@@ -68,7 +74,7 @@ class Email extends DataProvider {
      * @return Array
      */
     public static function getAll() {
-        $settings = new SystemSetting();
+        $settings = new Email();
         return $settings->getCollection([]);
     }
 }
