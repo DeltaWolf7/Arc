@@ -82,16 +82,35 @@ if (system\Helper::arcIsAjaxRequest()) {
         . PHP_EOL . $county = $shipping->admin_area_1 . PHP_EOL . $shipping->postal_code;
 
     $order->update();
-    
 
+    $title = SystemSetting::getByKey("ARC_SITETITLE");
+    $logo = SystemSetting::getByKey("ARC_LOGO_PATH");
+
+    $items = ArcEcomOrderLine::getByOrderID($order->id);
+    $itemLines = "";
+    foreach ($items as $item) {
+        $itemLines .= "<tr class=\"item\"><td>" . $item->description . " x" . $item->qty . "<br />";
+        foreach ($item->options as $option) {
+            $opt = ArcEcomAttribute::getByID($option);
+            $type = ArcEcomAttributeType::getByID($opt->typeid);
+            $itemLines .= $type->name . " +£" . $opt->priceadjust;
+        }
+        $itemLines .= "</td><td>£" . ($item->price * $item->qty) . "</td></tr>";
+    }
+    
     // send email invoice
-    $password = md5(uniqid($user->email, true));
-    $messageS = SystemSetting::getByKey("ECOM_EMAILINVOICE");
-    $message = html_entity_decode($messageS->value);
-    $message = str_replace("{password}", $password, $message);
+    $email = Email::getByKey("ARC_ECOM_ORDER");
+    $message = html_entity_decode($email->text);
+    $message = str_replace("{arc::sitetitle}", $title->value, $message);
+    $message = str_replace("{arc::emailbilling}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
+    $message = str_replace("{arc::emaildelivery}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
+    $message = str_replace("{arc::emailstatus}", $order->status, $message);
+    $message = str_replace("{arc::emailtotal}", $order->total, $message);   
+    $message = str_replace("{arc::emailitems}", $itemLines, $message);
+    $message = str_replace("{arc::sitelogo}", system\Helper::arcGetPath() . $logo->value, $message);
 
     $mail = new Mail();
-    $mail->Send($user->email, "Order " . $order->id, $message, true);
+    $mail->Send($user->email, $title->value . " Order " . $order->id, $message, true);
 
     system\Helper::arcReturnJSON(["redirect" => "/ordercomplete"]);
 }

@@ -33,13 +33,13 @@ class ArcEcomProduct extends DataProvider {
 
     public static function getByID($id) {
         $product = new ArcEcomProduct();
-        $product->get(["id" => $id]);
+        $product->get(["id" => $id, "LIMIT" => 1]);
         return $product;
     }
 
     public static function getByModel($model) {
         $product = new ArcEcomProduct();
-        $product->get(["model" => $model]);
+        $product->get(["model" => $model, "LIMIT" => 1]);
         return $product;
     }
 

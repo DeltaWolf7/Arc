@@ -25,7 +25,7 @@ class ArcEcomOrderLine extends DataProvider {
 
     public static function getByID($id) {
         $line = new ArcEcomOrderLine();
-        $line->get(["id" => $id]);
+        $line->get(["id" => $id, "LIMIT" => 1]);
         return $line;
     }
 

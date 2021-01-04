@@ -17,7 +17,7 @@ class ArcEcomDelivery extends DataProvider {
 
     public static function getByID($id) {
         $delivery = new ArcEcomDelivery();
-        $delivery->get(["id" => $id]);
+        $delivery->get(["id" => $id, "LIMIT" => 1]);
         return $delivery;
     }
 

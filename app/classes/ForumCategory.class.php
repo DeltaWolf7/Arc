@@ -22,7 +22,7 @@ class ForumCategory extends DataProvider {
 
     public static function getByID($id) {
         $category = new ForumCategory();
-        $category->get(["id" => $id]);
+        $category->get(["id" => $id, "LIMIT" => 1]);
         return $category;
     }
 

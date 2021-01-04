@@ -22,7 +22,7 @@ class ArcDownload extends DataProvider {
 
     public static function getByID($id) {
         $download = new ArcDownload();
-        $download->get(["id" => $id]);
+        $download->get(["id" => $id, "LIMIT" => 1]);
         return $download;
     }
 

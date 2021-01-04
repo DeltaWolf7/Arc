@@ -27,7 +27,7 @@ class CRMUserAddress extends DataProvider {
 
     public static function getByID($id) {
         $crm = new CRMUserAddress();
-        $crm->get(["id" => $id]);
+        $crm->get(["id" => $id, "LIMIT" => 1]);
         return $crm;
     }
 
@@ -38,13 +38,13 @@ class CRMUserAddress extends DataProvider {
 
     public static function getDeliveryByUserID($id) {
         $crm = new CRMUserAddress();
-        $crm->get(["userid" => $id, "isdelivery" => 1]);
+        $crm->get(["userid" => $id, "isdelivery" => 1, "LIMIT" => 1]);
         return $crm;
     }
 
     public static function getBillingByUserID($id) {
         $crm = new CRMUserAddress();
-        $crm->get(["userid" => $id, "isbilling" => 1]);
+        $crm->get(["userid" => $id, "isbilling" => 1, "LIMIT" => 1]);
         return $crm;
     }
 

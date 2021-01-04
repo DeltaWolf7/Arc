@@ -22,7 +22,7 @@ class CRMUserContact extends DataProvider {
 
     public static function getByID($id) {
         $crm = new CRMUserContact();
-        $crm->get(["id" => $id]);
+        $crm->get(["id" => $id, "LIMIT" => 1]);
         return $crm;
     }
 

@@ -54,7 +54,7 @@ class Email extends DataProvider {
 
     public static function getByID($id) {
         $setting = new Email();
-        $setting->get(["id" => $id]);
+        $setting->get(["id" => $id, "LIMIT" => 1]);
         return $setting;
     }
 
@@ -65,7 +65,7 @@ class Email extends DataProvider {
      */
     public static function getByKey($key) {
         $setting = new Email();
-        $setting->get(["key" => $key]);
+        $setting->get(["key" => $key, "LIMIT" => 1]);
         return $setting;
     }
 

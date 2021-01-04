@@ -22,19 +22,19 @@ class ArcEcomAttribute extends DataProvider {
 
     public static function getByID($id) {
         $attribute = new ArcEcomAttribute();
-        $attribute->get(["id" => $id]);
+        $attribute->get(["id" => $id, "LIMIT" => 1]);
         return $attribute;
     }
 
     public static function getByProductIDAndTypeAndValue($productid, $type, $value) {
         $attribute = new ArcEcomAttribute();
-        $attribute->get(["productid" => $productid, "typeid" => $type, "value" => $value]);
+        $attribute->get(["productid" => $productid, "typeid" => $type, "value" => $value, "LIMIT" => 1]);
         return $attribute;
     }
 
     public static function getByProductIDAndType($productid, $type) {
         $attribute = new ArcEcomAttribute();
-        $attribute->get(["productid" => $productid, "typeid" => $type]);
+        $attribute->get(["productid" => $productid, "typeid" => $type, "LIMIT" => 1]);
         return $attribute;
     }
 

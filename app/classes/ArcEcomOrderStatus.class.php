@@ -13,7 +13,7 @@ class ArcEcomOrderStatus extends DataProvider {
 
     public static function getByID($id) {
         $brand = new ArcEcomOrderStatus();
-        $brand->get(["id" => $id]);
+        $brand->get(["id" => $id, "LIMIT" => 1]);
         return $brand;
     }
 

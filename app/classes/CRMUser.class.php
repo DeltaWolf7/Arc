@@ -21,19 +21,19 @@ class CRMUser extends DataProvider {
 
     public static function getByID($id) {
         $crm = new CRMUser();
-        $crm->get(["id" => $id]);
+        $crm->get(["id" => $id, "LIMIT" => 1]);
         return $crm;
     }
 
     public static function getByUserID($id) {
         $crm = new CRMUser();
-        $crm->get(["userid" => $id]);
+        $crm->get(["userid" => $id, "LIMIT" => 1]);
         return $crm;
     }
 
     public static function getByUserIDAndCreate($id) {
         $crm = new CRMUser();
-        $crm->get(["userid" => $id]);
+        $crm->get(["userid" => $id, "LIMIT" => 1]);
         if ($crm->id == 0 && $id > 0) {
             $crm = new CRMUser();
             $crm->userid = $id;

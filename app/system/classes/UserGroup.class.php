@@ -52,7 +52,7 @@ class UserGroup extends DataProvider {
      */
     public static function getByName($name) {
         $group = new UserGroup();
-        $group->get(['name' => $name]);
+        $group->get(['name' => $name, "LIMIT" => 1]);
         return $group;
     }
 
@@ -95,7 +95,7 @@ class UserGroup extends DataProvider {
      */
     public static function getByID($id) {
         $group = new UserGroup();
-        $group->get(["id" => $id]);
+        $group->get(["id" => $id, "LIMIT" => 1]);
         return $group;
     }
 

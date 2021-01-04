@@ -8,11 +8,12 @@ class ArcEcomOrder extends DataProvider {
     public $vat;
     public $total;
     public $shipping;
-    public $shippingid;
     public $status;
-    public $billingid;
+    public $billing;
     public $shippingtypeid;
     public $paymentdata;
+    public $weight;
+    public $shippingprice;
 
     public function __construct() {
         parent::__construct();
@@ -21,27 +22,40 @@ class ArcEcomOrder extends DataProvider {
         $this->subtotal = 0.00;
         $this->vat = 0.00;
         $this->total = 0.00;
-        $this->status = 1;
+        $this->status = "New";
         $this->shipping = 0.00;
-        $this->billingid = 0;
-        $this->shippingid = 0;
+        $this->billing = "";
+        $this->shipping = "";
         $this->shippingtypeid = 0;
+        $this->weight = 0.00;
+        $this->shippingprice = 0.00;
         $this->paymentdata = [];
         $this->table = ARCDBPREFIX . "ecom_orders";
         $this->map = ["id" => "id", "date" => "date", "userid" => "userid", "subtotal" => "subtotal", "vat" => "vat",
-             "total" => "total", "status" => "status", "shipping" => "shipping", "billingid" => "billingid",
-              "shippingid" => "shippingid", "shippingtypeid" => "shippingtypeid", "paymentdata" => "paymentdata"];
+             "total" => "total", "status" => "status", "shipping" => "shipping", "billing" => "billing",
+              "shippingtypeid" => "shippingtypeid", "paymentdata" => "paymentdata",
+               "weight" => "weight", "shippingprice" => "shippingprice"];
     }
 
     public static function getByID($id) {
         $order = new ArcEcomOrder();
-        $order->get(["id" => $id]);
+        $order->get(["id" => $id, "LIMIT" => 1]);
         return $order;
     }
 
     public static function getByUserID($userid) {
         $orders = new ArcEcomOrder();
-        return $orders->getCollection(["userid" => $userid]);
+        return $orders->getCollection(["userid" => $userid, "LIMIT" => 1]);
+    }
+
+    public static function getAll() {
+        $orders = new ArcEcomOrder();
+        return $orders->getCollection(["ORDER" => ['date' => 'DESC']]);
+    }
+
+    public static function getByStatus($status) {
+        $orders = new ArcEcomOrder();
+        return $orders->getCollection(["status" => $status]);
     }
 
     public function delete() {

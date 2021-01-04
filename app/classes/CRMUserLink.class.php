@@ -15,7 +15,7 @@ class CRMUserLink extends DataProvider {
 
     public static function getByID($id) {
         $crm = new CRMUserLink();
-        $crm->get(["id" => $id]);
+        $crm->get(["id" => $id, "LIMIT" => 1]);
         return $crm;
     }
 

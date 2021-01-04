@@ -38,7 +38,7 @@ class ForumPost extends DataProvider {
 
     public static function getByID($id) {
         $post = new ForumPost();
-        $post->get(["id" => $id]);
+        $post->get(["id" => $id, "LIMIT" => 1]);
         return $post;
     }
 }

@@ -19,7 +19,7 @@ class ArcEcomImage extends DataProvider {
 
     public static function getByID($id) {
         $image = new ArcEcomImage();
-        $image->get(["id" => $id]);
+        $image->get(["id" => $id, "LIMIT" => 1]);
         return $image;
     }
 

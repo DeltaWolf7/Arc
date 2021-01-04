@@ -56,7 +56,7 @@ class SystemSetting extends DataProvider {
      */
     public static function getByKey($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["AND" => ["skey" => $key, "userid" => $userid]]);
+        $setting->get(["AND" => ["skey" => $key, "userid" => $userid], "LIMIT" => 1]);
         // if no setting was found in the database, return empty setting with key.
         if (empty($setting->key)) {
             $setting->key = $key;
@@ -73,7 +73,7 @@ class SystemSetting extends DataProvider {
      */
     public static function keyExists($key, $userid = 0) {
         $setting = new SystemSetting();
-        $setting->get(["AND" => ["skey" => $key, "userid" => $userid]]);
+        $setting->get(["AND" => ["skey" => $key, "userid" => $userid], "LIMIT" => 1]);
         if (empty($setting->key)) {
             return false;
         }

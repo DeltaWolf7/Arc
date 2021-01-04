@@ -17,7 +17,7 @@ class BlogCategory extends DataProvider {
 
     public static function getByID($id) {
         $category = new BlogCategory();
-        $category->get(["id" => $id]);
+        $category->get(["id" => $id, "LIMIT" => 1]);
         return $category;
     }
 
@@ -28,7 +28,7 @@ class BlogCategory extends DataProvider {
 
     public static function getBySEOUrl($url) {
         $category = new BlogCategory();
-        $category->get(["SEOUrl" => $url]);
+        $category->get(["SEOUrl" => $url, "LIMIT" => 1]);
         return $category;
     }
 
@@ -39,7 +39,7 @@ class BlogCategory extends DataProvider {
      */
     public static function getByName($name) {
         $group = new BlogCategory();
-        $group->get(["name" => $name]);
+        $group->get(["name" => $name, "LIMIT" => 1]);
         return $group;
     }
 

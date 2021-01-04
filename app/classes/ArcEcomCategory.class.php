@@ -17,7 +17,7 @@ class ArcEcomCategory extends DataProvider {
 
     public static function getByID($id) {
         $category = new ArcEcomCategory();
-        $category->get(["id" => $id]);
+        $category->get(["id" => $id, "LIMIT" => 1]);
         return $category;
     }
 

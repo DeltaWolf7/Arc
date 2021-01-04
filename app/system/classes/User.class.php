@@ -80,7 +80,7 @@ class User extends DataProvider {
         // Create a new user object
         $user = new User();
         // Get the user data from database by email address
-        $user->get(["email" => $email]);
+        $user->get(["email" => $email, "LIMIT" => 1]);
         // Return the user object
         return $user;
     }
@@ -94,7 +94,7 @@ class User extends DataProvider {
         // Create a new user object
         $user = new User();
         // Get the data from the database for the user by ID
-        $user->get(["id" => $id]);
+        $user->get(["id" => $id, "LIMIT" => 1]);
         // return the user object
         return $user;
     }

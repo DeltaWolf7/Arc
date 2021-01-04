@@ -116,7 +116,7 @@ class Router extends DataProvider
     public static function getByID($id)
     {
         $route = new Router();
-        $route->get(['id' => $id]);
+        $route->get(['id' => $id, "LIMIT" => 1]);
         return $route;
     }
     

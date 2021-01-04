@@ -28,7 +28,7 @@ class Blog extends DataProvider {
 
     public static function getByID($id) {
         $blog = new Blog();
-        $blog->get(["id" => $id]);
+        $blog->get(["id" => $id, "LIMIT" => 1]);
         return $blog;
     }
 
@@ -49,7 +49,7 @@ class Blog extends DataProvider {
 
     public static function getBySEOUrl($url) {
         $blog = new Blog();
-        $blog->get(["SEOUrl" => $url]);
+        $blog->get(["SEOUrl" => $url, "LIMIT" => 1]);
         return $blog;
     }
 

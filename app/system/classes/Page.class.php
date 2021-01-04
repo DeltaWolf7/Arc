@@ -99,7 +99,7 @@ class Page extends DataProvider {
         // Create a new page class
         $page = new Page();
         // Get page data from database
-        $page->get(["seourl" => $seourl]);
+        $page->get(["seourl" => $seourl, "LIMIT" => 1]);
         // Return page
         return $page;
     }
@@ -141,7 +141,7 @@ class Page extends DataProvider {
         // Create a new page class
         $page = new Page();
         // Get data from database
-        $page->get(["id" => $id]);
+        $page->get(["id" => $id, "LIMIT" => 1]);
         // Return page object
         return $page;
     }

@@ -15,13 +15,13 @@ class ArcEcomAttributeType extends DataProvider {
 
     public static function getByID($id) {
         $attribute = new ArcEcomAttributeType();
-        $attribute->get(["id" => $id]);
+        $attribute->get(["id" => $id, "LIMIT" => 1]);
         return $attribute;
     }
 
     public static function getByName($name) {
         $attribute = new ArcEcomAttributeType();
-        $attribute->get(["name" => $name]);
+        $attribute->get(["name" => $name, "LIMIT" => 1]);
         return $attribute;
     }
 }
