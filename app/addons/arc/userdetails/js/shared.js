@@ -34,7 +34,6 @@ $("#crmeditaddressform").submit(function(e) {
 
 // crm address save complete
 function crmEditAddressSaved(data) {
-    var jdata = arcGetJson(data);
     if (!data.error) {
         $("#editAddressModal").modal("hide");
         location.reload();
