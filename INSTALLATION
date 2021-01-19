@@ -10,6 +10,5 @@
     f. ARCDBPREFIX - table prefix, no change required
     g. ARCDEBUG - enable/disable debug mode
     h. ARCSESSIONTIMEOUT - session timeout
-    i. ARCFORCENOSSL - force SSL off
     j. ARCIVKEYPAIR - Encryption key, MUST BE CHANGED
 5. Login to site with 'admin@server.local' and 'password'

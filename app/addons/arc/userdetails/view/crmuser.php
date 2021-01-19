@@ -1,6 +1,7 @@
 <?php
      $user = system\Helper::arcGetUser();
      if ($user->id > 0) {
+        $crmuser = CRMUser::getByUserID($user->id);
 ?>
 
 <h4 class="mt-3">CRM Details</h4>

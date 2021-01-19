@@ -27,13 +27,23 @@
 // Prevent PHP7 bug with memcache
 ini_set('session.lazy_write', 0);
 
+// Security Hardening. https://php.watch/articles/PHP-Samesite-cookies
+header("X-XSS-Protection: 1; mode=block");
+header("Strict-Transport-Security:max-age=63072000");
+ini_set("session.cookie_httponly", True);
+if (array_key_exists('HTTPS', $_SERVER) && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on')) {
+    // check if ssl, if so enable security hardening for ssl.
+    ini_set("session.cookie_secure", True);
+    ini_set("session.cookie_samesite", "Strict");
+}
+
 // Hide PHP version
 if (function_exists('header_remove')) {
     header_remove('X-Powered-By'); // PHP 5.3+
 }
 
-// Check that we are using PHP 5.5 or newer.
-if (version_compare(phpversion(), '5.5.0', '<') == true) {
+// Check that we are using PHP 7 or newer.
+if (version_compare(phpversion(), '7.0', '<') == true) {
     die('PHP 5.5 or newer required');
 }
 

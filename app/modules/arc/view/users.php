@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group">
                             <label for="inGroups">In Groups</label>
-                            <select name="inGroups" class="form-control" size="5"
+                            <select id="inGroups" class="form-control" size="5"
                                 ondblclick="removeUserFromGroup('<?php echo $user->id; ?>')">
                                 <?php
                         foreach ($userGroups as $group) { 
