@@ -36,6 +36,8 @@ if (system\Helper::arcIsAjaxRequest()) {
         case "VOIDED":
             $order->status = "Payment Failure";
             break;
+        default:
+            break;
     }
 
 

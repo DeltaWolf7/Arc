@@ -226,7 +226,7 @@
                 </div>
 
                 <div class="col-5 col-sm-2 text-secondary-d3 text-600">
-                    £<?php echo ($price * $item->qty); ?>
+                    £<?php echo $price * $item->qty; ?>
                 </div>
             </div>
 

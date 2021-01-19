@@ -267,9 +267,6 @@ class ArcCountries {
                                     "Zimbabwe",
                                     "Åland Islands"];
 
-    public function __construct() {
-    }
-
     public static function getArray() {
         return self::$countires;
     }

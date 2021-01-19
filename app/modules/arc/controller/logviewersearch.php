@@ -42,6 +42,9 @@ if (system\Helper::arcIsAjaxRequest()) {
             case "warning":
                 $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i><span>";
                 break;
+            default:
+            $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i><span>";
+                break;
         }
         $html .= "</td>"
                 . "<td class=\"text-sm\">{$log->module}</td>"

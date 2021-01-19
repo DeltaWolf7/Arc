@@ -4,11 +4,12 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
     if (isset($_FILES['file']['name'])) {
         if (!$_FILES['file']['error']) {
             $filesize = SystemSetting::getByKey("ARC_FILE_UPLOAD_SIZE_BYTES");
+            define("txtLimitExceeded", "File size exceeds limit");
 
             if ($_FILES['file']['size'] > $filesize->value) {
-                system\Helper::arcAddMessage("danger", "File size exceeds limit");
+                system\Helper::arcAddMessage("danger", txtLimitExceeded);
                 Log::createLog("danger", "user", "File exceeds size limit.");
-                system\Helper::arcReturnJSON(["message" => "File size exceeds limit"]);
+                system\Helper::arcReturnJSON(["message" => txtLimitExceeded]);
                 return;
             }
             $file_type = $_FILES['file']['type'];
@@ -53,9 +54,9 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             Log::createLog("success", "user", "Upload complete.");
         } else {
             if ($_FILES['file']['error'] == "1") {
-                system\Helper::arcAddMessage("danger", "File size exceeds limit");
-                system\Helper::arcReturnJSON(["message" => "File size exceeds limit"]);
-                Log::createLog("danger", "user", "File exceeds size limit.");
+                system\Helper::arcAddMessage("danger", txtLimitExceeded);
+                system\Helper::arcReturnJSON(["message" => txtLimitExceeded]);
+                Log::createLog("danger", "user", txtLimitExceeded);
             } else {
                 Log::createLog("danger", "user", "Upload error " . $_FILES['file']['error']);
                 system\Helper::arcAddMessage("danger", "Upload error " . $_FILES['file']['error']);

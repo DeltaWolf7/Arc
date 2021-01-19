@@ -68,6 +68,10 @@ class Mail {
                 // Set SMTP mode
                 $this->mode = "SMTP";
                 break;
+            default:
+                // Set MAIL mode
+                $this->mode = "MAIL";
+                break;
         }
     }
 

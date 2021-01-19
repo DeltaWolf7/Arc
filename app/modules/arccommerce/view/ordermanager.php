@@ -171,7 +171,7 @@
                 £<?php echo $price; ?>              </div>
 
                 <div class="col-5 col-sm-2 text-secondary-d3 text-600">
-                £<?php echo ($price * $orderline->qty); ?>  </div>
+                £<?php echo $price * $orderline->qty; ?>  </div>
             </div>
 
         </div>

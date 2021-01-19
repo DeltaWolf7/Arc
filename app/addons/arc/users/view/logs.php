@@ -45,6 +45,11 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
                                                     class="fa fa-exclamation-triangle"></i><span>
                                                     <?php
                 break;
+                default:
+                ?>
+                                    <span class="badge badge-danger"><i class="fa fa-exclamation-circle"></i><span>
+                                            <?php
+                break;
         }
         ?>
                 </td>
