@@ -8,6 +8,5 @@ if (system\Helper::arcIsAjaxRequest()) {
         $apikey->update();
     }
 
-    //system\Helper::arcAddMessage("success", "User API key created");
     system\Helper::arcReturnJSON();
 }

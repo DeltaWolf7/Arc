@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $table = "<thead class=\"thead-default\"><tr><th scope=\"col\">SEO Url</th><th scope=\"col\">Title</th><th scope=\"col\">Icon</th><th scope=\"col\">Sort Order</th><th class=\"text-right\" scope=\"col\"><button onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
     $table .= "<tbody>";
     $pages = Page::getAllPages();

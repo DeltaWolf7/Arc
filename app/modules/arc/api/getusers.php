@@ -1,10 +1,6 @@
 <?php
 
-class getusersApi extends Api {
-
-    public function __construct() {
-        parent::__construct();
-    }
+class getUsersApi extends Api {
 
     public function GET() {
         

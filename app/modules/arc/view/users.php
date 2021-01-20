@@ -67,8 +67,8 @@
                         <div class="form-group">
                             <label for="enabled">Account Enabled</label>
                             <select name="enabled" class="form-control">
-                                <option value="1" <?php if ($user->enabled == "1") echo "selected"; ?>>Yes</option>
-                                <option value="0" <?php if($user->enabled == "0") echo "selected"; ?>>No</option>
+                                <option value="1" <?php if ($user->enabled == "1") { echo "selected"; } ?>>Yes</option>
+                                <option value="0" <?php if($user->enabled == "0") { echo "selected"; } ?>>No</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -77,7 +77,7 @@
                                 ondblclick="removeUserFromGroup('<?php echo $user->id; ?>')">
                                 <?php
                         foreach ($userGroups as $group) { 
-                            if ($user->inGroup($group->name) == true) {
+                            if ($user->inGroup($group->name)) {
                                 echo "<option value=" . $group->name . ">" . $group->name . "</option>";
                             }
                         }

@@ -6,7 +6,7 @@ class ArcDownloadImage extends DataProvider {
     public $image;
 
     public function __construct() {
-        parent::__construct();;
+        parent::__construct();
         $this->downloadid = 0;
         $this->image = "";
         $this->table = ARCDBPREFIX . "download_images";

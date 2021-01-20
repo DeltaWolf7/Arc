@@ -21,8 +21,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $logs = Log::getLogs($page, $number);
 
     foreach ($logs as $log) {
-        $html .= "<tr>"
-                . "<td>";
+        $html .= "<tr><td>";
         switch ($log->type) {
             case "success":
                 $html .= "<span class=\"badge badge-success\"><i class=\"fa fa-check\"></i><span>";
@@ -34,11 +33,11 @@ if (system\Helper::arcIsAjaxRequest()) {
                 $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i><span>";
                 break;
             case "warning":
+            default:
                 $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i><span>";
                 break;
         }
-        $html .= "</td>"
-                . "<td class=\"text-sm\">{$log->module}</td>"
+        $html .= "</td><td class=\"text-sm\">{$log->module}</td>"
                 . "<td class=\"text-sm\" style=\"width: 150px;\">" . system\Helper::arcConvertDateTime($log->event) . "</td>";
 
         if ($log->userid == 0) {

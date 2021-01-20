@@ -36,6 +36,6 @@ function saveAddress() {
         isbilling: $("#isbilling").prop('checked') ? 1 : 0, isdelivery: $("#isdelivery").prop('checked') ? 1 : 0}, null, changeComplete);
 }
 
-function deleteAddress(addressid) {
-    arcAjaxRequest("arc/userdeleteaddressdetails", { id: addressid }, null, changeComplete);
+function deleteAddress(addid) {
+    arcAjaxRequest("arc/userdeleteaddressdetails", { id: addid }, null, changeComplete);
 }

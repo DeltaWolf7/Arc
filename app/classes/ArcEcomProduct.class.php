@@ -77,17 +77,13 @@ class ArcEcomProduct extends DataProvider {
         $foundStock = false;
         foreach ($options as $option) {
             $type= ArcEcomAttributeType::getByID($option->typeid);
-            if ($type->isoption) {
-                if ($option->stock > 0) {
+            if ($type->isoption && $option->stock > 0) {
                     $foundStock = true;
-                }
             }
         }
 
-        if ($foundStock == false) {
-            if ($this->stock > 0) {
+        if (!$foundStock && $this->stock > 0) {
                 $foundStock = true;
-            }
         }
 
         return $foundStock;

@@ -100,7 +100,7 @@ function doLogin($user)
     }
 }
 
-function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local")
+function LDAPLogin($server, $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local")
 {
     // https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
     $ldap = ldap_connect("ldap://{$server}");

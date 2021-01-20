@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $page = Page::getByID($_POST["id"]);
     $page->content = htmlentities($_POST["html"]);
     $page->seourl = strtolower($_POST["seourl"]);

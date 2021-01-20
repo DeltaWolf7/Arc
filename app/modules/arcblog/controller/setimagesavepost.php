@@ -1,7 +1,7 @@
 <?php
 
 
-if (system\Helper::arcIsAjaxRequest() == true) {  
+if (system\Helper::arcIsAjaxRequest()) {  
         $post = Blog::getByID($_POST["id"]);
         if ($post->id != 0) {
             if (empty($_POST["image"])) {

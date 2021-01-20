@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
+if (system\Helper::arcIsAjaxRequest() && !empty($_FILES)) {
     Log::createLog("success", "arcblog", "Detected upload request.");
     if (isset($_FILES['file']['name'])) {
         if (!$_FILES['file']['error']) {
@@ -24,9 +24,6 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
 
             Log::createLog("info", "arcblog", "Valid image type detected.");
 
-            //$name = md5(uniqid(rand(), true));
-            //$ext = explode('.', $_FILES['file']['name']);
-            //$filename = $name . '.' . $ext[1];
             $filename = $_FILES['file']['name'];
 
             // force lowercase names

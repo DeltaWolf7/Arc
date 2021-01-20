@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() == true) {
+if (system\Helper::arcIsAjaxRequest()) {
     $groups = UserGroup::getAllGroups();
     $table = "<table class=\"table table-sm\">";
     $table .= "<thead class=\"thead-default\"><tr><th scope=\"col\">Route</th><th scope=\"col\">Destination</th><th scope=\"col\">Status</th><th scope=\"col\">&nbsp;</th></tr></thead><tbody>";

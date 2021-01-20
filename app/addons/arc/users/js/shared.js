@@ -38,7 +38,6 @@ $("#crmeditcontactform").submit(function(e) {
 
 // crm contact save complete
 function crmEditContactSaved(data) {
-    var jdata = arcGetJson(data);
     if (!data.error) {
         $("#editContactModal").modal("hide");
         location.reload();
@@ -85,7 +84,6 @@ $("#crmeditaddressform").submit(function(e) {
 
 // crm address save complete
 function crmEditAddressSaved(data) {
-    var jdata = arcGetJson(data);
     if (!data.error) {
         $("#editAddressModal").modal("hide");
         location.reload();
