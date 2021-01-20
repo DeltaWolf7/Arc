@@ -26,23 +26,22 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
         switch ($log->type) {
             case "success":
                 ?>
-                    <span class="badge badge-success"><i class="fa fa-check"></i><span>
+                    <span class="badge badge-success"><em class="fa fa-check"></em><span>
                             <?php
                 break;
             case "info":
                 ?>
-                            <span class="badge badge-info"><i class="fa fa-info-circle"></i><span>
+                            <span class="badge badge-info"><em class="fa fa-info-circle"></em><span>
                                     <?php
                 break;
             case "danger":
                 ?>
-                                    <span class="badge badge-danger"><i class="fa fa-exclamation-circle"></i><span>
+                                    <span class="badge badge-danger"><em class="fa fa-exclamation-circle"></em><span>
                                             <?php
                 break;
             case "warning":
                 ?>
-                                            <span class="badge badge-warning"><i
-                                                    class="fa fa-exclamation-triangle"></i><span>
+                                            <span class="badge badge-warning"><em class="fa fa-exclamation-triangle"></em><span>
                                                     <?php
                 break;
                 default:

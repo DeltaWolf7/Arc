@@ -25,16 +25,16 @@ if (system\Helper::arcIsAjaxRequest()) {
                 . "<td>";
         switch ($log->type) {
             case "success":
-                $html .= "<span class=\"badge badge-success\"><i class=\"fa fa-check\"></i><span>";
+                $html .= "<span class=\"badge badge-success\"><em class=\"fa fa-check\"></em><span>";
                 break;
             case "info":
-                $html .= "<span class=\"badge badge-info\"><i class=\"fa fa-info-circle\"></i><span>";
+                $html .= "<span class=\"badge badge-info\"><em class=\"fa fa-info-circle\"></em><span>";
                 break;
             case "danger":
-                $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i><span>";
+                $html .= "<span class=\"badge badge-danger\"><em class=\"fa fa-exclamation-circle\"></em><span>";
                 break;
             case "warning":
-                $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i><span>";
+                $html .= "<span class=\"badge badge-warning\"><em class=\"fa fa-exclamation-triangle\"></em><span>";
                 break;
         }
         $html .= "</td>"

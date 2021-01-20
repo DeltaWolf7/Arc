@@ -41,7 +41,5 @@ class Initialiser {
                 \Log::createLog('error', 'Arc', 'Unable to create assets directory. Error: ' . $e->getMessage());
             }
         }
-
-        \Log::createLog('warning', 'Arc', 'Initilised default Arc settings');
     }
 }
