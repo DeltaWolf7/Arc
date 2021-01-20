@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.9.1.0";
+        self::$arc["version"] = "0.9.1.1";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -809,5 +809,20 @@ class Helper {
 
     public static function arcGetProcessor() {
         return "/" . self::$arc["arc_processor"];
+    }
+
+
+    public function arcCreatePassword($length){
+        //A list of characters that can be used in our random password.
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.[]?*()';
+        //Create a blank string.
+        $password = '';
+        //Get the index of the last character in our $characters string.
+        $characterListLength = mb_strlen($characters, '8bit') - 1;
+        //Loop from 1 to the $length that was specified.
+        foreach(range(1, $length) as $i){
+            $password .= $characters[random_int(0, $characterListLength)];
+        }
+        return $password;
     }
 }

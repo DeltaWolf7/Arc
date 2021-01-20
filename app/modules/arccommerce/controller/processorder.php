@@ -8,7 +8,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     if ($user->id == 0) {
         $user = new User();
         $user->email = $data->payer->email_address;
-        $password = md5(uniqid($user->email, true));
+        $password = system\Helper::arcCreatePassword(14);
         $user->setPassword($password);
         $user->firstname = $data->payer->name->given_name;
         $user->lastname = $data->payer->name->surname;
