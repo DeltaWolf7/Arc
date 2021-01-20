@@ -3,7 +3,7 @@
         Group</button>
 </div>
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="Groups">
         <thead>
             <tr>
                 <th scope="col">ID</th>

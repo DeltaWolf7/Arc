@@ -566,8 +566,9 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <iframe style="width: 100%; height: 500px; border: 0;"
-                            src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
+                        <!--<iframe style="width: 100%; height: 500px; border: 0;"
+                            src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>/-->
+                            FIX ME, DONT USE IFRAMES
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"

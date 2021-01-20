@@ -17,7 +17,7 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
     </div>
 </div>
 <div class="table-responsive mt-3">
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="Links">
         <thead>
             <tr>
                 <th scope="col">ID</th>

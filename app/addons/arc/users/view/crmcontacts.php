@@ -21,7 +21,7 @@
 </div>
 
 <div class="table-responsive mt-3">
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="contacts">
         <thead>
             <tr>
                 <th scope="col">ID</th>
