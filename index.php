@@ -34,8 +34,11 @@ header("Strict-Transport-Security:max-age=63072000");
 header('X-Content-Type-Options: nosniff');
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
 header("X-Frame-Options: DENY");
+
 // https://content-security-policy.com/examples/php/
-//header("Content-Security-Policy: default-src 'self'"); Not in use, blocks scripts.
+// disabled at moment, causing issue with own scripts
+//header("Content-Security-Policy: default-src 'self' https://cdnjs.cloudflare.com"); // allow cdns and self
+
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
 header("Referrer-Policy: no-referrer");
 //https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy

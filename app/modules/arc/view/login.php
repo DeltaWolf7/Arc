@@ -6,7 +6,7 @@ if ($ldap->value == "1") {
 }
 $reg = SystemSetting::getByKey("ARC_ALLOWREG");
 ?>
-
+<form>
     <div class="collapse show" id="collapseA">
         <div class="row">
                 <div class="col-md-6 col-md-offset-1">
@@ -17,7 +17,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                                  <input maxlength="100" type="text" class="form-control" id="email" placeholder="<?php echo $login; ?>">
                              </div>
                             <div class="form-group">
-                                  <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password">
+                                  <input maxlength="100" type="password" class="form-control" id="password" placeholder="Password" autocomplete="on">
                             </div>
                             <div class="text-right">
                                 <button id="loginBtn" class="btn btn-primary btn-block">Login</button><br />
@@ -47,8 +47,9 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                 </div>
         </div>
     </div>
+    </form>
     
-
+<form>
     <div class="collapse" id="collapseB">
     <div class="row">
             <div class="col-md-3"></div>
@@ -79,7 +80,9 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <div class="col-md-3"></div>
         </div>
     </div>
+    </form>
 
+    <form>
     <div class="collapse" id="collapseC">
         <div class="row">
             <div class="col-md-3"></div>
@@ -100,6 +103,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
             <div class="col-md-3"></div>
         </div>
     </div>
+    </form>
 
 
 
