@@ -5,7 +5,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $userid = $_POST["userid"];
 
     $html = "<table class=\"table table-striped table-sm\">"
-        . "<thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Actions</th></tr></thead>"
+        . "<thead><tr><th scope=\"col\">ID</th scope=\"col\"><th scope=\"col\">Name</th><th scope=\"col\">Email</th><th scope=\"col\">Actions</th></tr></thead>"
         . "<tbody>";
     
     foreach ($users as $user) {

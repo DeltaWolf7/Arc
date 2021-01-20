@@ -24,12 +24,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Title</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Action</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Title</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>

@@ -11,12 +11,12 @@ if (system\Helper::arcIsAjaxRequest()) {
     }
 
     $html = "<div class=\"table-responsive\"><table class=\"table table-striped table-sm\">"
-            . "<thead class=\"thead-default\"><tr><th>Type</th>"
-            . "<th>Module</th>"
-            . "<th>When</th>"
-            . "<th>User</th>"
-            . "<th>Imp</th>"
-            . "<th>Message</th></tr></thead><tbody>";
+            . "<thead class=\"thead-default\"><tr><th scope=\"col\">Type</th>"
+            . "<th scope=\"col\">Module</th>"
+            . "<th scope=\"col\">When</th>"
+            . "<th scope=\"col\">User</th>"
+            . "<th scope=\"col\">Imp</th>"
+            . "<th scope=\"col\">Message</th></tr></thead><tbody>";
 
     $logs = Log::getLogs($page, $number);
 

@@ -22,11 +22,11 @@
 
 <table class="table table-striped">
     <tr>
-        <th>ID</th>
-        <th>Date/Time</th>
-        <th>Customer</th>
-        <th>Status</th>
-        <th>Actions</th>
+        <th scope="col">ID</th>
+        <th scope="col">Date/Time</th>
+        <th scope="col">Customer</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
     </tr>
     <?php
         foreach ($orders as $order) {

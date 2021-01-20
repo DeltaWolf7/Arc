@@ -509,9 +509,9 @@
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>User</th>
-                                    <th>Key</th>
-                                    <th>Actions</th>
+                                    <th scope="col">User</th>
+                                    <th scope="col">Key</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="apiKeys">

@@ -2,7 +2,7 @@
 
 if (system\Helper::arcIsAjaxRequest()) {
     $data = "<table class=\"table table-striped\">";
-        $data .= "<thead class=\"thead-default\"><tr><th>Title</th><th>Category</th><th>Date</th><th>SEO Url</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" onclick=\"editPost(0);\"><i class=\"fa fa-plus\"></i> New Post</button></th></tr></thead>";
+        $data .= "<thead class=\"thead-default\"><tr><th scope=\"col\">Title</th><th scope=\"col\">Category</th><th scope=\"col\">Date</th><th scope=\"col\">SEO Url</th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" onclick=\"editPost(0);\"><i class=\"fa fa-plus\"></i> New Post</button></th></tr></thead>";
         $data .= "<tbody>";
         $blogs = Blog::getAllBlogs();
         foreach ($blogs as $blog) {

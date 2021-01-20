@@ -9,11 +9,11 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
     <table class="table table-striped table-sm">
         <thead class="thead-default">
             <tr>
-                <th>Type</th>
-                <th>Module</th>
-                <th>When</th>
-                <th>Imp</th>
-                <th>Message</th>
+                <th scope="col">Type</th>
+                <th scope="col">Module</th>
+                <th scope="col">When</th>
+                <th scope="col">Imp</th>
+                <th scope="col">Message</th>
             </tr>
         </thead>
         <tbody>

@@ -20,11 +20,11 @@ if (is_numeric(system\Helper::arcGetLastURIItem())) {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Direction</th>
-                <th>Email</th>
-                <th>Action</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Direction</th>
+                <th scope="col">Email</th>
+                <th scope="col">Action</th>
             </tr>
         </thead>
         <tbody>

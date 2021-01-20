@@ -151,13 +151,13 @@
         </div>
         <table class="table table-striped">
             <thead>
-                <th>#</th>
-                <th>Img</th>
-                <th>Name (<?php echo count($users); ?>)</th>
-                <th>Active</th>
-                <th>Email</th>
-                <th>Auth</th>
-                <th>Action</th>
+                <th scope="col">#</th>
+                <th scope="col">Img</th>
+                <th scope="col">Name (<?php echo count($users); ?>)</th>
+                <th scope="col">Active</th>
+                <th scope="col">Email</th>
+                <th scope="col">Auth</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>

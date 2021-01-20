@@ -2,12 +2,12 @@
 
 <table class="table table-striped">
     <tr>
-        <th>Order #</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Items</th>
-        <th>Total</th>
-        <th></th>
+        <th scope="col">Order #</th>
+        <th scope="col">Date</th>
+        <th scope="col">Status</th>
+        <th scope="col">Items</th>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
     </tr>
     <?php
         $user = system\Helper::arcGetUser();

@@ -3,7 +3,7 @@
 if (system\Helper::arcIsAjaxRequest() == true) {
     $groups = UserGroup::getAllGroups();
     $table = "<table class=\"table table-sm\">";
-    $table .= "<thead class=\"thead-default\"><tr><th>Route</th><th>Destination</th><th>Status</th><th>&nbsp;</th></tr></thead><tbody>";
+    $table .= "<thead class=\"thead-default\"><tr><th scope=\"col\">Route</th><th scope=\"col\">Destination</th><th scope=\"col\">Status</th><th scope=\"col\">&nbsp;</th></tr></thead><tbody>";
     foreach ($groups as $group) {
         $permissions = Router::getByGroupID($group->id);
         $table .= "<thead class=\"thead-light\"><tr><th colspan=\"3\"><strong>" . $group->name . "</strong></th><th class=\"text-right\"><button class=\"btn btn-primary btn-sm\" onclick=\"editPermission(" . $group->id . ",0);\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";

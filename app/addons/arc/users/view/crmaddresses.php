@@ -23,12 +23,12 @@
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Address Lines</th>
-                <th>County</th>
-                <th>Postcode</th>
-                <th>Billing</th>
-                <th>Delivery</th>
+                <th scope="col">ID</th>
+                <th scope="col">Address Lines</th>
+                <th scope="col">County</th>
+                <th scope="col">Postcode</th>
+                <th scope="col">Billing</th>
+                <th scope="col">Delivery</th>
             </tr>
         </thead>
         <tbody>

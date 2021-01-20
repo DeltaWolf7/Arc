@@ -8,16 +8,16 @@
     </div>
 </div>
 <div class="table-responsive mt-3">
-    <table class="table table-striped">
+    <table class="table table-striped" aria-label="Addresses">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Address Lines</th>
-                <th>County</th>
-                <th>Postcode</th>
-                <th>Billing</th>
-                <th>Delivery</th>
-                <th>
+                <th scope="col">ID</th>
+                <th scope="col">Address Lines</th>
+                <th scope="col">County</th>
+                <th scope="col">Postcode</th>
+                <th scope="col">Billing</th>
+                <th scope="col">Delivery</th>
+                <th scope="col">
                     <form id="crmnewaddress">
                         <input type="hidden" name="addressid" value="0" />
                         <input type="hidden" name="addressuserid" value="0" />

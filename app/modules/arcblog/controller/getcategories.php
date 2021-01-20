@@ -4,8 +4,8 @@ if (system\Helper::arcIsAjaxRequest()) {
      $data = "<table class=\"table table-striped\">";
      $data .= "<thead class=\"thead-default\">"
      . "<tr>"
-     . "<th>Name</th>"
-     . "<th>SEO Url</th>"
+     . "<th scope=\"col\">Name</th>"
+     . "<th scope=\"col\">SEO Url</th>"
      . "<th class=\"text-right\">"
      . "<button class=\"btn btn-primary btn-sm\" onclick=\"catBtn(0)\"><i class=\"fa fa-plus\"></i> New Category</button>"
      . "</th>"

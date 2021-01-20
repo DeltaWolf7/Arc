@@ -811,18 +811,9 @@ class Helper {
         return "/" . self::$arc["arc_processor"];
     }
 
-
     public function arcCreatePassword($length){
         //A list of characters that can be used in our random password.
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.[]?*()';
-        //Create a blank string.
-        $password = '';
-        //Get the index of the last character in our $characters string.
-        $characterListLength = mb_strlen($characters, '8bit') - 1;
-        //Loop from 1 to the $length that was specified.
-        foreach(range(1, $length) as $i){
-            $password .= $characters[random_int(0, $characterListLength)];
-        }
-        return $password;
+        return substr(str_shuffle($characters), 0, $length);
     }
 }
