@@ -359,10 +359,9 @@ class Helper {
     public static function arcIsUserAdmin() {
         if (self::arcGetUser() == null) {
             return false;
-        } else {
-            return self::arcIsUserInGroup("Administrators");
         }
-        return true;
+
+        return self::arcIsUserInGroup("Administrators");
     }
 
     public static function arcGetSessionID() {

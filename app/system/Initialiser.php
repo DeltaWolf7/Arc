@@ -37,7 +37,7 @@ class Initialiser {
             try {
                 mkdir(Helper::arcGetPath(true) . 'assets');
                 \Log::createLog('success', 'Arc', 'Assets directory created.');
-            } catch (Exception $ex) {
+            } catch (Exception $e) {
                 \Log::createLog('error', 'Arc', 'Unable to create assets directory. Error: ' . $e->getMessage());
             }
         }
