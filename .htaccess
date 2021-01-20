@@ -26,8 +26,3 @@ Options -Indexes
     #QSA - No append, NC - not case sencertive, L - last rule
     RewriteRule ^(.*)$ index.php?$1 [QSA,NC,L]
 </IfModule>
-
-# https://docs.sucuri.net/warnings/hardening/security-headers-x-frame-options/
-Header always append X-Frame-Options SAMEORIGIN
-# https://docs.sucuri.net/warnings/hardening/security-headers-x-content-type-nosniff/
-Header set X-Content-Type-Options nosniff

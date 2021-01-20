@@ -27,14 +27,26 @@
 // Prevent PHP7 bug with memcache
 ini_set('session.lazy_write', 0);
 
-// Security Hardening. https://php.watch/articles/PHP-Samesite-cookies
+// Security Hardening. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
 header("X-XSS-Protection: 1; mode=block");
 header("Strict-Transport-Security:max-age=63072000");
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
+header('X-Content-Type-Options: nosniff');
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
+header("X-Frame-Options: DENY");
+// https://content-security-policy.com/examples/php/
+//header("Content-Security-Policy: default-src 'self'"); Not in use, blocks scripts.
+// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
+header("Referrer-Policy: no-referrer");
+//https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
+
 ini_set("session.cookie_httponly", True);
 if (array_key_exists('HTTPS', $_SERVER) && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on')) {
     // check if ssl, if so enable security hardening for ssl.
     ini_set("session.cookie_secure", True);
     ini_set("session.cookie_samesite", "Strict");
+    // cookie prefix
+    session_name('__Secure-PHPSESSID');
 }
 
 // Hide PHP version
