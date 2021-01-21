@@ -149,7 +149,7 @@
                 &nbsp;<button class="btn btn-success btn-sm" onclick="arcRedirect('/0')"><i class="fas fa-plus"></i> New
                     User</button></div>
         </div>
-        <table class="table table-striped">
+        <table class="table table-striped" aria-label="Users">
             <thead>
                 <th scope="col">#</th>
                 <th scope="col">Img</th>
@@ -170,7 +170,7 @@
                         <?php
                         $profileImage = $user->getProfileImage();
                     ?>
-                        <img class="img-fluid" width="30px" src="<?php echo $profileImage; ?>" />
+                        <img class="img-fluid" width="30px" src="<?php echo $profileImage; ?>" alt="Profile Image" />
                     </td>
                     <td>
                         <?php

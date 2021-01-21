@@ -1,6 +1,6 @@
 <h3>My Orders</h3>
 
-<table class="table table-striped">
+<table class="table table-striped" aria-label="Orders">
     <tr>
         <th scope="col">Order #</th>
         <th scope="col">Date</th>

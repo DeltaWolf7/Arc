@@ -20,7 +20,7 @@
     </select>
 </div>
 
-<table class="table table-striped">
+<table class="table table-striped" aria-label="Orders">
     <tr>
         <th scope="col">ID</th>
         <th scope="col">Date/Time</th>

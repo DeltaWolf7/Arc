@@ -506,7 +506,7 @@
 
 
                     <div class="table">
-                        <table class="table table-striped">
+                        <table class="table table-striped" aria-label="API">
                             <thead>
                                 <tr>
                                     <th scope="col">User</th>

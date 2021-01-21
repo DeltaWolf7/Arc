@@ -11,7 +11,7 @@
             ?>
             <div class="col-md-2"><a href="#"
                     onclick="$('#image').attr('src','<?php echo $path . $image->filename; ?>')"><img height="100px"
-                        src="<?php echo $path . $image->filename; ?>" /></a></div>
+                        src="<?php echo $path . $image->filename; ?>" alt="<?php echo $product->name; ?>" /></a></div>
             <?php
                 }
             ?>
@@ -79,7 +79,7 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <h3>Features</h3>
-        <table class="table table-striped">
+        <table class="table table-striped" aria-label="Features">
             <?php
                     echo $features;
                 ?>

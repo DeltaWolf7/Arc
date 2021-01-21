@@ -26,7 +26,7 @@
                 foreach ($images as $image) {
                     ?>
 
-                        <a href="#"><img style="height: 100px;" src="<?php echo $image->image; ?>" class="img-thumbnail"></a>
+                        <a href="#"><img style="height: 100px;" src="<?php echo $image->image; ?>" class="img-thumbnail" alt="Preview"></a>
 
                     <?php
                 }
