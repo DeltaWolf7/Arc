@@ -7,7 +7,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $html = "";
 
     // buttons
-    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"
+    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"3\">"
             . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
             . " <button class=\"btn btn-secondary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
             . "<i class=\"fa fa-folder\"></i> New Folder</button>"
@@ -54,8 +54,9 @@ function GetPath($path) {
                 // folder
                 $fi = new FilesystemIterator($fullPath . $file, FilesystemIterator::SKIP_DOTS);
                 $html .= "<td><i class=\"fa fa-folder-o\"></i> <a class=\"clickable\" onclick=\"getFolderPath('{$path}/{$file}')\">{$file}</a></td>"
+                        . "<td style=\"width: 10px;\"></td>"
                         . "<td style=\"width: 10px;\">folder</td>"
-                        . "<td style=\"width: 10px;\">-</td>"
+                        . "<td style=\"width: 30px;\">-</td>"
                         . "<td style=\"width: 100px;\">" . iterator_count($fi) . ngettext(" item", " items", iterator_count($fi)) . "</td>"
                         . "<td style=\"width: 100px;\">" . date("d M Y", filectime($fullPath . $file)) . "</td>";
             } else {
@@ -72,6 +73,11 @@ function GetPath($path) {
                         . "', '"
                         . date("d M Y", filectime($fullPath . $file))
                         . "')\">{$file}<a/></td>"
+                        . "<td style=\"width: 30px;\">";
+                        if (substr($filetype, 0, 5) === "image") {
+                         $html .= "<img src=\"{$webPath}/{$file}\" style=\"width: 30px;\" />";   
+                        }
+                $html .= "</td>"
                         . "<td style=\"width: 10px;\">{$filetype}</td>"
                         . "<td style=\"width: 10px;\"><a alt=\"Copy link to clipboard\" class=\"clickable\" onclick=\"copyToClipboard('{$webPath}/{$file}')\"><i class=\"fa fa-link\"></i></a></td>"
                         . "<td style=\"width: 100px;\">" . FileSizeConvert(filesize($fullPath . $file)) . "</td>"
