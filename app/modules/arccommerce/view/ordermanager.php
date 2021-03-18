@@ -1,5 +1,10 @@
 <?php
 
+    if (isset($_GET["delete"])) {
+        $o =  ArcEcomOrder::getByID($_GET["delete"]);
+        $o->delete();
+    }
+
     if (!isset($_GET["order"])) {
         $orders = ArcEcomOrder::getAll();
 ?>
@@ -20,13 +25,13 @@
     </select>
 </div>
 
-<table class="table table-striped" aria-label="Orders">
+<table class="table table-striped">
     <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Date/Time</th>
-        <th scope="col">Customer</th>
-        <th scope="col">Status</th>
-        <th scope="col">Actions</th>
+        <th>ID</th>
+        <th>Date/Time</th>
+        <th>Customer</th>
+        <th>Status</th>
+        <th>Actions</th>
     </tr>
     <?php
         foreach ($orders as $order) {
@@ -41,7 +46,7 @@
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="viewOrder(<?php echo $order->id; ?>)"><i
                         class="fas fa-search"></i></button>
-                <button class="btn btn-outline-secondary" type="button" onclick=""><i class="fas fa-broom"></i></button>
+                <button class="btn btn-outline-secondary" type="button" onclick="deleteOrder(<?php echo $order->id; ?>)"><i class="fas fa-broom"></i></button>
             </div>
         </td>
     </tr>
@@ -104,13 +109,47 @@
                         <?php echo $order->status; ?>
                     </span>
                 </div>
+
+                <div class="my-2">
+                    <i class="fa fa-circle text-blue-m2 text-xs mr-1" aria-hidden="true"></i>
+                    <span class="text-600 text-90">
+                        Delivery Method:
+                    </span>
+                    <span>
+                        <?php 
+                        $del = ArcEcomDelivery::getByID($order->shippingtypeid);
+                        echo $del->name;
+                         ?>
+                    </span>
+                </div>
+
+                <div class="my-2">
+                    <i class="fa fa-circle text-blue-m2 text-xs mr-1" aria-hidden="true"></i>
+                    <span class="text-600 text-90">
+                        Tracking:
+                    </span>
+                    <span class="badge bgc-green-d1 text-white badge-pill px-25">
+                        <?php echo $order->tracking; ?>
+                    </span>
+                </div>
+
+                
+                <div class="my-2">
+                    <i class="fa fa-circle text-blue-m2 text-xs mr-1" aria-hidden="true"></i>
+                    <span class="text-600 text-90">
+                        Dropship Order:
+                    </span>
+                    <span class="badge bgc-green-d1 text-white badge-pill px-25">
+                        <?php echo $order->dropshiporder; ?>
+                    </span>
+                </div>
             </div>
         </div><!-- /.col -->
     </div>
     <div class="mt-4">
         <div class="row text-600 text-95 text-secondary-d3 brc-purple-l1 py-25 border-y-2">
             <div class="d-none d-sm-block col-1">
-                #
+                Model
             </div>
 
             <div class="col-6 col-sm-4">
@@ -142,7 +181,11 @@
             
             <div class="row mb-2 mb-sm-0 py-25 bgc-purple-l4">
                 <div class="d-none d-sm-block col-1">
-                  <?php echo $orderline->productid; ?></div>
+                <?php 
+                  $prod = ArcEcomProduct::getByID($orderline->productid);
+                  echo $prod->model; 
+                  ?>
+                  </div>
 
 
 
@@ -171,7 +214,7 @@
                 £<?php echo $price; ?>              </div>
 
                 <div class="col-5 col-sm-2 text-secondary-d3 text-600">
-                £<?php echo $price * $orderline->qty; ?>  </div>
+                £<?php echo ($price * $orderline->qty); ?>  </div>
             </div>
 
         </div>
@@ -269,5 +312,9 @@ function updateStatus() {
 
 function viewOrder(orderno) {
     window.location = urlRaw + '?order=' + orderno;
+}
+
+function deleteOrder(orderno) {
+    window.location = urlRaw + '?delete=' + orderno;
 }
 </script>

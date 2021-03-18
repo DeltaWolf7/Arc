@@ -14,6 +14,8 @@ class ArcEcomOrder extends DataProvider {
     public $paymentdata;
     public $weight;
     public $shippingprice;
+    public $tracking;
+    public $dropshiporder;
 
     public function __construct() {
         parent::__construct();
@@ -30,11 +32,13 @@ class ArcEcomOrder extends DataProvider {
         $this->weight = 0.00;
         $this->shippingprice = 0.00;
         $this->paymentdata = [];
+        $this->tracking = "";
+        $this->dropshiporder = "";
         $this->table = ARCDBPREFIX . "ecom_orders";
         $this->map = ["id" => "id", "date" => "date", "userid" => "userid", "subtotal" => "subtotal", "vat" => "vat",
              "total" => "total", "status" => "status", "shipping" => "shipping", "billing" => "billing",
               "shippingtypeid" => "shippingtypeid", "paymentdata" => "paymentdata",
-               "weight" => "weight", "shippingprice" => "shippingprice"];
+               "weight" => "weight", "shippingprice" => "shippingprice", "tracking" => "tracking", "dropshiporder" => "dropshiporder"];
     }
 
     public static function getByID($id) {

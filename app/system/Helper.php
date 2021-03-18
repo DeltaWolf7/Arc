@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.9.1.1";
+        self::$arc["version"] = "0.10.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -84,15 +84,15 @@ class Helper {
         }
 
         // Javascript, add required javascript files to header
-        self::arcAddFooter("external", "<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js' integrity='sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==' crossorigin='anonymous'></script>");
-        self::arcAddFooter("external", "<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js' integrity='sha512-wV7Yj1alIZDqZFCUQJy85VN+qvEIly93fIQAN7iqDFCPEucLCeNFz4r35FCo9s6WrpdDQPi80xbljXB8Bjtvcg==' crossorigin='anonymous'></script>");
-        self::arcAddFooter("external", "<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js' integrity='sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==' crossorigin='anonymous'></script>");
-        self::arcAddFooter("external", "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css' integrity='sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==' crossorigin='anonymous' />");
-        self::arcAddFooter("js", self::arcGetPath() . "vendor/arc/js/arc.js");
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>');
+        self::arcAddFooter('external', '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">');
+        self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.js');
 
         // CSS, add required css files to header
-        self::arcAddHeader("external", "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css' integrity='sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==' crossorigin='anonymous' />");
-        self::arcAddHeader("css", self::arcGetPath() . "vendor/arc/css/arc.css");
+        self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">');
+        self::arcAddHeader('css', self::arcGetPath() . 'vendor/arc/css/arc.css');
     }
 
     /**
@@ -358,9 +358,10 @@ class Helper {
     public static function arcIsUserAdmin() {
         if (self::arcGetUser() == null) {
             return false;
+        } else {
+            return self::arcIsUserInGroup("Administrators");
         }
-
-        return self::arcIsUserInGroup("Administrators");
+        return true;
     }
 
     public static function arcGetSessionID() {
@@ -807,11 +808,5 @@ class Helper {
 
     public static function arcGetProcessor() {
         return "/" . self::$arc["arc_processor"];
-    }
-
-    public function arcCreatePassword($length){
-        //A list of characters that can be used in our random password.
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!-.[]?*()';
-        return substr(str_shuffle($characters), 0, $length);
     }
 }

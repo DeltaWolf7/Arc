@@ -8,7 +8,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     if ($user->id == 0) {
         $user = new User();
         $user->email = $data->payer->email_address;
-        $password = system\Helper::arcCreatePassword(14);
+        $password = md5(uniqid($user->email, true));
         $user->setPassword($password);
         $user->firstname = $data->payer->name->given_name;
         $user->lastname = $data->payer->name->surname;
@@ -35,8 +35,6 @@ if (system\Helper::arcIsAjaxRequest()) {
             break;
         case "VOIDED":
             $order->status = "Payment Failure";
-            break;
-        default:
             break;
     }
 
@@ -95,21 +93,21 @@ if (system\Helper::arcIsAjaxRequest()) {
         foreach ($item->options as $option) {
             $opt = ArcEcomAttribute::getByID($option);
             $type = ArcEcomAttributeType::getByID($opt->typeid);
-            $itemLines .= $type->name . " +£" . $opt->priceadjust;
+            $itemLines .= $type->name . " +&#163;" . $opt->priceadjust;
         }
-        $itemLines .= "</td><td>£" . ($item->price * $item->qty) . "</td></tr>";
+        $itemLines .= "</td><td>&#163;" . ($item->price * $item->qty) . "</td></tr>";
     }
     
     // send email invoice
     $email = Email::getByKey("ARC_ECOM_ORDER");
     $message = html_entity_decode($email->text);
-    $message = str_replace("{arc::sitetitle}", $title->value, $message);
-    $message = str_replace("{arc::emailbilling}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
-    $message = str_replace("{arc::emaildelivery}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
-    $message = str_replace("{arc::emailstatus}", $order->status, $message);
-    $message = str_replace("{arc::emailtotal}", $order->total, $message);   
-    $message = str_replace("{arc::emailitems}", $itemLines, $message);
-    $message = str_replace("{arc::sitelogo}", system\Helper::arcGetPath() . $logo->value, $message);
+    $message = str_replace("{arc:sitetitle}", $title->value, $message);
+    $message = str_replace("{arc:emailbilling}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
+    $message = str_replace("{arc:emaildelivery}", $addresslines . "<br />" . $county . "<br />" . $postcode, $message);
+    $message = str_replace("{arc:emailstatus}", $order->status, $message);
+    $message = str_replace("{arc:emailtotal}", $order->total, $message);   
+    $message = str_replace("{arc:emailitems}", $itemLines, $message);
+    $message = str_replace("{arc:sitelogo}", system\Helper::arcGetPath() . $logo->value, $message);
 
     $mail = new Mail();
     $mail->Send($user->email, $title->value . " Order " . $order->id, $message, true);

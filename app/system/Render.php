@@ -206,7 +206,7 @@ class Render {
 
             // impersonating
             if (isset($_SESSION['arc_imposter'])) {
-                $content = str_replace('{{arc:impersonate}}', '<div class="alert alert-info>Impersonating ' . Helper::arcGetUser()->getFullname() . '. <a href="/arcsiu">Stop impersonating user</a></div>', $content);
+                $content = str_replace('{{arc:impersonate}}', '<div class="alert alert-info">Impersonating ' . Helper::arcGetUser()->getFullname() . '. <a href="/arcsiu">Stop impersonating user</a></div>', $content);
             } else {
                 $content = str_replace('{{arc:impersonate}}', '', $content);
             }
