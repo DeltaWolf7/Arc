@@ -9,22 +9,6 @@
         $orders = ArcEcomOrder::getAll();
 ?>
 
-
-<div class="form-group">
-    <label for="status">Status</label>
-    <select class="form-control" id="status" onchange="updateStatus()">
-        <?php
-            foreach ($statuses as $stat) {
-                if ($s == $stat->id) {
-                    echo "<option value=\"" . $stat->name . "\" selected>" . $stat->name . "</option>";
-                } else {
-                    echo "<option value=\"" . $stat->name . "\">" . $stat->name . "</option>";
-                }
-            }
-        ?>
-    </select>
-</div>
-
 <table class="table table-striped">
     <tr>
         <th>ID</th>
@@ -106,7 +90,17 @@
                         Status:
                     </span>
                     <span class="badge bgc-green-d1 text-white badge-pill px-25">
-                        <?php echo $order->status; ?>
+                    <select class="form-control" id="status">
+                    <?php $ostatus = ArcEcomOrderStatus::getAll();
+                        foreach ($ostatus as $os) {
+                            if (strtoupper($os->name) == strtoupper($order->status)) {
+                                echo "<option value=\"" . $os->name . "\" selected>" . $os->name . "</option>";
+                            } else {
+                                echo "<option value=\"" . $os->name . "\">" . $os->name . "</option>";
+                            }
+                        }
+                    ?>
+                    </select>
                     </span>
                 </div>
 
@@ -129,7 +123,7 @@
                         Tracking:
                     </span>
                     <span class="badge bgc-green-d1 text-white badge-pill px-25">
-                        <?php echo $order->tracking; ?>
+                        <input id="tracking" class="form-control" value="<?php echo $order->tracking; ?>" />
                     </span>
                 </div>
 
@@ -140,9 +134,11 @@
                         Dropship Order:
                     </span>
                     <span class="badge bgc-green-d1 text-white badge-pill px-25">
-                        <?php echo $order->dropshiporder; ?>
+                    <input id="dropship" class="form-control" value="<?php echo $order->dropshiporder; ?>" />
                     </span>
                 </div>
+
+                <button class="btn btn-primary btn-block" onclick="saveUpdate(<?php echo $order->id; ?>)">Update</button>
             </div>
         </div><!-- /.col -->
     </div>

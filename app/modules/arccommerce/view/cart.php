@@ -61,8 +61,8 @@
  // Set delivery
  if (isset($_GET["del"])) {
      $newDel = ArcEcomDelivery::getByID($_GET["del"]);
-     if ($newDel->id > 0) {
-         $order->shippingtypeid = $newDel->id;
+     if ($newDel->id > 0 && $newDel->enabled == 1) {
+        $order->shippingtypeid = $newDel->id;
      }
  }
 
