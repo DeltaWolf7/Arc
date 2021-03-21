@@ -21,7 +21,8 @@ $("#btnSaveSettings").click(function() {
         timeFormat: $("#timeFormat").val(),
         siteTitle: $("#siteTitle").val(),
         media: $("#mediaManagerURL").val(),
-        gAdsense: $("#gAdsense").val()
+        gAdsense: $("#gAdsense").val(),
+        gAnal: $("#gAnal").val()
     }, arcGetStatus);
 });
 

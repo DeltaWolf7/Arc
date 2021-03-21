@@ -213,6 +213,23 @@
                         </div>
                     </div>
                 </fieldset>
+
+                <!-- Google Analytics /-->
+                <fieldset>
+                    <legend>Google Analytics</legend>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="gAnal">Analytics ID </label>
+                                <input id="gAnal" type="text" class="form-control"
+                                    value="<?php echo $gAnal->value; ?>">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <i class="fa fa-info-circle"></i> Google Analytics client ID.</a>.
+                        </div>
+                    </div>
+                </fieldset>
             </div>
 
             <!-- Login /-->
@@ -506,12 +523,12 @@
 
 
                     <div class="table">
-                        <table class="table table-striped" aria-label="API">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th scope="col">User</th>
-                                    <th scope="col">Key</th>
-                                    <th scope="col">Actions</th>
+                                    <th>User</th>
+                                    <th>Key</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="apiKeys">
@@ -566,9 +583,8 @@
                                 aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <!--<iframe style="width: 100%; height: 500px; border: 0;"
-                            src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>/-->
-                            FIX ME, DONT USE IFRAMES
+                        <iframe style="width: 100%; height: 500px; border: 0;"
+                            src="<?php echo system\Helper::arcGetPath() . $media->value; ?>"></iframe>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal"

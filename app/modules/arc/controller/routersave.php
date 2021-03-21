@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest()) {
+if (system\Helper::arcIsAjaxRequest() == true) {
         $route = Router::getByID($_POST["id"]);
         $route->groupallowed = $_POST["group"];
         $route->route = $_POST["route"];

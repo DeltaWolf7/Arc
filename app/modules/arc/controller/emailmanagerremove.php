@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest()) {
+if (system\Helper::arcIsAjaxRequest() == true) {
             $email = Email::getByID($_POST["id"]);
             if ($email->protected == 0) {
                 $email->delete();

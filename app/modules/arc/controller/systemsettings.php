@@ -27,3 +27,4 @@ $title = \SystemSetting::getByKey("ARC_SITETITLE");
 $media = \SystemSetting::getByKey("ARC_MEDIAMANAGERURL");
 
 $gAdsense = \SystemSetting::getByKey("ARC_GADSENSE");
+$gAnal = \SystemSetting::getByKey("ARC_GANAL");

@@ -67,8 +67,8 @@
                         <div class="form-group">
                             <label for="enabled">Account Enabled</label>
                             <select name="enabled" class="form-control">
-                                <option value="1" <?php if ($user->enabled == "1") { echo "selected"; } ?>>Yes</option>
-                                <option value="0" <?php if($user->enabled == "0") { echo "selected"; } ?>>No</option>
+                                <option value="1" <?php if ($user->enabled == "1") echo "selected"; ?>>Yes</option>
+                                <option value="0" <?php if($user->enabled == "0") echo "selected"; ?>>No</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -77,7 +77,7 @@
                                 ondblclick="removeUserFromGroup('<?php echo $user->id; ?>')">
                                 <?php
                         foreach ($userGroups as $group) { 
-                            if ($user->inGroup($group->name)) {
+                            if ($user->inGroup($group->name) == true) {
                                 echo "<option value=" . $group->name . ">" . $group->name . "</option>";
                             }
                         }
@@ -149,15 +149,15 @@
                 &nbsp;<button class="btn btn-success btn-sm" onclick="arcRedirect('/0')"><i class="fas fa-plus"></i> New
                     User</button></div>
         </div>
-        <table class="table table-striped" aria-label="Users">
+        <table class="table table-striped">
             <thead>
-                <th scope="col">#</th>
-                <th scope="col">Img</th>
-                <th scope="col">Name (<?php echo count($users); ?>)</th>
-                <th scope="col">Active</th>
-                <th scope="col">Email</th>
-                <th scope="col">Auth</th>
-                <th scope="col">Action</th>
+                <th>#</th>
+                <th>Img</th>
+                <th>Name (<?php echo count($users); ?>)</th>
+                <th>Active</th>
+                <th>Email</th>
+                <th>Auth</th>
+                <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -170,7 +170,7 @@
                         <?php
                         $profileImage = $user->getProfileImage();
                     ?>
-                        <img class="img-fluid" width="30px" src="<?php echo $profileImage; ?>" alt="Profile Image" />
+                        <img class="img-fluid" width="30px" src="<?php echo $profileImage; ?>" />
                     </td>
                     <td>
                         <?php

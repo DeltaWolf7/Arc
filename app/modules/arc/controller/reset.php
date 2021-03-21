@@ -6,7 +6,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     // valid user
     if ($user->id > 0) {
 
-        $password = system\Helper::arcCreatePassword(14);
+        $password = md5(uniqid($user->email, true));
         $user->setPassword($password);
         $user->update();
 

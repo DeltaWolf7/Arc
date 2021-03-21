@@ -7,7 +7,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $html = "";
 
     // buttons
-    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"3\">"
+    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"
             . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
             . " <button class=\"btn btn-secondary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
             . "<i class=\"fa fa-folder\"></i> New Folder</button>"

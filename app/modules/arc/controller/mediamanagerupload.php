@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest() && !empty($_FILES)) {
+if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
     if (isset($_FILES['file']['name'])) {
         if (!$_FILES['file']['error']) {
             Log::createLog("success", "mediamanager", "Starting file upload.");

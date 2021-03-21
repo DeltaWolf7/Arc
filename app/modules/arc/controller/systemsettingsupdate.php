@@ -92,6 +92,10 @@ if (system\Helper::arcIsAjaxRequest()) {
     $setting = SystemSetting::getByKey("ARC_GADSENSE");
     $setting->value = $_POST["gAdsense"];
     $setting->update();
+
+    $setting = SystemSetting::getByKey("ARC_GANAL");
+    $setting->value = $_POST["gAnal"];
+    $setting->update();
     
     system\Helper::arcAddMessage("success", "System settings saved.");
     system\Helper::arcReturnJSON([]);

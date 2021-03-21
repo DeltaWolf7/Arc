@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest()) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     $email = Email::getByID($_POST["id"]);
     $email->text = htmlentities($_POST["html"]);
     $email->subject = $_POST["subject"];

@@ -1,6 +1,6 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest()) {
+if (system\Helper::arcIsAjaxRequest() == true) {
     $page = Page::getByID($_POST["id"]);
     system\Helper::arcReturnJSON(["title" => $page->title, "seourl" => $page->seourl,
         "metadescription" => $page->metadescription, "metakeywords" => $page->metakeywords,

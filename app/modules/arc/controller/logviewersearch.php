@@ -19,12 +19,12 @@ if (system\Helper::arcIsAjaxRequest()) {
     $noPages = round($count / $number, 0);  
 
     $html = "<div class=\"table-responsive\"><table class=\"table table-striped table-sm\">"
-            . "<thead class=\"thead-default\"><tr><th scope=\"col\">Type</th>"
-            . "<th scope=\"col\">Module</th>"
-            . "<th scope=\"col\">When</th>"
-            . "<th scope=\"col\">User</th>"
-            . "<th scope=\"col\">Imp</th>"
-            . "<th scope=\"col\">Message</th></tr></thead><tbody>";
+            . "<thead class=\"thead-default\"><tr><th>Type</th>"
+            . "<th>Module</th>"
+            . "<th>When</th>"
+            . "<th>User</th>"
+            . "<th>Imp</th>"
+            . "<th>Message</th></tr></thead><tbody>";
 
     foreach ($logs as $log) {
         $html .= "<tr>"
@@ -41,9 +41,6 @@ if (system\Helper::arcIsAjaxRequest()) {
                 break;
             case "warning":
                 $html .= "<span class=\"badge badge-warning\"><i class=\"fa fa-exclamation-triangle\"></i><span>";
-                break;
-            default:
-            $html .= "<span class=\"badge badge-danger\"><i class=\"fa fa-exclamation-circle\"></i><span>";
                 break;
         }
         $html .= "</td>"

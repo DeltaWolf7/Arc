@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-body" id="listDiv">
-        <table class="table table-striped table-sm" id="pages" aria-label="Pages">
+        <table class="table table-striped table-sm" id="pages">
         </table>
     </div>
 

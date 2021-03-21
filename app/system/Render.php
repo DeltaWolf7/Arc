@@ -161,6 +161,14 @@ class Render {
             if (strlen($gAdsense->value) > 0) {
                 Helper::arcAddFooter('external', '<script data-ad-client="' . $gAdsense->value . '" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>');
             }
+
+            $gAnal = \SystemSetting::getByKey('ARC_GANAL');
+            if (strlen($gAnal->value) > 0) {
+                Helper::arcAddFooter('external', '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $gAnal->value . '"></script>'
+                . '<script>window.dataLayer = window.dataLayer || [];'
+                . 'function gtag(){dataLayer.push(arguments);} gtag(\'js\', new Date());'
+                . 'gtag(\'config\', \'' . $gAnal->value . '\');</script>');
+            }
         }
 
         $groups[] = \UserGroup::getByName('Guests');

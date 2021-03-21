@@ -3,14 +3,14 @@
         Group</button>
 </div>
 <div class="table-responsive">
-    <table class="table table-striped" aria-label="Groups">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Name</th>
-                <th scope="col">Description</th>
-                <th scope="col">Users</th>
-                <th scope="col">Action</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Users</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody id="groupsData">

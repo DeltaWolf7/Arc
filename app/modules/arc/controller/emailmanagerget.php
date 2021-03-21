@@ -1,7 +1,7 @@
 <?php
 
-if (system\Helper::arcIsAjaxRequest()) {
-    $table = "<thead class=\"thead-default\"><tr><th scope=\"col\">Key</th><th scope=\"col\">Subject</th><th scope=\"col\">System</th><th scope=\"col\" class=\"text-right\"><button onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
+if (system\Helper::arcIsAjaxRequest() == true) {
+    $table = "<thead class=\"thead-default\"><tr><th>Key</th><th>Subject</th><th>System</th><th class=\"text-right\"><button onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
     $table .= "<tbody>";
     $emails = Email::getAll();
     foreach ($emails as $email) {
