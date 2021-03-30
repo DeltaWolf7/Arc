@@ -31,6 +31,8 @@
 
     // Order not yet saved, save it to get order id;
     if ($order->id == 0) {
+        // default to royalmail
+        $order->shippingtypeid = 3;
         $order->update();
     }
 
@@ -223,11 +225,11 @@
                 </div>
 
                 <div class="d-none d-sm-block col-2 text-95">
-                    £<?php echo $price; ?>
+                    £<?php echo number_format($price, 2); ?>
                 </div>
 
                 <div class="col-5 col-sm-2 text-secondary-d3 text-600">
-                    £<?php echo ($price * $item->qty); ?>
+                    £<?php echo number_format(($price * $item->qty), 2); ?>
                 </div>
             </div>
 
@@ -236,11 +238,11 @@
                     $subtotal += $price;
             }
             $vatrate = 0.00;
-            $vat = round(($subtotal * $vatrate) - $subtotal, 2); // should load from db. fake it.
+            $vat = number_format(($subtotal * $vatrate) - $subtotal, 2); // should load from db. fake it.
             if ($vatrate == 0) {
                 $vat = 0.00;
             }
-            $total = number_format($subtotal + $vat + $shipping, 2);
+            $total = $subtotal + $vat + $shipping;
             
         ?>
         </div>
@@ -281,7 +283,7 @@
 
                     <div class="col-5">
                         <span class="text-125 text-secondary-d3">
-                            £<?php echo $subtotal; ?>
+                            £<?php echo number_format($subtotal, 2); ?>
                         </span>
                     </div>
                 </div>
@@ -293,7 +295,7 @@
 
                     <div class="col-5">
                         <span class="text-115 text-secondary-d3">
-                            £<?php echo $vat; ?>
+                            £<?php echo number_format($vat, 2); ?>
                         </span>
                     </div>
                 </div>
@@ -317,7 +319,7 @@
 
                     <div class="col-5">
                         <span class="text-115 text-secondary-d3">
-                            £<?php echo $shipping; ?>
+                            £<?php echo number_format($shipping, 2); ?>
                         </span>
                     </div>
                 </div>
@@ -328,8 +330,8 @@
                     </div>
 
                     <div class="col-5">
-                        <span class="text-150">
-                            £<?php echo $total; ?>
+                        <span class="text-200">
+                            £<?php echo number_format($total, 2); ?>
                         </span>
                     </div>
                 </div>
