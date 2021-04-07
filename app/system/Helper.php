@@ -87,7 +87,7 @@ class Helper {
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>');
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>');
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>');
-        self::arcAddFooter('external', '<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">');
+        self::arcAddFooter('external', '<script src="https://kit.fontawesome.com/5ddfcf8ebf.js" crossorigin="anonymous"></script>');
         self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.js');
 
         // CSS, add required css files to header
@@ -120,6 +120,9 @@ class Helper {
             case "keywords":
             case "author":
             case "viewport":
+                if ($type == "description" && strlen($content) > 160) {
+                    $content = substr($content, 0, 160);
+                }
                 self::$arc["headerdata"][$type] = "<meta name=\"{$type}\" content=\"{$content}\" />" . PHP_EOL;
                 break;
             case "alternate":

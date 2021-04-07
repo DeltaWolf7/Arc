@@ -57,6 +57,7 @@ if (!empty($search)) {
         }
         $cat = ArcEcomCategory::getByID($catData[0]);
         system\Helper::arcAddHeader("title", $cat->name);
+        system\Helper::arcAddHeader("description", $cat->name);
         $bread = CreateBreadCrumb("<li class=\"breadcrumb-item\"><a href=\"/categories\">Home</a></li>", $cat);
     } else {
         $categories = ArcEcomCategory::getAllCategoriesByParentID();

@@ -11,14 +11,14 @@
             ?>
             <div class="col-md-2"><a href="#"
                     onclick="$('#image').attr('src','<?php echo $path . $image->filename; ?>')"><img height="100px"
-                        src="<?php echo $path . $image->filename; ?>" /></a></div>
+                        src="<?php echo $path . $image->filename; ?>" alt="<?php echo $product->name; ?>"/></a></div>
             <?php
                 }
             ?>
         </div>
     </div>
     <div class="col-md-6">
-        <h3><?php echo $product->name; ?></h3>
+        <h1><?php echo $product->name; ?></h1>
         <h4 class="text-primary">£<?php echo $product->price; ?></h4>
         <h6 class="text-secondary">RRP £<?php echo $product->rrp; ?>, Model: <?php echo $product->model; ?></h6>
 

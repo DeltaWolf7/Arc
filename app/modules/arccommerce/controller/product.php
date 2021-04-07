@@ -8,6 +8,7 @@ if (count($uri) > 1) {
     $product = ArcEcomProduct::GetByID($productdata[0]);
     if ($product->id > 0) {
         system\Helper::arcAddHeader("title", $product->name);
+        system\Helper::arcAddHeader("description", $product->description);
 
         $path = system\Helper::arcGetPath() . "assets/products/";
         $images = ArcEcomImage::getAllByProductIDAndType($product->id, "IMAGE");
