@@ -7,13 +7,13 @@ if (system\Helper::arcIsAjaxRequest()) {
     $html = "";
 
     // buttons
-    $html .= "<table class=\"table table-striped small\"><tr><td colspan=\"2\">"
-            . "<button class=\"btn btn-secondary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
-            . " <button class=\"btn btn-secondary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
+    $html .= "<table class=\"table table-striped table-sm align-middle\"><tr><td colspan=\"2\">"
+            . "<button class=\"btn btn-primary btn-sm btn-file\"><input type=\"file\"><i class=\"fa fa-upload\"></i> Upload</button>"
+            . " <button class=\"btn btn-primary btn-sm\" title=\"Create Folder\" onclick=\"showCreateFolder()\">"
             . "<i class=\"fa fa-folder\"></i> New Folder</button>"
-            . " <button class=\"btn btn-secondary btn-sm\" title=\"Move\" onclick=\"move()\">"
+            . " <button class=\"btn btn-primary btn-sm\" title=\"Move\" onclick=\"move()\">"
             . "<i class=\"fas fa-file-import\"></i> Move</button>"
-            . " <button class=\"btn btn-secondary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
+            . " <button class=\"btn btn-primary btn-sm\" onclick=\"doDelete()\"><i class=\"fa fa-trash\"></i> Delete</button>";
     if ($postPath != "") {
         $backUrl = "";
         $back = explode("/", $postPath);
@@ -21,9 +21,9 @@ if (system\Helper::arcIsAjaxRequest()) {
             $backUrl .= $back[$i] . "/";
         }
         $backUrl = rtrim($backUrl, "/");
-        $html .= " <button class=\"btn btn-secondary btn-sm\" onclick=\"getFolderPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i> Up</button>";
+        $html .= " <button class=\"btn btn-primary btn-sm\" onclick=\"getFolderPath('" . $backUrl . "')\"><i class=\"fa fa-level-up\"></i> Up</button>";
     }
-    $html .= "</td><td class=\"text-right\" colspan=\"4\">";
+    $html .= "</td><td class=\"text-end\" colspan=\"5\">";
 
     // path
     $html .= "<i class=\"fa fa-home\"></i> ";

@@ -69,17 +69,28 @@ function getApikeys() {
 function displayKeys(data) {
     var jdata = arcGetJson(data);
     $("#apiKeys").html(jdata.html);
+    $("#apiuser").html(jdata.users);
 }
 
 function removeApiKey(userid) {
     arcAjaxRequest("arc/systemsettingsremoveapi", { userid: userid }, getApikeys);
+    arcGetStatus();
 }
 
 $("#createAPI").click(function() {
     arcAjaxRequest("arc/systemsettingscreateapi", { userid: $("#apiuser").val() }, getApikeys);
+    arcGetStatus();
 });
 
 function copyToClipboardSuccess(data) {
     $("#siteLogo").val(data);
     $("#mediaManagerMD").modal("hide");
+}
+
+function copyToClipboard(key) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(key).select();
+    document.execCommand("copy");
+    $temp.remove();
 }

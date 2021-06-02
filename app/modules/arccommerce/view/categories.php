@@ -71,7 +71,7 @@ if (count($products) > 0) {
             ?>
 <div class="card">
     <a href="/products/<?php echo $product->getSEOUrl(); ?>">
-        <img class="card-img-top img-fluid" src="<?php echo $imagePath . $image->filename; ?>"
+        <img class="card-img-top img-fluid lazy" data-src="<?php echo $imagePath . $image->filename; ?>"
             alt="<?php echo $product->name; ?>">
     </a>
     <div class="card-body text-sm mt-0 pt-0">

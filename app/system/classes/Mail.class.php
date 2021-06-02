@@ -199,6 +199,8 @@ class Mail {
                 }
                 break;
         }
+
+        Log::createLog("success", "arcmail", "SMTP: Subject: " . $subject);
     }
 
 }

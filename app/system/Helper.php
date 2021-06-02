@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.10.0.0";
+        self::$arc["version"] = "0.11.0.0";
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -85,14 +85,14 @@ class Helper {
 
         // Javascript, add required javascript files to header
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>');
-        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>');
+        self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">');
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>');
         self::arcAddFooter('external', '<script src="https://kit.fontawesome.com/5ddfcf8ebf.js" crossorigin="anonymous"></script>');
-        self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.js');
+        self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.min.js');
 
         // CSS, add required css files to header
-        self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">');
-        self::arcAddHeader('css', self::arcGetPath() . 'vendor/arc/css/arc.css');
+        self::arcAddHeader('css', self::arcGetPath() . 'vendor/arc/css/arc.min.css');
     }
 
     /**
@@ -132,9 +132,6 @@ class Helper {
             case "css":
                 self::$arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
                 break;
-            case "js":
-                self::$arc["headerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
-                break;
             case "favicon":
                 self::$arc["headerdata"][$type] = "<link href=\"" . $content . "\" rel=\"icon\">" . PHP_EOL;
                 break;
@@ -152,9 +149,6 @@ class Helper {
      */
     public static function arcAddFooter($type, $content) {
         switch ($type) {
-            case "css":
-                self::$arc["footerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
-                break;
             case "js":
                 self::$arc["footerdata"][] = "<script src=\"" . $content . "\"></script>" . PHP_EOL;
                 break;
@@ -647,7 +641,7 @@ class Helper {
      * @return string
      */
     public static function arcGetVersion() {
-        return "Powered Arc";
+        return self::$arc["version"];
     }
 
     public static function arcGetURI() {

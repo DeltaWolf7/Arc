@@ -1,5 +1,5 @@
 // Login
-$("#loginBtn").click(function() {
+$("#loginBtn").click(function () {
     login();
 });
 
@@ -7,18 +7,45 @@ function login() {
     $("#email").prop("disabled", true);
     $("#password").prop("disabled", true);
     $("#loginBtn").prop("disabled", true);
-    arcAjaxRequest("arc/dologin", { email: $("#email").val(), password: $("#password").val() }, showMessage, success);
+    arcAjaxRequest("arc/dologin", {
+        email: $("#email").val(),
+        password: $("#password").val()
+    }, showMessage, success);
 }
 
-$("#btnForgot").click(function() {
-    $('#collapseA').collapse('hide');
-    $('#collapseB').collapse('hide');
-    $('#collapseC').collapse('show');
+$("#btnReg").click(function () {
+    toggleView("reg");
 });
 
-$("#forgotCancel").click(function() {
+$("#btnBackLogin").click(function () {
+    toggleView("login");
+});
+
+$("#btnForgot").click(function () {
+    toggleView("forgot");
+});
+
+$("#forgotCancel").click(function () {
     cancelForgot();
 });
+
+function toggleView(item) {
+    $('#collapseA').collapse('hide');
+    $('#collapseB').collapse('hide');
+    $('#collapseC').collapse('hide');
+
+    switch (item) {
+        case "login":
+            $('#collapseA').collapse('show');
+            break;
+        case "reg":
+            $('#collapseB').collapse('show');
+            break;
+        case "forgot":
+            $('#collapseC').collapse('show');
+            break;
+    }
+}
 
 function showMessage() {
     arcGetStatus();
@@ -28,13 +55,13 @@ function showMessage() {
 }
 
 function cancelForgot() {
-    $('#collapseA').collapse('show');
-    $('#collapseB').collapse('hide');
-    $('#collapseC').collapse('hide');
+    toggleView("login");
 }
 
-$("#sendReset").click(function() {
-    arcAjaxRequest("arc/reset", { emailf: $("#emailf").val() }, arcGetStatus);
+$("#sendReset").click(function () {
+    arcAjaxRequest("arc/reset", {
+        emailf: $("#emailf").val()
+    }, arcGetStatus);
     cancelForgot();
 });
 
@@ -45,24 +72,8 @@ function success(data) {
     }
 }
 
-// Login effects
-var sview = false;
-
-function switchView() {
-    if (sview == false) {
-        sview = true;
-        $('#collapseA').collapse('hide');
-        $('#collapseB').collapse('show');
-    } else {
-        sview = false;
-        $('#collapseA').collapse('show');
-        $('#collapseB').collapse('hide');
-    }
-}
-
-
 // Register
-$("#registerBtn").click(function() {
+$("#registerBtn").click(function () {
     arcAjaxRequest("arc/doregister", {
         firstname: $("#firstname").val(),
         lastname: $("#lastname").val(),
@@ -72,8 +83,25 @@ $("#registerBtn").click(function() {
     }, arcGetStatus, success);
 });
 
-$("#password").keypress(function(e) {
+$("#password").keypress(function (e) {
     if (e.keyCode == 13) {
         login();
     }
+});
+
+
+//hide password
+$(document).ready(function () {
+    $("#show_hide_password a").on('click', function (event) {
+        event.preventDefault();
+        if ($('#show_hide_password input').attr("type") == "text") {
+            $('#show_hide_password input').attr('type', 'password');
+            $('#show_hide_password i').addClass("bx-hide");
+            $('#show_hide_password i').removeClass("bx-show");
+        } else if ($('#show_hide_password input').attr("type") == "password") {
+            $('#show_hide_password input').attr('type', 'text');
+            $('#show_hide_password i').removeClass("bx-hide");
+            $('#show_hide_password i').addClass("bx-show");
+        }
+    });
 });

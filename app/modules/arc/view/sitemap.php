@@ -1,4 +1,7 @@
-<?php
+<div class="card">
+    <div class="card-body">
+        <h3>Base Sitemap generation</h3>
+        <?php
 
     $group = UserGroup::getByName("Guests");
     $routes = Router::getByGroupID($group->id);
@@ -16,6 +19,10 @@
     fwrite($map, $sitemap);
     fclose($map);
 
-    echo "<br />Complete."
+    echo "<br />Complete.";
+
+    echo "<br /><br /><strong>Path: " . system\Helper::arcGetPath() . "sitemap.txt</strong>";
 
 ?>
+    </div>
+</div>

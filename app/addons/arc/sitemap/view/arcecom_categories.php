@@ -1,4 +1,7 @@
-<?php
+<div class="card mt-2">
+    <div class="card-body">
+        <h3>Ecommerce Generation - Categories</h3>
+        <?php
 
     $sitemap = file_get_contents(system\Helper::arcGetPath(true) . "sitemap.txt");
     echo "<br /><br />Adding Catgeories</br >";
@@ -11,3 +14,5 @@
     file_put_contents(system\Helper::arcGetPath(true) . "sitemap.txt", $sitemap);
     echo "<br />Complete adding categories.";
 ?>
+    </div>
+</div>

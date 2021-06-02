@@ -33,7 +33,7 @@ header("Strict-Transport-Security:max-age=63072000");
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
 header('X-Content-Type-Options: nosniff');
 // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-header("X-Frame-Options: DENY");
+header("X-Frame-Options: SAMEORIGIN");
 
 // https://content-security-policy.com/examples/php/
 // disabled at moment, causing issue with own scripts
@@ -58,8 +58,8 @@ if (function_exists('header_remove')) {
 }
 
 // Check that we are using PHP 7 or newer.
-if (version_compare(phpversion(), '7.0', '<') == true) {
-    die('PHP 5.5 or newer required');
+if (version_compare(phpversion(), '7.3.0', '<') == true) {
+    die('PHP 7.3.0 or newer required');
 }
 
 // Check we have a config file and include

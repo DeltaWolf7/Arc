@@ -5,8 +5,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
         $pages = Page::getAllPages(true);
         
         // route
-        $data = "<div class=\"form-group\"><label for=\"route\">Route</label>"
-                . "<select id=\"route\" class=\"form-control\">"
+        $data = "<label for=\"route\" class=\"form-label\">Route</label>"
+                . "<select id=\"route\" class=\"form-select\">"
                 . "<option value=\"\"";
         if ($permission->route == "") {
             $data .= "selected";
@@ -22,13 +22,12 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             }
             $data .= ">" . $page->seourl . "</option>";
         }
-        $data .= "</select></div>";
+        $data .= "</select>";
         
         //destination
-        $data .= "<div class=\"form-group\">"
-            . "<label for=\"destination\">Destination Override</label><input id=\"destination\" class=\"form-control\" value=\""
-            . $permission->destination . "\"></input>"
-            . "</div>";
+        $data .= "<label for=\"destination\" class=\"form-label\">Destination Override</label>"
+        . "<input id=\"destination\" class=\"form-control\" value=\""
+            . $permission->destination . "\"></input>";
         
         
         system\Helper::arcReturnJSON(["data" => $data]);

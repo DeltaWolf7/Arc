@@ -1,6 +1,6 @@
 <div class="card">
-    <div class="card-body" id="listDiv">
-        <table class="table table-striped table-sm" id="pages">
+    <div class="card-body table-responsive" id="listDiv">
+        <table class="table table-striped align-middle" id="pages">
         </table>
     </div>
 
@@ -12,27 +12,27 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="key">Key</label>
+                              
+                                    <label for="key" class="form-label">Key</label>
                                     <input type="text" class="form-control" id="key" placeholder="Key" maxlength="100">
-                                </div>
+                            
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="subject">Subject</label>
+                        
+                                    <label for="subject" class="form-label">Subject</label>
                                     <input type="text" class="form-control" id="subject" placeholder="Subject" maxlength="200">
-                                </div>
+                       
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
+                            <div class="col-md-12 mt-2">
+                            
                                     <div id="summernote"></div>
-                                </div>
+                        
                             </div>
                         </div>
                     </div>
-                <div class="text-right">
+                <div class="text-end mt-3">
                     <button class="btn btn-secondary" id="closeBtn">Close</button>
                     <button class="btn btn-primary" id="savePageBtn">Save</button>
                 </div>

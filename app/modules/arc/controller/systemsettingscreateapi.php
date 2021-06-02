@@ -4,10 +4,15 @@ if (system\Helper::arcIsAjaxRequest()) {
     
     $apikey = SystemSetting::getByKey("APIKEY", $_POST["userid"]);
     if ($apikey->id == 0) {
-        $apikey->value = md5(microtime() . rand());
+        
+        $salt = mt_rand();
+        $signature = hash_hmac('sha256', $salt, ARCIVKEYPAIR, true);
+        $encodedSignature = base64_encode($signature);
+        
+        $apikey->value = $encodedSignature;
         $apikey->update();
     }
 
-    //system\Helper::arcAddMessage("success", "User API key created");
+    system\Helper::arcAddMessage("success", "User API key created");
     system\Helper::arcReturnJSON();
 }

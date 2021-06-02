@@ -4,13 +4,13 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     $html = "<div class=\"table table-responsive\">"
         . "<table class=\"table table-striped\">"
-        . "<thead>"
+        . "<thead class=\"text-primary\">"
         .        "<tr>"
          .          "<th scope=\"col\">ID</th>"
          .           "<th scope=\"col\">Date</th>"
           .          "<th scope=\"col\">Title</th>"
           .          "<th scope=\"col\">Version</th>"
-          .          "<th scope=\"col\" class=\"text-right\"><button class=\"btn btn-success btn-sm\"><i class=\"fa fa-plus\"></i> Add</button></th>"
+          .          "<th scope=\"col\" class=\"text-end\"><button class=\"btn btn-success btn-sm\"><i class=\"fa fa-plus\"></i> Add</button></th>"
           .      "<tr>"
            . "</thead>"
             . "<tbody>";

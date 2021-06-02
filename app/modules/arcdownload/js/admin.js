@@ -3,7 +3,7 @@ $(document).ready(function() {
 });
 
 function getDownloads() {
-    arcAjaxRequest("arcdownload/getDownloads", {}, null, getDownloadsComplete);
+    arcAjaxRequest("arcdownload/getdownloads", {}, null, getDownloadsComplete);
 }
 
 function getDownloadsComplete(data) {
@@ -12,5 +12,5 @@ function getDownloadsComplete(data) {
 }
 
 function deleteDownload(id) {
-    arcAjaxRequest("arcdownload/deleteDownload", {id: id}, null, getDownloads);
+    arcAjaxRequest("arcdownload/deletedownload", {id: id}, null, getDownloads);
 }

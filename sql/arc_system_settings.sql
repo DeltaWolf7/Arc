@@ -15,7 +15,7 @@ INSERT INTO `arc_system_settings` (`id`, `skey`, `svalue`, `userid`) VALUES
 (7, 'ARC_MAIL_SENDER', 'admin@server.local', 0),
 (8, 'ARC_LOGIN_URL', '', 0),
 (9, 'ARC_FILE_UPLOAD_SIZE_BYTES', '2000000', 0),
-(10, 'ARC_THEME', 'ace', 0),
+(10, 'ARC_THEME', 'rukada', 0),
 (11, 'ARC_DEFAULT_PAGE', 'welcome', 0),
 (12, 'ARC_LDAP_ENABLED', '0', 0),
 (13, 'ARC_LDAP_SERVER', 'localhost', 0),

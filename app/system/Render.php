@@ -115,7 +115,7 @@ class Render {
                 \Log::createLog('warning', 'arc', "401: {$uri}");
             }
         } else {
-            Helper::arcAddFooter('js', Helper::arcGetPath() . 'vendor/arc/js/arckeepalive.js');
+            Helper::arcAddFooter('js', Helper::arcGetPath() . 'vendor/arc/js/arckeepalive.min.js');
         }
 
         // update last activity time stamp
@@ -138,9 +138,9 @@ class Render {
             // Check the theme in config exists.
             if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value)) {
                 $name = $theme->value;
-                $theme->value = 'beagle';
+                $theme->value = 'paper';
                 $theme->update();
-                die("Unable to find theme '{$name}'. Selected theme reset to 'beagle'.");
+                die("Unable to find theme '{$name}'. Selected theme reset to '{$theme->value}'.");
             }
 
             // If page has theme set, use it.

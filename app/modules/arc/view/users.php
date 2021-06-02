@@ -6,73 +6,73 @@
         }
         $userGroups = UserGroup::getAllGroups();
 ?>
-<div class="row">
-    <div class="col-md-6">
-        <span class="badge badge-info">Created:
-            <?php echo system\Helper::arcConvertDate($user->created); ?></span>&nbsp;
-        <span class="badge badge-primary" id="idtag">ID: <?php echo $user->id; ?></span>&nbsp;
-    </div>
-    <div class="col-md-6 text-right">
-        <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i class="fas fa-times"></i>
-            Close</a>
-    </div>
-</div>
-<form id="userForm">
-    <input type="hidden" name="id" id="id" value="<?php echo $user->id; ?>" />
-    <div class="row mt-3">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="firstname">Firstname</label>
-                <input type="text" class="form-control" name="firstname" placeholder="Firstname"
-                    value="<?php echo $user->firstname; ?>">
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <span class="badge bg-primary">Created:
+                    <?php echo system\Helper::arcConvertDate($user->created); ?></span>&nbsp;
+                <span class="badge bg-primary" id="idtag">ID: <?php echo $user->id; ?></span>&nbsp;
             </div>
-            <div class="form-group">
-                <label for="lastname">Lastname</label>
-                <input type="text" class="form-control" name="lastname" placeholder="Lastname"
-                    value="<?php echo $user->lastname; ?>">
+            <div class="col-md-6 text-end">
+                <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i
+                        class="fas fa-times"></i>
+                    Close</a>
             </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" name="email" placeholder="Email"
-                    value="<?php echo $user->email; ?>">
-            </div>
-            <div class="form-group">
-                <label for="avGroups">Available Groups</label>
-                <select id="avGroups" class="form-control" size="5"
-                    ondblclick="addUserToGroup('<?php echo $user->id; ?>')">;
-                    <?php
+        </div>
+        <form id="userForm">
+            <input type="hidden" name="id" id="id" value="<?php echo $user->id; ?>" />
+            <div class="row mt-3">
+                <div class="col-md-6">
+
+                    <label for="firstname" class="form-label">Firstname</label>
+                    <input type="text" class="form-control" name="firstname" placeholder="Firstname"
+                        value="<?php echo $user->firstname; ?>">
+
+                    <label for="lastname" class="form-label">Lastname</label>
+                    <input type="text" class="form-control" name="lastname" placeholder="Lastname"
+                        value="<?php echo $user->lastname; ?>">
+
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" class="form-control" name="email" placeholder="Email"
+                        value="<?php echo $user->email; ?>">
+
+                    <label for="avGroups" class="form-label">Available Groups</label>
+                    <select id="avGroups" class="form-control" size="5"
+                        ondblclick="addUserToGroup('<?php echo $user->id; ?>')">;
+                        <?php
                         foreach ($userGroups as $group) { 
                             if ($user->inGroup($group->name) != true) {
                                 ?>
-                    <option value="<?php echo $group->name; ?>""><?php echo $group->name; ?></option>
+                        <option value="<?php echo $group->name; ?>""><?php echo $group->name; ?></option>
                                 <?php
                             }
                         }
     ?>
     
         </select>
-                    </div>
+               
                 </div>
                 <div class=" col-md-6">
-                        <div class="form-group">
-                            <label for="password">Password (Leave blank to keep unchanged)</label>
+
+                            <label for="password" class="form-label">Password (Leave blank to keep unchanged)</label>
                             <input type="password" class="form-control" name="password" placeholder="Password"
                                 autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label for="retype">Retype</label>
+
+                            <label for="retype" class="form-label">Retype</label>
                             <input type="password" class="form-control" name="retype" placeholder="Retype"
                                 autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label for="enabled">Account Enabled</label>
-                            <select name="enabled" class="form-control">
-                                <option value="1" <?php if ($user->enabled == "1") echo "selected"; ?>>Yes</option>
-                                <option value="0" <?php if($user->enabled == "0") echo "selected"; ?>>No</option>
+
+                            <label for="enabled" class="form-label">Account Enabled</label>
+                            <select name="enabled" class="form-select">
+                                <option value="1" <?php if ($user->enabled == "1") echo "selected"; ?>>Yes
+                                </option>
+                                <option value="0" <?php if($user->enabled == "0") echo "selected"; ?>>No
+                                </option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="inGroups">In Groups</label>
+
+                            <label for="inGroups" class="form-label">In Groups</label>
                             <select id="inGroups" class="form-control" size="5"
                                 ondblclick="removeUserFromGroup('<?php echo $user->id; ?>')">
                                 <?php
@@ -83,22 +83,25 @@
                         }
                         ?>
                             </select>
-                        </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="clearImage" name="clearImage">
-                    <label class="form-check-label" for="clearImage">Reset User Profile Image?</label>
+
                 </div>
             </div>
-            <div class="col-md-6 text-right">
-                <button class="btn btn-success" type="submit"><i class="far fa-save"></i>
-                    Save</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-check mt-4">
+                        <input type="checkbox" class="form-check-input" id="clearImage" name="clearImage"
+                            class="form-label">
+                        <label class="form-check-label" for="clearImage">Reset User Profile Image?</label>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end mt-3">
+                    <button class="btn btn-success" type="submit"><i class="far fa-save"></i>
+                        Save</button>
+                </div>
             </div>
-        </div>
-</form>
+        </form>
+    </div>
+</div>
 <?php
     } else {
         // all users
@@ -131,7 +134,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <select class="form-control" id="group" onchange="viewGroup()">
+                <select class="form-select" id="group" onchange="viewGroup()">
                     <option value="0" <?php if(!isset($_GET["groupid"])) { echo "selected"; } ?>>View Group Users
                     </option>
                     <?php
@@ -149,15 +152,15 @@
                 &nbsp;<button class="btn btn-success btn-sm" onclick="arcRedirect('/0')"><i class="fas fa-plus"></i> New
                     User</button></div>
         </div>
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped align-middle">
+            <thead class="text-primary">
                 <th>#</th>
                 <th>Img</th>
                 <th>Name (<?php echo count($users); ?>)</th>
                 <th>Active</th>
                 <th>Email</th>
                 <th>Auth</th>
-                <th>Action</th>
+                <th style="width: 150px;">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -215,8 +218,8 @@
         ?>
 
                     </td>
-                    <td style="width: 10px;">
-                        <div class="btn-group" role="group">
+                    <td>
+                     
                             <button class="btn btn-secondary btn-sm"
                                 onclick="impersonateUser('<?php echo $user->id; ?>')"><i
                                     class="fas fa-user-secret"></i></button>
@@ -225,7 +228,7 @@
                                     class="fa fa-pencil"></i></a>
                             <button style="width: 35px;" class="btn btn-danger btn-sm"
                                 onclick="removeUser('<?php echo $user->id; ?>')"><i class="fa fa-remove"></i></button>
-                        </div>
+                       
                     </td>
                 </tr>
                 <?php

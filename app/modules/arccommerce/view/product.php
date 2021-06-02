@@ -3,15 +3,15 @@
 ?>
 <div class="row">
     <div class="col-md-6">
-        <img id="image" class="img-fluid" src="<?php echo $path . $images[0]->filename ?>"
+        <img id="image" class="img-fluid lazy" data-src="<?php echo $path . $images[0]->filename ?>"
             alt="<?php echo $product->name; ?>" />
         <div class="row mt-3">
             <?php
                 foreach ($images as $image) {
             ?>
             <div class="col-md-2"><a href="#"
-                    onclick="$('#image').attr('src','<?php echo $path . $image->filename; ?>')"><img height="100px"
-                        src="<?php echo $path . $image->filename; ?>" alt="<?php echo $product->name; ?>"/></a></div>
+                    onclick="$('#image').attr('src','<?php echo $path . $image->filename; ?>')"><img class="lazy" height="100px"
+                    data-src="<?php echo $path . $image->filename; ?>" alt="<?php echo $product->name; ?>"/></a></div>
             <?php
                 }
             ?>
