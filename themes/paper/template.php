@@ -19,7 +19,7 @@
             <div class="sidebar-header">
                 <div>
                     <a href="{{arc:path}}"><img src="{{arc:sitelogo}}" class="logo-icon" alt="{{arc:sitetitle}}"
-                            width="48" heigh="48"></a>
+                           width="50px" height="50px"></a>
                 </div>
                 <div>
                     <a href="{{arc:path}}">

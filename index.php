@@ -87,6 +87,7 @@ switch (ARCDEBUG) {
 // Include and initilise helper class.
 require_once 'app/system/Initialiser.php';
 require_once 'app/system/API.php';
+require_once 'app/system/CRON.php';
 require_once 'app/system/Render.php';
 require_once 'app/system/Helper.php';
 system\Helper::Init();

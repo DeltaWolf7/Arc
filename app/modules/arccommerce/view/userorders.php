@@ -1,7 +1,8 @@
-<h3>My Orders</h3>
+<div class="card">
+    <div class="card-body">
 
 <table class="table table-striped">
-    <tr>
+    <tr class="text-primary">
         <th>Order #</th>
         <th>Date</th>
         <th>Status</th>
@@ -27,3 +28,5 @@
         }
     ?>
 </table>
+</div>
+</div>

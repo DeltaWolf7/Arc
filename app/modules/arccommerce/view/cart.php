@@ -1,4 +1,6 @@
-<?php
+<div class="card">
+    <div class="card-body">
+        <?php
 
  // Load order
  $user = system\Helper::arcGetUser();
@@ -80,101 +82,100 @@
 
 ?>
 
-<h2>Cart</h2>
-<?php
+        <?php
 
 // So we have items?
  if (count($orderitems) > 0) { 
      ?>
-<div class="card-body px-4 px-lg-5">
-    <div class="row mt-4">
-        <div class="col-sm-6">
-            <div>
-                <div class="mt-1 mb-2 text-secondary-d1 text-600 text-125">
-                    Billing\Delivery:
-                </div>
+        <div class="card-body px-4 px-lg-5">
+            <div class="row mt-4">
+                <div class="col-sm-6">
+                    <div>
+                        <div class="mt-1 mb-2 text-secondary-d1 text-600 text-125 fw-bold">
+                            Billing\Delivery:
+                        </div>
 
-                <div class="text-600 text-110 text-primary mt-2">
-                    <?php
+                        <div class="text-600 text-110 text-primary mt-2">
+                            <?php
                     if ($user != null) {
                      echo $user->getFullname(); 
                     }
                      ?>
-                </div>
+                        </div>
 
-                <div class="text-dark-l1">
-                    <div class="my-1">
-                        Use my PayPal details
+                        <div class="text-dark-l1">
+                            <div class="my-1">
+                                Use my PayPal details
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.col -->
+
+                <div class="col-sm-6 align-self-start d-sm-flex justify-content-end text-95">
+                    <hr class="d-sm-none">
+                    <div class="text-dark-l1">
+                        <div class="mt-1 mb-2 text-secondary-d1 text-600 text-125 fw-bold">
+                            Invoice
+                        </div>
+
+                        <div class="my-2">
+                            <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                            <span class="text-600 text-90">
+                                ID:
+                            </span>
+                            #<?php echo $order->id; ?>
+                        </div>
+
+                        <div class="my-2">
+                            <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                            <span class="text-600 text-90">
+                                Issue Date:
+                            </span>
+                            <?php echo system\Helper::arcConvertDate($order->date); ?>
+                        </div>
+
+                        <div class="my-2">
+                            <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
+                            <span class="text-600 text-90">
+                                Status:
+                            </span>
+                            <span class="badge bgc-green-d1 text-white badge-pill bg-success px-25">
+                                New
+                            </span>
+                        </div>
+                    </div>
+                </div><!-- /.col -->
+            </div>
+            <div class="mt-4">
+                <div class="row text-600 text-95 text-secondary-d3 brc-purple-l1 py-25 border-y-2">
+                    <div class="d-none d-sm-block col-1 text-primary">
+                        Remove
+                    </div>
+
+                    <div class="d-none d-sm-block col-1 text-primary">
+                        #
+                    </div>
+
+                    <div class="col-6 col-sm-4 text-primary">
+                        Description
+                    </div>
+
+                    <div class="d-none d-sm-block col-4 col-sm-2 text-primary">
+                        Qty
+                    </div>
+
+                    <div class="d-none d-sm-block col-sm-2 text-primary">
+                        Unit Price
+                    </div>
+
+                    <div class="col-5 col-sm-2 text-primary">
+                        Amount
                     </div>
                 </div>
-            </div>
-        </div><!-- /.col -->
 
-        <div class="col-sm-6 align-self-start d-sm-flex justify-content-end text-95">
-            <hr class="d-sm-none">
-            <div class="text-dark-l1">
-                <div class="mt-1 mb-2 text-secondary-d1 text-600 text-125">
-                    Invoice
-                </div>
+                <div class="text-95 text-dark-m3">
 
-                <div class="my-2">
-                    <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                    <span class="text-600 text-90">
-                        ID:
-                    </span>
-                    #<?php echo $order->id; ?>
-                </div>
-
-                <div class="my-2">
-                    <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                    <span class="text-600 text-90">
-                        Issue Date:
-                    </span>
-                    <?php echo system\Helper::arcConvertDate($order->date); ?>
-                </div>
-
-                <div class="my-2">
-                    <i class="fa fa-circle text-blue-m2 text-xs mr-1"></i>
-                    <span class="text-600 text-90">
-                        Status:
-                    </span>
-                    <span class="badge bgc-green-d1 text-white badge-pill px-25">
-                        New
-                    </span>
-                </div>
-            </div>
-        </div><!-- /.col -->
-    </div>
-    <div class="mt-4">
-        <div class="row text-600 text-95 text-secondary-d3 brc-purple-l1 py-25 border-y-2">
-            <div class="d-none d-sm-block col-1">
-                Remove
-            </div>
-
-            <div class="d-none d-sm-block col-1">
-                #
-            </div>
-
-            <div class="col-6 col-sm-4">
-                Description
-            </div>
-
-            <div class="d-none d-sm-block col-4 col-sm-2">
-                Qty
-            </div>
-
-            <div class="d-none d-sm-block col-sm-2">
-                Unit Price
-            </div>
-
-            <div class="col-5 col-sm-2">
-                Amount
-            </div>
-        </div>
-
-        <div class="text-95 text-dark-m3">
-
-            <?php
+                    <?php
             $swt = "";
             $subtotal = 0.00;
             $weight = 0.0;
@@ -186,24 +187,24 @@
                 $price = $item->price;
 
                 if ($swt == "") {
-                    $swt = " bgc-purple-l4";
+                    $swt = " bg-light";
                 } else {
                     $swt = "";
                 }
         ?>
 
-            <div class="row mb-2 mb-sm-0 py-25<?php echo $swt; ?>">
-                <div class="d-none d-sm-block col-1 text-center">
-                    <button class="btn btn-danger btn-sm" onclick="remove(<?php echo $item->id; ?>)"><i
-                            class="far fa-window-close"></i></button>
-                </div>
+                    <div class="row mb-2 mb-sm-0 py-25<?php echo $swt; ?> mt-3">
+                        <div class="d-none d-sm-block col-1 mt-3">
+                            <button class="btn btn-danger btn-sm" onclick="remove(<?php echo $item->id; ?>)"><i
+                                    class="far fa-window-close"></i></button>
+                        </div>
 
-                <div class="d-none d-sm-block col-1">
-                    <?php echo $item->productid; ?>
-                </div>
+                        <div class="d-none d-sm-block col-1 mt-3">
+                            <?php echo $item->productid; ?>
+                        </div>
 
-                <div class="col-6 col-sm-4">
-                    <?php 
+                        <div class="col-6 col-sm-4">
+                            <?php 
                     echo $item->description; 
                     if (count($item->options)) {
                         foreach ($item->options as $option) {
@@ -218,22 +219,22 @@
                         }
                     }    
                 ?>
-                </div>
+                        </div>
 
-                <div class="d-none d-sm-block col-2">
-                    <?php echo $item->qty; ?>
-                </div>
+                        <div class="d-none d-sm-block col-2 mt-3">
+                            <?php echo $item->qty; ?>
+                        </div>
 
-                <div class="d-none d-sm-block col-2 text-95">
-                    £<?php echo number_format($price, 2); ?>
-                </div>
+                        <div class="d-none d-sm-block col-2 text-95 mt-3">
+                            £<?php echo number_format($price, 2); ?>
+                        </div>
 
-                <div class="col-5 col-sm-2 text-secondary-d3 text-600">
-                    £<?php echo number_format(($price * $item->qty), 2); ?>
-                </div>
-            </div>
+                        <div class="col-5 col-sm-2 text-secondary-d3 text-600 mt-3">
+                            £<?php echo number_format(($price * $item->qty), 2); ?>
+                        </div>
+                    </div>
 
-            <?php
+                    <?php
 
                     $subtotal += $price;
             }
@@ -245,20 +246,85 @@
             $total = $subtotal + $vat + $shipping;
             
         ?>
-        </div>
+                </div>
 
-        <div class="row border-b-2 brc-purple-l1"></div>
 
-        <div class="row mt-4">
-            <div class="col-12 col-sm-7 mt-2 mt-lg-0">
-                <label for="DelType">Shipping Method</label>
-                <?php 
+                <div class="row mt-4">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-2 text-right text-primary">
+                        SubTotal
+                    </div>
+
+                    <div class="col-md-2">
+                        <span class="text-125 text-secondary-d3">
+                            £<?php echo number_format($subtotal, 2); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row my-2">
+                <div class="col-md-8"></div>
+                    <div class="col-md-2 text-right text-primary">
+                        VAT
+                    </div>
+
+                    <div class="col-md-2">
+                        <span class="text-115 text-secondary-d3">
+                            £<?php echo number_format($vat, 2); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row my-2">
+                <div class="col-md-8"></div>
+                    <div class="col-md-2 text-right text-primary">
+                        Weight
+                    </div>
+
+                    <div class="col-md-2">
+                        <span class="text-115 text-secondary-d3">
+                            <?php echo $weight; ?> kg
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row my-2">
+                <div class="col-md-8"></div>
+                    <div class="col-md-2 text-right text-primary">
+                        Delivery
+                    </div>
+
+                    <div class="col-md-2">
+                        <span class="text-115 text-secondary-d3">
+                            £<?php echo number_format($shipping, 2); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row my-3 align-items-center p-2 radius-1">
+                <div class="col-md-8"></div>
+                    <div class="col-md-2 text-right text-110 fw-bolder">
+                        Total
+                    </div>
+
+                    <div class="col-md-2">
+                        <span class="text-200 fw-bolder">
+                            £<?php echo number_format($total, 2); ?>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                    <label for="DelType">Shipping Method</label>
+                    <?php 
                         $delzero = "";
                         if ($order->shippingtypeid == 0) {
                             $delzero = " selected";
                         }
                         $delOptions = ArcEcomDelivery::getAllEnabled();
-                        echo "<select id=\"DelType\" class=\"form-control\" onchange=\"updateDelivery()\">"
+                        echo "<select id=\"DelType\" class=\"form-select\" onchange=\"updateDelivery()\">"
                             . "<option value=\"0\"" . $delzero . ">-- Select Delivery Method --</option>";
                         foreach ($delOptions as $delOpt) {
                             $dSel = "";
@@ -272,81 +338,20 @@
                         }
                         echo "</select>";
                         ?>
-            </div>
-
-
-            <div class="col-12 col-sm-5 text-dark-l1 text-90 order-first order-sm-last">
-                <div class="row my-2">
-                    <div class="col-7 text-right">
-                        SubTotal
-                    </div>
-
-                    <div class="col-5">
-                        <span class="text-125 text-secondary-d3">
-                            £<?php echo number_format($subtotal, 2); ?>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row my-2">
-                    <div class="col-7 text-right">
-                        VAT
-                    </div>
-
-                    <div class="col-5">
-                        <span class="text-115 text-secondary-d3">
-                            £<?php echo number_format($vat, 2); ?>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row my-2">
-                    <div class="col-7 text-right">
-                        Weight
-                    </div>
-
-                    <div class="col-5">
-                        <span class="text-115 text-secondary-d3">
-                            <?php echo $weight; ?> kg
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row my-2">
-                    <div class="col-7 text-right">
-                        Delivery
-                    </div>
-
-                    <div class="col-5">
-                        <span class="text-115 text-secondary-d3">
-                            £<?php echo number_format($shipping, 2); ?>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="row my-3 align-items-center p-2 radius-1">
-                    <div class="col-7 text-right text-110">
-                        Total
-                    </div>
-
-                    <div class="col-5">
-                        <span class="text-200">
-                            £<?php echo number_format($total, 2); ?>
-                        </span>
-                    </div>
+                        </div>
                 </div>
 
                 <?php 
     if ($order->shippingtypeid != 0) {
 ?>
                 <div class="row">
-                    <div class="col-12 text-right" id="smart-button-container">
+                <div class="col-md-6"></div>
+                    <div class="col-md-6 text-right" id="smart-button-container">
                         <div style="text-align: center;">
                             <div id="paypal-button-container"></div>
                         </div>
                     </div>
-                    <script
-                        src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal->value; ?>&currency=GBP"
+                    <script src="https://www.paypal.com/sdk/js?client-id=<?php echo $paypal->value; ?>&currency=GBP"
                         data-sdk-integration-source="button-factory"></script>
                     <script>
                     function initPayPalButton() {
@@ -411,10 +416,8 @@
             </div>
         </div>
 
-    </div>
 
-</div>
-<?php
+        <?php
             $order->total = $total;
             $order->subtotal = $subtotal;
             $order->vat = $vat;
@@ -431,15 +434,18 @@
                 }
 ?>
 
-<div class="card">
-    <div class="card-body">
-        Your shopping cart is empty.
-    </div>
-</div>
+        <div class="card">
+            <div class="card-body">
+                Your shopping cart is empty.
+            </div>
+        </div>
 
-<?php
+        <?php
             }
             ?>
+
+    </div>
+</div>
 <script>
 function arcprocess(data) {
     var jdata = arcGetJson(data);

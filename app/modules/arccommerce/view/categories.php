@@ -1,4 +1,4 @@
-<div class="row mb-3">
+<div class="row mb-3 mt-3">
     <div class="col-md-10">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -33,28 +33,29 @@
 
 <?php
     if (count($categories) > 0 || count($products) > 0) {
-        echo "<div class=\"card-columns\">";
+        echo "<div class=\"row row-cols-1 row-cols-md-4 g-4\">";
     if (count($categories) > 0) {
   // Categories
             foreach ($categories as $category) {
         ?>
-
-<div class="card">
-    <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
-<?php
+<div class="col">
+    <div class="card">
+        <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
+            <?php
     $cat_image = system\Helper::arcGetPath(true) . "assets/categories/" . $category->image;
     if (!file_exists($cat_image)) {
         $cat_image = "<div style=\"height: 100px;\" class=\"text-center pt-4\"><h3>" . $category->name . "</h3></div>";
         echo $cat_image;
     } else {
         ?>
-    <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
-            alt="<?php echo $category->name; ?>">
-        <?php
+            <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
+                alt="<?php echo $category->name; ?>">
+            <?php
     }
     
 ?>
-    </a>
+        </a>
+    </div>
 </div>
 
 <?php
@@ -69,29 +70,31 @@ if (count($products) > 0) {
                 $image = ArcEcomImage::getByProductIDAndType($product->id, "THUMB");
             }
             ?>
-<div class="card">
-    <a href="/products/<?php echo $product->getSEOUrl(); ?>">
-        <img class="card-img-top img-fluid lazy" data-src="<?php echo $imagePath . $image->filename; ?>"
-            alt="<?php echo $product->name; ?>">
-    </a>
-    <div class="card-body text-sm mt-0 pt-0">
-        <hr />
-        <strong><?php echo $product->name; ?></strong>
-        <div class="row">
-            <div class="col-md-6">
-                £<?php echo $product->price; ?>
-            </div>
-            <div class="col-md-6 text-right">
-                <?php
+<div class="col">
+    <div class="card">
+        <a href="/products/<?php echo $product->getSEOUrl(); ?>">
+            <img class="card-img-top img-fluid" loading="lazy" src="<?php echo $imagePath . $image->filename; ?>"
+                alt="<?php echo $product->name; ?>" width="250px" height="250px">
+        </a>
+        <div class="card-body text-sm mt-0 pt-0">
+            <hr />
+            <strong><?php echo $product->name; ?></strong>
+            <div class="row">
+                <div class="col-md-6">
+                    £<?php echo $product->price; ?>
+                </div>
+                <div class="col-md-6 text-end">
+                    <?php
                     if ($product->checkStock()) {
-                        echo "<i class=\"badge badge-success\">In Stock</i>";
+                        echo "<i class=\"badge bg-success\">In Stock</i>";
                     } else {
-                        echo "<i class=\"badge badge-danger\">Out of Stock</i>";
+                        echo "<i class=\"badge bg-danger\">Out of Stock</i>";
                     }
                 ?>
+                </div>
             </div>
+            </i>
         </div>
-        </i>
     </div>
 </div>
 <?php

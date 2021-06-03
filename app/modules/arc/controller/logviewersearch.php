@@ -24,7 +24,9 @@ if (system\Helper::arcIsAjaxRequest()) {
             . "<th scope=\"col\">When</th>"
             . "<th scope=\"col\">User</th>"
             . "<th scope=\"col\">Imp</th>"
-            . "<th scope=\"col\">Message</th></tr></thead><tbody>";
+            . "<th scope=\"col\">Message</th>"
+            . "<th scope=\"col\">Session ID</th>"
+            . "</tr></thead><tbody>";
 
     foreach ($logs as $log) {
         $html .= "<tr>"
@@ -61,6 +63,7 @@ if (system\Helper::arcIsAjaxRequest()) {
                 }
         
                 $html .= "<td class=\"text-sm\">{$log->message}</td>"
+                . "<td>{$log->sessionid}</td>"
                 . "</tr>";
     }
     $html .= "</tbody></table></div>";

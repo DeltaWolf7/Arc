@@ -85,10 +85,10 @@ class Helper {
 
         // Javascript, add required javascript files to header
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>');
-        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>');
-        self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">');
-        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>');
-        self::arcAddFooter('external', '<script src="https://kit.fontawesome.com/5ddfcf8ebf.js" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous" defer></script>');
+        self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" defer>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js" defer></script>');
+        self::arcAddFooter('external', '<script src="https://kit.fontawesome.com/5ddfcf8ebf.js" crossorigin="anonymous" defer></script>');
         self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.min.js');
 
         // CSS, add required css files to header
@@ -680,14 +680,18 @@ class Helper {
      */
     public static function arcGetContent() {
         $uri = self::arcGetURI();
-        
         // check for API request
-        if (strpos($uri, "api/v1") === false) {
-             // No API, Get regular content
-            Render::arcRenderContent($uri);
-        } else {
-            // process uri
+        if (strpos($uri, "api/v1") !== false) {
+             // process uri
             API::arcGetAPI($uri);
+        }
+        else if (strpos($uri, "runcron") !== false) {
+            // run cron jobs
+            CRON::arcRunCron();
+        }
+        else {
+            // No API, Get regular content
+            Render::arcRenderContent($uri);
         }
     }
 

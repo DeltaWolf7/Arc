@@ -39,6 +39,7 @@ class Log extends DataProvider {
     public $module;
     public $impersonate;
     public $userid;
+    public $sessionid;
  
     /**
      * Default constructor
@@ -51,10 +52,12 @@ class Log extends DataProvider {
         $this->message = "";
         $this->impersonate = false;
         $this->userid = 0;
+        $this->sessionid = session_id();
         // Set the table used by the object
         $this->table = ARCDBPREFIX . 'logs';
         // Set the property to column mapping
-        $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event", "message" => "message", "impersonate" => "impersonate", "userid" => "userid"];
+        $this->map = ["id" => "id", "type" => "type", "module" => "module", "event" => "event",
+                     "message" => "message", "impersonate" => "impersonate", "userid" => "userid", "sessionid" => "sessionid"];
     }
 
     /**
@@ -79,7 +82,7 @@ class Log extends DataProvider {
         // Create a new log class
         $logs = new Log();
         // Return collection of log objects
-        return $logs->getCollection(["message[~]" => $query, 'ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
+        return $logs->getCollection(["OR" => ["message[~]" => $query, "sessionid[~]" => $query], 'ORDER' => ['id' => 'DESC'], "LIMIT" => [$number * $page, $number]]);
     }
 
         /**
@@ -128,12 +131,5 @@ class Log extends DataProvider {
         }
         // Update log in database
         $log->update();
-       
-        // Get number of days to keep setting
-        $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
-        // Delete logs older than the number of kept days    
-        if ($days->value != "") {
-            system\Helper::arcGetDatabase()->query("delete from " . $log->table . " where datediff(now(), " . $log->table . ".event) > " . $days->value);
-        }
     }
 }

@@ -1,3 +1,10 @@
+<?php
+    $haveThemeSettings = false;
+    if (file_exists(system\Helper::arcGetThemePath(true) . "settings.php")) {
+        $haveThemeSettings = true;
+    }
+?>
+
 <div class="card">
     <div class="card-body">
         <div class="d-flex align-items-start">
@@ -13,6 +20,14 @@
                     type="button" role="tab" aria-controls="v-pills-ldap" aria-selected="false">LDAP</button>
                 <button class="nav-link" id="v-pills-api-tab" data-bs-toggle="pill" data-bs-target="#v-pills-api"
                     type="button" role="tab" aria-controls="v-pills-api" aria-selected="false">API</button>
+                <?php
+                    if ($haveThemeSettings === true) {
+                        ?>
+                <button class="nav-link" id="v-pills-theme-tab" data-bs-toggle="pill" data-bs-target="#v-pills-theme"
+                    type="button" role="tab" aria-controls="v-pills-theme" aria-selected="false">Theme</button>
+                <?php
+                    }
+                ?>
             </div>
             <div class="border p-4 rounded">
                 <div class="tab-content" id="v-pills-tabContent">
@@ -509,38 +524,46 @@
                                 </select>
                             </div>
                             <div class="col-md-3">
-                                <button class="btn btn-secondary" id="createAPI"><i class="fa fa-plus"></i> 
+                                <button class="btn btn-secondary" id="createAPI"><i class="fa fa-plus"></i>
                                     Create
                                     API key</button>
                             </div>
                             <div class="col-12">
-                            <table class="table table-striped table-sm align-middle">
-                            <thead class="text-primary">
-                                <tr>
-                                    <th>User</th>
-                                    <th>Key</th>
-                                    <th class="text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="apiKeys">
+                                <table class="table table-striped table-sm align-middle">
+                                    <thead class="text-primary">
+                                        <tr>
+                                            <th>User</th>
+                                            <th>Key</th>
+                                            <th class="text-end">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="apiKeys">
 
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        
+
                     </div>
+
+                    <?php
+                    if ($haveThemeSettings === true) {
+                        ?>
+                    <div class="tab-pane fade" id="v-pills-theme" role="tabpanel" aria-labelledby="v-pills-theme-tab">
+                        <?php include_once(system\Helper::arcGetThemePath(true) . "settings.php"); ?>
+                    </div>
+
+                    <?php
+                    }
+                        ?>
                 </div>
             </div>
         </div>
 
-
-
         <div class="text-end mt-3">
             <button id="btnSaveSettings" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
         </div>
-
 
         <div class="modal" id="mediaManagerMD" tabindex="-1">
             <div class="modal-dialog modal-lg">

@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `arc_logs` (
   `message` text NOT NULL,
   `impersonate` tinyint NOT NULL,
   `userid` int NOT NULL,
+  `sessionid` varchar(100) NOT NULL
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
