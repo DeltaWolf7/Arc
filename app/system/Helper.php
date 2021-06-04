@@ -689,6 +689,18 @@ class Helper {
             // run cron jobs
             CRON::arcRunCron();
         }
+        else if (strpos($uri, "search") !== false && (isset($_POST["search"]) || isset($_GET["search"]))) {
+            // run cron jobs
+
+            $searchquery = null;
+            if (isset($_POST["search"])) {
+                $searchquery = $_POST["search"];
+            } else {
+                $searchquery = $_GET["search"];
+            }
+
+            Render::arcRenderSearch($searchquery);
+        }
         else {
             // No API, Get regular content
             Render::arcRenderContent($uri);

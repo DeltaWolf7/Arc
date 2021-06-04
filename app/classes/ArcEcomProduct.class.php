@@ -12,6 +12,7 @@ class ArcEcomProduct extends DataProvider {
     public $ean;
     public $brandid;
     public $stock;
+    public $new;
 
     public function __construct() {
         parent::__construct();
@@ -25,10 +26,11 @@ class ArcEcomProduct extends DataProvider {
         $this->ean = "";
         $this->brandid = 0;
         $this->stock = 0;
+        $this->new = false;
         $this->table = ARCDBPREFIX . "ecom_products";
         $this->map = ["id" => "id", "categoryid" => "categoryid", "name" => "name", "model" => "model", "cost" => "cost",
              "rrp" => "rrp", "price" => "price", "description" => "description",
-             "ean" => "ean", "brandid" => "brandid", "stock" => "stock"];
+             "ean" => "ean", "brandid" => "brandid", "stock" => "stock", "new" => "new"];
     }
 
     public static function getByID($id) {
@@ -46,6 +48,11 @@ class ArcEcomProduct extends DataProvider {
     public static function getAllByCategoryID($categoryid, $orderby = "name", $direction = "ASC") {
         $products = new ArcEcomProduct();
         return $products->getCollection(["categoryid" => $categoryid, "ORDER" => ["{$orderby}" => "{$direction}"]]);
+    }
+
+    public static function getAllNew() {
+        $products = new ArcEcomProduct();
+        return $products->getCollection(["new" => '1']);
     }
 
     public static function search($query, $orderby = "name", $direction = "ASC") {

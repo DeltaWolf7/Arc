@@ -1,3 +1,46 @@
+<?php
+
+$imagePath = system\Helper::arcGetPath() . "assets/products/";
+$products = [];
+$search = $searchquery;
+
+
+// sort
+$sort = "az";
+$sortBy = "name";
+$sortOrd = "ASC";
+if (isset($_GET["sort"])) {
+    $sort = $_GET["sort"];
+}
+
+switch ($sort) {
+    case "az":
+        $sortBy = "name";
+        $sortOrd = "ASC"; 
+        break;
+    case "za":
+        $sortBy = "name";
+        $sortOrd = "DESC"; 
+        break;
+    case "lh":
+        $sortBy = "price";
+        $sortOrd = "ASC"; 
+        break;
+    case "hl":
+        $sortBy = "price";
+        $sortOrd = "DESC"; 
+        break;
+}
+
+if (!empty($search)) {
+    $products = ArcEcomProduct::search($search, $sortBy, $sortOrd);
+    system\Helper::arcAddHeader("title", "Search results for '" . $search. "'");
+    $bread = "<li class=\"breadcrumb-item\"><a href=\"/categories\">Home</a></li>" 
+        . PHP_EOL . "<li class=\"breadcrumb-item\">Search results for '" . $search . "'</li>";
+}
+
+?>
+
 <div class="row mb-3 mt-3">
     <div class="col-md-10">
         <nav aria-label="breadcrumb">
@@ -8,7 +51,7 @@
     </div>
     <div class="col-md-2">
         <?php if (count($products) > 0) { ?>
-            <div class="dropdown">
+        <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                 data-bs-toggle="dropdown" aria-expanded="false">
                 Sort By
@@ -34,36 +77,8 @@
 </div>
 
 
-<?php
-    if (count($categories) > 0 || count($products) > 0) {
-        echo "<div class=\"row row-cols-1 row-cols-md-4 g-4\">";
-    if (count($categories) > 0) {
-  // Categories
-            foreach ($categories as $category) {
-        ?>
-<div class="col">
-    <div class="card">
-        <a href="/categories/<?php echo $category->getSEOUrl(); ?>">
-            <?php
-    $cat_image = system\Helper::arcGetPath(true) . "assets/categories/" . $category->image;
-    if (!file_exists($cat_image)) {
-        $cat_image = "<div style=\"height: 100px;\" class=\"text-center pt-4\"><h3>" . $category->name . "</h3></div>";
-        echo $cat_image;
-    } else {
-        ?>
-            <img class="card-img-top img-fluid" src="<?php echo $catImagePath  . $category->image; ?>"
-                alt="<?php echo $category->name; ?>">
-            <?php
-    }
-    
-?>
-        </a>
-    </div>
-</div>
-
-<?php
-            }
-}
+<div class="row row-cols-1 row-cols-md-4 g-4">
+    <?php
 
 if (count($products) > 0) {
         // Products (Shown when category has no children).
@@ -73,46 +88,53 @@ if (count($products) > 0) {
                 $image = ArcEcomImage::getByProductIDAndType($product->id, "THUMB");
             }
             ?>
-<div class="col">
-    <div class="card">
-        <a href="/products/<?php echo $product->getSEOUrl(); ?>">
-            <img class="card-img-top img-fluid" loading="lazy" src="<?php echo $imagePath . $image->filename; ?>"
-                alt="<?php echo $product->name; ?>" width="250px" height="250px">
-        </a>
-        <div class="card-body text-sm mt-0 pt-0">
-            <hr />
-            <strong><?php echo $product->name; ?></strong>
-            <div class="row">
-                <div class="col-md-6">
-                    £<?php echo $product->price; ?>
-                </div>
-                <div class="col-md-6 text-end">
-                    <?php
+    <div class="col">
+        <div class="card">
+            <a href="/products/<?php echo $product->getSEOUrl(); ?>">
+                <img class="card-img-top img-fluid" loading="lazy" src="<?php echo $imagePath . $image->filename; ?>"
+                    alt="<?php echo $product->name; ?>" width="250px" height="250px">
+            </a>
+            <div class="card-body text-sm mt-0 pt-0">
+                <hr />
+                <strong><?php echo $product->name; ?></strong>
+                <div class="row">
+                    <div class="col-md-6">
+                        £<?php echo $product->price; ?>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <?php
                     if ($product->checkStock()) {
                         echo "<i class=\"badge bg-success\">In Stock</i>";
                     } else {
                         echo "<i class=\"badge bg-danger\">Out of Stock</i>";
                     }
                 ?>
+                    </div>
                 </div>
+                </i>
             </div>
-            </i>
         </div>
     </div>
-</div>
-<?php
+    <?php
             } 
             ?>
-
+</div>
 <?php
-} 
-echo "</div>";
 } else {
 
     ?>
-
-<h2>Sorry, we didn't find what you were looking for..</h2>
+<div class="card">
+    <div class="card-body">
+        <h2>Sorry, we didn't find what you were looking for..</h2>
+    </div>
+</div>
 
 <?php
 }
 ?>
+
+<script>
+function sort(mode) {
+    window.location.href = "/search" + "?search=<?php echo $search; ?>&sort=" + mode;
+}
+</script>

@@ -8,12 +8,6 @@ $catImagePath = system\Helper::arcGetPath() . "assets/categories/";
 $categories = [];
 $products = [];
 
-// search
-$search = "";
-if (isset($_GET["search"])) {
-    $search = $_GET["search"];
-}
-
 // sort
 $sort = "az";
 $sortBy = "name";
@@ -41,13 +35,7 @@ switch ($sort) {
         break;
 }
 
-if (!empty($search)) {
-    $products = ArcEcomProduct::search($search, $sortBy, $sortOrd);
-    system\Helper::arcAddHeader("title", "Search results for '" . $search. "'");
-    $bread = "<li class=\"breadcrumb-item\"><a href=\"/categories\">Home</a></li>" 
-        . PHP_EOL . "<li class=\"breadcrumb-item\">Search results for '" . $search . "'</li>";
-    $categories = [];
-} else {
+
     if (count($uri) > 1) {
         $catData = explode("-", $uri[count($uri) - 1]);
         $categories = ArcEcomCategory::getAllCategoriesByParentID($catData[0]);
@@ -63,7 +51,7 @@ if (!empty($search)) {
         $categories = ArcEcomCategory::getAllCategoriesByParentID();
         $bread = "<li class=\"breadcrumb-item\"><a href=\"/categories\">Home</a></li>";
     }
-}
+
 
 function CreateBreadCrumb($breadcrumb, $category) {
     if ($category->parentid != 0) {

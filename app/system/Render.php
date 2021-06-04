@@ -243,4 +243,105 @@ class Render {
         }
     }
 
+    public static function arcRenderSearch($searchquery) {
+
+        // set session if it exists.
+        if (isset($_POST['arcsid'])) {
+            Helper::arcSetSession($_POST['arcsid']);
+        }
+
+        // expired session - check for actual user because guests don't need to timeout.
+        if (ARCSESSIONTIMEOUT > 0) {
+            $timeout = ARCSESSIONTIMEOUT * 60;
+            if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > $timeout) && isset($_SESSION['arc_user'])) {
+                // 401 session timeout
+                session_unset();
+                session_destroy();
+                $page = \Page::getBySEOURL('error');
+                http_response_code(401);
+                \Log::createLog('warning', 'arc', "401: {$uri}");
+            }
+        } else {
+            Helper::arcAddFooter('js', Helper::arcGetPath() . 'vendor/arc/js/arckeepalive.min.js');
+        }
+
+        // update last activity time stamp
+        $_SESSION['LAST_ACTIVITY'] = time();
+       
+            // get the current theme
+            $theme = \SystemSetting::getByKey('ARC_THEME');
+
+            // setup page
+            Helper::arcAddHeader('title', 'Search results for \'' . $searchquery . '\'');
+
+            // Check if the theme has a controller and include it if it does.
+            if (file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/controller/controller.php')) {
+                include_once Helper::arcGetPath(true) . 'themes/' . $theme->value . '/controller/controller.php';
+            }
+
+            $gAdsense = \SystemSetting::getByKey('ARC_GADSENSE');
+            if (strlen($gAdsense->value) > 0) {
+                Helper::arcAddFooter('external', '<script data-ad-client="' . $gAdsense->value . '" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>');
+            }
+
+            $gAnal = \SystemSetting::getByKey('ARC_GANAL');
+            if (strlen($gAnal->value) > 0) {
+                Helper::arcAddFooter('external', '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $gAnal->value . '"></script>'
+                . '<script>window.dataLayer = window.dataLayer || [];'
+                . 'function gtag(){dataLayer.push(arguments);} gtag(\'js\', new Date());'
+                . 'gtag(\'config\', \'' . $gAnal->value . '\');</script>');
+            }
+
+            // template
+            if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/template.php')) {
+                die('Unable to find template.php for theme \'' . $theme->value . '\'.');
+            }
+
+            $content = file_get_contents(Helper::arcGetPath(true) . 'themes/' . $theme->value . '/template.php');
+
+            // custom menu
+            if (file_exists(Helper::arcGetThemePath(true) . 'menu.php')) {
+                ob_start();
+                include Helper::arcGetThemePath(true) . 'menu.php';
+                $newContent = ob_get_contents();
+                ob_end_clean();
+                $content = str_replace('{{arc:menu}}', $newContent, $content);
+            }
+
+            // header
+            $content = str_replace('{{arc:title}}', 'Search results for \'' . $searchquery  . '\'', $content);
+
+            // impersonating
+            if (isset($_SESSION['arc_imposter'])) {
+                $content = str_replace('{{arc:impersonate}}', '<div class="alert alert-info">Impersonating ' . Helper::arcGetUser()->getFullname() . '. <a href="/arcsiu">Stop impersonating user</a></div>', $content);
+            } else {
+                $content = str_replace('{{arc:impersonate}}', '', $content);
+            }
+
+            // body
+            ob_start();
+            $dir = new \DirectoryIterator(Helper::arcGetPath(true) . "app/modules");
+            foreach ($dir as $fileinfo) {
+                if (!$fileinfo->isDot()) {
+                    if (is_dir(Helper::arcGetPath(true) . "app/modules/" . $dir . "/search")) {
+                        $s = new \DirectoryIterator(Helper::arcGetPath(true) . "app/modules/" . $dir . "/search");
+                        foreach ($s as $job) {
+                            if (!$job->isDot()) {
+                                include_once(Helper::arcGetPath(true) . "app/modules/" . $dir . "/search/" . $job);
+                            }
+                        }
+                    }
+                }
+            }
+            $newContent = ob_get_contents();
+            ob_end_clean();
+            $content = str_replace('{{arc:content}}', $newContent, $content);
+            
+            //template modules
+            $content = Helper::arcProcessModuleTags($content);
+            $content = Helper::arcProcessTags($content);
+
+            echo $content;
+    }
+
 }

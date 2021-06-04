@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv='content-language' content='en-gb'>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="theme-color" content="#0d6efd">
+    <meta name="theme-color" content="#f4f3ef">
     <link rel="icon" href="{{arc:path}}assets/logo-32x32.png" type="image/png" />
     {{arc:header}}
 </head>
@@ -19,7 +19,7 @@
             <div class="sidebar-header">
                 <div>
                     <a href="{{arc:path}}"><img src="{{arc:sitelogo}}" class="logo-icon" alt="{{arc:sitetitle}}"
-                           width="50px" height="50px"></a>
+                            width="50px" height="50px"></a>
                 </div>
                 <div>
                     <a href="{{arc:path}}">
@@ -42,7 +42,19 @@
                 <nav class="navbar navbar-expand">
                     <div class="mobile-toggle-menu"><i class='fas fa-bars'></i>
                     </div>
+
                     <h1>{{arc:title}}</h1>
+
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <form method="post" action="/search/">
+                            <div class="input-group no-border">
+                                <input type="text" class="form-control" name="search" placeholder="Search...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </nav>
             </div>
         </header>
