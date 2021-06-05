@@ -64,3 +64,9 @@ function arcNotification(data) {
 		confirmButtonText: 'OK'
 	  })
 }
+
+function validateSearch($form) {
+	if (document.forms[$form].search.value === "") {
+		return false;
+	}
+}

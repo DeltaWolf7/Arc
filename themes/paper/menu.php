@@ -3,6 +3,21 @@
 $menus = system\Helper::arcGetMenu();
 $path = system\Helper::arcGetPath();
 
+?>
+
+<div class="menusearch">
+    <form method="post" name="srchm" action="/search/" onsubmit="return validateSearch('srchm')">
+        <div class="input-group no-border">
+            <input type="text" class="form-control" name="search" placeholder="Search...">
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="submit" aria-label="Search"><i
+                        class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<?php
 
 $html = '<ul class="metismenu" id="menu">';
 

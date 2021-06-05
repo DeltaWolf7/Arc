@@ -51,7 +51,10 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.11.0.0";
+        self::$arc["version"] = "0.12.0.0";
+
+        // Search Results Flag
+        self::$arc["hassearchresults"] = false;
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -821,5 +824,13 @@ class Helper {
 
     public static function arcGetProcessor() {
         return "/" . self::$arc["arc_processor"];
+    }
+
+    public static function arcHasSearchResults() {
+        return self::$arc["hassearchresults"];
+    }
+
+    public static function arcMarkSearch($flag = true) {
+        self::$arc["hassearchresults"] = $flag;
     }
 }

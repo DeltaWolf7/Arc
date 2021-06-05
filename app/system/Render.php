@@ -333,7 +333,16 @@ class Render {
                     }
                 }
             }
+
             $newContent = ob_get_contents();
+            if (Helper::arcHasSearchResults() == false) {
+                $newContent .= "<div class=\"card\"><div class=\"card-body\">"
+                 . "<h2 class=\"text-primary\"><i class=\"fas fa-brain\"></i> Brain fuzz..</h2>"
+                 . "<p>Sorry, I couldn't find anything matching <strong>'{$searchquery }'</strong>. Maybe it got lost somewhere in my circuits.</p>"
+                 . "<p>Why not try searching again using different words?</p>"
+                 . "</div></div>";
+            }
+
             ob_end_clean();
             $content = str_replace('{{arc:content}}', $newContent, $content);
             

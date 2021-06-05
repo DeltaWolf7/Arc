@@ -121,6 +121,12 @@ class Page extends DataProvider {
         return $page->getCollection(["ORDER" => ['seourl' => 'ASC']]);
     }
 
+    public static function searchPages($query) {
+        // Create new page class
+        $page = new Page();
+        return $page->getCollection(["OR" => ["title[~]" => $query, "content[~]" => $query, "metakeywords[~]" => $query]]);
+    }
+
     /**
      * Get the User group permissions for the page
      * @return \UserPermission User permission object

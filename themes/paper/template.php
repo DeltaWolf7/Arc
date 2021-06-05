@@ -9,6 +9,7 @@
     <meta name="theme-color" content="#f4f3ef">
     <link rel="icon" href="{{arc:path}}assets/logo-32x32.png" type="image/png" />
     {{arc:header}}
+
 </head>
 
 <body>
@@ -44,13 +45,20 @@
                     </div>
 
                     <h1>{{arc:title}}</h1>
-
-                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
-                        <form method="post" action="/search/">
+                    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse"
+                        data-target="#navigation" aria-controls="navigation-index" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                        <span class="navbar-toggler-bar navbar-kebab"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end nav-search" id="navigation">
+                        <form method="post" name="srch" action="/search/" onsubmit="return validateSearch('srch')">
                             <div class="input-group no-border">
                                 <input type="text" class="form-control" name="search" placeholder="Search...">
                                 <div class="input-group-append">
-                                    <button class="btn btn-secondary" type="submit"><i class="fas fa-search"></i></button>
+                                    <button class="btn btn-secondary" type="submit" aria-label="Search"><i
+                                            class="fas fa-search"></i></button>
                                 </div>
                             </div>
                         </form>

@@ -32,13 +32,10 @@ switch ($sort) {
         break;
 }
 
-if (!empty($search)) {
-    $products = ArcEcomProduct::search($search, $sortBy, $sortOrd);
-    system\Helper::arcAddHeader("title", "Search results for '" . $search. "'");
-    $bread = "<li class=\"breadcrumb-item\"><a href=\"/categories\">Home</a></li>" 
-        . PHP_EOL . "<li class=\"breadcrumb-item\">Search results for '" . $search . "'</li>";
-}
+$products = ArcEcomProduct::search($search, $sortBy, $sortOrd);
 
+if (count($products) > 0) {
+    
 ?>
 
 <div class="row mb-3 mt-3">
@@ -120,17 +117,7 @@ if (count($products) > 0) {
             ?>
 </div>
 <?php
-} else {
-
-    ?>
-<div class="card">
-    <div class="card-body">
-        <h2>Sorry, we didn't find what you were looking for..</h2>
-    </div>
-</div>
-
-<?php
-}
+system\Helper::arcMarkSearch();
 ?>
 
 <script>
@@ -138,3 +125,8 @@ function sort(mode) {
     window.location.href = "/search" + "?search=<?php echo $search; ?>&sort=" + mode;
 }
 </script>
+
+<?php
+} 
+}
+    ?>

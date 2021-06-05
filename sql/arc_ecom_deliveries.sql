@@ -10,7 +10,7 @@ CREATE TABLE `arc_ecom_deliveries` (
 ALTER TABLE `arc_ecom_deliveries`
   ADD PRIMARY KEY (`id`);
 
--
+
 ALTER TABLE `arc_ecom_deliveries`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;

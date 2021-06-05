@@ -13,7 +13,8 @@ CREATE TABLE `arc_ecom_products` (
   `description` text NOT NULL,
   `ean` varchar(14) NOT NULL,
   `brandid` int(100) NOT NULL,
-  `stock` int(11) NOT NULL
+  `stock` int(11) NOT NULL,
+  `new`tinyint NOT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
