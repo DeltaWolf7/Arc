@@ -73,7 +73,7 @@ class Render {
                     // if not keep trying.
                 }
                 // set router processor
-                Helper::$arc['arc_processor']= $routeProcessor;
+                Helper::$arc['arc_processor'] = $routeProcessor;
             }
 
             if ($route->id > 0) {
@@ -134,6 +134,9 @@ class Render {
             if (!empty($page->metakeywords)) {
                 Helper::arcAddHeader('keywords', $page->metakeywords);
             }
+
+            // add in cononical and og:url.
+            Helper::arcAddHeader('canonical', Helper::arcGetPath() . Helper::arcGetURI());
 
             // Check the theme in config exists.
             if (!file_exists(Helper::arcGetPath(true) . 'themes/' . $theme->value)) {

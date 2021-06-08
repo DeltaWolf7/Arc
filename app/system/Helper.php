@@ -51,10 +51,13 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.12.0.0";
+        self::$arc["version"] = "0.12.0.1";
 
         // Search Results Flag
         self::$arc["hassearchresults"] = false;
+
+        // Route processor
+        self::$arc['arc_processor'] = null;
 
         // Initilise status
         if (!isset($_SESSION["status"])) {
@@ -117,9 +120,11 @@ class Helper {
         switch ($type) {
             case "title":
                 $title = \SystemSetting::getByKey("ARC_SITETITLE");
-                self::$arc["headerdata"][$type] = "<title>" . $content . " - " . $title->value . "</title>" . PHP_EOL;
+                self::$arc["headerdata"][$type] = "<title>{$title->value} | {$content}</title>" . PHP_EOL;
+                self::$arc["headerdata"]["og:title"] = "<meta property=\"og:title\" content=\"{$content} - {$title->value}\">" . PHP_EOL;
                 break;
             case "description":
+                self::$arc["headerdata"]["og:description"] = "<meta property=\"og:description\" content=\"{$content}\">" . PHP_EOL;
             case "keywords":
             case "author":
             case "viewport":
@@ -131,12 +136,14 @@ class Helper {
             case "alternate":
             case "canonical":
                 self::$arc["headerdata"][$type] = "<link rel=\"{$type}\" href=\"{$content}\" />" . PHP_EOL;
+                self::$arc["headerdata"]["og:url"] = "<meta property=\"og:url\" content=\"{$content}\">" . PHP_EOL;
                 break;
             case "css":
-                self::$arc["headerdata"][] = "<link href=\"" . $content . "\" rel=\"stylesheet\">" . PHP_EOL;
+                self::$arc["headerdata"][] = "<link href=\"{$content}\" rel=\"stylesheet\">" . PHP_EOL;
                 break;
             case "favicon":
-                self::$arc["headerdata"][$type] = "<link href=\"" . $content . "\" rel=\"icon\">" . PHP_EOL;
+                self::$arc["headerdata"][$type] = "<link href=\"{$content}\" rel=\"icon\">" . PHP_EOL;
+                self::$arc["headerdata"]["og:image"] = "<meta property=\"og:image\" content=\"{$content}\">" . PHP_EOL;
                 break;
             default:
                 self::$arc["headerdata"][] = $content . PHP_EOL;
