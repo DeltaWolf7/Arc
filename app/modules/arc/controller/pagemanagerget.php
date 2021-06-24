@@ -1,7 +1,7 @@
 <?php
 
 if (system\Helper::arcIsAjaxRequest() == true) {
-    $table = "<thead class=\"text-primary\"><tr><th>SEO Url</th><th>Title</th><th>Icon</th><th>Sort Order</th><th class=\"text-end\"><button onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
+    $table = "<thead class=\"text-primary\"><tr><th>Title</th><th>SEO Url</th><th>Icon</th><th>Sort Order</th><th class=\"text-end\"><button onclick=\"editPage(0);\" class=\"btn btn-primary btn-sm\"><i class=\"fa fa-plus\"></i> Create</button></th></tr></thead>";
     $table .= "<tbody>";
     $pages = Page::getAllPages();
     foreach ($pages as $page) {

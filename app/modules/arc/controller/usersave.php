@@ -14,24 +14,24 @@ if (system\Helper::arcIsAjaxRequest()) {
         }
     }
 
-    $user->firstname = ucwords(strtolower($_POST["firstname"]));
+    $user->firstname = ucwords(strtolower(trim($_POST["firstname"])));
     if (empty($_POST["firstname"]) && !$hasError) {
         system\Helper::arcAddMessage("danger", "Firstname cannot be empty");
         $hasError = true;
     }
 
-    $user->lastname = ucwords(strtolower($_POST["lastname"]));
+    $user->lastname = ucwords(strtolower(trim($_POST["lastname"])));
     if (empty($_POST["lastname"]) && !$hasError) {
         system\Helper::arcAddMessage("danger", "Lastname cannot be empty");
         $hasError = true;
     }
 
-    if (!filter_var(strtolower($_POST["email"]), FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var(strtolower(trim($_POST["email"])), FILTER_VALIDATE_EMAIL)) {
         system\Helper::arcAddMessage("danger", "Invalid email address");
         $hasError = true;
     }
 
-    $test = User::getByEmail($_POST["email"]);
+    $test = User::getByEmail(trim($_POST["email"]));
     if ($user->id == 0 && $test->id != 0 && !$hasError) {
         system\Helper::arcAddMessage("danger", "User already exists with this email address");
         $hasError = true;
@@ -45,7 +45,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     if (!$hasError) {
         $user->enabled = $_POST["enabled"];
-        $user->email = strtolower($_POST["email"]);
+        $user->email = strtolower(trim($_POST["email"]));
         $user->update();
         system\Helper::arcAddMessage("success", "User updated");
     } 
