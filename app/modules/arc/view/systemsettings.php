@@ -394,7 +394,7 @@
                                         a
                                         email
                                         address or name and email address.<br />
-                                        John Smith &lt;johnsmith@emailserver.com&gt;
+                                        johnsmith@emailserver.com&
 
                                     </div>
                                 </div>

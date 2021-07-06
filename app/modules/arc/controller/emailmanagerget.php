@@ -14,7 +14,8 @@ if (system\Helper::arcIsAjaxRequest() == true) {
             $table .= "<td><i class=\"fas fa-times text-danger\"></i></td>";
         }
 
-        $table .= "<td class=\"text-end\"><button class=\"btn btn-success btn-sm\" onclick=\"editPage({$email->id});\"><i class='fa fa-pencil'></i></button>"
+        $table .= "<td class=\"text-end\"><button class=\"btn btn-info btn-sm\" onclick=\"send({$email->id});\"><i class=\"far fa-paper-plane\"></i></button>"
+                . " <button class=\"btn btn-success btn-sm\" onclick=\"editPage({$email->id});\"><i class='fa fa-pencil'></i></button>"
                 . " <button onclick=\"removePage({$email->id});\" class=\"btn btn-danger btn-sm\"><i class='fa fa-remove'></i></button></td>"
                 . "</tr>";
     }

@@ -176,7 +176,9 @@ class Mail {
 
                     $mail->Password = $smtp_password;
                 }
-                $mail->setFrom($from);
+                $siteTitle = \SystemSetting::getByKey("ARC_SITETITLE");
+                $mail->setFrom($from, $siteTitle->value);
+                
                 foreach ($to as $email) {
                     $mail->addAddress($email);
                 }

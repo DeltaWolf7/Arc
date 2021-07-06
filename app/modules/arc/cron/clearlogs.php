@@ -1,8 +1,6 @@
 <?php
 
     // CLEAR LOGS
-    // Create a new log class
-    $log = new Log();
     // Get number of days to keep setting
     $days = SystemSetting::getByKey("ARC_KEEP_LOGS");
     // Delete logs older than the number of kept days    

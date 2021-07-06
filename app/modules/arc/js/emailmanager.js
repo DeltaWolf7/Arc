@@ -113,3 +113,7 @@ function uploadComplete(data) {
     var jdata = arcGetJson(data);
     $('#summernote').summernote("insertImage", jdata.path);
 }
+
+function send(emailid) {
+    arcAjaxRequest("arc/emailmanagersend", { emailid: emailid }, arcGetStatus, null);
+}
