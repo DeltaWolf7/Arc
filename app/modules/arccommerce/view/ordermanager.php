@@ -22,6 +22,9 @@
             <?php
         foreach ($orders as $order) {
             $customer = User::getByID($order->userid);
+            if ($customer->id == 0) {
+                $customer->firstname = "Not Set";
+            }
     ?>
             <tr>
                 <td><?php echo $order->id; ?></td>

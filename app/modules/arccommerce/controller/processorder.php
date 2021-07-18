@@ -19,7 +19,7 @@ if (system\Helper::arcIsAjaxRequest()) {
     $name = $data->payer->name->given_name . " " . $data->payer->name->surname;
 
     $order = ArcEcomOrder::getByID($orderid);
-    $order->paymentdata = $data;
+    $order->paymentdata = $data->id;
     $order->userid = $user->id;
 
     // https://developer.paypal.com/docs/api/orders/v2/#orders_capture
