@@ -6,7 +6,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <img id="image" class="img-fluid" loading="lazy" src="<?php echo $path . $images[0]->filename ?>"
+                <img id="image" class="img-fluid" loading="lazy" src="<?php echo $path . $images[0]->filename; ?>"
                     alt="<?php echo $product->name; ?>" />
                 <div class="row mt-3">
                     <?php
@@ -90,6 +90,38 @@
                 ?>
                 </table>
             </div>
+        </div>
+        <?php
+    }
+
+    // cross sell
+    echo "<h3 class=\"mt-3\">Similar Items</h3>";
+    $crosssell = ArcEcomProduct::getAllByCategoryID($product->categoryid);
+    if (count($crosssell) >= 4) {
+    ?>
+        <div class="row">
+            <?php
+            for ($i = 0; $i < 4; $i++) {
+                $images = ArcEcomImage::getAllByProductIDAndType($crosssell[$i]->id, "IMAGE");
+                if (count($images) == 0) {
+                    $images = []; 
+                    $images[] = ArcEcomImage::getByProductIDAndType($crosssell[$i]->id, "THUMB");
+                }
+            
+        ?>
+            <div class="col-sm-3">
+                <div class="card">
+                    <img src="<?php echo $path . $images[0]->filename; ?>" class="card-img-top" alt="<?php echo $crosssell[$i]->name; ?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?php echo $crosssell[$i]->name; ?></h5>
+                        <p class="card-text"><strong>£<?php echo $crosssell[$i]->price; ?></strong></p>
+                        <a href="/products/<?php echo $crosssell[$i]->getSEOUrl(); ?>" class="btn btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            <?php
+    }
+?>
         </div>
         <?php
     }
