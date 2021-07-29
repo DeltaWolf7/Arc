@@ -23,7 +23,8 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h1><?php echo $product->name; ?></h1>
+                <h2><?php echo $product->name; ?></h2>
+                <?php system\Helper::arcSetTitleOveride($product->name); ?>
                 <h4 class="text-primary">£<?php echo $product->price; ?></h4>
                 <h6 class="text-secondary">RRP £<?php echo $product->rrp; ?>, Model: <?php echo $product->model; ?></h6>
 
@@ -97,25 +98,33 @@
     // cross sell
     echo "<h3 class=\"mt-3\">Similar Items</h3>";
     $crosssell = ArcEcomProduct::getAllByCategoryID($product->categoryid);
+    $used = array();
+    $used[] = $product->id;
     if (count($crosssell) >= 4) {
     ?>
         <div class="row">
             <?php
             for ($i = 0; $i < 4; $i++) {
-                $images = ArcEcomImage::getAllByProductIDAndType($crosssell[$i]->id, "IMAGE");
+                $rnd = rand(0, count($crosssell) - 1);
+                while (in_array($rnd, $used)) {
+                    $rnd = rand(0, count($crosssell));
+                }
+                $used[] = $rnd;
+
+                $images = ArcEcomImage::getAllByProductIDAndType($crosssell[$rnd]->id, "IMAGE");
                 if (count($images) == 0) {
                     $images = []; 
-                    $images[] = ArcEcomImage::getByProductIDAndType($crosssell[$i]->id, "THUMB");
+                    $images[] = ArcEcomImage::getByProductIDAndType($crosssell[$rnd]->id, "THUMB");
                 }
             
         ?>
             <div class="col-sm-3">
                 <div class="card">
-                    <img src="<?php echo $path . $images[0]->filename; ?>" class="card-img-top" alt="<?php echo $crosssell[$i]->name; ?>">
+                    <img src="<?php echo $path . $images[0]->filename; ?>" class="card-img-top" alt="<?php echo $crosssell[$rnd]->name; ?>">
                     <div class="card-body">
-                        <h5 class="card-title"><?php echo $crosssell[$i]->name; ?></h5>
-                        <p class="card-text"><strong>£<?php echo $crosssell[$i]->price; ?></strong></p>
-                        <a href="/products/<?php echo $crosssell[$i]->getSEOUrl(); ?>" class="btn btn-primary">View</a>
+                        <h5 class="card-title"><?php echo $crosssell[$rnd]->name; ?></h5>
+                        <p class="card-text"><strong>£<?php echo $crosssell[$rnd]->price; ?></strong></p>
+                        <a href="/products/<?php echo $crosssell[$rnd]->getSEOUrl(); ?>" class="btn btn-primary">View</a>
                     </div>
                 </div>
             </div>

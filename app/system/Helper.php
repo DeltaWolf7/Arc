@@ -51,10 +51,13 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.12.0.1";
+        self::$arc["version"] = "0.12.0.2";
 
         // Search Results Flag
         self::$arc["hassearchresults"] = false;
+
+        // Title override
+        self::$arc["titleoverride"] = "";
 
         // Route processor
         self::$arc['arc_processor'] = null;
@@ -217,6 +220,14 @@ class Helper {
         }
         $content .= "<script>var arcsid = '" . self::arcGetSessionID() . "'</script>";
         return $content;
+    }
+
+    public static function arcSetTitleOveride($title) {
+        self::$arc["titleoverride"] = $title;
+    }
+
+    public static function arcGetTitleOverride() {
+        return self::$arc["titleoverride"];
     }
 
     /**

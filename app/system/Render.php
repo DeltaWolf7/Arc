@@ -208,13 +208,6 @@ class Render {
                 $content = str_replace('{{arc:menu}}', $newContent, $content);
             }
 
-            // header
-            if ($page->showtitle == '1') {
-                $content = str_replace('{{arc:title}}', "{$page->title}", $content);
-            } else {
-                $content = str_replace('{{arc:title}}', '', $content);
-            }
-
             // impersonating
             if (isset($_SESSION['arc_imposter'])) {
                 $content = str_replace('{{arc:impersonate}}', '<div class="alert alert-info">Impersonating ' . Helper::arcGetUser()->getFullname() . '. <a href="/arcsiu">Stop impersonating user</a></div>', $content);
@@ -225,6 +218,18 @@ class Render {
             // body
             $content = str_replace('{{arc:content}}', Helper::arcProcessModuleTags(html_entity_decode($page->content)), $content);
             
+            // header
+            if ($page->showtitle == '1') {
+                $oTitle = Helper::arcGetTitleOverride();
+                if ($oTitle != "") {
+                    $content = str_replace('{{arc:title}}', "{$oTitle}", $content);
+                } else {
+                    $content = str_replace('{{arc:title}}', "{$page->title}", $content);
+                }
+            } else {
+                $content = str_replace('{{arc:title}}', '', $content);
+            }
+
             // page icon
             $content = str_replace('{{arc:pageicon}}', '<i class="' . $page->iconclass . '"></i> ', $content);
 
