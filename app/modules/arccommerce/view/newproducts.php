@@ -1,4 +1,4 @@
-<h1>New Products</h1>
+<h2>New Products</h2>
 <div class="row row-cols-1 row-cols-md-4 g-4">
 
     <?php
