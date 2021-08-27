@@ -4,6 +4,11 @@
     <?php
 
         $products = ArcEcomProduct::getAllNew();
+        if (count($products) == 0) {
+            // we have no new products, redirect to categories
+            system\Helper::arcRedirect("/categories");
+            exit();
+        }
         foreach ($products as $product) {
             $image = ArcEcomImage::getByProductIDAndType($product->id, "IMAGE");
             if ($image->id == 0) {

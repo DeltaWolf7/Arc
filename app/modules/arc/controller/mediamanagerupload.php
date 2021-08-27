@@ -26,7 +26,7 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             $filename = $_FILES['file']['name'];
 
             // force lowercase names
-            $filename = strtolower($filename);
+            //$filename = strtolower($filename);
             $path = system\Helper::arcGetPath(true) . "assets" . $_POST["path"];
             $destination = $path . "/" . $filename;
 

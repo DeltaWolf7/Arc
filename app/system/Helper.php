@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.12.0.2";
+        self::$arc["version"] = "0.12.0.4";
 
         // Search Results Flag
         self::$arc["hassearchresults"] = false;
@@ -222,10 +222,17 @@ class Helper {
         return $content;
     }
 
+    /**
+     * Set title to override.
+     * @param string $title Title to override.
+     */
     public static function arcSetTitleOveride($title) {
         self::$arc["titleoverride"] = $title;
     }
 
+    /**
+     * Get title overridden.
+     */
     public static function arcGetTitleOverride() {
         return self::$arc["titleoverride"];
     }
