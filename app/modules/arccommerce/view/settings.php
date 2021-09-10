@@ -10,7 +10,7 @@
 <form id="EcomSettings">
     <div class="form-group">
         <label for="paypalid">PayPal ID</label>
-        <input type="text" name="paypalid" id="paypayid" value="" placeholder="" class="form-control" />
+        <input type="text" name="paypalid" id="paypayid" value="<?php echo $paypal->value; ?>" placeholder="" class="form-control" />
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
