@@ -62,7 +62,6 @@ $("#sendReset").click(function () {
     arcAjaxRequest("arc/reset", {
         emailf: $("#emailf").val()
     }, arcGetStatus);
-    cancelForgot();
 });
 
 function success(data) {
