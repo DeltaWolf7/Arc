@@ -1,10 +1,10 @@
 Name                            Version             Url
 ----                            -------             ---
-Bootstarp                       5.0.1               https://getbootstrap.com/
-Meedoo                          2.0.1               http://medoo.in/
+Bootstarp                       4.6.0               https://getbootstrap.com/
+Meedoo                          2.3.1               http://medoo.in/
 jQuery                          3.6.0               https://jquery.com/
 Summernote                      0.8.18              http://summernote.org/
 Font Awesome                    5.15.2              http://fortawesome.github.io/Font-Awesome/
 Moment                          2.29.1              http://momentjs.com/
-PHPMailer                       6.4.1               https://github.com/PHPMailer/PHPMailer
-CodeMirror                      5.61.1              http://codemirror.net/
+PHPMailer                       6.1.8               https://github.com/PHPMailer/PHPMailer
+CodeMirror                      5.39.2              http://codemirror.net/

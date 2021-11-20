@@ -76,6 +76,33 @@ abstract class DataProvider {
     }
 
     /**
+     * Get data from database and fill the object with random row
+     * @param string $where Query to execute against the database
+     */
+    public function rand($where) {
+        // Run query against the database
+        $data = system\Helper::arcGetDatabase()->rand($this->table, $this->getColumns(), $where);
+        // Create array to hold the objects
+        $collection = array();
+        // Check we have an array from the database
+        if (is_array($data)) {
+            // Go through each item in the array
+            foreach ($data as $item) {
+                // Get the class needed to create the object
+                $className = get_class($this);
+                // Create a new object from its class
+                $newObject = new $className;
+                // Fill the new object
+                $newObject->fill($item);
+                // Add the object to the collection
+                $collection[] = $newObject;
+            }
+        }
+        // Return the collection
+        return $collection;
+    }
+
+    /**
      * Get a collection of objects filled from the database
      * @param string $where Query to execute against the database
      * @return array Collection of objects
