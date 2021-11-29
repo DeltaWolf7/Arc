@@ -34,6 +34,7 @@ namespace system;
 class API {
 
     public static function arcGetAPI($uri) {
+        $lastUser = null;
         // Handle API request
         if (!isset($_GET["key"])) {
             Helper::arcReturnJSON(["error" => "API key required to process request"]);
@@ -46,6 +47,7 @@ class API {
                 $apikey = \SystemSetting::getByKey("APIKEY", $user->id);
                 if ($apikey->id != 0 && $apikey->value == $_GET["key"]) {
                     $key = $apikey->value;
+                    $lastUser = Helper::arcGetUser();
                     Helper::arcSetUser($user);
                 }
             }
@@ -86,6 +88,7 @@ class API {
                 }
             }
         }
+        Helper::arcSetUser($lastUser);
     }
 
 }
