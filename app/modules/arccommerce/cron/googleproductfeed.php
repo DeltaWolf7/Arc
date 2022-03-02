@@ -1,5 +1,5 @@
 <?php
-
+    set_time_limit(1800); //30 min
     Log::createLog("success", "CRON", "Creating Google products feeds XML.");
     $products = ArcEcomProduct::getAll();
     if ($products != null) {

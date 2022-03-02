@@ -1,10 +1,12 @@
 <?php
 
+    set_time_limit(1800); //30 min
     $products = ArcEcomProduct::getAll();
     $path = system\Helper::arcGetPath() . "assets/products/";
+    $title = SystemSetting::getByKey("ARC_SITETITLE");
 
     $productFeed = '<?xml version="1.0"?><rss version="2.0" xmlns:g="http://base.google.com/ns/1.0"><channel>';
-    $productFeed .= '<title>ClassyBunnies.co.uk</title>';
+    $productFeed .= '<title>' . $title->value . '</title>';
     $productFeed .= '<link>' . system\Helper::arcGetPath() . '</link>';
     $productFeed .= '<description>Classy Bunnies is the UK\'s based, popular online store for buying adult toys discreetly online.</description>';
 

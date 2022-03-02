@@ -24,6 +24,11 @@ if (system\Helper::arcIsAjaxRequest() && count($_FILES) > 0) {
             }
 
             $filename = $_FILES['file']['name'];
+            if (strpos($filename, ".php") != false) {
+                system\Helper::arcAddMessage("danger", "This type of file is not allowed. (PHP)");
+                Log::createLog("danger", "mediamanager", "Blocked file type: PHP");
+                return;
+            }
 
             // force lowercase names
             //$filename = strtolower($filename);
