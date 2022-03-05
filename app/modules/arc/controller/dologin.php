@@ -87,6 +87,15 @@ if (system\Helper::arcIsAjaxRequest()) {
 function doLogin($user)
 {
     system\Helper::arcSetUser($user);
+
+    $lastSeen = SystemSetting::getByKey("ARC_USER_LASTSEEN", $user->id);
+    if ($lastSeen->id == 0) {
+        $lastSeen->userid = $user->id;
+        $lastSeen->key = "ARC_USER_LASTSEEN";
+    }
+    $lastSeen->value = date("d-m-Y H:i:s");
+    $lastSeen->update();
+
     Log::createLog("success", "user", "User logged in: " . $user->email);
     system\Helper::arcCheckSettingExists("ARC_LOGIN_URL", "/");
 

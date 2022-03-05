@@ -159,6 +159,7 @@
                 <th>Name (<?php echo count($users); ?>)</th>
                 <th>Active</th>
                 <th>Email</th>
+                <th>Last Seen</th>
                 <th>Auth</th>
                 <th style="width: 150px;">Action</th>
                 </tr>
@@ -203,6 +204,7 @@
         ?>
                     </td>
                     <td><?php echo $user->email; ?></td>
+                    <td><?php $lastSeen = SystemSetting::getByKey("ARC_USER_LASTSEEN", $user->id); echo $lastSeen->value; ?></td>
                     <td class="text-center">
                         <?php
         $ad = SystemSetting::getByKey("ARC_USER_AD", $user->id);
