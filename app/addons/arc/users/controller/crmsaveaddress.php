@@ -9,6 +9,13 @@ if (system\Helper::arcIsAjaxRequest()) {
     $address->addresslines = $_POST["addresslines"];
     $address->county = $_POST["county"];
     $address->postcode = $_POST["postcode"];
+
+    if (!isset($_POST["country"])) {
+        system\Helper::arcAddMessage("danger", "Country cannot be empty.");
+        system\Helper::arcReturnJSON(["error" => true]);
+        return;
+    }
+
     $address->country = $_POST["country"];
 
     if (isset($_POST["isbilling"])) {

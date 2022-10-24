@@ -95,27 +95,3 @@ function crmEditAddressSaved(data) {
 function crmRemoveAddress(addressid) {
     arcAjaxRequest("addons/arc/users/crmremoveaddress", { addressid: addressid }, location.reload());
 }
-
-
-///////////// CRM LINKS /////////////
-
-function removeLink(id) {
-    arcAjaxRequest("addons/arc/users/crmremovelink", { id: id }, null, location.reload());
-}
-
-function addLink() {
-    $("#editLinkModal").modal("show");
-}
-
-function saveLink(userid, linkid) {
-    arcAjaxRequest("addons/arc/users/crmsavelink", { userid: userid, linkid: linkid }, null, location.reload());
-}
-
-function searchLink(userid) {
-    arcAjaxRequest("addons/arc/users/crmsearchlink", { userid: userid, search: $("#linkSearch").val() }, null, completeSearchLink);
-}
-
-function completeSearchLink(data) {
-    var jdata = arcGetJson(data);
-    $("#linksearchresults").html(jdata.html);
-}

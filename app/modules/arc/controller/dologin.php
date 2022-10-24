@@ -23,7 +23,7 @@ if (system\Helper::arcIsAjaxRequest()) {
 
     if ($ldapEnabled->value == "1") {
         Log::createLog("warning", "ldap", "LDAP lookup: " . $_POST["email"]);
-        $result = LDAPLogin($ldapServer->value, $_POST["email"], $_POST["password"], $ldapDomain->value, $ldapBase->value);
+        $result = LDAPLogin($_POST["email"], $_POST["password"], $ldapServer->value, $ldapDomain->value, $ldapBase->value);
         $user = \User::getByEmail($result["email"]);
 
         if (is_array($result)) {
@@ -109,7 +109,7 @@ function doLogin($user)
     }
 }
 
-function LDAPLogin($server = "mydomain.local", $username, $password, $domain = "mydomain", $dc = "dc=mydomain,dc=local")
+function LDAPLogin($username, $password, $server = "mydomain.local", $domain = "mydomain", $dc = "dc=mydomain,dc=local")
 {
     // https://www.exchangecore.com/blog/how-use-ldap-active-directory-authentication-php/   
     $ldap = ldap_connect("ldap://{$server}");

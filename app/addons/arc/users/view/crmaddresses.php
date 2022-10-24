@@ -80,6 +80,7 @@
     }
 ?>
 
+<form id="crmeditaddressform">
 <div class="modal" tabindex="-1" id="editAddressModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -87,7 +88,6 @@
                 <h5 class="modal-title" id="myModalLabel">Address Editor</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form id="crmeditaddressform">
                 <input type="hidden" name="addressuserid" id="addressuserid" value="<?php echo $user->id; ?>" />
                 <input type="hidden" name="addressid" id="addressid" value="0" />
                 <div class="modal-body">
@@ -121,7 +121,7 @@
                     <button class="btn btn-danger" data-bs-dismiss="modal"><i class="fas fa-times"></i> Close</button>
                     <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Save</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>
+</form>

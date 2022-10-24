@@ -4,8 +4,7 @@ CREATE TABLE `arc_router` (
   `destination` varchar(255) NOT NULL,
   `groupallowed` int(11) NOT NULL,
   `visible` tinyint(4) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;mping data for table `arc_router`
---
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 INSERT INTO `arc_router` (`id`, `route`, `destination`, `groupallowed`, `visible`) VALUES
 (1, 'error', '', 3, 1),

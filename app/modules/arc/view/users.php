@@ -226,7 +226,7 @@
                                 onclick="impersonateUser('<?php echo $user->id; ?>')"><i
                                     class="fas fa-user-secret"></i></button>
                             <a class="btn btn-primary btn-sm"
-                                href="<?php echo "/" . system\Helper::arcGetURI() . "/" . $user->id; ?>"><i
+                                href="<?php echo "/" . system\Helper::arcGetURI() . "/" . $user->id; ?>" target="_blank"><i
                                     class="fa fa-pencil"></i></a>
                             <button style="width: 35px;" class="btn btn-danger btn-sm"
                                 onclick="removeUser('<?php echo $user->id; ?>')"><i class="fa fa-remove"></i></button>

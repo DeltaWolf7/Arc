@@ -69,6 +69,7 @@
         }
 ?>
 
+<form id="crmeditaddressform">
 <div class="modal" id="editAddressModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -77,7 +78,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="crmeditaddressform">
+                
                     <input type="hidden" name="addressuserid" id="addressuserid" value="<?php echo $user->id; ?>" />
                     <input type="hidden" name="addressid" id="addressid" value="0" />
 
@@ -105,7 +106,7 @@
                         <input type="checkbox" class="form-check-input" id="isdelivery" name="isdelivery">
                         <label class="form-check-label" for="isdelivery">Delivery?</label>
                     </div>
-                </form>
+                
             </div>
 
             <div class="modal-footer">
@@ -115,3 +116,4 @@
         </div>
     </div>
 </div>
+</form>

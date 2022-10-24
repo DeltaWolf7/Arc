@@ -47,9 +47,6 @@ class Config {
         define('ARCDBPREFIX', 'arc_');
         // Database charset
         define('ARCCHARSET', 'utf8');
-                
-        // Project debug mode
-        define('ARCDEBUG', true);
         
         // Session Timeout (minutes), default 1 hour.
         // Set to 0 to disable.

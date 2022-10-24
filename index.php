@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Craig Longford.
+ * Copyright 2022 Craig Longford.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,42 +24,9 @@
  * THE SOFTWARE.
  */
 
-// Prevent PHP7 bug with memcache
-ini_set('session.lazy_write', 0);
-
-// Security Hardening. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protection
-header("X-XSS-Protection: 1; mode=block");
-header("Strict-Transport-Security:max-age=63072000");
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options
-header('X-Content-Type-Options: nosniff');
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options
-header("X-Frame-Options: SAMEORIGIN");
-
-// https://content-security-policy.com/examples/php/
-// disabled at moment, causing issue with own scripts
-//header("Content-Security-Policy: default-src 'self' https://cdnjs.cloudflare.com"); // allow cdns and self
-
-// https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
-header("Referrer-Policy: no-referrer");
-//https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Feature-Policy
-
-ini_set("session.cookie_httponly", True);
-if (array_key_exists('HTTPS', $_SERVER) && (isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'on')) {
-    // check if ssl, if so enable security hardening for ssl.
-    ini_set("session.cookie_secure", True);
-    ini_set("session.cookie_samesite", "Strict");
-    // cookie prefix
-    session_name('__Secure-PHPSESSID');
-}
-
-// Hide PHP version
-if (function_exists('header_remove')) {
-    header_remove('X-Powered-By'); // PHP 5.3+
-}
-
 // Check that we are using PHP 7 or newer.
-if (version_compare(phpversion(), '7.3.0', '<') == true) {
-    die('PHP 7.3.0 or newer required');
+if (version_compare(phpversion(), '8.1.0', '<') == true) {
+    die('PHP 8.1.0 or newer required');
 }
 
 // Check we have a config file and include
@@ -68,21 +35,6 @@ if (!is_readable('app/system/Config.php')) {
 }
 require_once 'app/system/Config.php';
 new system\Config();
-
-// Set debug environment.
-switch (ARCDEBUG) {
-    case true:
-        error_reporting(E_ALL);
-        ini_set('display_errors', 1);
-        break;
-    case false:
-        error_reporting(0);
-        ini_set('display_errors', 0);
-        break;
-    default:
-        die('Unknown debug setting in Config.php');
-        break;
-}
 
 // Include and initilise helper class.
 require_once 'app/system/Initialiser.php';
