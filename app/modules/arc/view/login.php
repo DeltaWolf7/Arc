@@ -14,6 +14,7 @@ $reg = SystemSetting::getByKey("ARC_ALLOWREG");
                 <div class="border p-4 rounded">
                     <h3>Sign in</h3>
                     <form>
+                        <input type="hidden" id="redirect" value="<?php if (isset($_GET["redirect"])) echo $_GET["redirect"]; ?>" />
                         <div class="row">
                             <div class="col-12">
                                 <label for="email" class="form-label">Email Address</label>

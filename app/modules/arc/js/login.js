@@ -9,7 +9,8 @@ function login() {
     $("#loginBtn").prop("disabled", true);
     arcAjaxRequest("arc/dologin", {
         email: $("#email").val(),
-        password: $("#password").val()
+        password: $("#password").val(),
+        redirect: $("#redirect").val()
     }, showMessage, success);
 }
 

@@ -13,11 +13,16 @@
             case "403":
                 ?>
                 You do not have permission to access this resource.<br />
+                <br />
+                If you have an account please <a href="<?php echo system\Helper::arcGetPath() . "login?redirect=" . $_SERVER['REQUEST_URI']; ?>">login</a> to continue.<br />
                 <?php
                 break;
             case "401":
                 ?>
-                Your session has expired. Please login and try again.<br />
+                Your session has expired. Please login and try again.
+                <br />
+                <br />
+                Please <a href="<?php echo system\Helper::arcGetPath() . "login?redirect=" . $_SERVER['REQUEST_URI']; ?>">login</a> to continue.<br />
                 <?php
                 break;
             case "419":

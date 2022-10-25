@@ -102,7 +102,11 @@ function doLogin($user)
     $url = SystemSetting::getByKey("ARC_LOGIN_URL");
 
     system\Helper::arcAddMessage("success", "Login successful.");
-    if (empty($url->value)) {
+
+    if (isset($_POST["redirect"])) {
+        system\Helper::arcReturnJSON(["redirect" => $_POST["redirect"]]);
+    }
+    elseif (empty($url->value)) {
         system\Helper::arcReturnJSON(["redirect" => "/"]);
     } else {
         system\Helper::arcReturnJSON(["redirect" => $url->value]);

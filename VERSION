@@ -3,8 +3,8 @@ Name                            Version             Url
 Bootstarp                       5.2.2               https://getbootstrap.com/
 Meedoo                          2.1.4               http://medoo.in/
 jQuery                          3.6.1               https://jquery.com/
-Summernote                      0.8.18              http://summernote.org/
+Summernote                      0.8.20              http://summernote.org/
 Font Awesome                    6.2.0               http://fortawesome.github.io/Font-Awesome/
 Moment                          2.29.4              http://momentjs.com/
 PHPMailer                       6.5.2               https://github.com/PHPMailer/PHPMailer
-CodeMirror                      5.65.0              http://codemirror.net/
+CodeMirror                      5.65.9              http://codemirror.net/

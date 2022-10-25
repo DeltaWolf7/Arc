@@ -96,7 +96,10 @@ class Whois {
         } else {
             $returnData['Expire'] = $errorMessagge;
         }
-        @fclose($whoisSocket);
+
+        if (isset($whoisSocket)) {
+            fclose($whoisSocket);
+        }
 
         $whoisSocket = null;
 

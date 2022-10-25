@@ -94,9 +94,9 @@ class Helper {
 
         // Javascript, add required javascript files to header
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>');
-        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js" integrity="sha256-h1OMS35Ij1pJ0S+Y1qBK/GHQDyankPMZVpeZrNQ062U=" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>');
         self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha256-IUOUHAPazai08QFs7W4MbzTlwEWFo7z/4zw8YmxEiko=" crossorigin="anonymous">');
-        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/dist/moment.js" integrity="sha256-SFm2p+y/sQKIKPpUM8QTghWu5ks7TYqXUA0NeGIH8bc=" crossorigin="anonymous"></script>');
+        self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js" integrity="sha256-80OqMZoXo/w3LuatWvSCub9qKYyyJlK0qnUCYEghBx8=" crossorigin="anonymous"></script>');
         self::arcAddFooter('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">');
         self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.min.js');
 
@@ -503,14 +503,14 @@ class Helper {
      */
     public static function arcRequestStatus($code) {
         $status = array(
-            200 => 'OK',
-            404 => 'Not Found',
-            405 => 'Method Not Allowed',
-            500 => 'Internal Server Error',
-            400 => 'Bad Request',
-            403 => 'Forbidden',
-            401 => 'Access denied',
-            401.1 => 'Logon failed'
+            "200" => 'OK',
+            "404"=> 'Not Found',
+            "405" => 'Method Not Allowed',
+            "500" => 'Internal Server Error',
+            "400" => 'Bad Request',
+            "403" => 'Forbidden',
+            "401" => 'Access denied',
+            "401.1" => 'Logon failed'
         );
         return ($status[$code]) ? $status[$code] : $status[500];
     }
