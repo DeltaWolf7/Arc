@@ -490,8 +490,8 @@ class Helper {
      * @param type $array Array containing the key value parameters.
      * Echos out the array.
      */
-    public static function arcReturnJSON($array = [], $status = 200) {
-        header("HTTP/1.1 " . $status . " " . self::arcRequestStatus($status));
+    public static function arcReturnJSON($array = [], $status = "200") {
+        header("HTTP/1.1 " . (string)$status . " " . self::arcRequestStatus($status));
         header("content-type:application/json");
         echo utf8_encode(json_encode($array));
     }
@@ -501,7 +501,7 @@ class Helper {
      * @param int $code Status code
      * @return string Status code
      */
-    public static function arcRequestStatus($code) {
+    public static function arcRequestStatus(string $code) {
         $status = array(
             "200" => 'OK',
             "404"=> 'Not Found',
@@ -512,7 +512,7 @@ class Helper {
             "401" => 'Access denied',
             "401.1" => 'Logon failed'
         );
-        return ($status[$code]) ? $status[$code] : $status[500];
+        return ($status[$code]) ? $status[$code] : $status["500"];
     }
 
     /**

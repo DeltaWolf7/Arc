@@ -103,10 +103,9 @@ function doLogin($user)
 
     system\Helper::arcAddMessage("success", "Login successful.");
 
-    if (isset($_POST["redirect"])) {
+    if (isset($_POST["redirect"]) && $_POST["redirect"] != "") {
         system\Helper::arcReturnJSON(["redirect" => $_POST["redirect"]]);
-    }
-    elseif (empty($url->value)) {
+    } elseif (empty($url->value)) {
         system\Helper::arcReturnJSON(["redirect" => "/"]);
     } else {
         system\Helper::arcReturnJSON(["redirect" => $url->value]);
