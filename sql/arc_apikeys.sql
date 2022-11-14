@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 26, 2021 at 01:32 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.10
+-- Host: localhost
+-- Generation Time: Nov 14, 2022 at 09:02 PM
+-- Server version: 8.0.27
+-- PHP Version: 8.1.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,23 +24,24 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `arc_tokens`
+-- Table structure for table `arc_apikeys`
 --
 
-CREATE TABLE `arc_tokens` (
-  `id` int(11) NOT NULL,
-  `token` varchar(50) NOT NULL,
-  `expires` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `arc_apikeys` (
+  `id` int NOT NULL,
+  `userid` int NOT NULL,
+  `apikey` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `secrethash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `arc_tokens`
+-- Indexes for table `arc_apikeys`
 --
-ALTER TABLE `arc_tokens`
+ALTER TABLE `arc_apikeys`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -48,10 +49,10 @@ ALTER TABLE `arc_tokens`
 --
 
 --
--- AUTO_INCREMENT for table `arc_tokens`
+-- AUTO_INCREMENT for table `arc_apikeys`
 --
-ALTER TABLE `arc_tokens`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `arc_apikeys`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

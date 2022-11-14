@@ -51,7 +51,7 @@ class Helper {
         self::$arc["modulepath"] = "";
 
         // Version
-        self::$arc["version"] = "0.12.0.6";
+        self::$arc["version"] = "1.0.0.1";
 
         // Search Results Flag
         self::$arc["hassearchresults"] = false;
@@ -88,7 +88,7 @@ class Helper {
                     'database_file' => ARCDBSERVER
                 ]);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             die("Unable to connect to database. Please check 'Config.php'.<br />Exception: " . $e->getMessage());
         }
 
@@ -709,7 +709,7 @@ class Helper {
     public static function arcGetContent() {
         $uri = self::arcGetURI();
         // check for API request
-        if (strpos($uri, "api/v1") !== false) {
+        if (strpos($uri, "api/") !== false) {
              // process uri
             API::arcGetAPI($uri);
         }

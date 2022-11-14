@@ -1,7 +1,5 @@
 <?php
 
-    system\Helper::arcAddHeader("css", system\Helper::arcGetModulePath() . "css/post.css");
-
     $uri = system\Helper::arcGetURI();
     $data = explode("/", $uri);
 

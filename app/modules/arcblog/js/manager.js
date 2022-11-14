@@ -90,7 +90,7 @@ $("#postSaveBtn").click(function() {
         title: $("#title").val(),
         tags: $("#tags").val(),
         seourl: $("#seourl").val(),
-        content: arcCleanSummernote($('#summernote').summernote('code')),
+        content: $('#summernote').summernote('code'),
         date: $("#date").val(),
         cat: $("#cat").val()
     }, null, saveComplete);

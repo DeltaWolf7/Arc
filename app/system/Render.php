@@ -267,7 +267,6 @@ class Render {
                 session_destroy();
                 $page = \Page::getBySEOURL('error');
                 http_response_code(401);
-                \Log::createLog('warning', 'arc', "401: {$uri}");
             }
         } else {
             Helper::arcAddFooter('js', Helper::arcGetPath() . 'vendor/arc/js/arckeepalive.min.js');

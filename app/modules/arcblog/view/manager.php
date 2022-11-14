@@ -1,18 +1,21 @@
 <div class="card">
     <div class="card-body">
 
-        <div role="tabpanel" id="tabs">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li id="tabPosts" role="presentation" class="nav-item"><a href="#posts" class="nav-link active" role="tab" data-toggle="tab">Posts</a></li>
-                <li id="tabCategories" role="presentation" class="nav-item"><a href="#categories" class="nav-link" role="tab" data-toggle="tab">Categories</a></li>
+                <li id="tabPosts" role="presentation" class="nav-item">
+                    <button class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#posts">Posts</button>
+                </li>
+                <li id="tabCategories" role="presentation" class="nav-item">
+                    <button class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#categories">Categories</button>
+                </li>
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
                 <div role="tabpanel" class="tab-pane active" id="posts"></div>
                 <div role="tabpanel" class="tab-pane" id="categories"></div>
             </div>
-        </div>
+
 
         <div id="postEditor" style="display: none;">
                         <div class="row">
@@ -35,14 +38,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="cat">Category</label>
-                                    <select class="form-control" id="cat">
+                                    <select class="form-select" id="cat">
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group" id="image">
                                 </div>
-                                <button id="changeImage" class="btn btn-primary btn-block btn-file"><input type="file">Change Image</button>
+                                <button id="changeImage" class="btn btn-primary btn-block btn-file"><input type="file">Change Image</button><br />
                                 <button id="removeImage" class="btn btn-danger btn-block">Remove Image</button>
                             </div>
                         </div>
@@ -60,7 +63,6 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">Edit Category</h4>
-                        <button type="button" class="close" data-dismiss="modal"><i aria-hidden="true">&times;</i><i class="sr-only">Close</i></button>
                     </div>
                     <div class="modal-body">
                         <div class="row">
@@ -77,7 +79,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button class="btn btn-primary" id="catSave">Save</button>
                     </div>
                 </div>

@@ -6,7 +6,7 @@
 
 <div class="card mt-3">
     <div class="card-body">
-        <h4>CRM Details</h4>
+        <h4>Contact Details</h4>
         <div class="row mt-3">
             <div class="col-md-12 border-top border-primary"></div>
         </div>

@@ -18,8 +18,6 @@
                     type="button" role="tab" aria-controls="v-pills-smtp" aria-selected="false">SMTP</button>
                 <button class="nav-link" id="v-pills-ldap-tab" data-bs-toggle="pill" data-bs-target="#v-pills-ldap"
                     type="button" role="tab" aria-controls="v-pills-ldap" aria-selected="false">LDAP</button>
-                <button class="nav-link" id="v-pills-api-tab" data-bs-toggle="pill" data-bs-target="#v-pills-api"
-                    type="button" role="tab" aria-controls="v-pills-api" aria-selected="false">API</button>
                 <?php
                     if ($haveThemeSettings === true) {
                         ?>
@@ -99,8 +97,7 @@
                                             aria-label="Site Logo" aria-describedby="basic-addon2"
                                             value="<?php echo $logo->value; ?>">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary" id="btnMediaManager"><i
-                                                    class="fa fa-folder-open-o" type="button"></i></button>
+                                            <button class="btn btn-primary" id="btnMediaManager"><i class="fa-solid fa-folder-open"></i></button>
                                         </div>
                                     </div>
 
@@ -490,60 +487,6 @@
                                 </div>
                             </div>
                         </fieldset>
-
-                    </div>
-
-                    <div class="tab-pane fade" id="v-pills-api" role="tabpanel" aria-labelledby="v-pills-api-tab">
-                        <!-- API Key /-->
-                        <h3>API</h3>
-                        <p>
-                            API key required for
-                            allowing access to the API’s provided by Arc and its modules.
-                        </p>
-                        <p>
-                            <strong>RESTful based API URL:</strong>
-                            <?php echo system\Helper::arcGetPath(); ?>api/v1/{module}/{method}?key={key}
-                        </p>
-                        <p>
-                            <strong>Arc Version:</strong> <?php echo system\Helper::arcGetVersion(); ?>
-                        </p>
-
-                        <label for="apiuser" class="form-label">Add user</label>
-                        <div class="row">
-                            <div class="col-md-9">
-                                <select class="form-select" id="apiuser">
-                                    <?php
-                                        $users = User::getAllUsers();
-                                        foreach ($users as $user) {
-                                            $apikey = SystemSetting::getByKey("APIKEY", $user->id);
-                                            if ($apikey->id == 0) {
-                                                echo "<option value=\"{$user->id}\">{$user->getFullname()} ({$user->email})</option>";
-                                            }
-                                        }
-                                        ?>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <button class="btn btn-secondary" id="createAPI"><i class="fa fa-plus"></i>
-                                    Create
-                                    API key</button>
-                            </div>
-                            <div class="col-12">
-                                <table class="table table-striped table-sm align-middle">
-                                    <thead class="text-primary">
-                                        <tr>
-                                            <th>User</th>
-                                            <th>Key</th>
-                                            <th class="text-end">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="apiKeys">
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
 
                     </div>
 

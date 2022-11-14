@@ -19,7 +19,7 @@
                         <th scope="col">Postcode</th>
                         <th scope="col">Billing</th>
                         <th scope="col">Delivery</th>
-                        <th scope="col" style="width: 110px;">
+                        <th scope="col" style="width: 110px;" class="text-end">
                             <form id="crmnewaddress">
                                 <input type="hidden" name="addressid" value="0" />
                                 <input type="hidden" name="addressuserid" value="0" />

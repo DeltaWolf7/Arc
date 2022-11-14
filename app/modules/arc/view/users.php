@@ -16,7 +16,7 @@
                 <span class="badge bg-primary" id="idtag">ID: <?php echo $user->id; ?></span>&nbsp;
             </div>
             <div class="col-md-6 text-end">
-                <a class="btn btn-danger" href="<?php echo system\Helper::arcGetProcessor(); ?>"><i
+                <a class="btn btn-danger" href="#" onclick="window.top.close();"><i
                         class="fas fa-times"></i>
                     Close</a>
             </div>
@@ -186,7 +186,7 @@
         }
     ?>
                         <a
-                            href="<?php echo "/" . system\Helper::arcGetURI() . "/" . $user->id; ?>"><?php echo $user->getFullname(); ?></a>
+                            href="<?php echo "/" . system\Helper::arcGetURI() . "/" . $user->id; ?>" target="_blank"><?php echo $user->getFullname(); ?></a>
                     </td>
                     <td class="text-center">
                         <?php
