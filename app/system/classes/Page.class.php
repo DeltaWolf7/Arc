@@ -128,17 +128,6 @@ class Page extends DataProvider {
     }
 
     /**
-     * Get the User group permissions for the page
-     * @return \UserPermission User permission object
-     */
-    public function getPermissions() {
-        // Create new permission class
-        $permissions = new UserPermission();
-        // Get data from database
-        return $permissions->getCollection(["permission" => $this->seourl]);
-    }
-
-    /**
      * Get the page from the database by its unique ID
      * @param int $id ID of the page to get
      * @return \Page Page object

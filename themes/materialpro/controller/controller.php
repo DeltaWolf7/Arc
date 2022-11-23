@@ -16,3 +16,14 @@ system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/sidebar
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/sparkline.js");
 system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/waves.js");
 
+system\Helper::arcAddFooter("js", system\Helper::arcGetThemePath() . "js/additions.js");
+
+// theme settings
+$dark = system\Helper::arcGetSetting("materialpro_theme");
+$collapse = system\Helper::arcGetSetting("materialpro_collapse");
+$fixedside = system\Helper::arcGetSetting("materialpro_fixedside");
+$fixedheader = system\Helper::arcGetSetting("materialpro_fixedheader");
+$boxed = system\Helper::arcGetSetting("materialpro_boxed");
+$logocolour = system\Helper::arcGetSetting("materialpro_logocolour");
+$navbarcolour = system\Helper::arcGetSetting("materialpro_navbarcolour");
+$sidebarcolour = system\Helper::arcGetSetting("materialpro_sidebarcolour");

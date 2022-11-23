@@ -98,10 +98,10 @@ class Helper {
         self::arcAddHeader('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" integrity="sha256-IUOUHAPazai08QFs7W4MbzTlwEWFo7z/4zw8YmxEiko=" crossorigin="anonymous">');
         self::arcAddFooter('external', '<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/min/moment.min.js" integrity="sha256-80OqMZoXo/w3LuatWvSCub9qKYyyJlK0qnUCYEghBx8=" crossorigin="anonymous"></script>');
         self::arcAddFooter('external', '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">');
-        self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.min.js');
+        self::arcAddFooter('js', self::arcGetPath() . 'vendor/arc/js/arc.js');
 
         // CSS, add required css files to header
-        self::arcAddHeader('css', self::arcGetPath() . 'vendor/arc/css/arc.min.css');
+        self::arcAddHeader('css', self::arcGetPath() . 'vendor/arc/css/arc.css');
     }
 
     /**
@@ -483,6 +483,11 @@ class Helper {
             $setting->update();
             \Log::createLog("warning", "Setting", $name . " was initilised with value '" . $value . "', ID: '" . $id . "'");
         }
+    }
+
+    public static function arcGetSetting($name) {
+        $setting = \SystemSetting::getByKey($name, 0);
+        return $setting->value;
     }
 
     /**

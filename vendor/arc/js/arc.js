@@ -113,7 +113,7 @@ function arcRedirect(additions = "", useBase = false) {
     if (useBase == false) {
         window.location = window.location.href.split('?')[0] + additions;
     } else {
-        window.location = window.location.protocol + "//" + window.location.host + additions
+        window.location = window.location.protocol + "//" + window.location.host + additions;
     }
 }
 
