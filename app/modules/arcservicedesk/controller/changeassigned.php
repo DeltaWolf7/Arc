@@ -5,13 +5,14 @@ if (system\Helper::arcIsAjaxRequest() == true) {
     $user = system\Helper::arcGetUser();
     $assigned = User::getByID($_POST["assigned"]);
 
-    if ($user->id == $assigned->id) {
+    $ticket = ArcServiceDeskTicket::getByID($_POST["ticketid"]);
+
+    if ($ticket->assignedto == $assigned->id) {
         system\Helper::arcAddMessage("warning", "No change made");
         system\Helper::arcReturnJSON();
         return;
     }
 
-    $ticket = ArcServiceDeskTicket::getByID($_POST["ticketid"]);
     $ticket->assignedto = $assigned->id;
     $ticket->update();
 
