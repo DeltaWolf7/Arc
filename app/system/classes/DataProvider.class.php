@@ -205,4 +205,11 @@ abstract class DataProvider {
             }
         }
     }
+
+    /**
+     * Support for the last query function.
+     */
+    public function last() {
+        return system\Helper::arcGetDatabase()->last();
+    }
 }
